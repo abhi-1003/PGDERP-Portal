@@ -1,0 +1,152 @@
+.field1 {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    justify-content: center;
+    
+    
+  }
+  .field2 {
+    padding-left: 10%;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    justify-content: left;
+  }
+  .fieldName {
+    font-size: 20px;
+    font-weight: 500;
+    justify-content: center;
+  }
+  .docFieldName{
+    font-size: 20px;
+    font-weight: 500;
+    justify-content: center;
+  }
+  .documents{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+  }
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .icon {
+    margin-left: 20px;
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-end;
+    justify-content: center;
+  }
+  .verify{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-content: center;
+  }
+  .radios{
+      display: flex;
+      flex-direction: row;
+  }
+  .radio{
+      margin-left: 10px;
+  }
+  .iconMobile{
+      display: flex;
+      flex-direction: row;
+  }
+
+
+@media only screen and (max-width: 1070px){
+    .field1{
+        margin-top: 8px;
+        font-size: 18px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .fieldName{
+        width: 100%
+    }
+}
+
+@media only screen and (max-width: 1115px){
+    .field1{
+        display: block;
+    }
+    .icon{
+        display: block;
+    }
+    .iconMobile{
+        display: flex;
+        flex-direction: row;
+    }
+    .docFieldName{
+        width: 100%;
+    }
+    .documents{
+        display: block;
+    }
+    .verify{
+        display: block;
+    }
+    .radios{
+        display: block;
+    }
+    .radios{
+        margin-left: 0;
+    }
+}
+
+
+
+.container1{
+    margin-top: 25px;
+    margin-left: 100px;
+}
+.tb {
+	width: 90%;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+	border-radius: 10px;
+}
+
+.h{
+  background-color:#5EAAA8;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.data {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	
+}
+
+.head {
+	text-align: left;
+}
+
+
+
+.data{
+	outline: thin solid white;
+}
+.first{
+	text-align:right;
+	width:50%;
+    font-weight: 500;
+}
+.row1:nth-child(even) {
+            background-color: white;
+				
+        }
+.row1:nth-child(odd) {
+            background-color: lightgrey;
+        }
+
