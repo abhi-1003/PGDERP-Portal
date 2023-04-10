@@ -11,7 +11,7 @@ import NavBar from "../components/Navbar/Navbar";
 import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -20,7 +20,7 @@ const initialValues = {
   password: "",
 };
 export default function StudentLogIn() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const validate = (fieldValues = values) => {
@@ -59,7 +59,7 @@ export default function StudentLogIn() {
           console.log(res.data.token);
           localStorage.setItem("phd-website-jwt", res.data.token);
           localStorage.setItem("phd-website-role", "accountSec");
-          history.push("/account");
+          navigate("/account");
         })
         .catch((err) => {
           setLoading(false);

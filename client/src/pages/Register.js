@@ -12,7 +12,7 @@ import NavBar from "../components/Navbar/Navbar";
 import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -25,7 +25,7 @@ const initialFValues = {
   cpassword: "",
 };
 export default function Register() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const validate = (fieldValues = values) => {
@@ -65,7 +65,8 @@ export default function Register() {
         mobile: values.mobile,
         password: values.password,
       };
-      console.log(data);
+      var data1 = [values.fullname,values.email,values.mobile,values.password];
+      console.log(data1);
       const url = BACKEND_URL + "/students/register";
       setLoading(true);
       axios
@@ -73,7 +74,7 @@ export default function Register() {
         .then((res) => {
           setLoading(false);
           alert("Registration Successful, Please verify email");
-          history.push("/candidate-otp", { userId: res.data.userId });
+          navigate("/candidate-otp", { userId: res.data.userId });
         })
         .catch((err) => {
           setLoading(false);

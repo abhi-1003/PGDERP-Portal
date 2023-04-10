@@ -2,14 +2,14 @@
 import { React, useState, useEffect } from "react";
 import Helmet from "react-helmet";
 import logo from "./logo_trans.png";
-import { useHistory } from "react-router-dom";
-// import { Route } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import { Route } from 'react-router-dom'
 // import MenuIcon from '@mui/icons-material/Menu';
 
 import "./Nsvbar.css";
 
 export default function NavBar(props) {
-  let history = useHistory();
+  let navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(props.loggedin);
 
   useEffect(() => {
@@ -23,10 +23,10 @@ export default function NavBar(props) {
   const toggle = (event) => {
     if (loggedIn) {
       localStorage.clear();
-      history.push("/");
+      navigate("/");
       setLoggedIn(!loggedIn);
     } else {
-      history.push("/");
+      navigate("/");
     }
   };
 
@@ -36,13 +36,13 @@ export default function NavBar(props) {
       console.log(localStorage.getItem("phd-website-role"));
       console.log(localStorage);
       if (role === "admin") {
-        history.push("/admin");
+        navigate("/admin");
       } else if (role === "phdCord") {
-        history.push("/coordinator");
+        navigate("/coordinator");     //history.push("/coordinator");
       } else if (role === "accountSec") {
-        history.push("/account");
+        navigate("/account");      //history.push("/account");
       } else if (role === "student") {
-        history.push("/candidate");
+        navigate("/candidate");     //history.push("/candidate");
       }
     }
   };
@@ -68,9 +68,9 @@ export default function NavBar(props) {
         <li className="li-class">
           <a href="/">
             <h1 id="big-screen">
-              PhD Admission Portal - College of Engineering, Pune
+              PGDERP Admission Portal - College of Engineering, Pune
             </h1>
-            <h1 id="small-screen">PhD Admission Portal - COEP</h1>
+            <h1 id="small-screen">PGDERP Admission Portal - COEP</h1>
           </a>
         </li>
 

@@ -18,7 +18,7 @@ import Select from "@mui/material/Select";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { BACKEND_URL } from "../config";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -31,7 +31,7 @@ const initialState = {
   role: "",
 };
 export default function FacLogIn() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -46,9 +46,9 @@ export default function FacLogIn() {
         setLoading(false);
         localStorage.setItem("phd-website-jwt", res.data.token);
         localStorage.setItem("phd-website-role", state.role);
-        if (state.role === "phdCord") history.push("/coordinator");
-        else if (state.role === "admin") history.push("/admin");
-        else history.push("/account");
+        if (state.role === "phdCord") navigate("/coordinator");
+        else if (state.role === "admin") navigate("/admin");
+        else navigate("/account");
       })
       .catch((err) => {
         setLoading(false);
