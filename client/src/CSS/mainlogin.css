@@ -96,17 +96,17 @@
 }
 
 .overlay {
-  background: #056676;
-  background: -webkit-linear-gradient(to right, #056676, #5eaaa8);
-  background: linear-gradient(to right, #056676, #5eaaa8);
+  background: #00294f;
+  background: -webkit-linear-gradient(to right, #00b07a, #012d5f);
+  background: linear-gradient(to right, #00b07a, #012d5f);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
   color: #ffffff;
   position: relative;
-  left: -100%;
+  left: -70%;
   height: 100%;
-  width: 200%;
+  width: 195%;
 }
 
 .overlay-panel {

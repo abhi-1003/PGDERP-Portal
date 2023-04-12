@@ -23,7 +23,7 @@ const theme = createTheme({
       darker: "#053e85",
     },
     neutral: {
-      main: "#056676",
+      main: "#012d5e",
       contrastText: "#fff",
     },
   },
@@ -92,7 +92,7 @@ export default function MainLogIn(props) {
                 </Typography>
                 <div className="social-container">
                   <Avatar
-                    sx={{ m: 0, bgcolor: "#056676", height: 60, width: 60 }}
+                    sx={{ m: 0, bgcolor: "#012d5e", height: 60, width: 60 }}
                   ></Avatar>
                 </div>
 
@@ -123,7 +123,7 @@ export default function MainLogIn(props) {
                     </Button>
                   </Grid>
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <Button
                     color="neutral"
                     onClick={handleRoute3}
@@ -134,7 +134,7 @@ export default function MainLogIn(props) {
                   >
                     Account Section Login
                   </Button>
-                </Grid>
+                </Grid> */}
               </div>
             </div>
             <div className="overlay-container">

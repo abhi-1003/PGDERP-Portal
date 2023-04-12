@@ -100,7 +100,7 @@ export default function FacLogIn() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "cadetblue" }}></Avatar>
+              <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
@@ -152,6 +152,7 @@ export default function FacLogIn() {
                   onClick={handleSubmit}
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  style={{ width: "100%", background: "#012d5e" }}
                 >
                   {loading ? (
                     <CircularProgress size="1.7em" color="inherit" />
