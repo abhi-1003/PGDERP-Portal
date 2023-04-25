@@ -4,8 +4,14 @@ import { useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import { renderText, renderButton, renderInputText, renderText1, renderMultiInputText, renderInputSelect } from '../common/displayComponents'
 import Select from '@material-ui/core'
+// "CourseName":"",
+// "NameOfUniversity":"",
+// "Specialization":"",
+// "PeriodFrom":"",
+// "PeriodTo":"",
+// "Grade":""
 export default function Step1({state, handleOnChange, handleNext}){
-    const names = ['COEP Tech','VPKBIT, Baramati','VPKBITNashik'];
+    const names = ['COEP Tech','VPKBIT, Baramati','VPKBIT, Nashik'];
     return(
         <Paper component={Box} p={2}>
             <Grid container spacing={2} style={{justifyContent: "center"}}>

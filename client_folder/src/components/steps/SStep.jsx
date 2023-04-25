@@ -1,11 +1,14 @@
 import { Box, Grid, Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from '@material-ui/core'
-import React from 'react'
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { renderText, renderButton, renderInputText, renderText1, renderMultiInputText, renderInputSelect } from '../common/displayComponents'
-export default function Step2({state, handleOnChange, handleNext, handlePrev}){
+import React, { useState } from 'react'
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { renderText, renderButton, renderInputText, renderText1, renderMultiInputText, renderInputSelect, renderDate, RenderDate, MultipleSelect } from '../common/displayComponents'
+const yesterday = dayjs().subtract(1, 'day');
+export default function Step2({state, handleOnChange,handleOnChangeDate, handleNext, handlePrev, handleChangePreferences}){
     return(
         <Paper component={Box} p={2}>
             <Grid container spacing={2} style={{justifyContent: "center"}}>
@@ -45,6 +48,15 @@ export default function Step2({state, handleOnChange, handleNext, handlePrev}){
                 name: "course", 
                 state, 
                 handleOnChange: handleOnChange })}</TableCell>  
+                        </TableRow>
+                        <TableRow>
+                           <TableCell>3</TableCell>
+                           <TableCell><Box mb={2} mt={2} mr={2}>
+          {renderText1({label:"Campus Preferences"})} 
+          </Box></TableCell>
+                           <TableCell>
+                            <MultipleSelect state={state} name1='coursePreference' handleChangePreferences={handleChangePreferences}/>
+                            </TableCell>  
                         </TableRow>
                         <TableRow>
                            <TableCell>4</TableCell>
@@ -166,6 +178,28 @@ export default function Step2({state, handleOnChange, handleNext, handlePrev}){
                 name: "PHnumber", 
                 state, 
                 handleOnChange: handleOnChange })}</TableCell>  
+                        </TableRow>
+                        <TableRow>
+                           <TableCell>14</TableCell>
+                           <TableCell><Box mb={2} mt={2} mr={2}>
+          {renderText1({label:"Date of Birth:"})} 
+          </Box></TableCell>
+                           <TableCell>
+                           <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer
+                components={[
+                    'DatePicker',
+                ]}
+            >   <DemoItem label="">
+                           {renderDate({label:"", 
+                name: "dob", 
+                state, 
+                handleOnChangeDate: handleOnChangeDate })}
+                 </DemoItem>
+                </DemoContainer>
+                </LocalizationProvider>
+                {renderText1({label:`Age:${state.age}`})}
+                            </TableCell>  
                         </TableRow>
                         <TableRow>
                            <TableCell>15</TableCell>

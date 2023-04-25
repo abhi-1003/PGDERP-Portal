@@ -4,16 +4,19 @@ import  PropTypes  from "prop-types";
 import { Styles } from './common/styles';
 import Step1 from './steps/SStep';
 import Step2 from './steps/Step2';
-import Step2b from './steps/Step2b';
-
 import Step3 from './steps/Step3';
+// import Step2b from "./steps/form_table";
 import { renderButton, renderInputText, renderText } from "./common/displayComponents";
 import Finished from "./steps/Finished";
+import { useState } from "react";
+import dayjs from 'dayjs';
+
 class FormComponent extends Component{
     state = {
         data :{
             ID: "",
             course: "",
+            'coursePreference':"",
             lastName:"",
             firstName:"",
             middleName:"",
@@ -26,6 +29,7 @@ class FormComponent extends Component{
             PHname:"",
             PHemail:"",
             PHnumber:"",
+            'dob':"",
             domicileState:"",
             nationality:"",
             InstituteSSC:"",
@@ -34,14 +38,66 @@ class FormComponent extends Component{
             HSCFrom:"",
             SSCTo:"",
             HSCTo:"",
+            SSCmarks:"",
+            HSCmarks:"",
+            Diplomamarks:"",
+            InstituteGrad:"",
+            SpecializationGrad:"",
+            GradFrom:"",
+            GradTo:"",
+            FinalYearMarksGrad:"",
+            AggregateMarksGrad:"",
+            DeadBacklogsGrad:"",
+            AliveBacklogGrad:"",
+            InstitutePostGrad:"",
+            SpecializationPostGrad:"",
+            PostGradFrom:"",
+            PostGradTo:"",
+            FinalYearMarksPostGrad:"",
+            AggregateMarksPostGrad:"",
+            DeadBacklogsPostGrad:"",
+            AliveBacklogPostGrad:""
         },
         errors: {},
         currentStep:0,
+        age:0,
+
     }
     render(){
         const { classes } = this.props;
 
+
+        const handleChangePreferences = (event) => {
+            const {
+              target: { value },
+            } = event;
+            const{data,errors} = this.state;
+            // setPersonName(
+            //   // On autofill we get a stringified value.
+            //   typeof value === 'string' ? value.split(',') : value,
+            // );
+          //   var coursePreference;
+          
+          console.log(value)
+            data['coursePreference']=typeof value === 'string' ? value.split(',') : value;;
+          };
+        
+        const today = dayjs();
+        const handleOnChangeDate=(name,value)=>{
+            const{data,errors} = this.state;
+            // console.log(today.$y - value.$y);
+            this.state.age = today.$y - value.$y;
+            data[name.name] = [value.$D, value.$M, value.$y];
+            // data[target.name] = target.value;
+            // console.log("run")
+            // console.log(name.name);
+            // console.log(value);
+            this.setState({data,errors});
+
+
+        }
         const handleOnChange = ({target}) =>{
+            console.log("handleOnChange");
             const{data,errors} = this.state;
             target.value.length <= 0 ? (errors[target.name] = `${target.name} cannot be an empty field`)
             : (errors[target.name] = "");
@@ -69,10 +125,12 @@ class FormComponent extends Component{
         const getStepItems = (steps) => {
             switch(steps){
                 case 0: 
-                return <Step1  
+                return <Step1 
                 state={this.state}
                 handleOnChange={handleOnChange}
-                handleNext={handleNext}                          
+                handleOnChangeDate={handleOnChangeDate}
+                handleNext={handleNext}
+                handleChangePreferences={handleChangePreferences}  
                 />;
                 case 1: 
                 return <div><Step2 state={this.state}
@@ -88,7 +146,7 @@ class FormComponent extends Component{
                 handleNext={handleNext}
                 handlePrev={handlePrev}/>;
                 case 3:
-                    return <Finished state={this.state.data}/>;
+                return <Finished state={this.state.data}/>;
                 default: 
                 return <Step1  
                 state={this.state}
@@ -115,7 +173,7 @@ class FormComponent extends Component{
                     </Paper>
      
                     <Box component={Paper}>
-                    <form className={classes.form}>                                          
+                    <form className={classes.form} onSubmit={(e)=>e.preventDefault()}>                                          
                         {getStepItems(this.state.currentStep)}
                     </form>
                     </Box>

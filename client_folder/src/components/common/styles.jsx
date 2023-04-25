@@ -1,7 +1,7 @@
 export const Styles = {
     formContainer:{
         width: "100%",
-        height: "98vh",
+        height: "100%",
         display: "flex",
         flexFlow: "row wrap",
         justifyContent: "center",

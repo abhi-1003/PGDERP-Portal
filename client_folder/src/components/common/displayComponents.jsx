@@ -1,84 +1,191 @@
 import { Button, TextField, Typography } from "@material-ui/core";
 import MenuItem from '@material-ui/core/MenuItem';
-export const renderText = ({label, color, align, variant, component}) => (
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { useState } from "react";
+import { Theme, useTheme } from '@material-ui/core/styles';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select, { SelectChangeEvent } from '@material-ui/core/Select';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+    width:'500px'
+    },
+  },
+};
+
+const names = [
+  'COEP Tech',
+  'VPKBIT Baramati',
+  'VPKBIT Nashik',
+];
+
+function getStyles(name, personName, theme) {
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
+export const renderText = ({ label, color, align, variant, component }) => (
     <Typography
-        color={color ? color: "primary"}
-        align={align ? align: "center"}
+        color={color ? color : "primary"}
+        align={align ? align : "center"}
         variant={variant ? variant : "h6"}>
-            {label}
+        {label}
     </Typography>
 );
-export const renderText1 = ({label, color, align, variant, component}) => (
+export const renderText1 = ({ label, color, align, variant, component }) => (
     <Typography
-        color={color ? color: "black"}
-        align={align ? align: "center"}
+        color={color ? color : "black"}
+        align={align ? align : "center"}
         variant={variant ? variant : "h8"}>
-            {label}
+        {label}
     </Typography>
 );
 
-export const  renderInputText= ({label, name,color, state, handleOnChange}) => {
+export const renderInputText = ({ label, name, color, state, handleOnChange }) => {
     const { data, errors } = state;
-    return(
-        <TextField 
-        label={label}
-        color={color ? color:"primary"} 
-        variant="outlined" 
-        name={name} 
-        fullWidth={true} 
-        size="small" 
-        value={data[name]} 
-        error={errors[name]? true: false}
-        helperText={errors[name]}
-        onChange={handleOnChange} />
+    return (
+        <TextField
+            label={label}
+            color={color ? color : "primary"}
+            variant="outlined"
+            name={name}
+            fullWidth={true}
+            size="small"
+            value={data[name]}
+            error={errors[name] ? true : false}
+            helperText={errors[name]}
+            onChange={handleOnChange} />
     )
 };
-export const  renderInputSelect= ({label, name,color, state, handleOnChange, arr}) => {
+export const renderInputSelect = ({ label, name, color, state, handleOnChange, arr }) => {
     const { data, errors } = state;
-    return(
-        <TextField 
-        label={label}
-        select
-        color={color ? color:"primary"} 
-        variant="outlined" 
-        name={name} 
-        fullWidth={true} 
-        size="small" 
-        value={data[name]} 
-        error={errors[name]? true: false}
-        helperText={errors[name]}
-        onChange={handleOnChange}>
+    return (
+        <TextField
+            label={label}
+            select
+            color={color ? color : "primary"}
+            variant="outlined"
+            name={name}
+            fullWidth={true}
+            size="small"
+            value={data[name]}
+            error={errors[name] ? true : false}
+            helperText={errors[name]}
+            onChange={handleOnChange}>
             {arr.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
+                <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                </MenuItem>
+            ))}
         </TextField>
     )
 };
-export const  renderMultiInputText= ({label, name,color, state, handleOnChange}) => {
+export const renderMultiInputText = ({ label, name, color, state, handleOnChange }) => {
     const { data, errors } = state;
-    return(
-        <TextField 
-        label={label}
-        multiline
-        color={color ? color:"primary"} 
-        variant="outlined" 
-        name={name} 
-        fullWidth={true} 
-        size="small" 
-        value={data[name]} 
-        error={errors[name]? true: false}
-        helperText={errors[name]}
-        onChange={handleOnChange} />
+    return (
+        <TextField
+            label={label}
+            multiline
+            color={color ? color : "primary"}
+            variant="outlined"
+            name={name}
+            fullWidth={true}
+            size="small"
+            value={data[name]}
+            error={errors[name] ? true : false}
+            helperText={errors[name]}
+            onChange={handleOnChange} />
+    )
+};
+
+export const renderButton = ({ label, variant, color, handleOnClick }) => (<Button
+    variant={variant ? variant : "outlined"}
+    color={color ? color : "primary"}
+    size='small'
+    style={{marginTop:"5px"}}
+    onClick={handleOnClick}>
+    {label}
+</Button>
+);
+
+
+export const renderDate = ({ label, name, state, handleOnChangeDate }) => {
+    const { data, errors } = state;
+    const yesterday = dayjs().subtract(1, 'day');
+    return (
+        
+                    <DatePicker
+                        defaultValue={yesterday}
+                        disableFuture
+                        label={label}
+                        // views={['year', 'month', 'day']}
+                        name={name}
+                        value={data[name]}
+                        // date={data[name].$d}
+                        onChange={(value)=>handleOnChangeDate({name},value)}
+                        // onChange={(value)=>console.log({value})}
+                    />
+               
     )
 };   
 
-export const renderButton = ({label, variant, color, handleOnClick}) => (<Button
-variant={variant ? variant : "outlined"}
-color={color ? color: "primary"}
-size = 'small'
-onClick={handleOnClick}>
-{label}
-</Button>
-);
+export const MultipleSelect = ({state, name1, handleChangePreferences}) => {
+    const theme = useTheme();
+    const [personName, setPersonName] = useState([]);
+    const { data, errors } = state;
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+      setPersonName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+
+      );
+
+    };
+  
+    return (
+      <div>
+        <FormControl sx={{ m: 1, width: '500px' }}>
+          <InputLabel id="demo-multiple-name-label"></InputLabel>
+          <Select
+            labelId="demo-multiple-name-label"
+            id="demo-multiple-name"
+            multiple
+            name1="campusPreferences"
+            value={personName}
+            onChange={(value)=>{handleChange(value);handleChangePreferences(value)}}
+            input={<OutlinedInput label="Name" />}
+            MenuProps={MenuProps}
+            style={{minWidth:'300px'}}
+          >
+            {names.map((name) => (
+              <MenuItem
+                key={name}
+                value={name}
+                style={getStyles(name, personName, theme)}
+              >
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+    );
+  }
