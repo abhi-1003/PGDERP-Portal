@@ -8,8 +8,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
 
+// Routers
+const studentRouter = require("./routes/student");
+
 //Connect to mongodb
 connectDB();
+
+app.use("/students", studentRouter);
 
 app.get("/", (req, res) => {
   res.send("this is pgderp portal");
