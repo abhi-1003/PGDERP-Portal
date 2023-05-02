@@ -40,7 +40,7 @@ exports.registerStudent = (req, res) => {
           .save()
           .then((user) => {
             req.body.userId = user._id;
-            return "Successfully Registered";
+            res.send({ message: "Successfully Registered" });
           })
           .catch((err) =>
             res.status(400).json({ error: err.message })
