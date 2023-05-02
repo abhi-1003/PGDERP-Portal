@@ -1,10 +1,8 @@
-import './App.css';
-import FormComponent from './components/formComponent';
+import "./App.css";
+import FormComponent from "./components/formComponent";
 
 function App() {
-  return(
-    <FormComponent/>
-  )
+	return <FormComponent />;
 }
 
 export default App;
