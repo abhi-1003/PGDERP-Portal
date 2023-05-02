@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm, Form } from "./Form";
 import Input from "./Input";
-// import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../config";
 import axios from "axios";
 
 const theme = createTheme();
@@ -22,8 +22,6 @@ const initialFValues = {
   cpassword: "",
 };
 export default function UserRegister() {
-  const [loading, setLoading] = useState(false);
-
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     for (const key in fieldValues) {
@@ -62,19 +60,15 @@ export default function UserRegister() {
         password: values.password,
       };
       console.log(data);
-    //   const url = BACKEND_URL + "/students/register";
-    //   setLoading(true);
-    //   axios
-    //     .post(url, data)
-    //     .then((res) => {
-    //       setLoading(false);
-    //       alert("Registration Successful, Please verify email");
-    //       history.push("/candidate-otp", { userId: res.data.userId });
-    //     })
-    //     .catch((err) => {
-    //       setLoading(false);
-    //       console.log(err.response || err);
-    //     });
+      const url = BACKEND_URL + "/students/userRegister";
+      axios
+        .post(url, data)
+        .then((res) => {
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          console.log(err.response || err);
+        });
     }
   };
 

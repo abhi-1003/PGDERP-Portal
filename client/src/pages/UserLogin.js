@@ -11,6 +11,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import NavBar from "../components/Navbar/Navbar";
 import { useForm, Form } from "./Form";
 import Input from "./Input";
+import { BACKEND_URL } from "../config";
+import axios from "axios";
 
 const theme = createTheme();
 const initialFValues = {
@@ -18,7 +20,7 @@ const initialFValues = {
   password: "",
 };
 export default function UserLogin() {
-    // let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -48,25 +50,18 @@ export default function UserLogin() {
         password: values.password,
       };
       console.log(data);
-    //   const url = BACKEND_URL + "/students/login";
-    //   setLoading(true);
-    //   axios
-    //     .post(url, data)
-    //     .then((res) => {
-    //       setLoading(false);
-    //       if (res.data.otp_error) {
-    //         navigate("/candidate-otp", { userId: res.data.userId });
-    //       } else {
-    //         localStorage.setItem("phd-website-jwt", res.data.token);
-    //         localStorage.setItem("phd-website-role", "student");
-    //         navigate("/candidate");
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       setLoading(false);
-    //       alert("Invalid credentials. Login again");
-    //       console.log(err.response || err);
-    //     });
+      const url = BACKEND_URL + "/students/userLogin";
+      axios
+        .post(url, data)
+        .then((res) => {
+          alert(res.data.message);
+          localStorage.setItem("pgderp-website-jwt", res.data.token);
+          localStorage.setItem("pgderp-website-role", "student");
+        })
+        .catch((err) => {
+          alert("Invalid credentials. Login again");
+          console.log(err.response || err);
+        });
     }
   };
   return (
@@ -115,7 +110,11 @@ export default function UserLogin() {
                       type="submit"
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
-                      style={{ width: "100%", marginLeft: "2%", background: "#012d5e" }}
+                      style={{
+                        width: "100%",
+                        marginLeft: "2%",
+                        background: "#012d5e",
+                      }}
                     >
                       Login
                     </Button>
