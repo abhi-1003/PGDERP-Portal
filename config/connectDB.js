@@ -1,4 +1,4 @@
-mongoURI = 'mongodb://localhost:27017/PGDERP-DB';
+const { mongoURI } = require("./configKeys");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
 
