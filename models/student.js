@@ -1,6 +1,21 @@
 const { model, Schema } = require("mongoose");
 
+const {
+  reqString,
+  email,
+  preSaveHashPassword,
+} = require("./schemaFields");
+
+const verificationField = {
+  type: String,
+  default: "pending",
+  enum: ["pending", "verified", "modification required"],
+}
+
 const personalInfo = {
+    name: {type: String},
+    email: {type: String},
+    mobile: { type: String },
     ID: {type: Number, required: require},
     course: {type: String, required: require},
     coursepreferences:{type: Array, required: require},
@@ -42,9 +57,12 @@ const personalInfo = {
     totalLiveBacklogs: {type: Number},
   };
   
-  // TODO : How to store verification data ? (need more info about requirements)
   const StudentSchema = Schema(
     {
+      name: reqString,
+      email: email,
+      password: reqString,
+      mobile: { type: String },
       personalInfo: personalInfo,
       academics: academics,
       academicsUGPG: academicsUGPG,
@@ -52,5 +70,8 @@ const personalInfo = {
     },
     { timestamps: true }
   );
-  const candidate = model("student", StudentSchema, "students");
-  module.exports = candidate;
+
+StudentSchema.pre("save", preSaveHashPassword);
+
+const Student = model("student", StudentSchema, "students");
+module.exports = Student;
