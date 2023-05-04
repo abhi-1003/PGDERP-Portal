@@ -21,7 +21,6 @@ import { nanoid } from "nanoid";
 // import "./form_table.css";
 import data from "./data.json";
 import ReadOnlyRow from "../ReadOnlyRow";
-import EditableRow from "../EditableRow";
 
 const Step2b = () => {
 	const [contacts, setContacts] = useState(data);
@@ -55,6 +54,7 @@ const Step2b = () => {
 		newFormData[fieldName] = fieldValue;
 
 		setAddFormData(newFormData);
+		console.log(contacts);
 	};
 
 	const handleEditFormChange = (event) => {
@@ -90,6 +90,8 @@ const Step2b = () => {
 
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
+		console.log(contacts)
+		
 	};
 
 	const handleEditFormSubmit = (event) => {

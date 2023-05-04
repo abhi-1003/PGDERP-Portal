@@ -71,6 +71,8 @@ class FormComponent extends Component {
 			AggregateMarksPostGrad: "",
 			DeadBacklogsPostGrad: "",
 			AliveBacklogPostGrad: "",
+			otherCourses:[],
+			professionalExperience:[],
 		},
 		errors: {},
 		currentStep: 0,
