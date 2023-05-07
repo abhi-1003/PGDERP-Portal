@@ -13,7 +13,7 @@ import React, { useState, Fragment } from "react";
 import { renderText, renderButton } from "../common/displayComponents";
 import { nanoid } from "nanoid";
 import data from "./data.json";
-import ReadOnlyRow from "../ReadOnlyRow";
+import ReadOnlyRowExp from "../ReadOnlyRowExp";
 
 export default function Step3({
 	state,
@@ -46,15 +46,16 @@ export default function Step3({
 		// periodFrom: ""
 		// periodFrom: ""
 		// workNature: ""
+
 		const newContact = {
 			id: nanoid(),
-			companyName: addFormData.courseName,
+			companyName: addFormData.companyName,
 			rankDesignation: addFormData.rankDesignation,
 			periodFrom: addFormData.periodFrom,
 			periodTo: addFormData.periodTo,
 			workNature: addFormData.workNature,
 		};
-
+console.log(newContact.companyName);
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
 	};
@@ -129,7 +130,7 @@ export default function Step3({
                     handleDeleteClick={handleDeleteClick}
                   />
                 )} */}
-							<ReadOnlyRow
+							<ReadOnlyRowExp
 								contact={contact}
 								handleEditClick={handleEditClick}
 								handleDeleteClick={handleDeleteClick}

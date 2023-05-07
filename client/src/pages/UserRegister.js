@@ -113,7 +113,7 @@ export default function UserRegister() {
                 />
                 <Input
                   name="mobile"
-                  label="mobile*"
+                  label="Mobile*"
                   value={values.mobile}
                   onChange={handleInputChange}
                   error={errors.mobile}
