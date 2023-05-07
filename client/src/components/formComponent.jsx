@@ -78,7 +78,7 @@ class FormComponent extends Component {
             professionalExperience: [],
         },
         errors: {},
-        currentStep: 1,
+        currentStep: 0,
         age: 0,
         HSCFilled: false,
         DiplomaFilled: false,
