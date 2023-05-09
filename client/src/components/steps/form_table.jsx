@@ -1,155 +1,173 @@
-import {TextField, Box, Grid, Paper, Table, TableBody, TableHead, TableRow, TableCell, TableContainer } from '@material-ui/core'
-import React from 'react'
-import { renderText, renderButton, renderInputText } from '../common/displayComponents'
+import {
+    TextField,
+    Box,
+    Grid,
+    Paper,
+    Table,
+    TableBody,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableContainer,
+} from "@material-ui/core";
+import React from "react";
+import {
+    renderText,
+    renderButton,
+    renderInputText,
+} from "../common/displayComponents";
 import { useState, Fragment } from "react";
 import { nanoid } from "nanoid";
 // import "./form_table.css";
 import data from "./data.json";
 import ReadOnlyRow from "../ReadOnlyRow";
-import EditableRow from "../EditableRow";
 
 const Step2b = () => {
-  const [contacts, setContacts] = useState(data);
-  const [addFormData, setAddFormData] = useState({
-    courseName: "",
-    uniName: "",
-    specialization: "",
-    periodFrom: "",
-    periodTo:"",
-    grade:"",
-  });
+    const [contacts, setContacts] = useState(data);
+    const [addFormData, setAddFormData] = useState({
+        courseName: "",
+        uniName: "",
+        specialization: "",
+        periodFrom: "",
+        periodTo: "",
+        grade: "",
+    });
 
-  const [editFormData, setEditFormData] = useState({
-    courseName: "",
-    uniName: "",
-    specialization: "",
-    periodFrom: "",
-    periodTo:"",
-    grade:"",
-  });
+    const [editFormData, setEditFormData] = useState({
+        courseName: "",
+        uniName: "",
+        specialization: "",
+        periodFrom: "",
+        periodTo: "",
+        grade: "",
+    });
 
-  const [editContactId, setEditContactId] = useState(null);
+    const [editContactId, setEditContactId] = useState(null);
 
-  const handleAddFormChange = (event) => {
-    event.preventDefault();
+    const handleAddFormChange = (event) => {
+        event.preventDefault();
 
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+        const fieldName = event.target.getAttribute("name");
+        const fieldValue = event.target.value;
 
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
+        const newFormData = { ...addFormData };
+        newFormData[fieldName] = fieldValue;
 
-    setAddFormData(newFormData);
-  };
-
-  const handleEditFormChange = (event) => {
-    event.preventDefault();
-
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...editFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setEditFormData(newFormData);
-  };
-
-  const handleAddFormSubmit = (event) => {
-    event.preventDefault();
-    console.log("run")
-    // courseName: "",
-    // uniName: "",
-    // specialization: "",
-    // periodFrom: "",
-    // periodTo:"",
-    // grade:"",
-    const newContact = {
-      id: nanoid(),
-      courseName: addFormData.courseName,
-      uniName: addFormData.uniName,
-      specialization: addFormData.specialization,
-      periodFrom: addFormData.periodFrom,
-      periodTo: addFormData.periodTo,
-      grade: addFormData.grade,
+        setAddFormData(newFormData);
+        console.log(contacts);
     };
 
-    const newContacts = [...contacts, newContact];
-    setContacts(newContacts);
-  };
+    const handleEditFormChange = (event) => {
+        event.preventDefault();
 
-  const handleEditFormSubmit = (event) => {
-    event.preventDefault();
+        const fieldName = event.target.getAttribute("name");
+        const fieldValue = event.target.value;
 
-    const editedContact = {
-      id: editContactId,
-      courseName: editFormData.courseName,
-      uniName: editFormData.uniName,
-      specialization: editFormData.specialization,
-      periodFrom: editFormData.periodFrom,
-      periodTo: editFormData.periodTo,
-      grade: editFormData.grade,
+        const newFormData = { ...editFormData };
+        newFormData[fieldName] = fieldValue;
+
+        setEditFormData(newFormData);
     };
 
-    const newContacts = [...contacts];
+    const handleAddFormSubmit = (event) => {
+        event.preventDefault();
+        console.log("run");
+        // courseName: "",
+        // uniName: "",
+        // specialization: "",
+        // periodFrom: "",
+        // periodTo:"",
+        // grade:"",
+        const newContact = {
+            id: nanoid(),
+            courseName: addFormData.courseName,
+            uniName: addFormData.uniName,
+            specialization: addFormData.specialization,
+            periodFrom: addFormData.periodFrom,
+            periodTo: addFormData.periodTo,
+            grade: addFormData.grade,
+        };
 
-    const index = contacts.findIndex((contact) => contact.id === editContactId);
-
-    newContacts[index] = editedContact;
-
-    setContacts(newContacts);
-    setEditContactId(null);
-  };
-
-  const handleEditClick = (event, contact) => {
-    event.preventDefault();
-    setEditContactId(contact.id);
-
-    const formValues = {
-        courseName: contact.courseName,
-        uniName: contact.uniName,
-        specialization: contact.specialization,
-        periodFrom: contact.periodFrom,
-        periodTo: contact.periodTo,
-        grade: contact.grade,
+        const newContacts = [...contacts, newContact];
+        setContacts(newContacts);
+        console.log(contacts);
     };
 
-    setEditFormData(formValues);
-  };
+    const handleEditFormSubmit = (event) => {
+        event.preventDefault();
 
-  const handleCancelClick = () => {
-    setEditContactId(null);
-  };
+        const editedContact = {
+            id: editContactId,
+            courseName: editFormData.courseName,
+            uniName: editFormData.uniName,
+            specialization: editFormData.specialization,
+            periodFrom: editFormData.periodFrom,
+            periodTo: editFormData.periodTo,
+            grade: editFormData.grade,
+        };
 
-  const handleDeleteClick = (contactId) => {
-    const newContacts = [...contacts];
+        const newContacts = [...contacts];
 
-    const index = contacts.findIndex((contact) => contact.id === contactId);
+        const index = contacts.findIndex(
+            (contact) => contact.id === editContactId
+        );
 
-    newContacts.splice(index, 1);
+        newContacts[index] = editedContact;
 
-    setContacts(newContacts);
-  };
+        setContacts(newContacts);
+        setEditContactId(null);
+    };
 
-  return (
-    <div className="app-container">
-      <form onSubmit={handleEditFormSubmit}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell>Name of University</TableCell>
-              <TableCell>Specialization</TableCell>
-              <TableCell>From</TableCell>
-              <TableCell>To</TableCell>
-              <TableCell>Grade/Marks(%)</TableCell>
+    const handleEditClick = (event, contact) => {
+        event.preventDefault();
+        setEditContactId(contact.id);
 
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {contacts.map((contact) => (
-              <Fragment>
-                {/* {editContactId === contact.id ? (
+        const formValues = {
+            courseName: contact.courseName,
+            uniName: contact.uniName,
+            specialization: contact.specialization,
+            periodFrom: contact.periodFrom,
+            periodTo: contact.periodTo,
+            grade: contact.grade,
+        };
+
+        setEditFormData(formValues);
+    };
+
+    const handleCancelClick = () => {
+        setEditContactId(null);
+    };
+
+    const handleDeleteClick = (contactId) => {
+        const newContacts = [...contacts];
+
+        const index = contacts.findIndex((contact) => contact.id === contactId);
+
+        newContacts.splice(index, 1);
+
+        setContacts(newContacts);
+    };
+
+    return (
+        <div className="app-container">
+            <form onSubmit={handleEditFormSubmit}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name of Course Name</TableCell>
+                            <TableCell>Name of University</TableCell>
+                            <TableCell>Specialization</TableCell>
+                            <TableCell>Period From</TableCell>
+                            <TableCell>Period To</TableCell>
+                            <TableCell>Grade/Marks(%)</TableCell>
+
+                            <TableCell>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {contacts.map((contact) => (
+                            <Fragment>
+                                {/* {editContactId === contact.id ? (
                   <EditableRow
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
@@ -163,90 +181,102 @@ const Step2b = () => {
                     handleDeleteClick={handleDeleteClick}
                   />
                 )} */}
-                <ReadOnlyRow
-                    contact={contact}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-              </Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </form>
-      <Paper component={Box} p={2}>
-      <h3>Add Course</h3>
-      <Grid container spacing={2} p={2}>
-      <form>
-        {/* <input
+                                <ReadOnlyRow
+                                    contact={contact}
+                                    handleEditClick={handleEditClick}
+                                    handleDeleteClick={handleDeleteClick}
+                                />
+                            </Fragment>
+                        ))}
+                    </TableBody>
+                </Table>
+            </form>
+            <Paper component={Box} p={2}>
+                <Grid container spacing={2} p={2}>
+                    <form
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            overflow: "scroll",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        {/* <input
           type="text"
           name="fullName"
           required="required"
           placeholder="Enter a name..."
           onChange={handleAddFormChange}
         /> */}
-         {/* fullName: "",
+                        {/* fullName: "",
     address: "",
     phoneNumber: "",
     email: "", */}
-        {/* {renderInputText({label:"Enter", 
+                        {/* {renderInputText({label:"Enter", 
                 name: "FullName",                  
                 handleOnChange: handleAddFormChange })} */}
-                <TextField
-            label="Enter Course Name"
-            // color={color ? color : "primary"}
-            variant="outlined"
-            name="courseName"
-            // fullWidth={true}
-            size="small"
-            onChange={handleAddFormChange} 
-            
-            style={{margin:'1px'}}/>
-            <TextField
-            label="Enter university Name"
-            // color={color ? color : "primary"}
-            variant="outlined"
-            name="uniName"
-            // fullWidth={true}
-            size="small"
-            style={{margin:'1px'}}
-            onChange={handleAddFormChange} />
-            <TextField
-            label="Specialization"
-            // color={color ? color : "primary"}
-            variant="outlined"
-            name="specialization"
-            // fullWidth={true}
-            size="small"
-            style={{margin:'1px'}}
-            onChange={handleAddFormChange} />
-            <TextField
-            label="Period From"
-            // color={color ? color : "primary"}
-            variant="outlined"
-            name="periodFrom"
-            // fullWidth={true}
-            size="small"
-            style={{margin:'1px'}}
-            onChange={handleAddFormChange} />
-            <TextField
-            label="Period To"
-            // color={color ? color : "primary"}
-            variant="outlined"
-            name="periodTo"
-            // fullWidth={true}
-            size="small"
-            style={{margin:'1px'}}
-            onChange={handleAddFormChange} />
-            <TextField
-            label="Grade"
-            // color={color ? color : "primary"}
-            variant="outlined"
-            name="grade"
-            // fullWidth={true}
-            size="small"
-            style={{margin:'1px'}}
-            onChange={handleAddFormChange} />
-        {/* <input
+                        <TextField
+                            label="Course Name"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="courseName"
+                            // fullWidth={true}
+                            size="small"
+                            onChange={handleAddFormChange}
+                            style={{ margin: "1px" }}
+                        />
+                        <TextField
+                            label="University Name"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="uniName"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Specialization"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="specialization"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Period From"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="periodFrom"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Period To"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="periodTo"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Grade"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="grade"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        {/* <input
           type="text"
           name="address"
           required="required"
@@ -267,13 +297,16 @@ const Step2b = () => {
           placeholder="Enter an email..."
           onChange={handleAddFormChange}
         /> */}
-        
-        {renderButton({label:"Add", handleOnClick: handleAddFormSubmit})}        
-      </form>
-      </Grid>
-      </Paper>
-    </div>
-  );
+
+                        {renderButton({
+                            label: "Add",
+                            handleOnClick: handleAddFormSubmit,
+                        })}
+                    </form>
+                </Grid>
+            </Paper>
+        </div>
+    );
 };
 
 export default Step2b;

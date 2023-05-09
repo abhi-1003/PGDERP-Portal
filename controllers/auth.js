@@ -3,6 +3,7 @@ const { compare } = require("bcryptjs");
 const axios = require("axios");
 const roleToModel = require("./roles");
 const Student = require("../models/student");
+const Counter = require("../models/counter");
 
 const generateToken = (user) => {
   // Create token
@@ -49,6 +50,27 @@ exports.registerStudent = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: err.message });
     });
+
+    const course = user.personalInfo.course;
+    Counter.findOne({ course: course }, (err, counter) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ err });
+      }
+      counter.index = counter.index + 1;
+      const ind = counter.index.toString().padStart(3, "0");
+      const appId = `PGDERP${counter.code}${ind}`;
+      user.applicationId = appId;
+      Promise.all([user.save(), counter.save()])
+        .then(() => {
+          res.json({ success: "true", applicationId: appId });
+        })
+        .catch((e) => {
+          console.log(e);
+          return res.status(400).json({ err });
+        });
+    });
+    
 };
 
 exports.loginStudent = (req, res) => {

@@ -113,7 +113,7 @@ export default function UserRegister() {
                 />
                 <Input
                   name="mobile"
-                  label="mobile*"
+                  label="Mobile*"
                   value={values.mobile}
                   onChange={handleInputChange}
                   error={errors.mobile}
@@ -134,7 +134,7 @@ export default function UserRegister() {
                   onChange={handleInputChange}
                   error={errors.cpassword}
                 />
-                <Grid item xs={12}>
+                <Grid item xs={12}> 
                   <Button
                     type="submit"
                     variant="contained"

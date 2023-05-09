@@ -13,9 +13,6 @@ const verificationField = {
 }
 
 const personalInfo = {
-    name: {type: String},
-    email: {type: String},
-    mobile: { type: String },
     ID: {type: Number},
     course: {type: String},
     coursepreferences:{type: Array},
@@ -37,25 +34,45 @@ const personalInfo = {
   };
   
   const academics = {
-    examination: {type: String},
-    institute: { type: String },
-    datefrom: {type: String},
-    dateto: {type: String},
-    percentageMarks: { type: Number },
+    examinationSSC: {type: String},
+    instituteSSC: { type: String },
+    datefromSSC: {type: String},
+    datetoSSC: {type: String},
+    percentageMarksSSC: { type: Number },
+    examinationHSC: {type: String},
+    instituteHSC: { type: String },
+    datefromHSC: {type: String},
+    datetoHSC: {type: String},
+    percentageMarksHSC: { type: Number },
+    examinationDiploma: {type: String},
+    instituteDiploma: { type: String },
+    datefromDiploma: {type: String},
+    datetoDiploma: {type: String},
+    percentageMarksDiploma: { type: Number },
   };
   
   const academicsUGPG = {
-    examination: {type: String},
-    institute: { type: String },
-    specialization: { type: String },
-    datefrom: {type: String},
-    dateto: {type: String},
-    marksFinalYear: { type: Number },
-    totalAggregate: { type: Number },
-    percentageMarks: { type: Number },
-    totalDeadBacklogs: {type: Number},
-    totalLiveBacklogs: {type: Number},
-  };
+    examinationUG: {type: String},
+    instituteUG: { type: String },
+    specializationUG: { type: String },
+    datefromUG: {type: String},
+    datetoUG: {type: String},
+    marksFinalYearUG: { type: Number },
+    totalAggregateUG: { type: Number },
+    percentageMarksUG: { type: Number },
+    totalDeadBacklogsUG: {type: Number},
+    totalLiveBacklogsUG: {type: Number},
+    examinationPG: {type: String},
+    institutePG: { type: String },
+    specializationPG: { type: String },
+    datefromPG: {type: String},
+    datetoPG: {type: String},
+    marksFinalYearPG: { type: Number },
+    totalAggregatePG: { type: Number },
+    percentageMarksPG: { type: Number },
+    totalDeadBacklogsPG: {type: Number},
+    totalLiveBacklogsPG: {type: Number},
+    };
   
   const StudentSchema = Schema(
     {
@@ -67,6 +84,7 @@ const personalInfo = {
       academics: academics,
       academicsUGPG: academicsUGPG,
       othercourses: {type: Array},
+      professionalExperience: {type: Array},
       verificationField: verificationField,
     },
     { timestamps: true }

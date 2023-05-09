@@ -10,6 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import NavBar from "../components/Navbar/Navbar";
 import { useForm, Form } from "./Form";
+import { Navigate, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
@@ -21,7 +22,7 @@ const initialFValues = {
 };
 export default function UserLogin() {
   // let navigate = useNavigate();
-
+  const navigate = useNavigate();
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     if ("email" in fieldValues) {
@@ -62,6 +63,7 @@ export default function UserLogin() {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
+        navigate("/form");
     }
   };
   return (
