@@ -1,19 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { Link } from "react-router-dom";
-const data = [
-    {
-        Sr: "1",
-        Name: "A B C",
-        Status: "Accepted"
-    },
-    {
-        Sr: "2",
-        Name: "P Q R",
-        Status: "Pending"
-    }
-]
+import { BACKEND_URL } from "../../config";
+import axios from "axios";
+
 
 const useStyles = makeStyles((theme) => ({
     homeContent: {
@@ -40,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1rem',
         background: "#05AAE2",
         paddingLeft: theme.spacing(3),
-        color:'white',
+        color: 'white',
     },
     tableCell: {
         paddingLeft: theme.spacing(3),
@@ -49,6 +40,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function HomeContent() {
+    const url = BACKEND_URL + "/students/applicants";
+    axios.get(url)
+    const [newdata, setNewdata] = useState([]);
+    useEffect(() => {
+        axios.get(url)
+            .then(response => {
+                console.log(response.data); // log the response data to the console
+                setNewdata(response.data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
     const classes = useStyles();
 
     return (
@@ -64,15 +69,14 @@ function HomeContent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((data) => {
+                        {newdata.map((data,index) => {
                             return (
-                                
-                                    <TableRow>
-                                        <TableCell className={classes.tableCell} width="10%">{data.Sr}</TableCell>
-                                        <TableCell className={classes.tableCell} width="70%"><Link to='/coordinator/application/{data.SR}' style={{textDecoration:'none', color:'black'}}>{data.Name}</Link></TableCell>
-                                        <TableCell className={classes.tableCell} width="20%"><Link to='/coordinator/application/{data.SR}' style={{textDecoration:'none', color:'black'}}>{data.Status}</Link></TableCell>
-                                    </TableRow>
-                                
+                                <TableRow>
+                                    <TableCell className={classes.tableCell} width="10%">{index+1}</TableCell>
+                                    <TableCell className={classes.tableCell} width="70%"><Link to={`/coordinator/application/${data._id}`} style={{ textDecoration: 'none', color: 'black' }}>{data.name}</Link></TableCell>
+                                    <TableCell className={classes.tableCell} width="20%"><Link to={`/coordinator/application/${data._id}`} style={{ textDecoration: 'none', color: 'black' }}>{data.verificationField}</Link></TableCell>
+                                </TableRow>
+
                             )
                         })
                         }

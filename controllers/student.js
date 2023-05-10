@@ -61,6 +61,44 @@ exports.personalDetails = async(req, res) => {
     }
 
   };
+
+  exports.getApplicantsNames = async (req, res) => {
+    // const email = req.query.email;
+    const user = await Student.find().exec();
+    try {
+      console.log(user);
+      return res.json(user);
+    } catch (error) {
+      res.status(400).json({ error: "request body contains invalid data!!" });
+      res.status(400).json(console.log(error));
+    }
+  };
+
+  exports.getPersonalDetails = async (req, res) => {
+    const _id = req.query.id;
+    const user = await Student.find({_id}).exec();
+    try {
+      console.log(user);
+      return res.json(user);
+    } catch (error) {
+      res.status(400).json({ error: "request body contains invalid data!!" });
+      res.status(400).json(console.log(error));
+    }
+  };
+
+  // exports.getAcademicDetails = async (req, res) => {
+  //   const _id = req.query.id;
+  //   const user = await Student.find(_id).exec();
+  //   try {
+  //     console.log(user);
+  //     return res.json(user);
+  //   } catch (error) {
+  //     res.status(400).json({ error: "request body contains invalid data!!" });
+  //     res.status(400).json(console.log(error));
+  //   }
+  // };
+
+
 //sample data:
 //   {"otherCourses":["pgderp-2","2021","2022","98"],"examinationSSC":"SSC","instituteSSC":"DAV","datefromSSC":"2017","datetoSSC":"2019","percentageMarksSSC":"97","examinationHSC":"HSC","instituteHSC":"DAV","datefromHSC":"2019","datetoHSC":"2021","percentageMarksHSC":"99","examinationDiploma":"Diploma","instituteDiploma":"DAV2","datefromDiploma":"2019","datetoDiploma":"2022","percentageMarksDiploma":"98","examinationUG":"UG","instituteUG":"COEP","specializationUG":"CSE","datefromUG":"2021","datetoUG":"2025","marksFinalYearUG":"9","totalAggregateUG":"10","percentageMarksUG":"9","totalDeadBacklogsUG":"0","totalLiveBacklogsUG":"0","examinationPG":"PG","institutePG":"MIT","specializationPG":"CSE","datefromPG":"2025","datetoPG":"2026","marksFinalYearPG":"9","totalAggregatePG":"9","percentageMarksPG":"10","totalDeadBacklogsPG":"0","totalLiveBacklogsPG":"0"}
   exports.academicDetails = async(req, res) => {
@@ -148,6 +186,21 @@ exports.personalDetails = async(req, res) => {
           res.status(400).json({ error: "request body contains invalid data" })
         }
 
+  };
+
+  exports.getAcademicDetails = async (req, res) => {
+    // const email = "prernat20.comp@coeptech.ac.in";
+    const email = req.query.email;
+    const user = await Student.findOne({ email }).exec();
+    try {
+      if (user) {
+        return res.json(user.academics);
+      } else {
+        return res.json({ error: "no user found" });
+      }
+    } catch (error) {
+      return res.status(400).json({ error: "request failed" });
+    }
   };
 //Sample Data:
 //{"professionalDetails":["Google","2025","2027","CEO"]} 

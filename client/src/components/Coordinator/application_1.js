@@ -1,7 +1,54 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { BACKEND_URL } from "../../config";
+import axios from "axios";
 
+const data = {
+    ID: "123",
+    course: "Comp",
+    'coursePreference': ['Pune', 'Baramati', 'Nashik'],
+    lastName: "XYZ",
+    firstName: "ABC",
+    middleName: "PQR",
+    Address: "Pune",
+    permanentAddress: "",
+    email: "",
+    gender: "",
+    phyDis: "",
+    number: "",
+    PHname: "",
+    PHemail: "",
+    PHnumber: "",
+    'dob': '17-Dec-1998',
+    domicileState: "",
+    nationality: "",
+    InstituteSSC: "",
+    InstituteHSC: "",
+    SSCFrom: "",
+    HSCFrom: "",
+    SSCTo: "",
+    HSCTo: "",
+    SSCmarks: "",
+    HSCmarks: "",
+    Diplomamarks: "",
+    InstituteGrad: "",
+    SpecializationGrad: "",
+    GradFrom: "",
+    GradTo: "",
+    FinalYearMarksGrad: "",
+    AggregateMarksGrad: "",
+    DeadBacklogsGrad: "",
+    AliveBacklogGrad: "",
+    InstitutePostGrad: "",
+    SpecializationPostGrad: "",
+    PostGradFrom: "",
+    PostGradTo: "",
+    FinalYearMarksPostGrad: "",
+    AggregateMarksPostGrad: "",
+    DeadBacklogsPostGrad: "",
+    AliveBacklogPostGrad: ""
+  }
 
 const useStyles = makeStyles((theme) => ({
     homeContent: {
@@ -37,7 +84,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Application1(props) {
-    const {data}=props
+    const [newdata, setData] = useState({});
+    const id=props.data;
+    console.log("id",id)
+    const url = BACKEND_URL + `/students/personalDetails?id=${id}`;
+    console.log(url);
+    useEffect(() => {
+      
+        axios
+          .get(url)
+          .then((response) => {
+            setData(response.data);
+            console.log("newdata", newdata);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, [url]);
+
     const classes = useStyles();
 
     function calculateAge(dob) {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import Application1 from './application_1';
@@ -53,19 +54,7 @@ const data = {
 }
 
 
-const getStepContent = (step) => {
-  switch (step) {
-    case 0:
-      return <Application1 data={data} />;
-    case 1:
-      return <Application2 data={data} />;
-    case 2:
-      return <Application3 data={data} />;
-    case 3:
-      return <Application4 data={data} />;
-    default:
-  }
-};
+
 
 const useStyles = makeStyles((theme) => ({
   control_buttons: {
@@ -76,7 +65,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Application() {
+  function Application() {
+    let { id } = useParams();
+    const getStepContent = (step) => {
+      switch (step) {
+        case 0:
+          return <Application1 data={id} />;
+        case 1:
+          return <Application2 data={data} />;
+        case 2:
+          return <Application3 data={data} />;
+        case 3:
+          return <Application4 data={data} />;
+        default:
+      }
+    };
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
 
