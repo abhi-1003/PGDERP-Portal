@@ -13,5 +13,5 @@ router.post("/professionalDetails",professionalDetails);
 router.get("/applicants",getApplicantsNames);
 router.get("/personalDetails",getPersonalDetails);
 router.get("/academicDetails",getAcademicDetails);
-// router.get("/professionalDetails",getProfessionalDetails);
+router.get("/professionalDetails",getProfessionalDetails);
 module.exports = router;

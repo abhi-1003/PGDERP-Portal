@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import axios from "axios";
+import { BACKEND_URL } from '../../config';
 
 const useStyles = makeStyles((theme) => ({
     homeContent: {
@@ -36,9 +38,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Application3(props) {
-    const {data}=props
     const classes = useStyles();
-
+    const id = props.data;
+    const [data, setData] = useState({});
+    const [loading,setLoading] = useState(false);
+    const url = BACKEND_URL + `/students/professionalDetails?id=${id}`;
+    useEffect(() => {
+        axios
+        .get(url)
+        .then((response) => {
+            setData(response.data);
+            setLoading(true);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    },[])
     return (
         <div>
             <div className={classes.homeContent}>
@@ -64,23 +79,24 @@ function Application3(props) {
                                 <TableCell className={classes.tableHeadCell} width="25%"><b>Nature Of Work</b></TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        {loading?
+                        (<TableBody>
                             <TableRow>
-                                <TableCell className={classes.tableCell} width="20%">INDITECH VALVES PVT. LTD</TableCell>
-                                <TableCell className={classes.tableCell} width="20%"></TableCell>
+                                <TableCell className={classes.tableCell} width="20%">{data[0]}</TableCell>
+                                <TableCell className={classes.tableCell} width="20%">{data[3]}</TableCell>
                                 <TableCell className={classes.tableCell} width="20%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                            {/* {data.SSCFrom} */}
+                                            {data[1]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                            {/* {data.SSCTo} */}
+                                            {data[2]}
                                         </Grid>
                                     </Grid></TableCell>
                                 <TableCell className={classes.tableCell} width="15%"></TableCell>
                                 <TableCell className={classes.tableCell} width="25%"></TableCell>
                             </TableRow>
-                        </TableBody>
+                        </TableBody>):<></>}
                     </Table>
                 </TableContainer><br />
                 <Grid container spacing={2} style={{width: '90%', margin: "auto" }}>
@@ -88,7 +104,6 @@ function Application3(props) {
                         <b>Total Experience (YY-MM-DD)</b>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        12 Years
                     </Grid>
                 </Grid><br />
                 <Grid container spacing={2} style={{width: '90%', margin: "auto" }}>
@@ -96,13 +111,11 @@ function Application3(props) {
                         <b>Duration Of Professional Gaps</b>
                     </Grid>
                     <Grid item xs={12} sm={3} style={{textAlign:"center"}}>
-                        12 Years
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         <b>Reason Of Professional Gaps</b>
                     </Grid>
                     <Grid item xs={12} sm={3} style={{textAlign:"center"}}>
-                        Reason
                     </Grid>
                 </Grid>
             </div>

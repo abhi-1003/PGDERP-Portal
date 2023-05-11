@@ -31,7 +31,6 @@ exports.personalDetails = async(req, res) => {
     //const user = await Student.findById(req.userId).exec();
     const user = await Student.findOne({email}).exec();
     try{
-    console.log(user);
     user.personalInfo.ID = ID;
     user.personalInfo.course = course;
     user.personalInfo.coursepreferences = coursepreferences;
@@ -66,7 +65,6 @@ exports.personalDetails = async(req, res) => {
     // const email = req.query.email;
     const user = await Student.find().exec();
     try {
-      console.log(user);
       return res.json(user);
     } catch (error) {
       res.status(400).json({ error: "request body contains invalid data!!" });
@@ -76,28 +74,14 @@ exports.personalDetails = async(req, res) => {
 
   exports.getPersonalDetails = async (req, res) => {
     const _id = req.query.id;
-    const user = await Student.find({_id}).exec();
+    const user = await Student.findOne({_id}).exec();
     try {
-      console.log(user);
-      return res.json(user);
+      return res.json(user.personalInfo);
     } catch (error) {
       res.status(400).json({ error: "request body contains invalid data!!" });
       res.status(400).json(console.log(error));
     }
   };
-
-  // exports.getAcademicDetails = async (req, res) => {
-  //   const _id = req.query.id;
-  //   const user = await Student.find(_id).exec();
-  //   try {
-  //     console.log(user);
-  //     return res.json(user);
-  //   } catch (error) {
-  //     res.status(400).json({ error: "request body contains invalid data!!" });
-  //     res.status(400).json(console.log(error));
-  //   }
-  // };
-
 
 //sample data:
 //   {"otherCourses":["pgderp-2","2021","2022","98"],"examinationSSC":"SSC","instituteSSC":"DAV","datefromSSC":"2017","datetoSSC":"2019","percentageMarksSSC":"97","examinationHSC":"HSC","instituteHSC":"DAV","datefromHSC":"2019","datetoHSC":"2021","percentageMarksHSC":"99","examinationDiploma":"Diploma","instituteDiploma":"DAV2","datefromDiploma":"2019","datetoDiploma":"2022","percentageMarksDiploma":"98","examinationUG":"UG","instituteUG":"COEP","specializationUG":"CSE","datefromUG":"2021","datetoUG":"2025","marksFinalYearUG":"9","totalAggregateUG":"10","percentageMarksUG":"9","totalDeadBacklogsUG":"0","totalLiveBacklogsUG":"0","examinationPG":"PG","institutePG":"MIT","specializationPG":"CSE","datefromPG":"2025","datetoPG":"2026","marksFinalYearPG":"9","totalAggregatePG":"9","percentageMarksPG":"10","totalDeadBacklogsPG":"0","totalLiveBacklogsPG":"0"}
@@ -190,15 +174,26 @@ exports.personalDetails = async(req, res) => {
 
   exports.getAcademicDetails = async (req, res) => {
     // const email = "prernat20.comp@coeptech.ac.in";
-    const email = req.query.email;
-    const user = await Student.findOne({ email }).exec();
+    const _id = req.query.id;
+    const user = await Student.findOne({_id}).exec();
+    let data = {};
     try {
       if (user) {
-        return res.json(user.academics);
+        if(user['academics'] !== undefined){
+          Object.assign(data,{'academics':user['academics']})
+        }
+        if(user['academicsUGPG'] !== undefined){
+          Object.assign(data,{'academicsUGPG':user['academicsUGPG']})
+        }
+        if(user['othercourses'] !== undefined){
+          Object.assign(data,{'othercourses':user['othercourses']})
+        }
+        return res.json(data);
       } else {
         return res.json({ error: "no user found" });
       }
     } catch (error) {
+      console.log(error);
       return res.status(400).json({ error: "request failed" });
     }
   };
@@ -222,3 +217,21 @@ exports.personalDetails = async(req, res) => {
     }
 
   };
+
+  exports.getProfessionalDetails = async(req,res) => {
+    const _id = req.query.id;
+    const user = await Student.findOne({_id}).exec();
+    try {
+      if (user) {
+        if(user['professionalExperience'] !== undefined){
+          return res.json(user['professionalExperience']);
+        }
+        return res.json([]);
+      } else {
+        return res.json({ error: "no user found" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ error: "request failed" });
+    }
+  }

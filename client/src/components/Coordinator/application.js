@@ -72,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
         case 0:
           return <Application1 data={id} />;
         case 1:
-          return <Application2 data={data} />;
+          return <Application2 data={id} />;
         case 2:
-          return <Application3 data={data} />;
+          return <Application3 data={id} />;
         case 3:
-          return <Application4 data={data} />;
+          return <Application4 data={id} />;
         default:
       }
     };

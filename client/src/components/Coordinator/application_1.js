@@ -5,13 +5,13 @@ import { BACKEND_URL } from "../../config";
 import axios from "axios";
 
 const data = {
-    ID: "123",
-    course: "Comp",
-    'coursePreference': ['Pune', 'Baramati', 'Nashik'],
-    lastName: "XYZ",
-    firstName: "ABC",
-    middleName: "PQR",
-    Address: "Pune",
+    ID: "",
+    course: "",
+    coursePreference: [],
+    lastName: "",
+    firstName: "",
+    middleName: "",
+    Address: "",
     permanentAddress: "",
     email: "",
     gender: "",
@@ -20,7 +20,7 @@ const data = {
     PHname: "",
     PHemail: "",
     PHnumber: "",
-    'dob': '17-Dec-1998',
+    dob: '',
     domicileState: "",
     nationality: "",
     InstituteSSC: "",
@@ -86,21 +86,18 @@ const useStyles = makeStyles((theme) => ({
 function Application1(props) {
     const [newdata, setData] = useState({});
     const id=props.data;
-    console.log("id",id)
     const url = BACKEND_URL + `/students/personalDetails?id=${id}`;
-    console.log(url);
     useEffect(() => {
       
         axios
           .get(url)
           .then((response) => {
             setData(response.data);
-            console.log("newdata", newdata);
           })
           .catch((error) => {
-            console.error(error);
+            console.log(error);
           });
-      }, [url]);
+      }, []);
 
     const classes = useStyles();
 
@@ -135,25 +132,26 @@ function Application1(props) {
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">1</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Candidate Id</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.ID}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.ID}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">2</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Course</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.course}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.course}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">3</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Campus Preference</TableCell>
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                                        {data.coursePreference.map((pre) => {
+                                        {newdata.coursepreferences!==undefined? newdata.coursepreferences.map((pre) => {
                                             return (
                                                 <Grid item xs={12} sm={4}>
                                                     <b>{pre}</b>
                                                 </Grid>
                                             )
-                                        })}
+                                        }):null}
+                                       
                                     </Grid>
                                     
                                 </TableCell>
@@ -164,13 +162,13 @@ function Application1(props) {
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={4}>
-                                            <b>{data.lastName}</b> <br/> Surname
+                                            <b>{newdata.lastName}</b> <br/> Surname
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            <b>{data.firstName}</b><br/> First Name
+                                            <b>{newdata.firstName}</b><br/> First Name
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            <b>{data.middleName}</b><br/> Father/Husband's Name
+                                            <b>{newdata.middleName}</b><br/> Father/Husband's Name
                                         </Grid>
                                     </Grid>
                                     
@@ -179,47 +177,47 @@ function Application1(props) {
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">5</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Postal Address</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.Address}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.Address}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">6</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Permanent Address</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.permanentAddress}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.permanentAddress}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">7</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Email-Id</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.email}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.email}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">8</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Gender</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.gender}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.gender}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">9</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Physical Disabilities</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.phyDis}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.phyDis}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">10</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Phone No. with STD Code</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.number}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.number}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">11</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Parents/Husband's Name</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.PHname}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.PHname}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">12</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Parents/Husband's Email-Id</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.PHemail}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.PHemail}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">13</TableCell>
                                 <TableCell className={classes.tableCell} width="30%">Parents/Husband's Mobile No.</TableCell>
-                                <TableCell className={classes.tableCell} width="60%">{data.PHnumber}</TableCell>
+                                <TableCell className={classes.tableCell} width="60%">{newdata.PHnumber}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={classes.tableCell} width="10%">14</TableCell>
@@ -227,13 +225,13 @@ function Application1(props) {
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={4}>
-                                            {data.dob}
+                                            {newdata.dob}
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
                                             <b>Age as on date:</b>
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            {calculateAge(new Date(data.dob))}
+                                            {calculateAge(new Date(newdata.dob))}
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -244,13 +242,13 @@ function Application1(props) {
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={4}>
-                                            {data.domicileState}
+                                            {newdata.domicileState}
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
                                             <b>Nationality: </b>
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            {data.nationality}
+                                            {newdata.nationality}
                                         </Grid>
                                     </Grid>
                                 </TableCell>
