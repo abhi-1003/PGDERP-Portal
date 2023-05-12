@@ -14,7 +14,7 @@ const studentRouter = require("./routes/student");
 //Connect to mongodb
 connectDB();
 
-app.use("/students", studentRouter);
+app.use("/student", studentRouter);
 
 app.get("/", (req, res) => {
   res.send("this is pgderp portal");

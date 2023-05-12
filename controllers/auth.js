@@ -4,6 +4,7 @@ const axios = require("axios");
 const roleToModel = require("./roles");
 const Student = require("../models/student");
 const Counter = require("../models/counter");
+const { jwtSecretKey } = require("../config/configKeys");
 
 const generateToken = (user) => {
   // Create token
@@ -13,7 +14,7 @@ const generateToken = (user) => {
       email: user.email,
       role: user.role,
     },
-    "Key",
+    jwtSecretKey,
     {
       expiresIn: "2h",
     }
@@ -90,8 +91,8 @@ exports.loginStudent = (req, res) => {
       if (isMatch) {
         user.role = Student.modelName;
         const token = generateToken(user);
-        res.send({ message: "Login Successful" });
-        return res.json(token);
+        res.send({ message: "Login Successful", token: token });
+        // return res.json(token);
       } else {
         return res.status(400).json({ error: "Invalid Credentials" });
       }

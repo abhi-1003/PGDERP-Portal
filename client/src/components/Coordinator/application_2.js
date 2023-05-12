@@ -42,7 +42,7 @@ function Application2(props) {
     const id = props.data;
     const [data,setData] = useState({});
     const [loading,setLoading] = useState(false);
-    const url = BACKEND_URL + `/students/academicDetails?id=${id}`
+    const url = BACKEND_URL + `/student/academicDetails?id=${id}`
     useEffect(()=>{
         axios
         .get(url)

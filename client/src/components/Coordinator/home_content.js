@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function HomeContent() {
-    const url = BACKEND_URL + "/students/applicants";
+    const url = BACKEND_URL + "/student/applicants";
     axios.get(url)
     const [newdata, setNewdata] = useState([]);
     useEffect(() => {

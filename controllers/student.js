@@ -6,7 +6,12 @@ const Student = require("../models/student");
 const Counter = require("../models/counter");
 //sample data
 //{"ID":"12345", "course":"PGDERP","coursePreference":["vcpde","dsa"],"lastName":"kuv","firstName":"abiu","middleName":"oil","Address":"iugwouh","permanentAddress":"ohoih","email":"a@gmail.com","gender":"iqbd","phyDis":"oubdo","number":"768768798","PHname":"hbdibqkudh","PHemail":"qydiy@khvdk.com","PHnumber":"927987298","dob":"24122002","domicileState":"maharashtra","nationality":"indian"}
+
+// Only student can access this route
 exports.personalDetails = async(req, res) => {
+  if(req.userRole != "student"){
+    res.status(403).json({ error: "Only student can change their details" });
+  }
     const {ID,
         course,
         coursepreferences,
@@ -61,8 +66,12 @@ exports.personalDetails = async(req, res) => {
 
   };
 
+  // Except students all other roles can access
   exports.getApplicantsNames = async (req, res) => {
     // const email = req.query.email;
+    if(req.userRole == "student"){
+      res.status(403).json({ error: "Only Admin can access this data" });
+    }
     const user = await Student.find().exec();
     try {
       return res.json(user);

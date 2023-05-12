@@ -60,7 +60,7 @@ export default function UserRegister() {
         password: values.password,
       };
       console.log(data);
-      const url = BACKEND_URL + "/students/userRegister";
+      const url = BACKEND_URL + "/student/userRegister";
       axios
         .post(url, data)
         .then((res) => {

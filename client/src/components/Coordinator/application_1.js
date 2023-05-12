@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 function Application1(props) {
     const [newdata, setData] = useState({});
     const id=props.data;
-    const url = BACKEND_URL + `/students/personalDetails?id=${id}`;
+    const url = BACKEND_URL + `/student/personalDetails?id=${id}`;
     useEffect(() => {
       
         axios

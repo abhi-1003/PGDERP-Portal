@@ -21,6 +21,8 @@ const initialFValues = {
   password: "",
 };
 export default function UserLogin() {
+
+  localStorage.clear();
   // let navigate = useNavigate();
   const navigate = useNavigate();
   const validate = (fieldValues = values) => {
@@ -51,12 +53,14 @@ export default function UserLogin() {
         password: values.password,
       };
       console.log(data);
-      const url = BACKEND_URL + "/students/userLogin";
+      const url = BACKEND_URL + "/student/userLogin";
       axios
         .post(url, data)
         .then((res) => {
           alert(res.data.message);
-          localStorage.setItem("pgderp-website-jwt", res.data.token);
+          let token_dict = res.data.token;
+          // console.log(token_dict.token)
+          localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "student");
         })
         .catch((err) => {
