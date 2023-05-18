@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const { reqString, email, preSaveHashPassword } = require("./schemaFields");
 
-const AdminSchema = Schema(
+const CoordinatorSchema = Schema(
   {
     email: email,
     mobile: { type: String },
@@ -11,7 +11,7 @@ const AdminSchema = Schema(
   { timestamps: true }
 );
 
-AdminSchema.pre("save", preSaveHashPassword);
+CoordinatorSchema.pre("save", preSaveHashPassword);
 
-const Admin = model("admin", AdminSchema, "admins");
-module.exports = Admin;
+const Coordinator = model("coordinator", CoordinatorSchema, "coordinators");
+module.exports = Coordinator;

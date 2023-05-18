@@ -5,6 +5,7 @@ const roleToModel = require("./roles");
 const Student = require("../models/student");
 const Admin = require("../models/admin");
 const Counter = require("../models/counter");
+const Coordinator = require("../models/coordinator");
 const { jwtSecretKey } = require("../config/configKeys");
 
 const generateToken = (user) => {
@@ -103,31 +104,60 @@ exports.loginStudent = (req, res) => {
     });
 };
 
-exports.registerAdmin = (req, res) => {
+exports.registerCoordinator = (req, res) => {
   const { email, mobile, password } = req.body;
   if (!(email, mobile && password)) {
     return res.status(400).json({ error: "All input is required" });
   }
-  Admin.findOne({ email })
+  Coordinator.findOne({ email })
     .then((old) => {
       if (old) {
         return res
           .status(409)
-          .send({ message: "Admin Already Exist. Please Login" })
-          .json({ error: "Admin Already Exist. Please Login" });
+          .send({ message: "Coordinator Already Exist. Please Login" })
+          .json({ error: "Coordinator Already Exist. Please Login" });
       }
-      const newAdmin = new Admin({ email, mobile, password });
-      newAdmin
+      const newCoordinator = new Coordinator({ email, mobile, password });
+      newCoordinator
         .save()
         .then((user) => {
           req.body.userId = user._id;
-          res.send({ message: "Admin Successfully Registered" });
+          res.send({ message: "Coordinator Successfully Registered" });
         })
         .catch((err) => res.status(400).json({ error: err.message }));
     })
     .catch((err) => {
       console.log(err);
       return res.status(400).json({ error: err.message });
+    });
+};
+
+exports.loginCoordinator = (req, res) => {
+  const { email, password } = req.body;
+  // Validate user input
+  if (!(email && password)) {
+    return res.status(400).json({ error: "All input is required" });
+  }
+  // check if user exists
+  Coordinator.findOne({ email })
+    .then(async (user) => {
+      if (!user) {
+        return res.status(404).json({ error: "Email not found" });
+      }
+
+      const isMatch = await compare(password, user.password);
+      if (isMatch) {
+        user.role = Coordinator.modelName;
+        const token = generateToken(user);
+        res.send({ message: "Login Successful", token: token });
+        // return res.json(token);
+      } else {
+        return res.status(400).json({ error: "Invalid Credentials" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({ error: "Invalid Credentials" });
     });
 };
 
@@ -157,5 +187,33 @@ exports.loginAdmin = (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(400).json({ error: "Invalid Credentials" });
+    });
+};
+
+exports.registerAdmin = (req, res) => {
+  const { email, mobile, password } = req.body;
+  if (!(email, mobile && password)) {
+    return res.status(400).json({ error: "All input is required" });
+  }
+  Admin.findOne({ email })
+    .then((old) => {
+      if (old) {
+        return res
+          .status(409)
+          .send({ message: "Admin Already Exist. Please Login" })
+          .json({ error: "Admin Already Exist. Please Login" });
+      }
+      const newAdmin = new Admin({ email, mobile, password });
+      newAdmin
+        .save()
+        .then((user) => {
+          req.body.userId = user._id;
+          res.send({ message: "Admin Successfully Registered" });
+        })
+        .catch((err) => res.status(400).json({ error: err.message }));
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).json({ error: err.message });
     });
 };
