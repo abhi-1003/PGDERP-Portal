@@ -10,11 +10,15 @@ app.use(express.json());
 
 // Routers
 const studentRouter = require("./routes/student");
+const coordinatorRouter = require("./routes/coordinator");
+const adminRouter = require("./routes/admin");
 
 //Connect to mongodb
 connectDB();
 
 app.use("/student", studentRouter);
+app.use("/coordinator", coordinatorRouter)
+app.use("/admin", adminRouter)
 
 app.get("/", (req, res) => {
   res.send("this is pgderp portal");
