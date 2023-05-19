@@ -4,6 +4,7 @@ const { reqString, email, preSaveHashPassword } = require("./schemaFields");
 
 const CoordinatorSchema = Schema(
   {
+    name: reqString,
     email: email,
     mobile: { type: String },
     password: reqString,

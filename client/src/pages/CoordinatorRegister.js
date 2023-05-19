@@ -12,18 +12,16 @@ import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 const initialFValues = {
+  fullname: "",
   email: "",
   mobile: "",
   password: "",
   cpassword: "",
 };
-export default function AdminRegister() {
-  const navigate = useNavigate();
-
+export default function UserRegister() {
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     for (const key in fieldValues) {
@@ -56,17 +54,17 @@ export default function AdminRegister() {
     e.preventDefault();
     if (validate()) {
       const data = {
+        name: values.fullname,
         email: values.email,
         mobile: values.mobile,
         password: values.password,
       };
       console.log(data);
-      const url = BACKEND_URL + "/admin/adminRegister";
+      const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios
         .post(url, data)
         .then((res) => {
           alert(res.data.message);
-          navigate("/admin_login");
         })
         .catch((err) => {
           console.log(err.response || err);
@@ -92,11 +90,18 @@ export default function AdminRegister() {
           }}>
           <Avatar sx={{ m: 1, bgcolor: "cadetblue" }}></Avatar>
           <Typography component="h1" variant="h5">
-            Register
+            Add Co-ordinator Details
           </Typography>
           <Form onSubmit={handleSubmit}>
             <Grid align="center" item xs={12}>
               <Grid align="center" item xs={12}>
+                <Input
+                  name="fullname"
+                  label="Full Name*"
+                  value={values.fullname}
+                  onChange={handleInputChange}
+                  error={errors.fullname}
+                />
                 <Input
                   name="email"
                   label="Email*"
@@ -113,7 +118,6 @@ export default function AdminRegister() {
                 />
                 <Input
                   name="password"
-                  type="password"
                   label="Password*"
                   value={values.password}
                   onChange={handleInputChange}

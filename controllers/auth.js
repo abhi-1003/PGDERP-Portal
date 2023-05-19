@@ -105,8 +105,11 @@ exports.loginStudent = (req, res) => {
 };
 
 exports.registerCoordinator = (req, res) => {
-  const { email, mobile, password } = req.body;
-  if (!(email, mobile && password)) {
+  if (req.userRole != "admin") {
+    res.status(403).json({ error: "Only Admin can add cooordinator" });
+  }
+  const { name, email, mobile, password } = req.body;
+  if (!(name, email, mobile && password)) {
     return res.status(400).json({ error: "All input is required" });
   }
   Coordinator.findOne({ email })
@@ -117,7 +120,7 @@ exports.registerCoordinator = (req, res) => {
           .send({ message: "Coordinator Already Exist. Please Login" })
           .json({ error: "Coordinator Already Exist. Please Login" });
       }
-      const newCoordinator = new Coordinator({ email, mobile, password });
+      const newCoordinator = new Coordinator({ name, email, mobile, password });
       newCoordinator
         .save()
         .then((user) => {
