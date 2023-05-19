@@ -54,28 +54,6 @@ export default function Home() {
     navigate("/cordinator_login");
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  // Fetch all the important links
-  const fetchData = async () => {
-    try {
-      await axios.get(BACKEND_URL + "/phdCords/getalllinks").then((res) => {
-        if (res.data) {
-          const links = res.data.map((link) => {
-            link.priority = link.priority ? link.priority : 0;
-            return link;
-          });
-          links.sort((a, b) => b.priority - a.priority);
-          setLinks(links);
-        }
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   return (
     <>
       <div style={{ marginTop: "10spx" }}>

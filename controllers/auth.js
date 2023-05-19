@@ -54,25 +54,6 @@ exports.registerStudent = (req, res) => {
       return res.status(400).json({ error: err.message });
     });
 
-  const course = user.personalInfo.course;
-  Counter.findOne({ course: course }, (err, counter) => {
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ err });
-    }
-    counter.index = counter.index + 1;
-    const ind = counter.index.toString().padStart(3, "0");
-    const appId = `PGDERP${counter.code}${ind}`;
-    user.applicationId = appId;
-    Promise.all([user.save(), counter.save()])
-      .then(() => {
-        res.json({ success: "true", applicationId: appId });
-      })
-      .catch((e) => {
-        console.log(e);
-        return res.status(400).json({ err });
-      });
-  });
 };
 
 exports.loginStudent = (req, res) => {
@@ -105,8 +86,9 @@ exports.loginStudent = (req, res) => {
 };
 
 exports.registerCoordinator = (req, res) => {
+  // console.log(req.headers["pgderp-website-jwt"]);
   if (req.userRole != "admin") {
-    res.status(403).json({ error: "Only Admin can add cooordinator" });
+    return res.status(403).json({ error: "Only Admin can add cooordinator" });
   }
   const { name, email, mobile, password } = req.body;
   if (!(name, email, mobile && password)) {
