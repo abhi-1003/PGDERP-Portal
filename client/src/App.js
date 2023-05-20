@@ -17,6 +17,7 @@ function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   console.log("Helllo     " + token);
   if (token) {
+    axios.defaults.headers.common["pgderp-website-jwt"] = "";
     axios.defaults.headers.common["pgderp-website-jwt"] = token;
   } else {
     axios.defaults.headers.common["pgderp-website-jwt"] = null;

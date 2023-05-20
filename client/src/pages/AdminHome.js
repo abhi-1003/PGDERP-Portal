@@ -17,6 +17,51 @@ import axios from "axios";
 
 const theme = createTheme();
 
+const exportToExcel = () => {
+  const url = BACKEND_URL + "/student/allStudentData";
+  const excel_data = [];
+  const XLSX = require("xlsx");
+  axios
+    .get(url)
+    .then((res) => {
+      let student_data = res.data;
+      console.log(student_data)
+      student_data.forEach((student) => {
+
+        let course = ""
+        let lastName = ""
+        let firstName = ""
+        if(student.personalInfo.course){
+          course = student.personalInfo.course;
+        }
+        if(student.personalInfo.lastName){
+          lastName = student.personalInfo.lastName;
+        }
+        
+        if(student.personalInfo.firstName){
+          firstName = student.personalInfo.firstName;
+        }
+  
+        console.log(course, lastName, firstName)
+
+        excel_data.push({
+          course,
+          lastName,
+          firstName
+        })
+      })
+      console.log(excel_data)
+
+      const XLSX = require("xlsx");
+      const workSheet = XLSX.utils.json_to_sheet(excel_data);
+      const workBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, "Students Data");
+      XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+      XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+      XLSX.writeFile(workBook, "Students Data.xlsx");
+    })
+}
+
 export default function AdminHome() {
   const navigate = useNavigate();
 
@@ -71,7 +116,7 @@ export default function AdminHome() {
               </Grid>
               <Grid item xs={12}>
                 <Button
-                  onClick={registerCordinator}
+                  onClick={exportToExcel}
                   type="submit"
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
