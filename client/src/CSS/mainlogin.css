@@ -1,11 +1,11 @@
 .all {
     box-sizing: border-box;
-    background: #ddf3f5;
   }
   
-  .bod {
+  .box {
     width: 75%;
-    background: #ddf3f5;
+    background:linear-gradient(rgba(250,0,0,0.5),transparent);
+    background-color:orange /*this your primary color*/;
     display: flex;
     flex-direction: column;
     justify-content: center;

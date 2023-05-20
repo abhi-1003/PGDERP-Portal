@@ -74,10 +74,15 @@ export default function UserLogin() {
     <>
       {/* <NavBar /> */}
       <ThemeProvider theme={theme}>
+        <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
+  top:"0px",
+  right:"0px",
+  bottom:"0px",
+  left:"0px"}}>
         <Container
           component="main"
           maxWidth="xs"
-          style={{ marginTop: "120px" }}
+          style={{ marginTop: "120px"}}
         >
           <CssBaseline />
           <Box
@@ -88,8 +93,8 @@ export default function UserLogin() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
-            <Typography component="h1" variant="h5">
+            <Avatar sx={{ m: 3, bgcolor: "#012d5e" }} style ={{marginBottom: "40px"}}></Avatar>
+            <Typography component="h1" variant="h5" style ={{marginBottom: "40px"}}>
               Login to PGDERP Portal
             </Typography>
             <Form onSubmit={handleSubmit}>
@@ -127,7 +132,7 @@ export default function UserLogin() {
                   </Grid>
                   <Grid container spacing={20}>
                     <Grid item xs>
-                      <Link href="/" variant="body2">
+                      <Link href="/home" variant="body2">
                         {"Home Page"}
                       </Link>
                     </Grid>
@@ -142,6 +147,7 @@ export default function UserLogin() {
             </Form>
           </Box>
         </Container>
+        </div>
       </ThemeProvider>
     </>
   );

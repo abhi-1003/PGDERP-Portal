@@ -12,6 +12,7 @@ import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 const initialFValues = {
@@ -22,6 +23,7 @@ const initialFValues = {
   cpassword: "",
 };
 export default function UserRegister() {
+  const navigate = useNavigate();
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     for (const key in fieldValues) {
@@ -65,6 +67,7 @@ export default function UserRegister() {
         .post(url, data)
         .then((res) => {
           alert(res.data.message);
+          navigate("/");
         })
         .catch((err) => {
           console.log(err.response || err);
@@ -75,6 +78,11 @@ export default function UserRegister() {
   return (
     <ThemeProvider theme={theme}>
       {/* <NavBar loggedin={false} /> */}
+      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
+  top:"0px",
+  right:"0px",
+  bottom:"0px",
+  left:"0px"}}>
       <Container
         component="main"
         item="true"
@@ -90,7 +98,7 @@ export default function UserRegister() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "cadetblue" }}></Avatar>
+          <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
           <Typography component="h1" variant="h5">
             Register
           </Typography>
@@ -140,14 +148,14 @@ export default function UserRegister() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleSubmit}
-                    style={{ width: "100%", marginLeft: "2%" }}
+                    style={{ width: "100%", marginLeft: "2%", background: "#012d5e", }}
                   >
                     Register
                   </Button>
                 </Grid>
 
                 <Grid item xs>
-                  <Link href="/login/candidate" variant="body2">
+                  <Link href="/" variant="body2">
                     {"Already Registered? Log In"}
                   </Link>
                 </Grid>
@@ -156,6 +164,7 @@ export default function UserRegister() {
           </Form>
         </Box>
       </Container>
+      </div>
     </ThemeProvider>
   );
 }
