@@ -12,7 +12,6 @@ import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 const initialFValues = {
@@ -22,11 +21,7 @@ const initialFValues = {
   password: "",
   cpassword: "",
 };
-
 export default function UserRegister() {
-  localStorage.clear();
-  const [pgderpID, setpgderpID] = useState("");
-  const navigate = useNavigate();
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     for (const key in fieldValues) {
@@ -58,50 +53,33 @@ export default function UserRegister() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      
-      const initial_url = BACKEND_URL + "/student/noStudents";
+      const data = {
+        name: values.fullname,
+        email: values.email,
+        mobile: values.mobile,
+        password: values.password,
+      };
+      console.log(data);
+      const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios
-        .get(initial_url)
+        .post(url, data)
         .then((res) => {
-          const ind = res.data.data.toString().padStart(3, "0");
-          const id = `PGDERP23${ind}`;
-          const url = BACKEND_URL + "/student/userRegister";
-          const data = {
-            name: values.fullname,
-            email: values.email,
-            mobile: values.mobile,
-            password: values.password,
-            pgderpID: id
-          };
-          console.log(data);
-          axios
-            .post(url, data)
-            .then((res) => {
-              alert(res.data.message);
-              navigate("/");
-            })
-            .catch((err) => {
-              console.log(err.response || err);
-            });
-            })
-      
+          alert(res.data.message);
+        })
+        .catch((err) => {
+          console.log(err.response || err);
+        });
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
       {/* <NavBar loggedin={false} /> */}
-      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
-  top:"0px",
-  right:"0px",
-  bottom:"0px",
-  left:"0px"}}>
       <Container
         component="main"
         item="true"
         maxWidth="xs"
-        style={{ marginTop: "90px" }}
-      >
+        style={{ marginTop: "90px" }}>
         <CssBaseline />
         <Box
           sx={{
@@ -109,11 +87,10 @@ export default function UserRegister() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
+          }}>
+          <Avatar sx={{ m: 1, bgcolor: "cadetblue" }}></Avatar>
           <Typography component="h1" variant="h5">
-            Register
+            Add Co-ordinator Details
           </Typography>
           <Form onSubmit={handleSubmit}>
             <Grid align="center" item xs={12}>
@@ -141,7 +118,6 @@ export default function UserRegister() {
                 />
                 <Input
                   name="password"
-                  type="password"
                   label="Password*"
                   value={values.password}
                   onChange={handleInputChange}
@@ -155,20 +131,19 @@ export default function UserRegister() {
                   onChange={handleInputChange}
                   error={errors.cpassword}
                 />
-                <Grid item xs={12}> 
+                <Grid item xs={12}>
                   <Button
                     type="submit"
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleSubmit}
-                    style={{ width: "100%", marginLeft: "2%", background: "#012d5e", }}
-                  >
+                    style={{ width: "100%", marginLeft: "2%" }}>
                     Register
                   </Button>
                 </Grid>
 
                 <Grid item xs>
-                  <Link href="/" variant="body2">
+                  <Link href="/login/candidate" variant="body2">
                     {"Already Registered? Log In"}
                   </Link>
                 </Grid>
@@ -177,7 +152,6 @@ export default function UserRegister() {
           </Form>
         </Box>
       </Container>
-      </div>
     </ThemeProvider>
   );
 }

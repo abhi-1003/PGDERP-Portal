@@ -20,7 +20,8 @@ const initialFValues = {
   email: "",
   password: "",
 };
-export default function UserLogin() {
+
+export default function AdminLogin() {
   localStorage.clear();
   // let navigate = useNavigate();
   const navigate = useNavigate();
@@ -61,12 +62,12 @@ export default function UserLogin() {
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "admin");
+          navigate("/admin_landing_page");
         })
         .catch((err) => {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
-      navigate("/form");
     }
   };
   return (

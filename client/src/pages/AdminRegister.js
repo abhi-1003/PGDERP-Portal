@@ -12,6 +12,7 @@ import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 const initialFValues = {
@@ -20,7 +21,9 @@ const initialFValues = {
   password: "",
   cpassword: "",
 };
-export default function UserRegister() {
+export default function AdminRegister() {
+  const navigate = useNavigate();
+
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     for (const key in fieldValues) {
@@ -63,6 +66,7 @@ export default function UserRegister() {
         .post(url, data)
         .then((res) => {
           alert(res.data.message);
+          navigate("/admin_login");
         })
         .catch((err) => {
           console.log(err.response || err);

@@ -28,7 +28,7 @@ const generateToken = (user) => {
 };
 
 exports.registerStudent = (req, res) => {
-  const { name, email, mobile, password } = req.body;
+  const { name, email, mobile, password, pgderpID } = req.body;
   if (!(name, email, mobile && password)) {
     return res.status(400).json({ error: "All input is required" });
   }
@@ -40,7 +40,8 @@ exports.registerStudent = (req, res) => {
           .send({ message: "User Already Exist. Please Login" })
           .json({ error: "User Already Exist. Please Login" });
       }
-      const newStudent = new Student({ name, email, mobile, password });
+      
+      const newStudent = new Student({ name, email, mobile, password, pgderpID });
       newStudent
         .save()
         .then((user) => {
@@ -54,25 +55,6 @@ exports.registerStudent = (req, res) => {
       return res.status(400).json({ error: err.message });
     });
 
-  const course = user.personalInfo.course;
-  Counter.findOne({ course: course }, (err, counter) => {
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ err });
-    }
-    counter.index = counter.index + 1;
-    const ind = counter.index.toString().padStart(3, "0");
-    const appId = `PGDERP${counter.code}${ind}`;
-    user.applicationId = appId;
-    Promise.all([user.save(), counter.save()])
-      .then(() => {
-        res.json({ success: "true", applicationId: appId });
-      })
-      .catch((e) => {
-        console.log(e);
-        return res.status(400).json({ err });
-      });
-  });
 };
 
 exports.loginStudent = (req, res) => {
@@ -105,8 +87,12 @@ exports.loginStudent = (req, res) => {
 };
 
 exports.registerCoordinator = (req, res) => {
-  const { email, mobile, password } = req.body;
-  if (!(email, mobile && password)) {
+  // console.log(req.headers["pgderp-website-jwt"]);
+  if (req.userRole != "admin") {
+    return res.status(403).json({ error: "Only Admin can add cooordinator" });
+  }
+  const { name, email, mobile, password } = req.body;
+  if (!(name, email, mobile && password)) {
     return res.status(400).json({ error: "All input is required" });
   }
   Coordinator.findOne({ email })
@@ -117,7 +103,7 @@ exports.registerCoordinator = (req, res) => {
           .send({ message: "Coordinator Already Exist. Please Login" })
           .json({ error: "Coordinator Already Exist. Please Login" });
       }
-      const newCoordinator = new Coordinator({ email, mobile, password });
+      const newCoordinator = new Coordinator({ name, email, mobile, password });
       newCoordinator
         .save()
         .then((user) => {
