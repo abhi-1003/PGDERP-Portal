@@ -263,3 +263,11 @@ exports.personalDetails = async(req, res) => {
       return res.status(403).json("Error : Access Denied")
     }
   }
+
+  exports.getNoStudents = async(req, res) => {
+      Student.countDocuments().then((count_documents) => {
+        return res.json({ data: count_documents })
+      }).catch((err) => {
+        console.log(err.Message);
+      })
+  }

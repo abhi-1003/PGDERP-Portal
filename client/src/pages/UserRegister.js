@@ -22,7 +22,9 @@ const initialFValues = {
   password: "",
   cpassword: "",
 };
+
 export default function UserRegister() {
+  const [pgderpID, setpgderpID] = useState("");
   const navigate = useNavigate();
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -55,23 +57,33 @@ export default function UserRegister() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const data = {
-        name: values.fullname,
-        email: values.email,
-        mobile: values.mobile,
-        password: values.password,
-      };
-      console.log(data);
-      const url = BACKEND_URL + "/student/userRegister";
+      
+      const initial_url = BACKEND_URL + "/student/noStudents";
       axios
-        .post(url, data)
+        .get(initial_url)
         .then((res) => {
-          alert(res.data.message);
-          navigate("/");
-        })
-        .catch((err) => {
-          console.log(err.response || err);
-        });
+          const ind = res.data.data.toString().padStart(3, "0");
+          const id = `PGDERP23${ind}`;
+          const url = BACKEND_URL + "/student/userRegister";
+          const data = {
+            name: values.fullname,
+            email: values.email,
+            mobile: values.mobile,
+            password: values.password,
+            pgderpID: id
+          };
+          console.log(data);
+          axios
+            .post(url, data)
+            .then((res) => {
+              alert(res.data.message);
+              navigate("/");
+            })
+            .catch((err) => {
+              console.log(err.response || err);
+            });
+            })
+      
     }
   };
 

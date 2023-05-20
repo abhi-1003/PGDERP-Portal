@@ -13,7 +13,6 @@ const verificationField = {
 }
 
 const personalInfo = {
-    ID: {type: Number},
     course: {type: String},
     campusPreference1:{type: Array},
     campusPreference2:{type: Array},
@@ -84,6 +83,7 @@ const personalInfo = {
       email: email,
       password: reqString,
       mobile: { type: String },
+      pgderpID: {type: String},
       personalInfo: personalInfo,
       academics: academics,
       academicsUGPG: academicsUGPG,

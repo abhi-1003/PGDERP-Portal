@@ -3,12 +3,14 @@ const express = require("express");
 const { auth } = require("../middleware/auth");
 
 const { registerStudent, loginStudent } = require("../controllers/auth");
-const { personalDetails, academicDetails, professionalDetails,getApplicantsNames,getPersonalDetails,getAcademicDetails,getProfessionalDetails, getAllStudentDetails} = require("../controllers/student");
+const { personalDetails, academicDetails, professionalDetails,getApplicantsNames,getPersonalDetails,getAcademicDetails,getProfessionalDetails, getAllStudentDetails, getNoStudents} = require("../controllers/student");
 
 const router = express.Router();
 
 router.post("/userRegister", registerStudent);
 router.post("/userLogin", loginStudent);
+
+router.get("/noStudents", getNoStudents)
 
 router.post("/personalDetails",[auth, personalDetails]);
 router.post("/academicDetails",[auth, academicDetails]);
