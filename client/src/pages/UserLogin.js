@@ -67,7 +67,7 @@ export default function UserLogin() {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
-        navigate("/form");
+        navigate("/student_form");
     }
   };
   return (

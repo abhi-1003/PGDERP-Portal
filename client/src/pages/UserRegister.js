@@ -24,6 +24,7 @@ const initialFValues = {
 };
 
 export default function UserRegister() {
+  localStorage.clear();
   const [pgderpID, setpgderpID] = useState("");
   const navigate = useNavigate();
   const validate = (fieldValues = values) => {

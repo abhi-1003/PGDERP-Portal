@@ -12,6 +12,7 @@ import AdminRegister from "./pages/AdminRegister";
 import { roles } from "./adminDetails";
 import axios from "axios";
 import ProtectedRoute from "./protectedRoute";
+import StudentHome from "./pages/StudentHome";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -44,6 +45,11 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/student_home" element = {
+          <ProtectedRoute allowedRoles={[roles.student]}>
+            <StudentHome />
+          </ProtectedRoute>
+        }/>
         <Route
           path="/register_cord"
           element={
