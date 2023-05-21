@@ -95,13 +95,41 @@ export default function Step2({
 								</Box>
 							</TableCell>
 							<TableCell>
-								<MultipleSelect
-									state={state}
-									name1="campusPreference"
-									handleChangePreferences={
-										handleChangePreferences
-									}
-								/>
+							<Grid container spacing={2} style={{ marginBottom: "1px"}}>
+								<Grid item xs={12} sm={3}>
+									{renderInputSelect({label:"Preference-1", 
+											name: "campusPreference1", 
+											state, 
+											handleOnChange: handleOnChange,
+										arr: [
+											{value:"COEP Tech",label:"COEP Tech"},
+											{value:"VPKBIT Baramati",label:"VPKBIT Baramati"},
+											{value:"VPKBIT Nashik",label:"VPKBIT Nashik"},
+										] })}
+								</Grid>
+								<Grid item xs={12} sm={3}>
+											{renderInputSelect({label:"Preference-2", 
+											name: "campusPreference2", 
+											state, 
+											handleOnChange: handleOnChange,
+											arr: [
+											{value:"COEP Tech",label:"COEP Tech"},
+											{value:"VPKBIT Baramati",label:"VPKBIT Baramati"},
+											{value:"VPKBIT Nashik",label:"VPKBIT Nashik"},
+										] })}
+								</Grid>
+								<Grid item xs={12} sm={3}>
+										{renderInputSelect({label:"Preference-3", 
+										name: "campusPreference3", 
+										state, 
+										handleOnChange: handleOnChange,
+										arr: [
+										{value:"COEP Tech",label:"COEP Tech"},
+										{value:"VPKBIT Baramati",label:"VPKBIT Baramati"},
+										{value:"VPKBIT Nashik",label:"VPKBIT Nashik"},
+									] })}
+								</Grid>
+							</Grid>
 							</TableCell>
 						</TableRow>
 						<TableRow>
@@ -320,13 +348,13 @@ export default function Step2({
 									<DemoContainer components={["DatePicker"]}>
 										{" "}
 										<DemoItem label="">
-											{renderDate({
-												label: "",
-												name: "dob",
-												state,
-												handleOnChangeDate:
-													handleOnChangeDate,
-											})}
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "dob"
+											onChange={(value) => handleOnChangeDate( "dob", value)}
+											
+										/>
 										</DemoItem>
 									</DemoContainer>
 								</LocalizationProvider>
@@ -370,6 +398,29 @@ export default function Step2({
 										})}
 									</Grid>
 								</Grid>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell>16</TableCell>
+							<TableCell>
+								<Box mb={2} mt={2} mr={2}>
+									{renderText1({ label: "Caste:" })}
+								</Box>
+							</TableCell>
+							<TableCell>
+							<Grid item xs={12} sm={2}>
+                {renderInputSelect({label:"", 
+                name: "caste", 
+                state, 
+                handleOnChange: handleOnChange,
+                arr: [
+                    {value:"general",label:"General"},
+                    {value:"obc",label:"OBC"},
+                    {value:"sc",label:"SC"},
+                    {value:"st",label:"ST"},
+                    {value:"Other",label:"Other"},
+                ] })}
+                </Grid>
 							</TableCell>
 						</TableRow>
 					</TableBody>
