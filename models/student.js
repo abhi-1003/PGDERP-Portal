@@ -13,27 +13,25 @@ const verificationField = {
 }
 
 const personalInfo = {
+    ID: {type: String},
     course: {type: String},
-    campusPreference1:{type: Array},
-    campusPreference2:{type: Array},
-    campusPreference3:{type: Array},
+    coursepreferences:{type: Array},
     lastName:{type: String},
     firstName:{type: String},
     middleName:{type: String},
-    fullName: {type: String},
-    postalAddress:{type: String},
+    Address:{type: String},
     permanentAddress:{type: String},
     email:{type: String},
     gender:{type: String},
     phyDis:{type: String},
-    mobileNumber:{type: Number},
+    number:{type: Number},
     PHname:{type: String},
     PHemail:{type: String},
     PHnumber:{type: Number},
-    dob:{type: Date},
+    dob:{type: Array},
     domicileState:{type: String},
     nationality:{type: String},
-    caste: {type: String}
+    caste:{type: String},
   };
   
   const academics = {
@@ -83,7 +81,6 @@ const personalInfo = {
       email: email,
       password: reqString,
       mobile: { type: String },
-      pgderpID: {type: String},
       personalInfo: personalInfo,
       academics: academics,
       academicsUGPG: academicsUGPG,
