@@ -25,6 +25,7 @@ exports.personalDetails = async(req, res) => {
         dob,
         domicileState,
         nationality,
+        caste,
       } = req.body;
     
     
@@ -49,6 +50,7 @@ exports.personalDetails = async(req, res) => {
     user.personalInfo.dob = dob;
     user.personalInfo.domicileState = domicileState;
     user.personalInfo.nationality = nationality;
+    user.personalInfo.caste = caste;
     await user.save().catch((err) => {
         console.log(err);
         return res.json({ error: "couldn't save record" });

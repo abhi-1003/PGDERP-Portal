@@ -13,7 +13,7 @@ const verificationField = {
 }
 
 const personalInfo = {
-    ID: {type: Number},
+    ID: {type: String},
     course: {type: String},
     coursepreferences:{type: Array},
     lastName:{type: String},
@@ -28,9 +28,10 @@ const personalInfo = {
     PHname:{type: String},
     PHemail:{type: String},
     PHnumber:{type: Number},
-    dob:{type: Date},
+    dob:{type: Array},
     domicileState:{type: String},
     nationality:{type: String},
+    caste:{type: String},
   };
   
   const academics = {
