@@ -15,6 +15,8 @@ import { Styles } from "./common/styles";
 import Step1 from "./steps/SStep";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
+import { BACKEND_URL } from "../config";
+import axios from "axios";
 // import Step2b from "./steps/form_table";
 import {
     renderButton,
@@ -30,7 +32,9 @@ class FormComponent extends Component {
         data: {
             ID: "",
             course: "",
-            campusPreference: "",
+            campusPreference1: "",
+            campusPreference2: "",
+            campusPreference3: "",
             lastName: "",
             firstName: "",
             middleName: "",
@@ -46,6 +50,7 @@ class FormComponent extends Component {
             dob: "",
             domicileState: "",
             nationality: "",
+            caste: "",
             InstituteSSC: "",
             InstituteHSC: "",
             SSCFrom: "",
@@ -114,7 +119,7 @@ class FormComponent extends Component {
             const { data, errors } = this.state;
             // console.log(today.$y - value.$y);
             this.state.age = today.$y - value.$y;
-            data[name.name] = [value.$D, value.$M, value.$y];
+            data[name] = [value.$D, value.$M, value.$y];
             // data[target.name] = target.value;
             // console.log("run")
             // console.log(name.name);
@@ -174,6 +179,81 @@ class FormComponent extends Component {
         };
 
         const handleOnClick = ({ target }) => {};
+
+        const handleSubmit = (e) => {
+            const { data, errors } = this.state;
+            e.preventDefault();
+            console.log(data);
+            const url1 = BACKEND_URL + "/students/personalDetails";
+            const url2 = BACKEND_URL + "/students/academicDetails";
+            const url3 = BACKEND_URL + "/students/professionalDetails";
+
+            const personalInfo = {ID:data.ID,
+            course:data.course,
+            campusPreference:[data.campusPreference1,data.campusPreference2,data.campusPreference3],
+            lastName:data.lastName,
+            firstName:data.firstName,
+            middleName:data.middleName,
+            Address:data.Address,
+            permanentAddress:data.permanentAddress,
+            email:data.email,
+            gender:data.gender,
+            phyDis:data.phyDis,
+            number:data.number,
+            PHname:data.PHname,
+            PHemail:data.PHemail,
+            PHnumber:data.PHnumber,
+            dob:data.dob,
+            domicileState:data.domicileState,
+            nationality:data.nationality,
+            caste: data.caste,};
+
+            const academicInfo = {InstituteSSC:data.InstituteSSC,
+            InstituteHSC:data.InstituteHSC,
+            SSCFrom:data.SSCFrom,
+            HSCFrom:data.HSCFrom,
+            SSCTo:data.SSCTo,
+            HSCTo:data.HSCTo,
+            SSCmarks:data.SSCmarks,
+            HSCmarks:data.HSCmarks,
+            InstituteDiploma:data.InstituteDiploma,
+            DiplomaFrom:data.DiplomaFrom,
+            DiplomaTo:data.DiplomaTo,
+            Diplomamarks:data.Diplomamarks,
+            InstituteGrad:data.InstituteGrad,
+            SpecializationGrad:data.SpecializationGrad,
+            GradFrom:data.GradFrom,
+            GradTo:data.GradTo,
+            FinalYearMarksGrad:data.FinalYearMarksGrad,
+            AggregateMarksGrad:data.AggregateMarksGrad,
+            DeadBacklogsGrad:data.DeadBacklogsGrad,
+            AliveBacklogGrad:data.AliveBacklogGrad,
+            InstitutePostGrad:data.InstitutePostGrad,
+            SpecializationPostGrad:data.SpecializationPostGrad,
+            PostGradFrom:data.PostGradFrom,
+            PostGradTo:data.PostGradTo,
+            FinalYearMarksPostGrad:data.FinalYearMarksPostGrad,
+            AggregateMarksPostGrad:data.AggregateMarksPostGrad,
+            DeadBacklogsPostGrad:data.DeadBacklogsPostGrad,
+            AliveBacklogPostGrad:data.AliveBacklogPostGrad,
+            otherCourses:data.otherCourses,};
+
+            const professionalInfo = {professionalExperience:data.professionalExperience};
+            axios.all([
+            axios.post(url1, personalInfo),
+            axios.post(url2, academicInfo),
+            axios.post(url3, professionalInfo)
+            ])
+                .then((res) => {
+                alert(res.data.message);
+                })
+                .catch((err) => {
+                alert("Couldn't send Info to backend");
+                console.log(err.response || err);
+            });
+        
+        }
+        
 
         const handleNext = () => {
             const { data, errors } = this.state;
@@ -511,7 +591,10 @@ class FormComponent extends Component {
                         />
                     );
                 case 3:
-                    return <Finished state={this.state.data} />;
+                    return <Finished state={this.state.data}
+                                     handleSubmit={handleSubmit}
+                                     handlePrev={handlePrev}
+                    />;
                 default:
                     return (
                         <Step1
