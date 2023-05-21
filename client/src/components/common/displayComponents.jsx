@@ -163,50 +163,50 @@ export const renderDate = ({ label, name, state, handleOnChangeDate }) => {
 	);
 };
 
-export const MultipleSelect = ({ state, name1, handleChangePreferences }) => {
-	const theme = useTheme();
-	const [personName, setPersonName] = useState([]);
-	const { data, errors } = state;
-	const handleChange = (event) => {
-		const {
-			target: { value },
-		} = event;
-		setPersonName(
-			// On autofill we get a stringified value.
-			typeof value === "string" ? value.split(",") : value
-		);
-	};
+// export const MultipleSelect = ({ state, name1, handleChangePreferences }) => {
+// 	const theme = useTheme();
+// 	const [personName, setPersonName] = useState([]);
+// 	const { data, errors } = state;
+// 	const handleChange = (event) => {
+// 		const {
+// 			target: { value },
+// 		} = event;
+// 		setPersonName(
+// 			// On autofill we get a stringified value.
+// 			typeof value === "string" ? value.split(",") : value
+// 		);
+// 	};
 
-	return (
-		<div>
-			<FormControl sx={{ m: 1, width: "500px" }}>
-				<Select
-					labelId="demo-multiple-name-label"
-					id="demo-multiple-name"
-					multiple
-					error={errors[name1] ? true : false}
-					helperText={errors[name1]}
-					name1="campusPreferences"
-					value={personName}
-					onChange={(value) => {
-						handleChange(value);
-						handleChangePreferences(value);
-					}}
-					input={<OutlinedInput label="Name" />}
-					MenuProps={MenuProps}
-					style={{ minWidth: "300px" }}
-				>
-					{names.map((name) => (
-						<MenuItem
-							key={name}
-							value={name}
-							style={getStyles(name, personName, theme)}
-						>
-							{name}
-						</MenuItem>
-					))}
-				</Select>
-			</FormControl>
-		</div>
-	);
-};
+// 	return (
+// 		<div>
+// 			<FormControl sx={{ m: 1, width: "500px" }}>
+// 				<Select
+// 					labelId="demo-multiple-name-label"
+// 					id="demo-multiple-name"
+// 					multiple
+// 					error={errors[name1] ? true : false}
+// 					helperText={errors[name1]}
+// 					name1="campusPreferences"
+// 					value={personName}
+// 					onChange={(value) => {
+// 						handleChange(value);
+// 						handleChangePreferences(value);
+// 					}}
+// 					input={<OutlinedInput label="Name" />}
+// 					MenuProps={MenuProps}
+// 					style={{ minWidth: "300px" }}
+// 				>
+// 					{names.map((name) => (
+// 						<MenuItem
+// 							key={name}
+// 							value={name}
+// 							style={getStyles(name, personName, theme)}
+// 						>
+// 							{name}
+// 						</MenuItem>
+// 					))}
+// 				</Select>
+// 			</FormControl>
+// 		</div>
+// 	);
+// };

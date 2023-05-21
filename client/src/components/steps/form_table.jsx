@@ -22,7 +22,8 @@ import { nanoid } from "nanoid";
 import data from "./data.json";
 import ReadOnlyRow from "../ReadOnlyRow";
 
-const Step2b = () => {
+const Step2b = ({state}) => {
+    const { data, errors } = this.state;
     const [contacts, setContacts] = useState(data);
     const [addFormData, setAddFormData] = useState({
         courseName: "",
@@ -89,6 +90,7 @@ const Step2b = () => {
         };
 
         const newContacts = [...contacts, newContact];
+        data.otherCourses = newContacts;
         setContacts(newContacts);
         console.log(contacts);
     };
@@ -144,7 +146,7 @@ const Step2b = () => {
         const index = contacts.findIndex((contact) => contact.id === contactId);
 
         newContacts.splice(index, 1);
-
+        data.otherCourses = newContacts;
         setContacts(newContacts);
     };
 

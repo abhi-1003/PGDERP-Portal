@@ -21,6 +21,7 @@ export default function Step3({
 	handleNext,
 	handlePrev,
 }) {
+	const { data, errors } = this.state;
 	const [contacts, setContacts] = useState(data);
 	const [editContactId, setEditContactId] = useState(null);
 	const [editFormData, setEditFormData] = useState({
@@ -57,6 +58,7 @@ export default function Step3({
 		};
 console.log(newContact.companyName);
 		const newContacts = [...contacts, newContact];
+		data.professionalExperience = newContacts;
 		setContacts(newContacts);
 	};
 	const handleDeleteClick = (contactId) => {
@@ -65,7 +67,7 @@ console.log(newContact.companyName);
 		const index = contacts.findIndex((contact) => contact.id === contactId);
 
 		newContacts.splice(index, 1);
-
+		data.professionalExperience = newContacts;
 		setContacts(newContacts);
 	};
 

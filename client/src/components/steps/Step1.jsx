@@ -50,6 +50,45 @@ export default function Step1({state, handleOnChange, handleNext}){
             </Grid>
             <Grid container spacing={2} style={{ marginBottom: "1px"}}>
           <Box mb={2} mt={2} mr={2}>
+          {renderText1({label:"3"})} 
+          </Box>
+          <Box mb={2} mt={2} mr={2}>
+          {renderText1({label:"Campus Preferences"})} 
+          </Box>
+                <Grid item xs={12} sm={6}>
+                {renderInputSelect({label:"Preference-1", 
+                name: "campusPreference1", 
+                state, 
+                handleOnChange: handleOnChange,
+                arr: [
+                    {value:"COEP Tech",label:"COEP Tech"},
+                    {value:"VPKBIT Baramati",label:"VPKBIT Baramati"},
+                    {value:"VPKBIT Nashik",label:"VPKBIT Nashik"},
+                ] })}
+                
+                {renderInputSelect({label:"Preference-2", 
+                name: "campusPreference2", 
+                state, 
+                handleOnChange: handleOnChange,
+                arr: [
+                  {value:"COEP Tech",label:"COEP Tech"},
+                  {value:"VPKBIT Baramati",label:"VPKBIT Baramati"},
+                  {value:"VPKBIT Nashik",label:"VPKBIT Nashik"},
+              ] })}
+                
+                {renderInputSelect({label:"Preference-3", 
+                name: "campusPreference3", 
+                state, 
+                handleOnChange: handleOnChange,
+                arr: [
+                  {value:"COEP Tech",label:"COEP Tech"},
+                  {value:"VPKBIT Baramati",label:"VPKBIT Baramati"},
+                  {value:"VPKBIT Nashik",label:"VPKBIT Nashik"},
+              ] })}
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} style={{ marginBottom: "1px"}}>
+          <Box mb={2} mt={2} mr={2}>
           {renderText1({label:"4"})} 
           </Box>
           <Box mb={2} mt={2} mr={2}>
@@ -228,7 +267,27 @@ export default function Step1({state, handleOnChange, handleNext}){
                 handleOnChange: handleOnChange })}
                 </Grid>
             </Grid>
-            
+            <Grid container spacing={2} style={{ marginBottom: "1px"}}>
+          <Box mb={2} mt={2} mr={2}>
+          {renderText1({label:"16"})} 
+          </Box>
+          <Box mb={2} mt={2} mr={2}>
+          {renderText1({label:"Caste"})} 
+          </Box>
+                <Grid item xs={12} sm={2}>
+                {renderInputSelect({label:"", 
+                name: "caste", 
+                state, 
+                handleOnChange: handleOnChange,
+                arr: [
+                    {value:"general",label:"General"},
+                    {value:"obc",label:"OBC"},
+                    {value:"sc",label:"SC"},
+                    {value:"st",label:"ST"},
+                    {value:"Other",label:"Other"},
+                ] })}
+                </Grid>
+            </Grid>
             <Grid container spacing={2} justifyContent="flex-end">
                     <Box p={2}>
                     {renderButton({label:"next", handleOnClick: handleNext})}

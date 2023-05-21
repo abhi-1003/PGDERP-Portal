@@ -315,7 +315,7 @@ export default function Step2({
                 </Table>
             </TableContainer>
             {renderText({ label: 'Other Courses Details' })}
-            <Step2b />
+            <Step2b state={this.state}/>
             <Grid container spacing={2} justifyContent='space-between'>
                 <Box p={2}>
                     {renderButton({ label: 'prev', handleOnClick: handlePrev })}
