@@ -45,29 +45,33 @@ export default function UserLogin() {
     validate
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       const data = {
         email: values.email,
         password: values.password,
       };
-      console.log(data);
+      // console.log(data);
       const url = BACKEND_URL + "/student/userLogin";
       axios
         .post(url, data)
         .then((res) => {
           alert(res.data.message);
           let token_dict = res.data.token;
+          console.log(res.data)
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "student");
+          localStorage.setItem("name", res.data.name);
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("pgderpID", res.data.pgderpID);
+          navigate("/student_home");
         })
         .catch((err) => {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
-        navigate("/student_form");
     }
   };
   return (
