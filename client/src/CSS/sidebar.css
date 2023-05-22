@@ -1,9 +1,9 @@
 .Sidebar{
 	height: 100%;
   position: relative;
-  top: -10px;
+  top: -16px;
 	width: 225px;
-	background-color: #aba800;
+	background-color: #FECA0A;
   z-index: 100000;
 }
 

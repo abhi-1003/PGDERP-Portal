@@ -158,6 +158,21 @@ class StudentHome extends Component {
     };
   }
 
+  componentDidMount() {  
+    const storedName = localStorage.getItem("name");
+    const storedEmail = localStorage.getItem("email");
+    const storedAppId = localStorage.getItem("pgderpID");
+    console.log(storedName, storedEmail, storedAppId);
+    this.setState({
+      name: storedName,
+      email: storedEmail,
+      appId: storedAppId
+    });
+  
+  } 
+
+
+
 //   async componentDidMount() {
 //     if (localStorage.getItem("pgderp-website-jwt")) {
 //     //   try {
@@ -643,17 +658,17 @@ class StudentHome extends Component {
                 alignItems: "center",
               }}
             >
-              <div className="box">
+              <div className="box" style={{width:"100%"}}>
                 <Grid container className="container-box">
                   <Grid item xs={12} md={6} className="grid-item">
-                    <p style={{ fontSize: "20px" }}>
+                    <p style={{ fontSize: "20px", textAlign:"center" }}>
                       <b style={{ fontWeight: 600 }}>Name : </b>
                       {"   "}
                       {this.state.name}
                     </p>
                   </Grid>
                   <Grid item xs={12} md={6} className="grid-item">
-                    <p style={{ fontSize: "20px" }}>
+                    <p style={{ fontSize: "20px", textAlign:"center" }}>
                       <b style={{ fontWeight: 600 }}>Email : </b>
                       {"   "}
                       {this.state.email}
@@ -661,7 +676,7 @@ class StudentHome extends Component {
                   </Grid>
                   {this.state.appId ? (
                     <Grid item xs={12} md={6} className="grid-item">
-                      <p style={{ fontSize: "20px" }}>
+                      <p style={{ fontSize: "20px", textAlign:"center" }}>
                         <b style={{ fontWeight: 600 }}>Application ID : </b>
                         {"   "}
                         {this.state.appId}
