@@ -77,6 +77,11 @@ export default function AdminRegister() {
   return (
     <ThemeProvider theme={theme}>
       {/* <NavBar loggedin={false} /> */}
+      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
+  top:"0px",
+  right:"0px",
+  bottom:"0px",
+  left:"0px"}}>
       <Container
         component="main"
         item="true"
@@ -148,6 +153,7 @@ export default function AdminRegister() {
           </Form>
         </Box>
       </Container>
+      </div>
     </ThemeProvider>
   );
 }

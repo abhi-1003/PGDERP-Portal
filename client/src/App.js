@@ -46,9 +46,9 @@ function App() {
           }
         />
         <Route path="/student_home" element = {
-          // <ProtectedRoute allowedRoles={[roles.student]}>
+          <ProtectedRoute allowedRoles={[roles.student]}>
             <StudentHome />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         }/>
         <Route
           path="/register_cord"

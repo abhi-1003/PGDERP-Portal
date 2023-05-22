@@ -772,24 +772,21 @@ class StudentHome extends Component {
             <div className="container-verification">
               <ul className="responsive-table">
                 <li className="table-header">
-                  <div className="col col-2">
+                  <div className="col col-4">
                     <b>Field</b>
                   </div>
-                  <div className="col col-3">
+                  <div className="col col-4">
                     <b>Remarks</b>
                   </div>
                   <div className="col col-4">
                     <b>Status</b>
                   </div>
-                  <div className="col col-5">
-                    <b>Edit</b>
-                  </div>
                 </li>
                 <li className="table-row">
-                  <div className="col col-2" data-label="Field">
-                    Academics PG
+                  <div className="col col-4" data-label="Field">
+                    Personal Info
                   </div>
-                  <div className="col col-3" data-label="Remark">
+                  <div className="col col-4" data-label="Remark">
                     {this.state.PGremarks.length
                       ? this.state.PGremarks
                       : "None"}
@@ -799,28 +796,14 @@ class StudentHome extends Component {
                     data-label="Status"
                     style={{ textTransform: "capitalize" }}
                   >
-                    {this.state.PGverification}
-                  </div>
-                  <div
-                    className="col col-5 editButton"
-                    onClick={() => {
-                      this.props.history.push({
-                        pathname: "/admissionForm",
-                        state: { step: 3, entire: "no" },
-                      });
-                    }}
-                  >
-                    <EditIcon
-                      sx={{ color: "cadetblue" }}
-                      className="editIcon"
-                    />
+                    {"Not Completed"}
                   </div>
                 </li>
                 <li className="table-row">
-                  <div className="col col-2" data-label="Field">
-                    Academics UG
+                  <div className="col col-4" data-label="Field">
+                    Academics Info & Professional Info
                   </div>
-                  <div className="col col-3" data-label="Remark">
+                  <div className="col col-4" data-label="Remark">
                     {this.state.UGremarks.length
                       ? this.state.UGremarks
                       : "None"}
@@ -830,21 +813,7 @@ class StudentHome extends Component {
                     data-label="Status"
                     style={{ textTransform: "capitalize" }}
                   >
-                    {this.state.UGverification}
-                  </div>
-                  <div
-                    className="col col-5 editButton"
-                    onClick={() => {
-                      this.props.history.push({
-                        pathname: "/admissionForm",
-                        state: { step: 2, entire: "no" },
-                      });
-                    }}
-                  >
-                    <EditIcon
-                      sx={{ color: "cadetblue" }}
-                      className="editIcon"
-                    />
+                    {"Not Completed"}
                   </div>
                 </li>
                 {/* <li className="table-row">
@@ -868,10 +837,10 @@ class StudentHome extends Component {
                   </div>
                 </li> */}
                 <li className="table-row">
-                  <div className="col col-2" data-label="Field">
-                    Entrance Details
+                  <div className="col col-4" data-label="Field">
+                    Documents Uploaded
                   </div>
-                  <div className="col col-3" data-label="Remark">
+                  <div className="col col-4" data-label="Remark">
                     {this.state.ENTremarks.length
                       ? this.state.ENTremarks
                       : "None"}
@@ -881,85 +850,10 @@ class StudentHome extends Component {
                     data-label="Status"
                     style={{ textTransform: "capitalize" }}
                   >
-                    {this.state.ENTverification}
-                  </div>
-                  <div
-                    className="col col-5 editButton"
-                    onClick={() => {
-                      this.props.history.push({
-                        pathname: "/admissionForm",
-                        state: { step: 4, entire: "no" },
-                      });
-                    }}
-                  >
-                    <EditIcon
-                      sx={{ color: "cadetblue" }}
-                      className="editIcon"
-                    />
+                    {"Not Completed"}
                   </div>
                 </li>
-                <li className="table-row">
-                  <div className="col col-2" data-label="Field">
-                    Fee Details
-                  </div>
-                  <div className="col col-3" data-label="Remark">
-                    {this.state.FEEremarks.length
-                      ? this.state.FEEremarks
-                      : "None"}
-                  </div>
-                  <div
-                    className="col col-4"
-                    data-label="Status"
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {this.state.FEEverification}
-                  </div>
-                  <div
-                    className="col col-5 editButton"
-                    onClick={() => {
-                      this.props.history.push({
-                        pathname: "/admissionForm",
-                        state: { step: 5, entire: "no" },
-                      });
-                    }}
-                  >
-                    <EditIcon
-                      sx={{ color: "cadetblue" }}
-                      className="editIcon"
-                    />
-                  </div>
-                </li>
-                <li className="table-row">
-                  <div className="col col-2" data-label="Field">
-                    Personal Info
-                  </div>
-                  <div className="col col-3" data-label="Remark">
-                    {this.state.PIremarks.length
-                      ? this.state.PIremarks
-                      : "None"}
-                  </div>
-                  <div
-                    className="col col-4"
-                    data-label="Status"
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {this.state.PIverification}
-                  </div>
-                  <div
-                    className="col col-5 editButton"
-                    onClick={() => {
-                      this.props.history.push({
-                        pathname: "/admissionForm",
-                        state: { step: 1, entire: "no" },
-                      });
-                    }}
-                  >
-                    <EditIcon
-                      sx={{ color: "cadetblue" }}
-                      className="editIcon"
-                    />
-                  </div>
-                </li>
+                
               </ul>
             </div>
           </div>
