@@ -184,11 +184,9 @@ class FormComponent extends Component {
             const { data, errors } = this.state;
             e.preventDefault();
             console.log(data);
-            const url1 = BACKEND_URL + "/students/personalDetails";
-            const url2 = BACKEND_URL + "/students/academicDetails";
-            const url3 = BACKEND_URL + "/students/professionalDetails";
 
-            const personalInfo = {ID:data.ID,
+            const personalInfo = {
+            ID:data.ID,
             course:data.course,
             campusPreference:[data.campusPreference1,data.campusPreference2,data.campusPreference3],
             lastName:data.lastName,
@@ -208,7 +206,8 @@ class FormComponent extends Component {
             nationality:data.nationality,
             caste: data.caste,};
 
-            const academicInfo = {InstituteSSC:data.InstituteSSC,
+            const academicsInfo = {
+            InstituteSSC:data.InstituteSSC,
             InstituteHSC:data.InstituteHSC,
             SSCFrom:data.SSCFrom,
             HSCFrom:data.HSCFrom,
@@ -238,19 +237,18 @@ class FormComponent extends Component {
             AliveBacklogPostGrad:data.AliveBacklogPostGrad,
             otherCourses:data.otherCourses,};
 
-            const professionalInfo = {professionalExperience:data.professionalExperience};
-            axios.all([
-            axios.post(url1, personalInfo),
-            axios.post(url2, academicInfo),
-            axios.post(url3, professionalInfo)
-            ])
+            const email = localStorage.getItem('email')
+            const url = BACKEND_URL + "/student/editStudentInfo";
+            const body = {
+                email : email,
+                personalInfo : personalInfo,
+                academicsInfo : academicsInfo
+            }
+            axios
+                .post(url, body)
                 .then((res) => {
-                alert(res.data.message);
+                    alert(res.data.message);
                 })
-                .catch((err) => {
-                alert("Couldn't send Info to backend");
-                console.log(err.response || err);
-            });
         
         }
         

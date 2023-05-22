@@ -73,6 +73,11 @@ export default function AdminHome() {
     <>
       {/* <NavBar /> */}
       <ThemeProvider theme={theme}>
+      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
+  top:"0px",
+  right:"0px",
+  bottom:"0px",
+  left:"0px"}}>
         <Container
           component="main"
           maxWidth="xs"
@@ -131,6 +136,7 @@ export default function AdminHome() {
             </Grid>
           </Box>
         </Container>
+        </div>
       </ThemeProvider>
     </>
   );

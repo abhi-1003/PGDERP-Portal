@@ -271,3 +271,27 @@ exports.personalDetails = async(req, res) => {
         console.log(err.Message);
       })
   }
+
+  exports.editStudentInfo = async(req, res) => {
+    if(req.userRole == "student"){
+      const fields = [
+        "personalInfo",
+        "academicsInfo"
+      ];
+      const email = req.body['email'];
+      try{
+        const user = await Student.findOne({email}).exec();
+        for (const field of fields) {
+          user[field] = req.body[field];
+        }
+        await user.save().catch((err) => {
+          console.log(err);
+          return res.json({ error: "couldn't update record" });
+        });
+        return res.status(200).json({user})
+      } catch (error) {
+        res.status(400).json({ error: "request body contains invalid data" });
+      }
+    }
+    
+  }
