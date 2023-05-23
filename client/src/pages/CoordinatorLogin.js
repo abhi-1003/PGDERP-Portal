@@ -22,7 +22,6 @@ const initialFValues = {
 };
 export default function UserLogin() {
   localStorage.clear();
-  // let navigate = useNavigate();
   const navigate = useNavigate();
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
@@ -52,20 +51,18 @@ export default function UserLogin() {
         password: values.password,
       };
       // console.log(data);
-      const url = BACKEND_URL + "/student/userLogin";
+      const url = BACKEND_URL + "/coordinator/coordinatorLogin";
       axios
         .post(url, data)
         .then((res) => {
           alert(res.data.message);
           let token_dict = res.data.token;
           console.log(res.data);
-          // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "student");
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("email", res.data.email);
-          localStorage.setItem("pgderpID", res.data.pgderpID);
-          navigate("/student/home");
+          navigate("/coordinator/*");
         })
         .catch((err) => {
           alert("Invalid credentials. Login again");
@@ -105,7 +102,7 @@ export default function UserLogin() {
                 component="h1"
                 variant="h5"
                 style={{ marginBottom: "40px" }}>
-                Login to PGDERP Portal
+                Coordinator Login
               </Typography>
               <Form onSubmit={handleSubmit}>
                 <Grid align="center" xs={12} item>
@@ -143,11 +140,6 @@ export default function UserLogin() {
                       <Grid item xs>
                         <Link href="/" variant="body2">
                           {"Home Page"}
-                        </Link>
-                      </Grid>
-                      <Grid item xs>
-                        <Link href="/student/register" variant="body2">
-                          {"Don't have an account? Register"}
                         </Link>
                       </Grid>
                     </Grid>

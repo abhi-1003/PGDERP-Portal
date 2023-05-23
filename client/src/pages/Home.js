@@ -43,15 +43,15 @@ export default function Home() {
   const [links, setLinks] = useState();
 
   const handleRoute1 = () => {
-    navigate("/");
+    navigate("/student/login");
   };
 
   const handleRoute2 = () => {
-    navigate("/admin_login");
+    navigate("/admin/login");
   };
 
   const handleRoute3 = () => {
-    navigate("/cordinator_login");
+    navigate("/cordinator/login");
   };
 
   return (

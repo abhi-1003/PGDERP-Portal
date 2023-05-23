@@ -62,7 +62,7 @@ export default function AdminLogin() {
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "admin");
-          navigate("/admin_landing_page");
+          navigate("/admin/home");
         })
         .catch((err) => {
           alert("Invalid credentials. Login again");
@@ -74,76 +74,80 @@ export default function AdminLogin() {
     <>
       {/* <NavBar /> */}
       <ThemeProvider theme={theme}>
-      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
-  top:"0px",
-  right:"0px",
-  bottom:"0px",
-  left:"0px"}}>
-        <Container
-          component="main"
-          maxWidth="xs"
-          style={{ marginTop: "120px" }}>
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}>
-            <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
-            <Typography component="h1" variant="h5">
-              Admin Login
-            </Typography>
-            <Form onSubmit={handleSubmit}>
-              <Grid align="center" xs={12} item>
-                <Grid align="center" item xs={12}>
-                  <Input
-                    name="email"
-                    label="Email*"
-                    value={values.email}
-                    onChange={handleInputChange}
-                    error={errors.email}
-                  />
-                  <Input
-                    type="password"
-                    name="password"
-                    label="Password*"
-                    value={values.password}
-                    onChange={handleInputChange}
-                    error={errors.password}
-                  />
-                  <Grid item xs={12}>
-                    <Button
-                      onClick={handleSubmit}
-                      type="submit"
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                      style={{
-                        width: "100%",
-                        marginLeft: "2%",
-                        background: "#012d5e",
-                      }}>
-                      Login
-                    </Button>
-                  </Grid>
-                  <Grid container spacing={20}>
-                    <Grid item xs>
-                      <Link href="/" variant="body2">
-                        {"Home Page"}
-                      </Link>
+        <div
+          style={{
+            background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
+            position: "absolute",
+            top: "0px",
+            right: "0px",
+            bottom: "0px",
+            left: "0px",
+          }}>
+          <Container
+            component="main"
+            maxWidth="xs"
+            style={{ marginTop: "120px" }}>
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}>
+              <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
+              <Typography component="h1" variant="h5">
+                Admin Login
+              </Typography>
+              <Form onSubmit={handleSubmit}>
+                <Grid align="center" xs={12} item>
+                  <Grid align="center" item xs={12}>
+                    <Input
+                      name="email"
+                      label="Email*"
+                      value={values.email}
+                      onChange={handleInputChange}
+                      error={errors.email}
+                    />
+                    <Input
+                      type="password"
+                      name="password"
+                      label="Password*"
+                      value={values.password}
+                      onChange={handleInputChange}
+                      error={errors.password}
+                    />
+                    <Grid item xs={12}>
+                      <Button
+                        onClick={handleSubmit}
+                        type="submit"
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        style={{
+                          width: "100%",
+                          marginLeft: "2%",
+                          background: "#012d5e",
+                        }}>
+                        Login
+                      </Button>
                     </Grid>
-                    <Grid item xs>
-                      <Link href="/register_admin" variant="body2">
-                        {"Register Admin"}
-                      </Link>
+                    <Grid container spacing={20}>
+                      <Grid item xs>
+                        <Link href="/" variant="body2">
+                          {"Home Page"}
+                        </Link>
+                      </Grid>
+                      <Grid item xs>
+                        <Link href="/admin/register" variant="body2">
+                          {"Register Admin"}
+                        </Link>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Form>
-          </Box>
-        </Container>
+              </Form>
+            </Box>
+          </Container>
         </div>
       </ThemeProvider>
     </>

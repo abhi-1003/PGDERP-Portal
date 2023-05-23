@@ -58,125 +58,126 @@ export default function UserRegister() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      
       const initial_url = BACKEND_URL + "/student/noStudents";
-      axios
-        .get(initial_url)
-        .then((res) => {
-          const ind = res.data.data.toString().padStart(3, "0");
-          const id = `PGDERP23${ind}`;
-          const url = BACKEND_URL + "/student/userRegister";
-          const data = {
-            name: values.fullname,
-            email: values.email,
-            mobile: values.mobile,
-            password: values.password,
-            pgderpID: id
-          };
-          console.log(data);
-          axios
-            .post(url, data)
-            .then((res) => {
-              alert(res.data.message);
-              navigate("/");
-            })
-            .catch((err) => {
-              console.log(err.response || err);
-            });
-            })
-      
+      axios.get(initial_url).then((res) => {
+        const ind = res.data.data.toString().padStart(3, "0");
+        const id = `PGDERP23${ind}`;
+        const url = BACKEND_URL + "/student/userRegister";
+        const data = {
+          name: values.fullname,
+          email: values.email,
+          mobile: values.mobile,
+          password: values.password,
+          pgderpID: id,
+        };
+        console.log(data);
+        axios
+          .post(url, data)
+          .then((res) => {
+            alert(res.data.message);
+            navigate("/student/login");
+          })
+          .catch((err) => {
+            console.log(err.response || err);
+          });
+      });
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
       {/* <NavBar loggedin={false} /> */}
-      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
-  top:"0px",
-  right:"0px",
-  bottom:"0px",
-  left:"0px"}}>
-      <Container
-        component="main"
-        item="true"
-        maxWidth="xs"
-        style={{ marginTop: "90px" }}
-      >
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
-          <Typography component="h1" variant="h5">
-            Register
-          </Typography>
-          <Form onSubmit={handleSubmit}>
-            <Grid align="center" item xs={12}>
+      <div
+        style={{
+          background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
+          position: "absolute",
+          top: "0px",
+          right: "0px",
+          bottom: "0px",
+          left: "0px",
+        }}>
+        <Container
+          component="main"
+          item="true"
+          maxWidth="xs"
+          style={{ marginTop: "90px" }}>
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}>
+            <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
+            <Typography component="h1" variant="h5">
+              Register
+            </Typography>
+            <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
-                <Input
-                  name="fullname"
-                  label="Full Name*"
-                  value={values.fullname}
-                  onChange={handleInputChange}
-                  error={errors.fullname}
-                />
-                <Input
-                  name="email"
-                  label="Email*"
-                  value={values.email}
-                  onChange={handleInputChange}
-                  error={errors.email}
-                />
-                <Input
-                  name="mobile"
-                  label="Mobile*"
-                  value={values.mobile}
-                  onChange={handleInputChange}
-                  error={errors.mobile}
-                />
-                <Input
-                  name="password"
-                  type="password"
-                  label="Password*"
-                  value={values.password}
-                  onChange={handleInputChange}
-                  error={errors.password}
-                />
-                <Input
-                  name="cpassword"
-                  type="password"
-                  label="Confirm Password*"
-                  value={values.cpassword}
-                  onChange={handleInputChange}
-                  error={errors.cpassword}
-                />
-                <Grid item xs={12}> 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={handleSubmit}
-                    style={{ width: "100%", marginLeft: "2%", background: "#012d5e", }}
-                  >
-                    Register
-                  </Button>
-                </Grid>
+                <Grid align="center" item xs={12}>
+                  <Input
+                    name="fullname"
+                    label="Full Name*"
+                    value={values.fullname}
+                    onChange={handleInputChange}
+                    error={errors.fullname}
+                  />
+                  <Input
+                    name="email"
+                    label="Email*"
+                    value={values.email}
+                    onChange={handleInputChange}
+                    error={errors.email}
+                  />
+                  <Input
+                    name="mobile"
+                    label="Mobile*"
+                    value={values.mobile}
+                    onChange={handleInputChange}
+                    error={errors.mobile}
+                  />
+                  <Input
+                    name="password"
+                    type="password"
+                    label="Password*"
+                    value={values.password}
+                    onChange={handleInputChange}
+                    error={errors.password}
+                  />
+                  <Input
+                    name="cpassword"
+                    type="password"
+                    label="Confirm Password*"
+                    value={values.cpassword}
+                    onChange={handleInputChange}
+                    error={errors.cpassword}
+                  />
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                      onClick={handleSubmit}
+                      style={{
+                        width: "100%",
+                        marginLeft: "2%",
+                        background: "#012d5e",
+                      }}>
+                      Register
+                    </Button>
+                  </Grid>
 
-                <Grid item xs>
-                  <Link href="/" variant="body2">
-                    {"Already Registered? Log In"}
-                  </Link>
+                  <Grid item xs>
+                    <Link href="/student/login" variant="body2">
+                      {"Already Registered? Log In"}
+                    </Link>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Form>
-        </Box>
-      </Container>
+            </Form>
+          </Box>
+        </Container>
       </div>
     </ThemeProvider>
   );
