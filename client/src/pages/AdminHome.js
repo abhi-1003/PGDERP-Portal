@@ -62,8 +62,8 @@ const exportToExcel = () => {
 export default function AdminHome() {
   const navigate = useNavigate();
 
-  const registerCordinator = () => {
-    navigate("/admin/registerCord");
+  const registerCoordinator = () => {
+    navigate("/admin/registerCoord");
   };
 
   return (
@@ -94,7 +94,7 @@ export default function AdminHome() {
               <Grid align="center" xs={12} item>
                 <Grid item xs={12}>
                   <Button
-                    onClick={registerCordinator}
+                    onClick={registerCoordinator}
                     type="submit"
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
@@ -108,7 +108,7 @@ export default function AdminHome() {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
-                    onClick={registerCordinator}
+                    onClick={registerCoordinator}
                     type="submit"
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
