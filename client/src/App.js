@@ -67,11 +67,12 @@ function App() {
 
         <Route path="/coordinator/*" element={<Coordinator />}></Route>
         <Route
-          path="/cordinator/login"
+          path="/coordinator/login"
           element={<CoordinatorLogin />}
-          exact></Route>
+          exact
+        ></Route>
         <Route
-          path="/admin/registerCord"
+          path="/admin/registerCoord"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
               <CoordinatorRegister />

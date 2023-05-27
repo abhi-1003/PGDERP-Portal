@@ -152,7 +152,7 @@ export default function UserRegister() {
                   </Grid>
 
                   <Grid item xs>
-                    <Link href="/cordinator/login" variant="body2">
+                    <Link href="/coordinator/login" variant="body2">
                       {"Already Registered? Log In"}
                     </Link>
                   </Grid>

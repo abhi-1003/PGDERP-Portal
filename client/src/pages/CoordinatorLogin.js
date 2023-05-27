@@ -18,7 +18,7 @@ import axios from "axios";
 const theme = createTheme();
 const initialFValues = {
   email: "",
-  password: "",
+  password: ""
 };
 export default function UserLogin() {
   localStorage.clear();
@@ -33,8 +33,7 @@ export default function UserLogin() {
     if ("password" in fieldValues)
       temp.password = fieldValues.password ? "" : "This field is required.";
     setErrors(temp);
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
+    if (fieldValues === values) return Object.values(temp).every(x => x === "");
   };
 
   const { values, errors, setErrors, handleInputChange } = useForm(
@@ -43,18 +42,18 @@ export default function UserLogin() {
     validate
   );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (validate()) {
       const data = {
         email: values.email,
-        password: values.password,
+        password: values.password
       };
       // console.log(data);
       const url = BACKEND_URL + "/coordinator/coordinatorLogin";
       axios
         .post(url, data)
-        .then((res) => {
+        .then(res => {
           alert(res.data.message);
           let token_dict = res.data.token;
           console.log(res.data);
@@ -64,7 +63,7 @@ export default function UserLogin() {
           localStorage.setItem("email", res.data.email);
           navigate("/coordinator/*");
         })
-        .catch((err) => {
+        .catch(err => {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
@@ -81,27 +80,44 @@ export default function UserLogin() {
             top: "0px",
             right: "0px",
             bottom: "0px",
-            left: "0px",
-          }}>
+            left: "0px"
+          }}
+        >
           <Container
             component="main"
             maxWidth="xs"
-            style={{ marginTop: "120px" }}>
+            style={{
+              marginTop: "120px",
+              backgroundColor: "rgba(215, 198, 165, 0.4)",
+              borderRadius: "32px"
+            }}
+          >
             <CssBaseline />
             <Box
               sx={{
                 marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-              }}>
+                alignItems: "center"
+              }}
+            >
               <Avatar
-                sx={{ m: 3, bgcolor: "#012d5e" }}
-                style={{ marginBottom: "40px" }}></Avatar>
+                sx={{
+                  m: 3,
+                  bgcolor: "#012d5e",
+                  width: "128px",
+                  height: "128px"
+                }}
+                style={{
+                  marginBottom: "-60px",
+                  top: "-85px"
+                }}
+              ></Avatar>
               <Typography
                 component="h1"
                 variant="h5"
-                style={{ marginBottom: "40px" }}>
+                style={{ marginBottom: "20px" }}
+              >
                 Coordinator Login
               </Typography>
               <Form onSubmit={handleSubmit}>
@@ -131,14 +147,32 @@ export default function UserLogin() {
                         style={{
                           width: "100%",
                           marginLeft: "2%",
-                          background: "#012d5e",
-                        }}>
+                          background: "#feca0a",
+                          color: "#012d5e",
+                          fontSize: "18px",
+                          fontWeight: "bold",
+                          letterSpacing: "2px"
+                        }}
+                      >
                         Login
                       </Button>
                     </Grid>
-                    <Grid container spacing={20}>
+                    <Grid
+                      container
+                      spacing={20}
+                      style={{
+                        alignItems: "center"
+                      }}
+                    >
                       <Grid item xs>
-                        <Link href="/" variant="body2">
+                        <Link
+                          href="/"
+                          variant="body2"
+                          style={{
+                            textDecoration: "none",
+                            color: "#1d8ffe"
+                          }}
+                        >
                           {"Home Page"}
                         </Link>
                       </Grid>
