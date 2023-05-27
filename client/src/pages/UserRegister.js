@@ -20,7 +20,7 @@ const initialFValues = {
   email: "",
   mobile: "",
   password: "",
-  cpassword: "",
+  cpassword: ""
 };
 
 export default function UserRegister() {
@@ -46,8 +46,7 @@ export default function UserRegister() {
       temp.cpassword = "Passwords do not match. ";
     }
     setErrors(temp);
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
+    if (fieldValues === values) return Object.values(temp).every(x => x === "");
   };
 
   const { values, errors, setErrors, handleInputChange } = useForm(
@@ -55,11 +54,11 @@ export default function UserRegister() {
     true,
     validate
   );
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (validate()) {
       const initial_url = BACKEND_URL + "/student/noStudents";
-      axios.get(initial_url).then((res) => {
+      axios.get(initial_url).then(res => {
         const ind = res.data.data.toString().padStart(3, "0");
         const id = `PGDERP23${ind}`;
         const url = BACKEND_URL + "/student/userRegister";
@@ -68,16 +67,16 @@ export default function UserRegister() {
           email: values.email,
           mobile: values.mobile,
           password: values.password,
-          pgderpID: id,
+          pgderpID: id
         };
         console.log(data);
         axios
           .post(url, data)
-          .then((res) => {
+          .then(res => {
             alert(res.data.message);
             navigate("/student/login");
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err.response || err);
           });
       });
@@ -95,23 +94,42 @@ export default function UserRegister() {
           right: "0px",
           bottom: "0px",
           left: "0px",
-        }}>
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
         <Container
           component="main"
           item="true"
           maxWidth="xs"
-          style={{ marginTop: "90px" }}>
+          style={{
+            backgroundColor: "rgba(215, 198, 165, 0.4)",
+            borderRadius: "32px"
+          }}
+        >
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
-            }}>
-            <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
-            <Typography component="h1" variant="h5">
-              Register
+              alignItems: "center"
+            }}
+          >
+            <Avatar
+              sx={{
+                m: 3,
+                bgcolor: "#012d5e",
+                width: "128px",
+                height: "128px"
+              }}
+            ></Avatar>
+            <Typography
+              component="h1"
+              style={{ marginBottom: "20px" }}
+              variant="h5"
+            >
+              Student Register
             </Typography>
             <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
@@ -162,14 +180,25 @@ export default function UserRegister() {
                       style={{
                         width: "100%",
                         marginLeft: "2%",
-                        background: "#012d5e",
-                      }}>
+                        background: "#feca0a",
+                        color: "#012d5e",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        letterSpacing: "2px"
+                      }}
+                    >
                       Register
                     </Button>
                   </Grid>
 
                   <Grid item xs>
-                    <Link href="/student/login" variant="body2">
+                    <Link
+                      href="/student/login"
+                      variant="body2"
+                      style={{
+                        alignItems: "center"
+                      }}
+                    >
                       {"Already Registered? Log In"}
                     </Link>
                   </Grid>

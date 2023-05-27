@@ -83,7 +83,7 @@ export default function Home() {
                   justifyContent: "center",
                   borderRadius: "32px",
                   backgroundColor: "rgba(215, 198, 165, 0.4)",
-                  padding: "12px"
+                  padding: "36px"
                 }}
               >
                 <div className="form-container log-in-container">

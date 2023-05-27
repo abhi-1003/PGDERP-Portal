@@ -83,14 +83,16 @@ export default function UserLogin() {
             top: "0px",
             right: "0px",
             bottom: "0px",
-            left: "0px"
+            left: "0px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
           <Container
             component="main"
             maxWidth="xs"
             style={{
-              marginTop: "120px",
               backgroundColor: "rgba(215, 198, 165, 0.4)",
               borderRadius: "32px"
             }}
@@ -98,7 +100,6 @@ export default function UserLogin() {
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center"
@@ -110,10 +111,6 @@ export default function UserLogin() {
                   bgcolor: "#012d5e",
                   width: "128px",
                   height: "128px"
-                }}
-                style={{
-                  marginBottom: "-60px",
-                  top: "-85px"
                 }}
               ></Avatar>
               <Typography
