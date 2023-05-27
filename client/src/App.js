@@ -14,6 +14,7 @@ import { roles } from "./adminDetails";
 import axios from "axios";
 import ProtectedRoute from "./protectedRoute";
 import StudentHome from "./pages/StudentHome";
+import { OtpScript } from "./components/common/otpScript";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -79,6 +80,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/otpscript" element = {<OtpScript />}></Route>
       </Routes>
     </Router>
   );

@@ -54,31 +54,27 @@ export default function UserRegister() {
     true,
     validate
   );
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault()
     if (validate()) {
       const initial_url = BACKEND_URL + "/student/noStudents";
-      axios.get(initial_url).then(res => {
+      axios.get(initial_url).then((res) => {
         const ind = res.data.data.toString().padStart(3, "0");
         const id = `PGDERP23${ind}`;
-        const url = BACKEND_URL + "/student/userRegister";
+        // const url = BACKEND_URL + "/student/userRegister";
         const data = {
           name: values.fullname,
           email: values.email,
           mobile: values.mobile,
           password: values.password,
-          pgderpID: id
+          pgderpID: id,
         };
-        console.log(data);
-        axios
-          .post(url, data)
-          .then(res => {
-            alert(res.data.message);
-            navigate("/student/login");
-          })
-          .catch(err => {
-            console.log(err.response || err);
-          });
+        console.log(data)
+        navigate('/otpscript', {
+          state:{
+            data: data
+          }
+        });
       });
     }
   };
@@ -130,6 +126,9 @@ export default function UserRegister() {
               variant="h5"
             >
               Student Register
+            </Typography>
+            <Typography component="h5" variant="h5">
+              Please enter correct details and after entering all details please enter OTP sent to your entered Email-ID
             </Typography>
             <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
@@ -187,7 +186,7 @@ export default function UserRegister() {
                         letterSpacing: "2px"
                       }}
                     >
-                      Register
+                      Proceed and verify your details
                     </Button>
                   </Grid>
 
