@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { renderButton } from "./common/displayComponents";
 
-const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
+const ReadOnlyRow = ({ contact, handleDeleteClick }) => {
 	return (
 		<TableRow>
 			<TableCell>{contact.courseName}</TableCell>
