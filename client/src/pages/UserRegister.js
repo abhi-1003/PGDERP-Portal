@@ -59,8 +59,8 @@ export default function UserRegister() {
     if (validate()) {
       const initial_url = BACKEND_URL + "/student/noStudents";
       axios.get(initial_url).then((res) => {
-        const ind = res.data.data.toString().padStart(3, "0");
-        const id = `PGDERP23${ind}`;
+        const ind = res.data.data.toString().padStart(4, "0");
+        const id = `ER23${ind}`;
         // const url = BACKEND_URL + "/student/userRegister";
         const data = {
           name: values.fullname,
