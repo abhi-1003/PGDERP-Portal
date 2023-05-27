@@ -64,13 +64,13 @@ export default function Home() {
               <div
                 className="container_login"
                 id="container"
-                style={{ marginTop: "90px" }}>
-                <div className="form-container log-in-container">
-                  <div className="form-container">
-                    <Typography component="h1" variant="h5" mt={2}>
+                style={{ marginTop: "90px", height:"100vh" }}>
+                <div className="form-container log-in-container" style={{display:"flex", justifyContent:"center", flexDirection:"row"}}>
+                  <div className="form-container" style={{width:"70%",}}>
+                    <Typography component="h1" variant="h5" m={2} style={{display:"flex", justifyContent:"center", flexDirection:"row"}}>
                       <b>Sign in </b>
                     </Typography>
-                    <div className="social-container">
+                    <div className="social-container" style={{display:"flex", justifyContent:"center", flexDirection:"row"}} >
                       <Avatar
                         sx={{
                           m: 0,
@@ -80,8 +80,9 @@ export default function Home() {
                         }}></Avatar>
                     </div>
 
+                    <div style={{display:"flex", justifyContent:"center", flexDirection:"row", marginTop:"30px"}}>
                     <Grid container spacing={6}>
-                      <Grid item xs={6}>
+                      <Grid item xs={4}>
                         <Button
                           color="neutral"
                           onClick={handleRoute1}
@@ -90,10 +91,10 @@ export default function Home() {
                           variant="contained"
                           sx={{ mt: 3, mb: 2 }}>
                           Student
-                          <br /> Login
+                          Login
                         </Button>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={4}>
                         <Button
                           color="neutral"
                           onClick={handleRoute2}
@@ -104,8 +105,7 @@ export default function Home() {
                           Admin Login
                         </Button>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <Button
                         color="neutral"
                         onClick={handleRoute3}
@@ -116,14 +116,17 @@ export default function Home() {
                         Co-ordinaator Login
                       </Button>
                     </Grid>
+                    </Grid>
+
+                    </div>
                   </div>
                 </div>
                 <div className="overlay-container">
                   <div className="overlay">
                     <div className="overlay-panel overlay-right">
-                      <Typography component="h1" variant="h5" mt={2}>
+                      {/* <Typography component="h1" variant="h5" mt={2}>
                         <b>Important Announcements</b>
-                      </Typography>
+                      </Typography> */}
                       <div className="scroll-box">
                         {links
                           ? links.map((item, key) => (
