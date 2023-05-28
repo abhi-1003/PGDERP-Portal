@@ -54,11 +54,11 @@ export default function UserRegister() {
     true,
     validate
   );
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = e => {
+    e.preventDefault();
     if (validate()) {
       const initial_url = BACKEND_URL + "/student/noStudents";
-      axios.get(initial_url).then((res) => {
+      axios.get(initial_url).then(res => {
         const ind = res.data.data.toString().padStart(4, "0");
         const id = `ER23${ind}`;
         // const url = BACKEND_URL + "/student/userRegister";
@@ -67,11 +67,11 @@ export default function UserRegister() {
           email: values.email,
           mobile: values.mobile,
           password: values.password,
-          pgderpID: id,
+          pgderpID: id
         };
-        console.log(data)
-        navigate('/otpscript', {
-          state:{
+        console.log(data);
+        navigate("/otpscript", {
+          state: {
             data: data
           }
         });
@@ -114,21 +114,16 @@ export default function UserRegister() {
           >
             <Avatar
               sx={{
-                m: 3,
                 bgcolor: "#012d5e",
                 width: "128px",
                 height: "128px"
               }}
             ></Avatar>
-            <Typography
-              component="h1"
-              style={{ marginBottom: "20px" }}
-              variant="h5"
-            >
+            <Typography component="h1" variant="h5">
               Student Register
             </Typography>
-            <Typography component="h5" variant="h5">
-              Please enter correct details and after entering all details please enter OTP sent to your entered Email-ID
+            <Typography component="h6" variant="h6">
+              Please Enter Correct Details
             </Typography>
             <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
@@ -171,19 +166,21 @@ export default function UserRegister() {
                     error={errors.cpassword}
                   />
                   <Grid item xs={12}>
+                    <Typography component="p" variant="body2">
+                      OTP will be sent to entered Email-ID
+                    </Typography>
                     <Button
                       type="submit"
                       variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
                       onClick={handleSubmit}
+                      sx={{ mt: 1, mb: 1 }}
                       style={{
                         width: "100%",
                         marginLeft: "2%",
                         background: "#feca0a",
                         color: "#012d5e",
                         fontSize: "18px",
-                        fontWeight: "bold",
-                        letterSpacing: "2px"
+                        fontWeight: "bold"
                       }}
                     >
                       Proceed and verify your details
