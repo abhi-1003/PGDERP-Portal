@@ -6,7 +6,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 
 const handleSubmit = (state) => {
-    const data = state;
+    const data = state.data;
         console.log(data);
 
         const personalInfo = {
@@ -28,7 +28,9 @@ const handleSubmit = (state) => {
         dob:data.dob,
         domicileState:data.domicileState,
         nationality:data.nationality,
-        caste: data.caste,};
+        caste: data.caste,
+        age: state.age,
+    };
 
         const academicsInfo = {
         InstituteSSC:data.InstituteSSC,
@@ -59,7 +61,16 @@ const handleSubmit = (state) => {
         AggregateMarksPostGrad:data.AggregateMarksPostGrad,
         DeadBacklogsPostGrad:data.DeadBacklogsPostGrad,
         AliveBacklogPostGrad:data.AliveBacklogPostGrad,
-        otherCourses:data.otherCourses,};
+        otherCourses:data.otherCourses,
+        DroptoGrad: state.DroptoGrad,
+        GradPeriod: state.GradPeriod,
+        GradtoPostGrad: state.GradtoPostGrad,
+        HSCFilled : state.HSCFilled,
+        HSCtoDiploma: state.HSCtoDiploma,
+        SSCtoDiploma: state.SSCtoDiploma,
+        SSCtoHSC: state.SSCtoHSC,
+        DiplomaFilled: state.DiplomaFilled,
+    };
 
         const email = localStorage.getItem('email')
         const url = BACKEND_URL + "/student/editStudentInfo";
