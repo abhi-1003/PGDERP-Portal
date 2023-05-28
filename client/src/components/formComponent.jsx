@@ -132,6 +132,15 @@ class FormComponent extends Component {
         };
 
         const today = dayjs();
+
+        const otherCoursesChange = (value) =>{
+            this.state.otherCourses = value;
+        }
+
+        const professionalExperienceChange = (value) => {
+            this.state.professionalExperience = value;
+        }
+
         const handleOnChangeDate = (name, value) => {
             const { data, errors } = this.state;
             console.log(name)
@@ -188,7 +197,6 @@ class FormComponent extends Component {
             }
             console.log("hiii")
             if(name==="GradTo"){
-                console.log("GradTOOOOOOOOOOOO")
                 this.state.GradPeriod = value.$y - this.state.data.GradFrom[2];
                 console.log(value.$y, this.state.data.GradFrom)
             }
@@ -642,6 +650,7 @@ class FormComponent extends Component {
                             handleOnChangeDate={handleOnChangeDate}
                             handleNext={handleNext}
                             handleChangePreferences={handleChangePreferences}
+                            otherCoursesChange = {otherCoursesChange}
                         />
                     );
                 case 1:
@@ -653,6 +662,7 @@ class FormComponent extends Component {
                                 handleOnChangeDate={handleOnChangeDate}
                                 handleNext={handleNext}
                                 handlePrev={handlePrev}
+                                otherCoursesChange = {otherCoursesChange}
                             />
                         </div>
                     );
@@ -663,6 +673,7 @@ class FormComponent extends Component {
                             handleOnChange={handleOnChange}
                             handleNext={handleNext}
                             handlePrev={handlePrev}
+                            professionalExperienceChange = {professionalExperienceChange}
                         />
                     );
                 case 3:

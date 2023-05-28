@@ -20,6 +20,7 @@ export default function Step3({
 	handleOnChange,
 	handleNext,
 	handlePrev,
+	professionalExperienceChange
 }) {
 	const [contacts, setContacts] = useState(data);
 	const [editContactId, setEditContactId] = useState(null);
@@ -58,6 +59,7 @@ export default function Step3({
 console.log(newContact.companyName);
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
+		professionalExperienceChange(newContacts)
 	};
 	const handleDeleteClick = (contactId) => {
 		const newContacts = [...contacts];
@@ -67,6 +69,7 @@ console.log(newContact.companyName);
 		newContacts.splice(index, 1);
 
 		setContacts(newContacts);
+		professionalExperienceChange(newContacts)
 	};
 
 	const handleEditClick = (event, contact) => {

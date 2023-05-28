@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 
 const handleSubmit = (state) => {
     const data = state.data;
-        console.log(data);
 
         const personalInfo = {
         ID:data.ID,
@@ -61,7 +60,8 @@ const handleSubmit = (state) => {
         AggregateMarksPostGrad:data.AggregateMarksPostGrad,
         DeadBacklogsPostGrad:data.DeadBacklogsPostGrad,
         AliveBacklogPostGrad:data.AliveBacklogPostGrad,
-        otherCourses:data.otherCourses,
+        otherCourses:state.otherCourses,
+        professionalExperience: state.professionalExperience,
         DroptoGrad: state.DroptoGrad,
         GradPeriod: state.GradPeriod,
         GradtoPostGrad: state.GradtoPostGrad,

@@ -73,6 +73,7 @@ const personalInfo = {
             DeadBacklogsPostGrad:{type: String},
             AliveBacklogPostGrad:{type: String},
             otherCourses:{type: Array},
+            professionalExperience: {type: Array},
   }
   
   // const academics = {
