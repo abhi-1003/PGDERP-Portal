@@ -98,6 +98,7 @@ class FormComponent extends Component {
         HSCFilled: false,
         DiplomaFilled: false,
         noneFilled: false,
+        documentsUploaded: [],
     };
     
     render() {
@@ -140,6 +141,7 @@ class FormComponent extends Component {
         const professionalExperienceChange = (value) => {
             this.state.professionalExperience = value;
         }
+
 
         const handleOnChangeDate = (name, value) => {
             const { data, errors } = this.state;

@@ -15,6 +15,8 @@ import axios from "axios";
 import ProtectedRoute from "./protectedRoute";
 import StudentHome from "./pages/StudentHome";
 import { OtpScript } from "./components/common/otpScript";
+import Docs from "./components/steps/docs";
+import DocViewer from "./pages/DocViewer";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -46,6 +48,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/doc" element={<Docs />}></Route>
         <Route
           path="/student/home"
           element={
@@ -81,6 +84,15 @@ function App() {
           }
         />
         <Route path="/otpscript" element = {<OtpScript />}></Route>
+        <Route
+          path="/doc-view"
+          element = {
+            <DocViewer
+              filename="c915f2f5b21ad66e31829b34602b630a1685288091058.pdf"
+              contentType="application/pdf"
+            />
+          }
+        ></Route>
       </Routes>
     </Router>
   );
