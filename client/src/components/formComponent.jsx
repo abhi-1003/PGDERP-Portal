@@ -9,9 +9,12 @@ import {
     Typography,
     withStyles,
 } from "@material-ui/core";
+import { nanoid } from "nanoid";
 import React, { Component } from "react";
+import dataa from "./steps/data.json";
 import PropTypes from "prop-types";
 import { Styles } from "./common/styles";
+import Step2b from './steps/form_table';
 import Step1 from "./steps/SStep";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
@@ -30,8 +33,8 @@ import dayjs from "dayjs";
 class FormComponent extends Component {
     state = {
         data: {
-            ID: "",
-            course: "",
+            ID: localStorage.getItem("pgderpID"),
+            course: "PGDERP",
             campusPreference1: "",
             campusPreference2: "",
             campusPreference3: "",
@@ -40,7 +43,7 @@ class FormComponent extends Component {
             middleName: "",
             Address: "",
             permanentAddress: "",
-            email: "",
+            email: localStorage.getItem("email"),
             gender: "",
             phyDis: "",
             number: "",
@@ -53,15 +56,15 @@ class FormComponent extends Component {
             caste: "",
             InstituteSSC: "",
             InstituteHSC: "",
-            SSCFrom: "",
-            HSCFrom: "",
             SSCTo: "",
             HSCTo: "",
+            SSCFrom: "",
+            HSCFrom: "",
             SSCmarks: "",
             HSCmarks: "",
             InstituteDiploma: "",
-            DiplomaFrom: "",
             DiplomaTo: "",
+            DiplomaFrom: "",
             Diplomamarks: "",
             InstituteGrad: "",
             SpecializationGrad: "",
@@ -84,14 +87,24 @@ class FormComponent extends Component {
         },
         errors: {},
         currentStep: 0,
+        SSCtoHSC: 0,
+        SSCtoDiploma: 0,
+        HSCtoDiploma: 0,
+        totalgaps: 0,
+        DroptoGrad: 0,
+        GradPeriod: 0,
+        GradtoPostGrad: 0,
         age: 0,
         HSCFilled: false,
         DiplomaFilled: false,
         noneFilled: false,
     };
+    
     render() {
         const { classes } = this.props;
+//      
 
+//
         const handleChangePreferences = (event) => {
             const {
                 target: { value },
@@ -118,7 +131,44 @@ class FormComponent extends Component {
         const handleOnChangeDate = (name, value) => {
             const { data, errors } = this.state;
             // console.log(today.$y - value.$y);
-            this.state.age = today.$y - value.$y;
+            if (name==="dob"){
+                this.state.age = today.$y - value.$y;
+            }
+            if(name==="HSCFrom"){
+                this.state.SSCtoHSC = value.$y - this.state.data.SSCTo[2];
+            }
+            if(name==="DiplomaFrom"){
+                this.state.SSCtoDiploma = value.$y - this.state.data.SSCTo[2];
+
+            }
+            if(name==="DiplomaFrom" && this.state.data.HSCTo !==[]){
+                this.state.HSCtoDiploma = value.$y - this.state.data.HSCTo[2];
+            }
+            if(name==="HSCTo" || name==="DiplomaTo"){
+                if(this.state.data.HSCFrom ===[]){
+                   this.state.totalgaps = this.state.SSCtoDiploma; 
+                }
+                else if(this.state.data.DiplomaFrom ===[]){
+                    this.state.totalgaps = this.state.SSCtoHSC
+                }
+                else{
+                    this.state.totalgaps = this.state.SSCtoHSC + this.state.HSCtoDiploma;
+                }
+            }
+            if(name==="GradFrom"){
+                if(this.state.data.DiplomaTo === []){
+                    this.state.DroptoGrad = value.$y - this.state.data.HSCTo[2];
+                }
+                else{
+                    this.state.DroptoGrad = value.$y - this.state.data.DiplomaTo[2];
+                }
+            }
+            if(name==="GradTo"){
+                this.state.GradPeriod = value.$y - this.state.data.GradFrom;
+            }
+            if(name==="PostGradFrom"){
+                this.state.GradtoPostGrad = value.$y - this.state.data.GradTo;
+            }
             data[name] = [value.$D, value.$M, value.$y];
             // data[target.name] = target.value;
             // console.log("run")
@@ -210,8 +260,8 @@ class FormComponent extends Component {
             InstituteSSC:data.InstituteSSC,
             InstituteHSC:data.InstituteHSC,
             SSCFrom:data.SSCFrom,
-            HSCFrom:data.HSCFrom,
             SSCTo:data.SSCTo,
+            HSCFrom:data.HSCFrom,
             HSCTo:data.HSCTo,
             SSCmarks:data.SSCmarks,
             HSCmarks:data.HSCmarks,
@@ -573,10 +623,10 @@ class FormComponent extends Component {
                             <Step2
                                 state={this.state}
                                 handleOnChange={handleOnChange}
+                                handleOnChangeDate={handleOnChangeDate}
                                 handleNext={handleNext}
                                 handlePrev={handlePrev}
                             />
-                            {/* <Step2b /> */}
                         </div>
                     );
                 case 2:

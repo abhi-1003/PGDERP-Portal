@@ -26,6 +26,7 @@ import {
 	renderDate,
 	RenderDate,
 	MultipleSelect,
+	renderInputTextDisabled,
 } from "../common/displayComponents";
 const yesterday = dayjs().subtract(1, "day");
 export default function Step2({
@@ -61,11 +62,9 @@ export default function Step2({
 								</Box>
 							</TableCell>
 							<TableCell>
-								{renderInputText({
-									label: "",
+								{renderInputTextDisabled({
+									label: localStorage.getItem("pgderpID"),
 									name: "ID",
-									state,
-									handleOnChange: handleOnChange,
 								})}
 							</TableCell>
 						</TableRow>
@@ -77,11 +76,9 @@ export default function Step2({
 								</Box>
 							</TableCell>
 							<TableCell>
-								{renderInputText({
-									label: "",
+								{renderInputTextDisabled({
+									label: "PGDERP",
 									name: "course",
-									state,
-									handleOnChange: handleOnChange,
 								})}
 							</TableCell>
 						</TableRow>
@@ -147,14 +144,6 @@ export default function Step2({
 								>
 									<Grid item xs={12} sm={3}>
 										{renderMultiInputText({
-											label: "Surname",
-											name: "lastName",
-											state,
-											handleOnChange: handleOnChange,
-										})}
-									</Grid>
-									<Grid item xs={12} sm={3}>
-										{renderMultiInputText({
 											label: "First Name",
 											name: "firstName",
 											state,
@@ -165,6 +154,14 @@ export default function Step2({
 										{renderMultiInputText({
 											label: "Middle Name",
 											name: "middleName",
+											state,
+											handleOnChange: handleOnChange,
+										})}
+									</Grid>
+									<Grid item xs={12} sm={3}>
+										{renderMultiInputText({
+											label: "Surname",
+											name: "lastName",
 											state,
 											handleOnChange: handleOnChange,
 										})}
@@ -214,11 +211,9 @@ export default function Step2({
 								</Box>
 							</TableCell>
 							<TableCell>
-								{renderInputText({
-									label: "",
+								{renderInputTextDisabled({
+									label: localStorage.getItem("email"),
 									name: "email",
-									state,
-									handleOnChange: handleOnChange,
 								})}
 							</TableCell>
 						</TableRow>
