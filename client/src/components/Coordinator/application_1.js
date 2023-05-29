@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { BACKEND_URL } from "../../config";
 import axios from "axios";
+import ReactLoading from 'react-loading';
 
 const data = {
     ID: "",
@@ -85,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Application1(props) {
     const [newdata, setData] = useState({});
+    const [loading, setLoading] = useState(false);
     const id=props.data;
     const url = BACKEND_URL + `/student/personalDetails?id=${id}`;
     useEffect(() => {
@@ -93,6 +95,7 @@ function Application1(props) {
           .get(url)
           .then((response) => {
             setData(response.data);
+            setLoading(true);
           })
           .catch((error) => {
             console.log(error);
@@ -118,7 +121,9 @@ function Application1(props) {
     return (
         <div>
             <div className={classes.homeContent}>
-                <Typography variant='h5' className={classes.title}>Personal Details</Typography>
+                {loading === false ? <Typography variant='h5' >Loading...</Typography>: (
+                    <>
+                    <Typography variant='h5' className={classes.title}>Personal Details</Typography>
                 <TableContainer component={Paper} className={classes.tableContainer}>
                     <Table className={classes.table}>
                         <TableHead className={classes.tableHead}>
@@ -144,7 +149,7 @@ function Application1(props) {
                                 <TableCell className={classes.tableCell} width="30%">Campus Preference</TableCell>
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                                        {newdata.coursepreferences!==undefined? newdata.coursepreferences.map((pre) => {
+                                        {newdata.campusPreference!==undefined? newdata.campusPreference.map((pre) => {
                                             return (
                                                 <Grid item xs={12} sm={4}>
                                                     <b>{pre}</b>
@@ -231,7 +236,7 @@ function Application1(props) {
                                             <b>Age as on date:</b>
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            {calculateAge(new Date(newdata.dob))}
+                                            {newdata.age}
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -256,6 +261,8 @@ function Application1(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                </>
+                )}
             </div>
         </div>
     )

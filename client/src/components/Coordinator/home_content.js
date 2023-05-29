@@ -43,11 +43,13 @@ function HomeContent() {
     const url = BACKEND_URL + "/student/applicants";
     axios.get(url)
     const [newdata, setNewdata] = useState([]);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         axios.get(url)
             .then(response => {
                 console.log(response.data); // log the response data to the console
-                setNewdata(response.data)
+                setNewdata(response.data);
+                setLoading(true);
             })
             .catch(error => {
                 console.error(error);
@@ -58,6 +60,8 @@ function HomeContent() {
 
     return (
         <div className={classes.homeContent}>
+           {loading === false ? <Typography variant='h5'>Loading...</Typography>:
+           <>
             <Typography variant='h5' className={classes.title}>Applications</Typography>
             <TableContainer component={Paper} className={classes.tableContainer}>
                 <Table className={classes.table}>
@@ -83,6 +87,7 @@ function HomeContent() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            </>}
         </div>
     )
 }

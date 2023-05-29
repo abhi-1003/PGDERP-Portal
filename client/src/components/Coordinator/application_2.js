@@ -81,48 +81,51 @@ function Application2(props) {
                        {loading?( 
                        <TableBody>
                         <TableRow>
-                                <TableCell className={classes.tableCell} width="25%">{data['academics']['examinationSSC']}</TableCell>
-                                <TableCell className={classes.tableCell} width="40%">{data['academics']['instituteSSC']}</TableCell>
+                                <TableCell className={classes.tableCell} width="25%">SSC</TableCell>
+                                <TableCell className={classes.tableCell} width="40%">{data['InstituteSSC']}</TableCell>
                                 <TableCell className={classes.tableCell} width="20%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academics']['datefromSSC']}
+                                        {data['SSCFrom'][1]}{data['SSCFrom'][0]}/{data['SSCFrom'][2]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academics']['datetoSSC']}
+                                        {data['SSCTo'][1]}{data['SSCTo'][0]}/{data['SSCTo'][2]}
                                         </Grid>
                                     </Grid></TableCell>
-                                <TableCell className={classes.tableCell} width="15%">{data['academics']['percentageMarksSSC']} %</TableCell>
+                                <TableCell className={classes.tableCell} width="15%">{data['SSCmarks']}</TableCell>
                             </TableRow>
+                            {data['HSCFilled'] ? 
                             <TableRow>
-                                <TableCell className={classes.tableCell} width="25%">{data['academics']['examinationHSC']}</TableCell>
-                                <TableCell className={classes.tableCell} width="40%">{data['academics']['instituteHSC']}</TableCell>
-                                <TableCell className={classes.tableCell} width="20%">
-                                    <Grid container spacing={2} >
-                                        <Grid item xs={12} sm={6} >
-                                        {data['academics']['datefromHSC']}
-                                        </Grid>
-                                        <Grid item xs={12} sm={6} >
-                                        {data['academics']['datefromHSC']}
-                                        </Grid>
-                                    </Grid></TableCell>
-                                <TableCell className={classes.tableCell} width="15%">{data['academics']['percentageMarksHSC']} %</TableCell>
-                            </TableRow>
-                            {data['academics']['examinationDiploma'] !== undefined?
-                            <TableRow>
-                            <TableCell className={classes.tableCell} width="25%">{data['academics']['examinationDiploma']}</TableCell>
-                            <TableCell className={classes.tableCell} width="40%">{data['academics']['instituteDiploma']}</TableCell>
+                            <TableCell className={classes.tableCell} width="25%">HSC</TableCell>
+                            <TableCell className={classes.tableCell} width="40%">{data['InstituteHSC']}</TableCell>
                             <TableCell className={classes.tableCell} width="20%">
                                 <Grid container spacing={2} >
                                     <Grid item xs={12} sm={6} >
-                                    {data['academics']['datefromDiploma']}
+                                    {data['HSCFrom'][0][1]/data['HSCFrom'][0][2]}
                                     </Grid>
                                     <Grid item xs={12} sm={6} >
-                                    {data['academics']['datetoDiploma']}
+                                    {data['HSCTo'][0][1]/data['HSCTo'][0][2]}
                                     </Grid>
                                 </Grid></TableCell>
-                            <TableCell className={classes.tableCell} width="15%">{data['academics']['percentageMarksDiploma']} %</TableCell>
-                        </TableRow>:<></>}
+                            <TableCell className={classes.tableCell} width="15%">{data['HSCmarks']}</TableCell>
+                        </TableRow>:
+                        <></>}
+                        {data['DiplomaFilled'] ? 
+                        <TableRow>
+                        <TableCell className={classes.tableCell} width="25%">Diploma</TableCell>
+                        <TableCell className={classes.tableCell} width="40%">{data['InstituteDiploma']}</TableCell>
+                        <TableCell className={classes.tableCell} width="20%">
+                            <Grid container spacing={2} >
+                                <Grid item xs={12} sm={6} >
+                                {data['DiplomaFrom'][0][1]/data['DiplomaFrom'][0][2]}
+                                </Grid>
+                                <Grid item xs={12} sm={6} >
+                                {data['DiplomaTo'][0][1]/data['DiplomaTo'][0][2]}
+                                </Grid>
+                            </Grid></TableCell>
+                        <TableCell className={classes.tableCell} width="15%">{data['Diplomamarks']}</TableCell>
+                    </TableRow>:
+                    <></>}
                         </TableBody>):
                         <></>}
                     </Table>
@@ -164,59 +167,59 @@ function Application2(props) {
                         {loading?
                         (<TableBody>
                             <TableRow>
-                                <TableCell className={classes.tableCell} width="10%">{data['academicsUGPG']['examinationUG']}</TableCell>
-                                <TableCell className={classes.tableCell} width="25%">{data['academicsUGPG']['instituteUG']}</TableCell>
-                                <TableCell className={classes.tableCell} width="15%">{data['academicsUGPG']['specializationUG']}</TableCell>
+                                <TableCell className={classes.tableCell} width="10%">UG</TableCell>
+                                <TableCell className={classes.tableCell} width="25%">{data['InstituteGrad']}</TableCell>
+                                <TableCell className={classes.tableCell} width="15%">{data['SpecializationGrad']}</TableCell>
                                 <TableCell className={classes.tableCell} width="15%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['datefromUG']}
+                                        {data['GradFrom'][0][1]/data['GradFrom'][0][2]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['datetoUG']}
+                                        {data['GradTo'][0][1]/data['GradTo'][0][2]}
                                         </Grid>
                                     </Grid></TableCell>
-                                <TableCell className={classes.tableCell} width="10%">{data['academicsUGPG']['marksFinalYearUG']}</TableCell>
-                                <TableCell className={classes.tableCell} width="10%">{data['academicsUGPG']['percentageMarksUG']}</TableCell>
+                                <TableCell className={classes.tableCell} width="10%">{data['FinalYearMarksGrad']}</TableCell>
+                                <TableCell className={classes.tableCell} width="10%">{data['AggregateMarksGrad']}</TableCell>
                                 <TableCell className={classes.tableCell} width="15%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['totalDeadBacklogsUG']}
+                                        {data['DeadBacklogsGrad']}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                            {data['academicsUGPG']['totalLiveBacklogsUG']}
+                                            {data['AliveBacklogGrad']}
                                         </Grid>
                                     </Grid></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={classes.tableCell} width="10%">{data['academicsUGPG']['examinationPG']}</TableCell>
-                                <TableCell className={classes.tableCell} width="25%">{data['academicsUGPG']['institutePG']}</TableCell>
-                                <TableCell className={classes.tableCell} width="15%">{data['academicsUGPG']['specializationPG']}</TableCell>
+                                <TableCell className={classes.tableCell} width="10%">PG</TableCell>
+                                <TableCell className={classes.tableCell} width="25%">{data['InstitutePostGrad']}</TableCell>
+                                <TableCell className={classes.tableCell} width="15%">{data['SpecializationPostGrad']}</TableCell>
                                 <TableCell className={classes.tableCell} width="15%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['datefromPG']}
+                                        {data['PostGradFrom'][0][1]/data['PostGradFrom'][0][2]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['datetoPG']}
+                                        {data['PostGradTo'][0][1]/data['PostGradTo'][0][2]}
                                         </Grid>
                                     </Grid></TableCell>
-                                <TableCell className={classes.tableCell} width="10%">{data['academicsUGPG']['marksFinalYearPG']}</TableCell>
-                                <TableCell className={classes.tableCell} width="10%">{data['academicsUGPG']['percentageMarksPG']}</TableCell>
+                                <TableCell className={classes.tableCell} width="10%">{data['FinalYearMarksPostGrad']}</TableCell>
+                                <TableCell className={classes.tableCell} width="10%">{data['AggregateMarksPostGrad']}</TableCell>
                                 <TableCell className={classes.tableCell} width="15%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['totalDeadBacklogsPG']}
+                                        {data['DeadBacklogsPostGrad']}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['academicsUGPG']['totalLiveBacklogsPG']}
+                                        {data['AliveBacklogPostGrad']}
                                         </Grid>
                                     </Grid></TableCell>
                             </TableRow>
                         </TableBody>):<></>}
                     </Table>
                 </TableContainer>
-                <Grid container spacing={2} style={{ marginBottom: "1px", width: '90%', margin: "auto" }}>
+                {/* <Grid container spacing={2} style={{ marginBottom: "1px", width: '90%', margin: "auto" }}>
                     <Grid item xs={12} sm={3}>
                         <b>Duration Of Educational Gaps</b><br /> (Gap During Academics)
                     </Grid>
@@ -229,7 +232,7 @@ function Application2(props) {
                     <Grid item xs={12} sm={3}>
 
                     </Grid>
-                </Grid><br />
+                </Grid><br /> */}
 
                 <Typography variant='h6' style={{ textAlign: "center" }}>Other Course Details (In Reverse Chronological Order) </Typography>
                 <TableContainer component={Paper} className={classes.tableContainer}>
@@ -237,6 +240,8 @@ function Application2(props) {
                         <TableHead className={classes.tableHead}>
                             <TableRow>
                                 <TableCell className={classes.tableHeadCell} width="30%"><b>Course Name</b></TableCell>
+                                <TableCell className={classes.tableHeadCell} width="30%"><b>University Name</b></TableCell>
+                                <TableCell className={classes.tableHeadCell} width="30%"><b>Specialization Name</b></TableCell>
                                 <TableCell className={classes.tableHeadCell} width="15%" style={{ textAlign: "center" }}><b>Period</b>
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6} style={{ marginTop: "6px" }}>
@@ -252,19 +257,25 @@ function Application2(props) {
                         </TableHead>
                         {loading?
                         (<TableBody>
-                            <TableRow>
-                                <TableCell className={classes.tableCell} width="30%">{data['othercourses'][0]}</TableCell>
-                                <TableCell className={classes.tableCell} width="15%">
-                                    <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                                        <Grid item xs={12} sm={6}>
-                                        {data['othercourses'][1]}
-                                        </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                        {data['othercourses'][2]}
-                                        </Grid>
-                                    </Grid></TableCell>
-                                <TableCell className={classes.tableCell} width="10%">{data['othercourses'][3]}</TableCell>
-                            </TableRow>
+                            {data['otherCourses'].map((item,index)=>{
+                                return (
+                                    <TableRow>
+                                    <TableCell className={classes.tableCell} width="30%">{item['courseName']}</TableCell>
+                                    <TableCell className={classes.tableCell} width="30%">{item['uniName']}</TableCell>
+                                    <TableCell className={classes.tableCell} width="30%">{item['specialization']}</TableCell>
+                                    <TableCell className={classes.tableCell} width="15%">
+                                        <Grid container spacing={2} style={{ marginBottom: "1px" }}>
+                                            <Grid item xs={12} sm={6}>
+                                            {item['periodFrom']}
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                            {item['periodTo']}
+                                            </Grid>
+                                        </Grid></TableCell>
+                                    <TableCell className={classes.tableCell} width="10%">{item['grade']}</TableCell>
+                                </TableRow>
+                                )
+                            })}
                         </TableBody>)
                         :<></>}
                     </Table>
