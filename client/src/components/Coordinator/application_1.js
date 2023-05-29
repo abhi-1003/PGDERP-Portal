@@ -4,51 +4,51 @@ import { Typography, Grid, TableContainer, Paper, Table, TableBody, TableCell, T
 import { BACKEND_URL } from "../../config";
 import axios from "axios";
 
-const data = {
-    ID: "",
-    course: "",
-    coursePreference: [],
-    lastName: "",
-    firstName: "",
-    middleName: "",
-    Address: "",
-    permanentAddress: "",
-    email: "",
-    gender: "",
-    phyDis: "",
-    number: "",
-    PHname: "",
-    PHemail: "",
-    PHnumber: "",
-    dob: '',
-    domicileState: "",
-    nationality: "",
-    InstituteSSC: "",
-    InstituteHSC: "",
-    SSCFrom: "",
-    HSCFrom: "",
-    SSCTo: "",
-    HSCTo: "",
-    SSCmarks: "",
-    HSCmarks: "",
-    Diplomamarks: "",
-    InstituteGrad: "",
-    SpecializationGrad: "",
-    GradFrom: "",
-    GradTo: "",
-    FinalYearMarksGrad: "",
-    AggregateMarksGrad: "",
-    DeadBacklogsGrad: "",
-    AliveBacklogGrad: "",
-    InstitutePostGrad: "",
-    SpecializationPostGrad: "",
-    PostGradFrom: "",
-    PostGradTo: "",
-    FinalYearMarksPostGrad: "",
-    AggregateMarksPostGrad: "",
-    DeadBacklogsPostGrad: "",
-    AliveBacklogPostGrad: ""
-  }
+// const data = {
+//     ID: "",
+//     course: "",
+//     coursePreference: [],
+//     lastName: "",
+//     firstName: "",
+//     middleName: "",
+//     Address: "",
+//     permanentAddress: "",
+//     email: "",
+//     gender: "",
+//     phyDis: "",
+//     number: "",
+//     PHname: "",
+//     PHemail: "",
+//     PHnumber: "",
+//     dob: '',
+//     domicileState: "",
+//     nationality: "",
+//     InstituteSSC: "",
+//     InstituteHSC: "",
+//     SSCFrom: "",
+//     HSCFrom: "",
+//     SSCTo: "",
+//     HSCTo: "",
+//     SSCmarks: "",
+//     HSCmarks: "",
+//     Diplomamarks: "",
+//     InstituteGrad: "",
+//     SpecializationGrad: "",
+//     GradFrom: "",
+//     GradTo: "",
+//     FinalYearMarksGrad: "",
+//     AggregateMarksGrad: "",
+//     DeadBacklogsGrad: "",
+//     AliveBacklogGrad: "",
+//     InstitutePostGrad: "",
+//     SpecializationPostGrad: "",
+//     PostGradFrom: "",
+//     PostGradTo: "",
+//     FinalYearMarksPostGrad: "",
+//     AggregateMarksPostGrad: "",
+//     DeadBacklogsPostGrad: "",
+//     AliveBacklogPostGrad: ""
+//   }
 
 const useStyles = makeStyles((theme) => ({
     homeContent: {
@@ -93,6 +93,7 @@ function Application1(props) {
           .get(url)
           .then((response) => {
             setData(response.data);
+            console.log(response.data);
           })
           .catch((error) => {
             console.log(error);
@@ -144,7 +145,7 @@ function Application1(props) {
                                 <TableCell className={classes.tableCell} width="30%">Campus Preference</TableCell>
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                                        {newdata.coursepreferences!==undefined? newdata.coursepreferences.map((pre) => {
+                                        {newdata.campusPreference!==undefined? newdata.campusPreference.map((pre) => {
                                             return (
                                                 <Grid item xs={12} sm={4}>
                                                     <b>{pre}</b>
