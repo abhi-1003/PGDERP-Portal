@@ -18,7 +18,7 @@ import axios from "axios";
 const theme = createTheme();
 const initialFValues = {
   email: "",
-  password: "",
+  password: ""
 };
 
 export default function AdminLogin() {
@@ -35,8 +35,7 @@ export default function AdminLogin() {
     if ("password" in fieldValues)
       temp.password = fieldValues.password ? "" : "This field is required.";
     setErrors(temp);
-    if (fieldValues === values)
-      return Object.values(temp).every((x) => x === "");
+    if (fieldValues === values) return Object.values(temp).every(x => x === "");
   };
 
   const { values, errors, setErrors, handleInputChange } = useForm(
@@ -45,26 +44,26 @@ export default function AdminLogin() {
     validate
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (validate()) {
       const data = {
         email: values.email,
-        password: values.password,
+        password: values.password
       };
       console.log(data);
       const url = BACKEND_URL + "/admin/loginAdmin";
       axios
         .post(url, data)
-        .then((res) => {
+        .then(res => {
           alert(res.data.message);
           let token_dict = res.data.token;
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "admin");
-          navigate("/admin_landing_page");
+          navigate("/admin/home");
         })
-        .catch((err) => {
+        .catch(err => {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
@@ -74,76 +73,124 @@ export default function AdminLogin() {
     <>
       {/* <NavBar /> */}
       <ThemeProvider theme={theme}>
-      <div style={{background: 'linear-gradient(to bottom, #42a7f5, #dae9eb)',position:"absolute",
-  top:"0px",
-  right:"0px",
-  bottom:"0px",
-  left:"0px"}}>
-        <Container
-          component="main"
-          maxWidth="xs"
-          style={{ marginTop: "120px" }}>
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}>
-            <Avatar sx={{ m: 1, bgcolor: "#012d5e" }}></Avatar>
-            <Typography component="h1" variant="h5">
-              Admin Login
-            </Typography>
-            <Form onSubmit={handleSubmit}>
-              <Grid align="center" xs={12} item>
-                <Grid align="center" item xs={12}>
-                  <Input
-                    name="email"
-                    label="Email*"
-                    value={values.email}
-                    onChange={handleInputChange}
-                    error={errors.email}
-                  />
-                  <Input
-                    type="password"
-                    name="password"
-                    label="Password*"
-                    value={values.password}
-                    onChange={handleInputChange}
-                    error={errors.password}
-                  />
-                  <Grid item xs={12}>
-                    <Button
-                      onClick={handleSubmit}
-                      type="submit"
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                      style={{
-                        width: "100%",
-                        marginLeft: "2%",
-                        background: "#012d5e",
-                      }}>
-                      Login
-                    </Button>
-                  </Grid>
-                  <Grid container spacing={20}>
-                    <Grid item xs>
-                      <Link href="/" variant="body2">
-                        {"Home Page"}
-                      </Link>
+        <div
+          style={{
+            background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
+            position: "absolute",
+            top: "0px",
+            right: "0px",
+            bottom: "0px",
+            left: "0px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Container
+            component="main"
+            maxWidth="xs"
+            style={{
+              backgroundColor: "rgba(215, 198, 165, 0.4)",
+              borderRadius: "32px"
+            }}
+          >
+            <CssBaseline />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
+              <Avatar
+                sx={{
+                  m: 3,
+                  bgcolor: "#012d5e",
+                  width: "128px",
+                  height: "128px"
+                }}
+              ></Avatar>
+              <Typography
+                component="h1"
+                variant="h5"
+                style={{ marginBottom: "20px" }}
+              >
+                Admin Login
+              </Typography>
+              <Form onSubmit={handleSubmit}>
+                <Grid align="center" xs={12} item>
+                  <Grid align="center" item xs={12}>
+                    <Input
+                      name="email"
+                      label="Email*"
+                      value={values.email}
+                      onChange={handleInputChange}
+                      error={errors.email}
+                    />
+                    <Input
+                      type="password"
+                      name="password"
+                      label="Password*"
+                      value={values.password}
+                      onChange={handleInputChange}
+                      error={errors.password}
+                    />
+                    <Grid item xs={12}>
+                      <Button
+                        onClick={handleSubmit}
+                        type="submit"
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        style={{
+                          width: "100%",
+                          marginLeft: "2%",
+                          background: "#feca0a",
+                          color: "#012d5e",
+                          fontSize: "18px",
+                          fontWeight: "bold",
+                          letterSpacing: "2px"
+                        }}
+                      >
+                        Login
+                      </Button>
                     </Grid>
-                    <Grid item xs>
-                      <Link href="/register_admin" variant="body2">
-                        {"Register Admin"}
-                      </Link>
+                    <Grid
+                      container
+                      spacing={20}
+                      style={{
+                        alignItems: "center"
+                      }}
+                    >
+                      <Grid item xs>
+                        <Link
+                          href="/"
+                          variant="body2"
+                          style={{
+                            textDecoration: "none",
+                            color: "#1d8ffe"
+                          }}
+                        >
+                          {"Home Page"}
+                        </Link>
+                      </Grid>
+                      <Grid item xs>
+                        <Link
+                          href="/admin/register"
+                          variant="body2"
+                          style={{
+                            textDecoration: "none",
+                            color: "#1d8ffe"
+                          }}
+                        >
+                          {"Register Admin"}
+                        </Link>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Form>
-          </Box>
-        </Container>
+              </Form>
+            </Box>
+          </Container>
         </div>
       </ThemeProvider>
     </>

@@ -9,9 +9,12 @@ import {
     Typography,
     withStyles,
 } from "@material-ui/core";
+import { nanoid } from "nanoid";
 import React, { Component } from "react";
+import dataa from "./steps/data.json";
 import PropTypes from "prop-types";
 import { Styles } from "./common/styles";
+import Step2b from './steps/form_table';
 import Step1 from "./steps/SStep";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
@@ -30,8 +33,8 @@ import dayjs from "dayjs";
 class FormComponent extends Component {
     state = {
         data: {
-            ID: "",
-            course: "",
+            ID: localStorage.getItem("pgderpID"),
+            course: "PGDERP",
             campusPreference1: "",
             campusPreference2: "",
             campusPreference3: "",
@@ -40,7 +43,7 @@ class FormComponent extends Component {
             middleName: "",
             Address: "",
             permanentAddress: "",
-            email: "",
+            email: localStorage.getItem("email"),
             gender: "",
             phyDis: "",
             number: "",
@@ -53,15 +56,15 @@ class FormComponent extends Component {
             caste: "",
             InstituteSSC: "",
             InstituteHSC: "",
-            SSCFrom: "",
-            HSCFrom: "",
             SSCTo: "",
             HSCTo: "",
+            SSCFrom: "",
+            HSCFrom: "",
             SSCmarks: "",
             HSCmarks: "",
             InstituteDiploma: "",
-            DiplomaFrom: "",
             DiplomaTo: "",
+            DiplomaFrom: "",
             Diplomamarks: "",
             InstituteGrad: "",
             SpecializationGrad: "",
@@ -84,14 +87,25 @@ class FormComponent extends Component {
         },
         errors: {},
         currentStep: 0,
+        SSCtoHSC: 0,
+        SSCtoDiploma: 0,
+        HSCtoDiploma: 0,
+        totalgaps: 0,
+        DroptoGrad: 0,
+        GradPeriod: 0,
+        GradtoPostGrad: 0,
         age: 0,
         HSCFilled: false,
         DiplomaFilled: false,
         noneFilled: false,
+        documentsUploaded: [],
     };
+    
     render() {
         const { classes } = this.props;
+//      
 
+//
         const handleChangePreferences = (event) => {
             const {
                 target: { value },
@@ -108,17 +122,89 @@ class FormComponent extends Component {
                 typeof value === "string" ? value.split(",") : value;
             if (value.length !== 3) {
                 errors["campusPreference"] = "Select 3 preferences";
-            } else {
+            } 
+            else if(value[0] === value[1] || value[1] === value[2] || value[0] === value[2]){
+                errors["campusPreference"] = "All 3 preferences must be different";
+            }
+            else {
                 errors["campusPreference"] = "";
             }
             this.setState({ data, errors });
         };
 
         const today = dayjs();
+
+        const otherCoursesChange = (value) =>{
+            this.state.otherCourses = value;
+        }
+
+        const professionalExperienceChange = (value) => {
+            this.state.professionalExperience = value;
+        }
+
+
         const handleOnChangeDate = (name, value) => {
             const { data, errors } = this.state;
+            console.log(name)
             // console.log(today.$y - value.$y);
-            this.state.age = today.$y - value.$y;
+            if (name==="dob"){
+                this.state.age = today.$y - value.$y;
+            }
+            if(name==="HSCFrom"){
+                this.state.SSCtoHSC = value.$y - this.state.data.SSCTo[2];
+            }
+            if(name==="DiplomaFrom"){
+                this.state.SSCtoDiploma = value.$y - this.state.data.SSCTo[2];
+
+            }
+            if(name==="DiplomaFrom" && this.state.data.HSCTo !==[]){
+                this.state.HSCtoDiploma = value.$y - this.state.data.HSCTo[2];
+            }
+            
+            let a = 0;
+            let b = 0;
+            let c = 0;
+
+            if(this.state.SSCtoHSC && isNaN(this.state.SSCtoHSC) == false){
+                a = this.state.SSCtoHSC
+            }
+            if(this.state.SSCtoDiploma && isNaN(this.state.SSCtoDiploma) == false){
+                b = this.state.SSCtoDiploma
+            }
+            if(this.state.HSCtoDiploma && isNaN(this.state.HSCtoDiploma) == false){
+                c = this.state.HSCtoDiploma
+            }
+            
+            console.log(this.state.data.SSCTo, this.state.data.HSCTo, this.state.data.DiplomaTo)
+            if(this.state.data.SSCFrom && this.state.data.HSCFrom && this.state.data.DiplomaFrom){
+                this.state.totalgaps = a + c;
+            }
+
+            else if(this.state.data.SSCFrom && this.state.HSCFrom){
+                this.state.totalgaps = a;
+            }
+
+            else if(this.state.data.SSCFrom && this.state.data.DiplomaFrom){
+                this.state.totalgaps = b;
+            }
+
+            console.log(this.state.SSCtoHSC, this.state.SSCtoDiploma, this.state.HSCtoDiploma, this.state.totalgaps)
+            if(name==="GradFrom"){
+                if(this.state.data.DiplomaTo === []){
+                    this.state.DroptoGrad = value.$y - this.state.data.HSCTo[2];
+                }
+                else{
+                    this.state.DroptoGrad = value.$y - this.state.data.DiplomaTo[2];
+                }
+            }
+            console.log("hiii")
+            if(name==="GradTo"){
+                this.state.GradPeriod = value.$y - this.state.data.GradFrom[2];
+                console.log(value.$y, this.state.data.GradFrom)
+            }
+            if(name==="PostGradFrom"){
+                this.state.GradtoPostGrad = value.$y - this.state.data.GradTo[2];
+            }
             data[name] = [value.$D, value.$M, value.$y];
             // data[target.name] = target.value;
             // console.log("run")
@@ -210,8 +296,8 @@ class FormComponent extends Component {
             InstituteSSC:data.InstituteSSC,
             InstituteHSC:data.InstituteHSC,
             SSCFrom:data.SSCFrom,
-            HSCFrom:data.HSCFrom,
             SSCTo:data.SSCTo,
+            HSCFrom:data.HSCFrom,
             HSCTo:data.HSCTo,
             SSCmarks:data.SSCmarks,
             HSCmarks:data.HSCmarks,
@@ -327,17 +413,15 @@ class FormComponent extends Component {
                     : (errors["nationality"] = "");
                 console.log("6");
             }
-
+            console.log(data.SSCTo.length, data.SSCFrom.length, data.SSCTo.length !== 3, isNaN(data.SSCFrom),)
             // Educational Details Validation
             if (data.InstituteSSC.length <= 0 && step === 1) {
                 errors["InstituteSSC"] = "Enter a valid institute";
                 goToNext = false;
             }
             if (
-                (data.SSCTo.length !== 4 ||
-                    data.SSCFrom.length !== 4 ||
-                    isNaN(data.SSCFrom) ||
-                    isNaN(data.SSCTo)) &&
+                (data.SSCTo.length !== 3 ||
+                    data.SSCFrom.length !== 3 ) &&
                 step === 1
             ) {
                 errors["SSCTo"] = "Enter a valid year";
@@ -352,20 +436,25 @@ class FormComponent extends Component {
                 goToNext = false;
             }
 
+            if (data.InstituteHSC.length <= 0 && step === 1) {
+                errors["InstituteHSC"] = "Enter a valid institute";
+                goToNext = false;
+            }
+
             if (
-                (data.HSCTo.length !== 4 ||
-                    data.HSCFrom.length !== 4 ||
+                (data.HSCTo.length !== 3 ||
+                    data.HSCFrom.length !== 3 ||
                     isNaN(data.HSCFrom) ||
                     isNaN(data.HSCTo) ||
                     Number(data.HSCmarks) > 100 ||
                     Number(data.HSCmarks) < 35) &&
                 step === 1
             ) {
-                errors["InstituteHSC"] = "Enter a valid institute";
-                if (data.HSCFrom.length !== 4 || isNaN(data.HSCFrom)) {
+                // errors["InstituteHSC"] = "Enter a valid institute";
+                if (data.HSCFrom.length !== 3 ) {
                     errors["HSCFrom"] = "Enter a valid year";
                 }
-                if (data.HSCTo.length !== 4 || isNaN(data.HSCTo)) {
+                if (data.HSCTo.length !== 3 ) {
                     errors["HSCTo"] = "Enter a valid year";
                 }
                 if (
@@ -383,8 +472,8 @@ class FormComponent extends Component {
             }
 
             if (
-                (data.DiplomaTo.length !== 4 ||
-                    data.DiplomaFrom.length !== 4 ||
+                (data.DiplomaTo.length !== 3 ||
+                    data.DiplomaFrom.length !== 3 ||
                     isNaN(data.DiplomaFrom) ||
                     isNaN(data.DiplomaTo) ||
                     Number(data.Diplomamarks) > 100 ||
@@ -401,10 +490,10 @@ class FormComponent extends Component {
                     errors["InstituteDiploma"] = "";
                 }
 
-                if (data.DiplomaFrom.length !== 4 || isNaN(data.DiplomaFrom)) {
+                if (data.DiplomaFrom.length !== 3) {
                     errors["DiplomaFrom"] = "Enter a valid year";
                 }
-                if (data.DiplomaTo.length !== 4 || isNaN(data.DiplomaTo)) {
+                if (data.DiplomaTo.length !== 3) {
                     errors["DiplomaTo"] = "Enter a valid year";
                 }
                 if (
@@ -442,10 +531,10 @@ class FormComponent extends Component {
                     ? (errors["SpecializationGrad"] =
                           "Enter a valid Specialization")
                     : (errors["SpecializationGrad"] = "");
-                data.GradFrom.length !== 4 || isNaN(data.GradFrom)
+                data.GradFrom.length !== 3
                     ? (errors["GradFrom"] = "Enter a valid year")
                     : (errors["GradFrom"] = "");
-                data.GradTo.length !== 4 || isNaN(data.GradTo)
+                data.GradTo.length !== 3
                     ? (errors["GradTo"] = "Enter a valid year")
                     : (errors["GradTo"] = "");
                 data.AliveBacklogGrad < 0 ||
@@ -472,14 +561,12 @@ class FormComponent extends Component {
             }
             // POST GRAD VALIDATION (not required)
             if (step === 1) {
-                (data.PostGradFrom.length !== 4 &&
-                    data.PostGradFrom.length !== 0) ||
-                isNaN(data.PostGradFrom)
+                (data.PostGradFrom.length !== 3 &&
+                    data.PostGradFrom.length !== 0) 
                     ? (errors["PostGradFrom"] = "Enter a valid year")
                     : (errors["PostGradFrom"] = "");
-                (data.PostGradTo.length !== 4 &&
-                    data.PostGradTo.length !== 0) ||
-                isNaN(data.PostGradTo)
+                (data.PostGradTo.length !== 3 &&
+                    data.PostGradTo.length !== 0)
                     ? (errors["PostGradTo"] = "Enter a valid year")
                     : (errors["PostGradTo"] = "");
 
@@ -565,6 +652,7 @@ class FormComponent extends Component {
                             handleOnChangeDate={handleOnChangeDate}
                             handleNext={handleNext}
                             handleChangePreferences={handleChangePreferences}
+                            otherCoursesChange = {otherCoursesChange}
                         />
                     );
                 case 1:
@@ -573,10 +661,11 @@ class FormComponent extends Component {
                             <Step2
                                 state={this.state}
                                 handleOnChange={handleOnChange}
+                                handleOnChangeDate={handleOnChangeDate}
                                 handleNext={handleNext}
                                 handlePrev={handlePrev}
+                                otherCoursesChange = {otherCoursesChange}
                             />
-                            {/* <Step2b /> */}
                         </div>
                     );
                 case 2:
@@ -586,10 +675,11 @@ class FormComponent extends Component {
                             handleOnChange={handleOnChange}
                             handleNext={handleNext}
                             handlePrev={handlePrev}
+                            professionalExperienceChange = {professionalExperienceChange}
                         />
                     );
                 case 3:
-                    return <Finished state={this.state.data}
+                    return <Finished state={this.state}
                                      handleSubmit={handleSubmit}
                                      handlePrev={handlePrev}
                     />;

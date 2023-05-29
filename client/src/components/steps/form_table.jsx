@@ -19,11 +19,18 @@ import {
 import { useState, Fragment } from "react";
 import { nanoid } from "nanoid";
 // import "./form_table.css";
-import data from "./data.json";
+import dataa from "./data.json";
 import ReadOnlyRow from "../ReadOnlyRow";
 
-const Step2b = () => {
-    const [contacts, setContacts] = useState(data);
+export default function Step2b(state,
+    handleOnChange,
+    handleOnChangeDate,
+    handleNext,
+    handlePrev,
+    otherCoursesChange){
+
+    console.log(state, otherCoursesChange)
+    const [contacts, setContacts] = useState(dataa);
     const [addFormData, setAddFormData] = useState({
         courseName: "",
         uniName: "",
@@ -33,16 +40,16 @@ const Step2b = () => {
         grade: "",
     });
 
-    const [editFormData, setEditFormData] = useState({
-        courseName: "",
-        uniName: "",
-        specialization: "",
-        periodFrom: "",
-        periodTo: "",
-        grade: "",
-    });
+    // const [editFormData, setEditFormData] = useState({
+    //     courseName: "",
+    //     uniName: "",
+    //     specialization: "",
+    //     periodFrom: "",
+    //     periodTo: "",
+    //     grade: "",
+    // });
 
-    const [editContactId, setEditContactId] = useState(null);
+   // const [editContactId, setEditContactId] = useState(null);
 
     const handleAddFormChange = (event) => {
         event.preventDefault();
@@ -57,27 +64,20 @@ const Step2b = () => {
         console.log(contacts);
     };
 
-    const handleEditFormChange = (event) => {
-        event.preventDefault();
+    // const handleEditFormChange = (event) => {
+    //     event.preventDefault();
 
-        const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value;
+    //     const fieldName = event.target.getAttribute("name");
+    //     const fieldValue = event.target.value;
 
-        const newFormData = { ...editFormData };
-        newFormData[fieldName] = fieldValue;
+    //     const newFormData = { ...editFormData };
+    //     newFormData[fieldName] = fieldValue;
 
-        setEditFormData(newFormData);
-    };
+    //     setEditFormData(newFormData);
+    // };
 
     const handleAddFormSubmit = (event) => {
         event.preventDefault();
-        console.log("run");
-        // courseName: "",
-        // uniName: "",
-        // specialization: "",
-        // periodFrom: "",
-        // periodTo:"",
-        // grade:"",
         const newContact = {
             id: nanoid(),
             courseName: addFormData.courseName,
@@ -90,53 +90,56 @@ const Step2b = () => {
 
         const newContacts = [...contacts, newContact];
         setContacts(newContacts);
-        console.log(contacts);
+        state.otherCoursesChange(newContacts)
+        console.log(state.state)
+
+        // console.log(newContacts);
     };
 
-    const handleEditFormSubmit = (event) => {
-        event.preventDefault();
+    // const handleEditFormSubmit = (event) => {
+    //     event.preventDefault();
 
-        const editedContact = {
-            id: editContactId,
-            courseName: editFormData.courseName,
-            uniName: editFormData.uniName,
-            specialization: editFormData.specialization,
-            periodFrom: editFormData.periodFrom,
-            periodTo: editFormData.periodTo,
-            grade: editFormData.grade,
-        };
+    //     const editedContact = {
+    //         id: editContactId,
+    //         courseName: editFormData.courseName,
+    //         uniName: editFormData.uniName,
+    //         specialization: editFormData.specialization,
+    //         periodFrom: editFormData.periodFrom,
+    //         periodTo: editFormData.periodTo,
+    //         grade: editFormData.grade,
+    //     };
 
-        const newContacts = [...contacts];
+    //     const newContacts = [...contacts];
 
-        const index = contacts.findIndex(
-            (contact) => contact.id === editContactId
-        );
+    //     const index = contacts.findIndex(
+    //         (contact) => contact.id === editContactId
+    //     );
 
-        newContacts[index] = editedContact;
+    //     newContacts[index] = editedContact;
 
-        setContacts(newContacts);
-        setEditContactId(null);
-    };
+    //     setContacts(newContacts);
+    //     setEditContactId(null);
+    // };
 
-    const handleEditClick = (event, contact) => {
-        event.preventDefault();
-        setEditContactId(contact.id);
+    // const handleEditClick = (event, contact) => {
+    //     event.preventDefault();
+    //     setEditContactId(contact.id);
 
-        const formValues = {
-            courseName: contact.courseName,
-            uniName: contact.uniName,
-            specialization: contact.specialization,
-            periodFrom: contact.periodFrom,
-            periodTo: contact.periodTo,
-            grade: contact.grade,
-        };
+    //     const formValues = {
+    //         courseName: contact.courseName,
+    //         uniName: contact.uniName,
+    //         specialization: contact.specialization,
+    //         periodFrom: contact.periodFrom,
+    //         periodTo: contact.periodTo,
+    //         grade: contact.grade,
+    //     };
 
-        setEditFormData(formValues);
-    };
+    //     setEditFormData(formValues);
+    // };
 
-    const handleCancelClick = () => {
-        setEditContactId(null);
-    };
+    // const handleCancelClick = () => {
+    //     setEditContactId(null);
+    // };
 
     const handleDeleteClick = (contactId) => {
         const newContacts = [...contacts];
@@ -144,13 +147,15 @@ const Step2b = () => {
         const index = contacts.findIndex((contact) => contact.id === contactId);
 
         newContacts.splice(index, 1);
-
+        setAddFormData(newContacts);
         setContacts(newContacts);
+        state.professionalExperienceChange(newContacts)
     };
 
     return (
         <div className="app-container">
-            <form onSubmit={handleEditFormSubmit}>
+             {/* onSubmit={handleEditFormSubmit} */}
+            <form>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -183,7 +188,7 @@ const Step2b = () => {
                 )} */}
                                 <ReadOnlyRow
                                     contact={contact}
-                                    handleEditClick={handleEditClick}
+                                    //handleEditClick={handleEditClick}
                                     handleDeleteClick={handleDeleteClick}
                                 />
                             </Fragment>
@@ -308,5 +313,3 @@ const Step2b = () => {
         </div>
     );
 };
-
-export default Step2b;

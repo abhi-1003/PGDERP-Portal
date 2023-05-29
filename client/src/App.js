@@ -7,12 +7,16 @@ import AdminHome from "./pages/AdminHome";
 import Home from "./pages/Home";
 import CoordinatorRegister from "./pages/CoordinatorRegister";
 import Coordinator from "./components/Coordinator/coordinator";
+import CoordinatorLogin from "./pages/CoordinatorLogin";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
 import { roles } from "./adminDetails";
 import axios from "axios";
 import ProtectedRoute from "./protectedRoute";
 import StudentHome from "./pages/StudentHome";
+import { OtpScript } from "./components/common/otpScript";
+import Docs from "./components/steps/docs";
+import DocViewer from "./pages/DocViewer";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -33,41 +37,62 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<UserLogin />} exact></Route>
-        <Route path="/home" element={<Home />} exact></Route>
-        <Route path="/register" element={<UserRegister />}></Route>
-        <Route path="/register_admin" element={<AdminRegister />}></Route>
+        <Route path="/" element={<Home />} exact></Route>
+        <Route path="/student/login" element={<UserLogin />} exact></Route>
+        <Route path="/student/register" element={<UserRegister />}></Route>
         <Route
-          path="/student_form"
+          path="/student/form"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <FormComponent />
             </ProtectedRoute>
           }
         />
-        <Route path="/student_home" element = {
-          <ProtectedRoute allowedRoles={[roles.student]}>
-            <StudentHome />
-          </ProtectedRoute>
-        }/>
+        <Route path="/doc" element={<Docs />}></Route>
         <Route
-          path="/register_cord"
+          path="/student/home"
           element={
-            <ProtectedRoute allowedRoles={[roles.admin]}>
-              <CoordinatorRegister />
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <StudentHome />
             </ProtectedRoute>
           }
         />
-        <Route path="/coordinator/*" element={<Coordinator />}></Route>
-        <Route path="/admin_login" element={<AdminLogin />} exact></Route>
+
+        <Route path="/admin/login" element={<AdminLogin />} exact></Route>
+        <Route path="/admin/register" element={<AdminRegister />}></Route>
         <Route
-          path="/admin_landing_page"
+          path="/admin/home"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
               <AdminHome />
             </ProtectedRoute>
           }
         />
+
+        <Route path="/coordinator/*" element={<Coordinator />}></Route>
+        <Route
+          path="/coordinator/login"
+          element={<CoordinatorLogin />}
+          exact
+        ></Route>
+        <Route
+          path="/admin/registerCoord"
+          element={
+            <ProtectedRoute allowedRoles={[roles.admin]}>
+              <CoordinatorRegister />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/otpscript" element = {<OtpScript />}></Route>
+        <Route
+          path="/doc-view"
+          element = {
+            <DocViewer
+              filename="c915f2f5b21ad66e31829b34602b630a1685288091058.pdf"
+              contentType="application/pdf"
+            />
+          }
+        ></Route>
       </Routes>
     </Router>
   );

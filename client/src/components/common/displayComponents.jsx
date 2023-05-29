@@ -77,6 +77,23 @@ export const renderInputText = ({
 		/>
 	);
 };
+
+export const renderInputTextDisabled = ({
+	label,
+	name,
+}) => {
+	return (
+		<TextField
+			label={label}
+			disabled
+			variant="outlined"
+			name={name}
+			fullWidth={true}
+			size="small"
+		/>
+	);
+};
+
 export const renderInputSelect = ({
 	label,
 	name,

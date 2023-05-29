@@ -8,19 +8,28 @@ import {
     TableRow,
     TableCell,
     TableContainer,
+    withWidth,
 } from '@material-ui/core';
 import React from 'react';
 import {
     renderText,
     renderButton,
     renderInputText,
+    renderText1,
 } from '../common/displayComponents';
 import Step2b from './form_table';
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 export default function Step2({
     state,
     handleOnChange,
     handleNext,
     handlePrev,
+    handleOnChangeDate,
+    otherCoursesChange
 }) {
     return (
         <Paper component={Box} p={2}>
@@ -61,20 +70,52 @@ export default function Step2({
                                 })}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
-                                    label: '',
-                                    name: 'SSCFrom',
-                                    state,
-                                    handleOnChange: handleOnChange,
-                                })}
-                            </TableCell>
-                            <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "SSCFrom"
+											onChange={(value) => handleOnChangeDate( "SSCFrom", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'SSCTo',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
+                            </TableCell>
+                            <TableCell>
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "SSCTo"
+											onChange={(value) => handleOnChangeDate( "SSCTo", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {/* {renderInputText({
+                                    label: '',
+                                    name: 'SSCTo',
+                                    state,
+                                    handleOnChange: handleOnChange,
+                                })} */}
                             </TableCell>
                             <TableCell>
                                 {renderInputText({
@@ -96,20 +137,53 @@ export default function Step2({
                                 })}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
-                                    label: '',
-                                    name: 'HSCFrom',
-                                    state,
-                                    handleOnChange: handleOnChange,
-                                })}
-                            </TableCell>
-                            <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "HSCFrom"
+											onChange={(value) => handleOnChangeDate( "HSCFrom", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                    {renderText1({ label: `Gap Between HSC and SSC:${state.SSCtoHSC}` })}
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'HSCTo',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
+                            </TableCell>
+                            <TableCell>
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "HSCTo"
+											onChange={(value) => handleOnChangeDate( "HSCTo", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {/* {renderInputText({
+                                    label: '',
+                                    name: 'HSCTo',
+                                    state,
+                                    handleOnChange: handleOnChange,
+                                })} */}
                             </TableCell>
                             <TableCell>
                                 {renderInputText({
@@ -131,20 +205,54 @@ export default function Step2({
                                 })}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
-                                    label: '',
-                                    name: 'DiplomaFrom',
-                                    state,
-                                    handleOnChange: handleOnChange,
-                                })}
-                            </TableCell>
-                            <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "DiplomaFrom"
+											onChange={(value) => handleOnChangeDate( "DiplomaFrom", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {renderText1({ label: `Gap Between SSC and Diploma:${state.SSCtoDiploma}\n` })}
+                                {renderText1({ label: `Gap Between HSC and Diploma:${state.HSCtoDiploma}` })}
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'DiplomaTo',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
+                            </TableCell>
+                            <TableCell>
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "DiplomaTo"
+											onChange={(value) => handleOnChangeDate( "DiplomaTo", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {/* {renderInputText({
+                                    label: '',
+                                    name: 'DiplomaTo',
+                                    state,
+                                    handleOnChange: handleOnChange,
+                                })} */}
                             </TableCell>
                             <TableCell>
                                 {renderInputText({
@@ -156,6 +264,7 @@ export default function Step2({
                             </TableCell>
                         </TableRow>
                     </TableBody>
+                    {renderText1({ label: `....Total Gaps:${state.totalgaps}` })}
                 </Table>
                 {renderText({ label: 'Graduation/Post-Graduation Details' })}
                 <Table aria-label='Educational Qualifications'>
@@ -172,8 +281,7 @@ export default function Step2({
                                 Final Year Percentage of marks
                             </TableCell>
                             <TableCell>Aggregate Percentage of marks</TableCell>
-                            <TableCell>Total No. Backlogs(Dead)</TableCell>
-                            <TableCell>Total No. Backlogs(Alive)</TableCell>
+                            <TableCell>Backlogs</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -196,20 +304,54 @@ export default function Step2({
                                 })}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "GradFrom"
+											onChange={(value) => handleOnChangeDate( "GradFrom", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {renderText1({ label: `Drop years: ${state.DroptoGrad}` })}
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'GradFrom',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "GradTo"
+											onChange={(value) => handleOnChangeDate( "GradTo", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {renderText1({ label: `Total Period: ${state.GradPeriod}` })}
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'GradTo',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
                             </TableCell>
                             <TableCell>
                                 {renderInputText({
@@ -235,14 +377,6 @@ export default function Step2({
                                     handleOnChange: handleOnChange,
                                 })}
                             </TableCell>
-                            <TableCell>
-                                {renderInputText({
-                                    label: '',
-                                    name: 'AliveBacklogGrad',
-                                    state,
-                                    handleOnChange: handleOnChange,
-                                })}
-                            </TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>Post Graduation</TableCell>
@@ -263,20 +397,53 @@ export default function Step2({
                                 })}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "PostGradFrom"
+											onChange={(value) => handleOnChangeDate( "PostGradFrom", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {renderText1({ label: `Gap in G & PG:${state.GradtoPostGrad}` })}
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'PostGradFrom',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
                             </TableCell>
                             <TableCell>
-                                {renderInputText({
+                            <LocalizationProvider
+									dateAdapter={AdapterDayjs}
+								>
+									<DemoContainer components={["DatePicker"]}>
+										{" "}
+										<DemoItem label="">
+										<DatePicker
+											disableFuture
+											// views={['year', 'month', 'day']}
+											name= "PostGradTo"
+											onChange={(value) => handleOnChangeDate( "PostGradTo", value)}
+											
+										/>
+										</DemoItem>
+									</DemoContainer>
+								</LocalizationProvider>
+                                {/* {renderInputText({
                                     label: '',
                                     name: 'PostGradTo',
                                     state,
                                     handleOnChange: handleOnChange,
-                                })}
+                                })} */}
                             </TableCell>
                             <TableCell>
                                 {renderInputText({
@@ -302,20 +469,20 @@ export default function Step2({
                                     handleOnChange: handleOnChange,
                                 })}
                             </TableCell>
-                            <TableCell>
-                                {renderInputText({
-                                    label: '',
-                                    name: 'AliveBacklogPostGrad',
-                                    state,
-                                    handleOnChange: handleOnChange,
-                                })}
-                            </TableCell>
+
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
             {renderText({ label: 'Other Courses Details' })}
-            <Step2b />
+            <Step2b 
+            state={state}
+            handleOnChange={handleOnChange}
+            handleOnChangeDate={handleOnChangeDate}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+            otherCoursesChange = {otherCoursesChange}
+            />
             <Grid container spacing={2} justifyContent='space-between'>
                 <Box p={2}>
                     {renderButton({ label: 'prev', handleOnClick: handlePrev })}

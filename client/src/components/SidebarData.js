@@ -17,13 +17,13 @@ export const SidebarData = [
     title: "Home",
     user: "Candidate",
     icon: <HomeIcon />,
-    link: "/",
+    link: "/student/home",
   },
   {
     title: "Fill Admission Form",
     user: "Candidate",
     icon: <ModeIcon />,
-    link: "/student_form",
+    link: "/student/form",
   },
   {
     title: "Logout",
@@ -31,5 +31,4 @@ export const SidebarData = [
     icon: <LogoutIcon />,
     link: "/",
   },
-  
 ];
