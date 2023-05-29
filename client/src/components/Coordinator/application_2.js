@@ -47,6 +47,7 @@ function Application2(props) {
         axios
         .get(url)
         .then((response) => {
+            console.log(response.data)
             setData(response.data);
             setLoading(true);
         })
@@ -86,10 +87,10 @@ function Application2(props) {
                                 <TableCell className={classes.tableCell} width="20%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['SSCFrom'][1]}{data['SSCFrom'][0]}/{data['SSCFrom'][2]}
+                                        {data['SSCFrom'][0]}/{data['SSCFrom'][1]}/{data['SSCFrom'][2]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['SSCTo'][1]}{data['SSCTo'][0]}/{data['SSCTo'][2]}
+                                        {data['SSCTo'][0]}/{data['SSCTo'][1]}/{data['SSCTo'][2]}
                                         </Grid>
                                     </Grid></TableCell>
                                 <TableCell className={classes.tableCell} width="15%">{data['SSCmarks']}</TableCell>
@@ -101,10 +102,10 @@ function Application2(props) {
                             <TableCell className={classes.tableCell} width="20%">
                                 <Grid container spacing={2} >
                                     <Grid item xs={12} sm={6} >
-                                    {data['HSCFrom'][0][1]/data['HSCFrom'][0][2]}
+                                    {data['HSCFrom'][0]}/{data['HSCFrom'][1]}/{data['HSCFrom'][2]}
                                     </Grid>
                                     <Grid item xs={12} sm={6} >
-                                    {data['HSCTo'][0][1]/data['HSCTo'][0][2]}
+                                    {data['HSCTo'][0]}/{data['HSCTo'][1]}/{data['HSCTo'][2]}
                                     </Grid>
                                 </Grid></TableCell>
                             <TableCell className={classes.tableCell} width="15%">{data['HSCmarks']}</TableCell>
@@ -117,10 +118,10 @@ function Application2(props) {
                         <TableCell className={classes.tableCell} width="20%">
                             <Grid container spacing={2} >
                                 <Grid item xs={12} sm={6} >
-                                {data['DiplomaFrom'][0][1]/data['DiplomaFrom'][0][2]}
+                                {data['DiplomaFrom'][0]}/{data['DiplomaFrom'][1]}/{data['DiplomaFrom'][2]}
                                 </Grid>
                                 <Grid item xs={12} sm={6} >
-                                {data['DiplomaTo'][0][1]/data['DiplomaTo'][0][2]}
+                                {data['DiplomaTo'][0]}/{data['DiplomaTo'][1]}/{data['DiplomaTo'][2]}
                                 </Grid>
                             </Grid></TableCell>
                         <TableCell className={classes.tableCell} width="15%">{data['Diplomamarks']}</TableCell>
@@ -173,10 +174,10 @@ function Application2(props) {
                                 <TableCell className={classes.tableCell} width="15%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['GradFrom'][0][1]/data['GradFrom'][0][2]}
+                                        {data['GradFrom'][0]}/{data['GradFrom'][1]}/{data['GradFrom'][2]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['GradTo'][0][1]/data['GradTo'][0][2]}
+                                        {data['GradTo'][0]}/{data['GradTo'][1]}/{data['GradTo'][2]}
                                         </Grid>
                                     </Grid></TableCell>
                                 <TableCell className={classes.tableCell} width="10%">{data['FinalYearMarksGrad']}</TableCell>
@@ -198,10 +199,10 @@ function Application2(props) {
                                 <TableCell className={classes.tableCell} width="15%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={6}>
-                                        {data['PostGradFrom'][0][1]/data['PostGradFrom'][0][2]}
+                                        {data['PostGradFrom'][0]}/{data['PostGradFrom'][1]}/{data['PostGradFrom'][2]}
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
-                                        {data['PostGradTo'][0][1]/data['PostGradTo'][0][2]}
+                                        {data['PostGradTo'][0]}/{data['PostGradTo'][1]}/{data['PostGradTo'][2]}
                                         </Grid>
                                     </Grid></TableCell>
                                 <TableCell className={classes.tableCell} width="10%">{data['FinalYearMarksPostGrad']}</TableCell>
@@ -219,20 +220,6 @@ function Application2(props) {
                         </TableBody>):<></>}
                     </Table>
                 </TableContainer>
-                {/* <Grid container spacing={2} style={{ marginBottom: "1px", width: '90%', margin: "auto" }}>
-                    <Grid item xs={12} sm={3}>
-                        <b>Duration Of Educational Gaps</b><br /> (Gap During Academics)
-                    </Grid>
-                    <Grid item xs={12} sm={3} style={{ textAlign: "center" }}>
-                        {data.GradFrom - data.HSCTo}
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <b>Reason of Educational Gap</b>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-
-                    </Grid>
-                </Grid><br /> */}
 
                 <Typography variant='h6' style={{ textAlign: "center" }}>Other Course Details (In Reverse Chronological Order) </Typography>
                 <TableContainer component={Paper} className={classes.tableContainer}>

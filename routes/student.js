@@ -18,7 +18,7 @@ router.post("/professionalDetails",[auth, professionalDetails]);
 router.get("/applicants", getApplicantsNames);
 router.get("/personalDetails", getPersonalDetails);
 router.get("/academicDetails", getAcademicDetails);
-router.get("/professionalDetails",[auth, getProfessionalDetails]);
+router.get("/professionalDetails", getProfessionalDetails);
 router.get("/allStudentData", [auth, getAllStudentDetails]);
 router.post("/editStudentInfo", [auth, editStudentInfo]);
 module.exports = router;

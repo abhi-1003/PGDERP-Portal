@@ -230,7 +230,7 @@ function Application1(props) {
                                 <TableCell className={classes.tableCell} width="60%">
                                     <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                                         <Grid item xs={12} sm={4}>
-                                            {newdata.dob}
+                                            {newdata.dob[0]}/{newdata.dob[1]}/{newdata.dob[2]}
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
                                             <b>Age as on date:</b>

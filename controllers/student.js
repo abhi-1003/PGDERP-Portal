@@ -72,7 +72,7 @@ exports.personalDetails = async(req, res) => {
     if(req.userRole == "student"){
       res.status(403).json({ error: "Only Admin can access this data" });
     }
-    const user = await Student.find().exec();
+    const user = await Student.find({'applicationFilled':true}).sort({'pgderpId':1}).exec();
     try {
       return res.json(user);
     } catch (error) {
@@ -187,17 +187,8 @@ exports.personalDetails = async(req, res) => {
     const user = await Student.findOne({_id}).exec();
     let data = {};
     try {
-      if (user) {
-        if(user['academics'] !== undefined){
-          Object.assign(data,{'academics':user['academics']})
-        }
-        if(user['academicsUGPG'] !== undefined){
-          Object.assign(data,{'academicsUGPG':user['academicsUGPG']})
-        }
-        if(user['othercourses'] !== undefined){
-          Object.assign(data,{'othercourses':user['othercourses']})
-        }
-        return res.json(data);
+      if (user && user['academicsInfo'] !== undefined) {
+        return res.json(user['academicsInfo'])
       } else {
         return res.json({ error: "no user found" });
       }
@@ -232,8 +223,8 @@ exports.personalDetails = async(req, res) => {
     const user = await Student.findOne({_id}).exec();
     try {
       if (user) {
-        if(user['professionalExperience'] !== undefined){
-          return res.json(user['professionalExperience']);
+        if(user['academicsInfo']['professionalExperience'] !== undefined){
+          return res.json(user['academicsInfo']['professionalExperience']);
         }
         return res.json([]);
       } else {
