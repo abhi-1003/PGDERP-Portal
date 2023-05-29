@@ -61,7 +61,7 @@ export default function UserLogin() {
           localStorage.setItem("pgderp-website-role", "student");
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("email", res.data.email);
-          navigate("/coordinator/*");
+          navigate("/coordinator");
         })
         .catch(err => {
           alert("Invalid credentials. Login again");

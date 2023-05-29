@@ -72,7 +72,7 @@ exports.personalDetails = async(req, res) => {
     if(req.userRole == "student"){
       res.status(403).json({ error: "Only Admin can access this data" });
     }
-    const user = await Student.find().exec();
+    const user = await Student.find({'applicationFilled':true}).sort({'pgderpId':1}).exec();
     try {
       return res.json(user);
     } catch (error) {
@@ -96,79 +96,79 @@ exports.personalDetails = async(req, res) => {
 //   {"otherCourses":["pgderp-2","2021","2022","98"],"examinationSSC":"SSC","instituteSSC":"DAV","datefromSSC":"2017","datetoSSC":"2019","percentageMarksSSC":"97","examinationHSC":"HSC","instituteHSC":"DAV","datefromHSC":"2019","datetoHSC":"2021","percentageMarksHSC":"99","examinationDiploma":"Diploma","instituteDiploma":"DAV2","datefromDiploma":"2019","datetoDiploma":"2022","percentageMarksDiploma":"98","examinationUG":"UG","instituteUG":"COEP","specializationUG":"CSE","datefromUG":"2021","datetoUG":"2025","marksFinalYearUG":"9","totalAggregateUG":"10","percentageMarksUG":"9","totalDeadBacklogsUG":"0","totalLiveBacklogsUG":"0","examinationPG":"PG","institutePG":"MIT","specializationPG":"CSE","datefromPG":"2025","datetoPG":"2026","marksFinalYearPG":"9","totalAggregatePG":"9","percentageMarksPG":"10","totalDeadBacklogsPG":"0","totalLiveBacklogsPG":"0"}
   exports.academicDetails = async(req, res) => {
     const {otherCourses,
-    examinationSSC,
-    instituteSSC,
-    datefromSSC,
-    datetoSSC,
-    percentageMarksSSC,
-    examinationHSC,
-    instituteHSC,
-    datefromHSC,
-    datetoHSC,
-    percentageMarksHSC,
-    examinationDiploma,
-    instituteDiploma,
-    datefromDiploma,
-    datetoDiploma,
-    percentageMarksDiploma,
-    examinationUG,
-    instituteUG,
-    specializationUG,
-    datefromUG,
-    datetoUG,
-    marksFinalYearUG,
-    totalAggregateUG,
-    percentageMarksUG,
-    totalDeadBacklogsUG,
-    totalLiveBacklogsUG,
-    examinationPG,
-    institutePG,
-    specializationPG,
-    datefromPG,
-    datetoPG,
-    marksFinalYearPG,
-    totalAggregatePG,
-    percentageMarksPG,
-    totalDeadBacklogsPG,
-    totalLiveBacklogsPG,} = req.body;
+    // examinationSSC,
+    InstituteSSC,
+    SSCFrom,
+    SSCTo,
+    SSCmarks,
+    // examinationHSC,
+    InstituteHSC,
+    HSCFrom,
+    HSCTo,
+    HSCmarks,
+    // examinationDiploma,
+    InstituteDiploma,
+    DiplomaFrom,
+    DiplomaTo,
+    Diplomamarks,
+    // examinationUG,
+    InstituteGrad,
+    SpecializationGrad,
+    GradFrom,
+    GradTo,
+    FinalYearMarksGrad,
+    AggregateMarksGrad,
+    // percentageMarksUG,
+    DeadBacklogsGrad,
+    AliveBacklogGrad,
+    // examinationPG,
+    InstitutePostGrad,
+    SpecializationPostGrad,
+    PostGradFrom,
+    PostGradTo,
+    FinalYearMarksPostGrad,
+    AggregateMarksPostGrad,
+    // percentageMarksPG,
+    DeadBacklogsPostGrad,
+    AliveBacklogPostGrad,} = req.body;
     const email = "a@gmail.com"
     const user = await Student.findOne({email}).exec();
     try{
-        user.academics.examinationSSC = examinationSSC;
-        user.academics.instituteSSC = instituteSSC;
-        user.academics.datefromSSC = datefromSSC;
-        user.academics.datetoSSC = datetoSSC;
-        user.academics.percentageMarksSSC = percentageMarksSSC;
-        user.academics.examinationHSC = examinationHSC;
-        user.academics.instituteHSC = instituteHSC;
-        user.academics.datefromHSC = datefromHSC;
-        user.academics.datetoHSC = datetoHSC;
-        user.academics.percentageMarksHSC = percentageMarksHSC;
-        user.academics.examinationDiploma = examinationDiploma;
-        user.academics.instituteDiploma = instituteDiploma;
-        user.academics.datefromDiploma = datefromDiploma;
-        user.academics.datetoDiploma = datetoDiploma;
-        user.academics.percentageMarksDiploma = percentageMarksDiploma;
-        user.academicsUGPG.examinationUG = examinationUG;
-        user.academicsUGPG.instituteUG = instituteUG;
-        user.academicsUGPG.datefromUG = datefromUG;
-        user.academicsUGPG.datetoUG = datetoUG;
-        user.academicsUGPG.specializationUG = specializationUG;
-        user.academicsUGPG.marksFinalYearUG = marksFinalYearUG;
-        user.academicsUGPG.totalAggregateUG = totalAggregateUG;
-        user.academicsUGPG.percentageMarksUG = percentageMarksUG;
-        user.academicsUGPG.totalDeadBacklogsUG = totalDeadBacklogsUG;
-        user.academicsUGPG.totalLiveBacklogsUG = totalLiveBacklogsUG;
-        user.academicsUGPG.examinationPG = examinationPG;
-        user.academicsUGPG.institutePG = institutePG;
-        user.academicsUGPG.datefromPG = datefromPG;
-        user.academicsUGPG.datetoPG = datetoPG;
-        user.academicsUGPG.specializationPG = specializationPG;
-        user.academicsUGPG.marksFinalYearPG = marksFinalYearPG;
-        user.academicsUGPG.totalAggregatePG = totalAggregatePG;
-        user.academicsUGPG.percentageMarksPG = percentageMarksPG;
-        user.academicsUGPG.totalDeadBacklogsPG = totalDeadBacklogsPG;
-        user.academicsUGPG.totalLiveBacklogsPG = totalLiveBacklogsPG;
+        // user.academicsInfo.examinationSSC = examinationSSC;
+        user.academicsInfo.InstituteSSC = InstituteSSC;
+        user.academicsInfo.SSCFrom = SSCFrom;
+        user.academicsInfo.SSCTo = SSCTo;
+        user.academicsInfo.SSCmarks = SSCmarks;
+        // user.academicsInfo.examinationHSC = examinationHSC;
+        user.academicsInfo.InstituteHSC = InstituteHSC;
+        user.academicsInfo.HSCFrom = HSCFrom;
+        user.academicsInfo.HSCTo = HSCTo;
+        user.academicsInfo.HSCmarks = HSCmarks;
+        // user.academicsInfo.examinationDiploma = examinationDiploma;
+        user.academicsInfo.InstituteDiploma = InstituteDiploma;
+        user.academicsInfo.DiplomaFrom= DiplomaFrom;
+        user.academicsInfo.DiplomaTo = DiplomaTo;
+        user.academicsInfo.Diplomamarks = Diplomamarks;
+        // user.academicsInfoUGPG.examinationUG = examinationUG;
+        user.academicsInfo.InstituteGrad = InstituteGrad;
+        user.academicsInfo.GradFrom = GradFrom;
+        user.academicsInfo.GradTo = GradTo;
+        user.academicsInfo.SpecializationGrad = SpecializationGrad;
+        user.academicsInfo.FinalYearMarksGrad = FinalYearMarksGrad;
+        user.academicsInfo.AggregateMarksGrad = AggregateMarksGrad;
+        // user.academicsInfoUGPG.percentageMarksUG = percentageMarksUG;
+        user.academicsInfo.DeadBacklogsGrad = DeadBacklogsGrad;
+        user.academicsInfo.AliveBacklogGrad = AliveBacklogGrad;
+        // user.academicsInfoUGPG.examinationPG = examinationPG;
+        user.academicsInfo.InstitutePostGrad = InstitutePostGrad;
+        user.academicsInfo.PostGradFrom = PostGradFrom;
+        user.academicsInfo.PostGradTo = PostGradTo;
+        user.academicsInfo.SpecializationPostGrad = SpecializationPostGrad;
+        user.academicsInfo.FinalYearMarksPostGrad = FinalYearMarksPostGrad;
+        user.academicsInfo.AggregateMarksPostGrad = AggregateMarksPostGrad;
+        // user.academicsInfoUGPG.percentageMarksPG = percentageMarksPG;
+        user.academicsInfo.DeadBacklogsPostGrad = DeadBacklogsPostGrad;
+        user.academicsInfo.AliveBacklogPostGrad = AliveBacklogPostGrad;
         user.othercourses = otherCourses;
         await user.save().catch((err) => {
             console.log(err);
@@ -187,17 +187,8 @@ exports.personalDetails = async(req, res) => {
     const user = await Student.findOne({_id}).exec();
     let data = {};
     try {
-      if (user) {
-        if(user['academics'] !== undefined){
-          Object.assign(data,{'academics':user['academics']})
-        }
-        if(user['academicsUGPG'] !== undefined){
-          Object.assign(data,{'academicsUGPG':user['academicsUGPG']})
-        }
-        if(user['othercourses'] !== undefined){
-          Object.assign(data,{'othercourses':user['othercourses']})
-        }
-        return res.json(data);
+      if (user && user['academicsInfo'] !== undefined) {
+        return res.json(user['academicsInfo'])
       } else {
         return res.json({ error: "no user found" });
       }
@@ -232,8 +223,8 @@ exports.personalDetails = async(req, res) => {
     const user = await Student.findOne({_id}).exec();
     try {
       if (user) {
-        if(user['professionalExperience'] !== undefined){
-          return res.json(user['professionalExperience']);
+        if(user['academicsInfo']['professionalExperience'] !== undefined){
+          return res.json(user['academicsInfo']['professionalExperience']);
         }
         return res.json([]);
       } else {

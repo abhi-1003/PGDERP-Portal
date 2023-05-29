@@ -75,31 +75,33 @@ function Application3(props) {
                                         </Grid>
                                     </Grid>
                                 </TableCell>
-                                <TableCell className={classes.tableHeadCell} width="15%"><b>Length Of Service</b></TableCell>
                                 <TableCell className={classes.tableHeadCell} width="25%"><b>Nature Of Work</b></TableCell>
                             </TableRow>
                         </TableHead>
                         {loading?
                         (<TableBody>
-                            <TableRow>
-                                <TableCell className={classes.tableCell} width="20%">{data[0]}</TableCell>
-                                <TableCell className={classes.tableCell} width="20%">{data[3]}</TableCell>
-                                <TableCell className={classes.tableCell} width="20%">
-                                    <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                                        <Grid item xs={12} sm={6}>
-                                            {data[1]}
-                                        </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                            {data[2]}
-                                        </Grid>
-                                    </Grid></TableCell>
-                                <TableCell className={classes.tableCell} width="15%"></TableCell>
-                                <TableCell className={classes.tableCell} width="25%"></TableCell>
-                            </TableRow>
+                            {data.map((item)=>{
+                                return (
+                                    <TableRow>
+                                    <TableCell className={classes.tableCell} width="20%">{item['companyName']}</TableCell>
+                                    <TableCell className={classes.tableCell} width="20%">{item['rankDesignation']}</TableCell>
+                                    <TableCell className={classes.tableCell} width="20%">
+                                        <Grid container spacing={2} style={{ marginBottom: "1px" }}>
+                                            <Grid item xs={12} sm={6}>
+                                                {item['periodFrom']}
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                {item['periodTo']}
+                                            </Grid>
+                                        </Grid></TableCell>
+                                    <TableCell className={classes.tableCell} width="25%">{item['workNature']}</TableCell>
+                                </TableRow>
+                                )
+                            })}
                         </TableBody>):<></>}
                     </Table>
                 </TableContainer><br />
-                <Grid container spacing={2} style={{width: '90%', margin: "auto" }}>
+                {/* <Grid container spacing={2} style={{width: '90%', margin: "auto" }}>
                     <Grid item xs={12} sm={6}>
                         <b>Total Experience (YY-MM-DD)</b>
                     </Grid>
@@ -117,7 +119,7 @@ function Application3(props) {
                     </Grid>
                     <Grid item xs={12} sm={3} style={{textAlign:"center"}}>
                     </Grid>
-                </Grid>
+                </Grid> */}
             </div>
         </div>
     )

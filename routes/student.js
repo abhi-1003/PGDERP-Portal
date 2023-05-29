@@ -15,10 +15,10 @@ router.get("/noStudents", getNoStudents)
 router.post("/personalDetails",[auth, personalDetails]);
 router.post("/academicDetails",[auth, academicDetails]);
 router.post("/professionalDetails",[auth, professionalDetails]);
-router.get("/applicants",[auth, getApplicantsNames]);
-router.get("/personalDetails",[auth, getPersonalDetails]);
-router.get("/academicDetails",[auth, getAcademicDetails]);
-router.get("/professionalDetails",[auth, getProfessionalDetails]);
+router.get("/applicants", getApplicantsNames);
+router.get("/personalDetails", getPersonalDetails);
+router.get("/academicDetails", getAcademicDetails);
+router.get("/professionalDetails", getProfessionalDetails);
 router.get("/allStudentData", [auth, getAllStudentDetails]);
 router.post("/editStudentInfo", [auth, editStudentInfo]);
 module.exports = router;

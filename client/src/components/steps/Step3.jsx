@@ -8,6 +8,8 @@ import {
 	TableHead,
 	TableRow,
 	TableCell,
+	Button,
+	Input,
 } from "@material-ui/core";
 import React, { useState, Fragment } from "react";
 import { renderText, renderButton } from "../common/displayComponents";
@@ -205,6 +207,31 @@ export default function Step3(
 					handleOnClick: handleAddFormSubmit,
 				})}
 			</form>
+			<br />
+			<hr />
+			<br />
+			<Grid container spacing={2} style={{ justifyContent: "center" }}>
+				<Box mt={1} mb={2}>
+					{renderText({ label: "Application Fee Payments" })}
+				</Box>
+			</Grid>
+			<Grid container spacing={2} style={{ justifyContent: "center" }}>
+				<Button color="primary" variant="contained" href="https://www.onlinesbi.sbi/">SBI Collect</Button>
+			</Grid>
+			<br />
+			<hr />
+			<br />
+			<Grid container spacing={2} style={{ justifyContent: "center" }}>
+			<Grid container spacing={2} style={{ justifyContent: "center" }}>
+				<Box mt={1} mb={2}>
+					{renderText({ label: "Upload Payment Receipt" })}
+				</Box>
+			</Grid>
+			<label>
+				<input type="file" />
+				<Button variant="contained" color="primary" size="small">Upload!</Button>
+			</label>
+			</Grid>
 			<Grid container spacing={2} justifyContent="space-between">
 				<Box p={2}>
 					{renderButton({ label: "prev", handleOnClick: handlePrev })}

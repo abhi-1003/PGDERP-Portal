@@ -41,7 +41,7 @@ function Coordinator() {
       <div className={classes.coordinatorHome}>
         <Header />
           <Routes>
-            <Route path="/" element={<HomeContent />} />
+            <Route path="/*" element={<HomeContent />} />
             <Route path="/application/:id" element={<Application />} />
           </Routes>
       </div>
