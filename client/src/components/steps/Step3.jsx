@@ -15,23 +15,14 @@ import { nanoid } from "nanoid";
 import data from "./data.json";
 import ReadOnlyRowExp from "../ReadOnlyRowExp";
 
-export default function Step3({
+export default function Step3(
 	state,
 	handleOnChange,
 	handleNext,
 	handlePrev,
 	professionalExperienceChange
-}) {
+) {
 	const [contacts, setContacts] = useState(data);
-	const [editContactId, setEditContactId] = useState(null);
-	const [editFormData, setEditFormData] = useState({
-		companyName: "",
-		rankDesignation: "",
-		periodFrom: "",
-		periodFrom: "",
-		workNature: "",
-	});
-
 	const [addFormData, setAddFormData] = useState({
 		companyName: "",
 		rankDesignation: "",
@@ -41,13 +32,6 @@ export default function Step3({
 	});
 	const handleAddFormSubmit = (event) => {
 		event.preventDefault();
-		console.log("run");
-		// companyName: ""
-		// rankDesignation: ""
-		// periodFrom: ""
-		// periodFrom: ""
-		// workNature: ""
-
 		const newContact = {
 			id: nanoid(),
 			companyName: addFormData.companyName,
@@ -56,10 +40,10 @@ export default function Step3({
 			periodTo: addFormData.periodTo,
 			workNature: addFormData.workNature,
 		};
-console.log(newContact.companyName);
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
-		professionalExperienceChange(newContacts)
+		state.professionalExperienceChange(newContacts)
+		console.log(state.state)
 	};
 	const handleDeleteClick = (contactId) => {
 		const newContacts = [...contacts];
@@ -69,23 +53,10 @@ console.log(newContact.companyName);
 		newContacts.splice(index, 1);
 
 		setContacts(newContacts);
-		professionalExperienceChange(newContacts)
+		state.professionalExperienceChange(newContacts)
+		console.log(state.state)
 	};
 
-	const handleEditClick = (event, contact) => {
-		event.preventDefault();
-		setEditContactId(contact.id);
-
-		const formValues = {
-			companyName: contact.companyName,
-			rankDesignation: contact.rankDesignation,
-			periodFrom: contact.periodFrom,
-			periodTo: contact.periodTo,
-			workNature: contact.workNature,
-		};
-
-		setEditFormData(formValues);
-	};
 	const handleAddFormChange = (event) => {
 		event.preventDefault();
 
@@ -135,7 +106,6 @@ console.log(newContact.companyName);
                 )} */}
 							<ReadOnlyRowExp
 								contact={contact}
-								handleEditClick={handleEditClick}
 								handleDeleteClick={handleDeleteClick}
 							/>
 						</Fragment>

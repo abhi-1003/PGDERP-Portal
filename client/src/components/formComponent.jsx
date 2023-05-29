@@ -205,7 +205,8 @@ class FormComponent extends Component {
             if(name==="PostGradFrom"){
                 this.state.GradtoPostGrad = value.$y - this.state.data.GradTo[2];
             }
-            data[name] = [value.$D, value.$M, value.$y];
+            data[name] = [value.$D, value.$M + 1, value.$y];
+            console.log(data[name]);
             // data[target.name] = target.value;
             // console.log("run")
             // console.log(name.name);
@@ -230,11 +231,6 @@ class FormComponent extends Component {
 
             if (target.name === "ID") {
                 console.log(target.value);
-                target.value.length !== 8 ||
-                target.value.substring(0, 2) !== "ER"
-                    ? (errors[target.name] =
-                          "ID must be of length 8 starting with ER. e.g. ER221001")
-                    : (errors[target.name] = "");
             } else if (target.name === "course") {
                 console.log(target.value);
             } else if (target.name === "email") {
@@ -347,15 +343,6 @@ class FormComponent extends Component {
             let noneFilled = this.state.noneFilled;
 
             let goToNext = true;
-            if (
-                (data.ID.length !== 8 || data.ID.substring(0, 2) !== "ER") &&
-                step === 0
-            ) {
-                goToNext = false;
-                errors["ID"] =
-                    "ID must be of length 8 starting with ER. e.g. ER221001";
-                console.log("1");
-            }
             if (!validateEmail(data.email) && step === 0) {
                 goToNext = false;
                 errors["email"] = "Enter a valid email address";
