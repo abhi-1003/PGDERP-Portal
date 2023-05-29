@@ -47,7 +47,6 @@ function HomeContent() {
     useEffect(() => {
         axios.get(url)
             .then(response => {
-                console.log(response.data); // log the response data to the console
                 setNewdata(response.data);
                 setLoading(true);
             })
