@@ -29,6 +29,7 @@ const generateToken = (user) => {
 
 exports.registerStudent = (req, res) => {
   const { name, email, mobile, password, pgderpID } = req.body;
+  const applicationFilled = false;
   if (!(name, email, mobile && password)) {
     return res.status(400).json({ error: "All input is required" });
   }
@@ -41,7 +42,7 @@ exports.registerStudent = (req, res) => {
           .json({ error: "User Already Exist. Please Login" });
       }
       
-      const newStudent = new Student({ name, email, mobile, password, pgderpID });
+      const newStudent = new Student({ name, email, mobile, password, pgderpID, applicationFilled});
       newStudent
         .save()
         .then((user) => {

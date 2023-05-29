@@ -64,7 +64,16 @@ export default function UserLogin() {
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("email", res.data.email);
           localStorage.setItem("pgderpID", res.data.pgderpID);
-          navigate("/student/home");
+          let student_data = {
+            name : res.data.name,
+            email : res.data.email,
+            pgderpID : res.data.pgderpID
+          }
+          navigate("/student/home", {
+            state:{
+              student_data: student_data
+            }
+          });
         })
         .catch(err => {
           alert("Invalid credentials. Login again");

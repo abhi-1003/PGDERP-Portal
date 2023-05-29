@@ -22,7 +22,14 @@ import { nanoid } from "nanoid";
 import dataa from "./data.json";
 import ReadOnlyRow from "../ReadOnlyRow";
 
-export default function Step2b(){
+export default function Step2b(state,
+    handleOnChange,
+    handleOnChangeDate,
+    handleNext,
+    handlePrev,
+    otherCoursesChange){
+
+    console.log(state, otherCoursesChange)
     const [contacts, setContacts] = useState(dataa);
     const [addFormData, setAddFormData] = useState({
         courseName: "",
@@ -83,7 +90,10 @@ export default function Step2b(){
 
         const newContacts = [...contacts, newContact];
         setContacts(newContacts);
-        console.log(newContacts);
+        state.otherCoursesChange(newContacts)
+        console.log(state.state)
+
+        // console.log(newContacts);
     };
 
     // const handleEditFormSubmit = (event) => {
@@ -139,6 +149,7 @@ export default function Step2b(){
         newContacts.splice(index, 1);
         setAddFormData(newContacts);
         setContacts(newContacts);
+        state.professionalExperienceChange(newContacts)
     };
 
     return (

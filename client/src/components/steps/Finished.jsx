@@ -1,13 +1,12 @@
 import { Box, Grid, Paper } from '@material-ui/core'
 import React from 'react'
-import { renderText, renderButton, renderInputText } from '../common/displayComponents'
+import { renderText, renderButton, renderInputText, renderText1 } from '../common/displayComponents'
 import { BACKEND_URL } from "../../config";
 import axios from "axios";
 import Button from "@mui/material/Button";
 
 const handleSubmit = (state) => {
-    const data = state;
-        console.log(data);
+    const data = state.data;
 
         const personalInfo = {
         ID:data.ID,
@@ -28,7 +27,9 @@ const handleSubmit = (state) => {
         dob:data.dob,
         domicileState:data.domicileState,
         nationality:data.nationality,
-        caste: data.caste,};
+        caste: data.caste,
+        age: state.age,
+    };
 
         const academicsInfo = {
         InstituteSSC:data.InstituteSSC,
@@ -59,7 +60,17 @@ const handleSubmit = (state) => {
         AggregateMarksPostGrad:data.AggregateMarksPostGrad,
         DeadBacklogsPostGrad:data.DeadBacklogsPostGrad,
         AliveBacklogPostGrad:data.AliveBacklogPostGrad,
-        otherCourses:data.otherCourses,};
+        otherCourses:state.otherCourses,
+        professionalExperience: state.professionalExperience,
+        DroptoGrad: state.DroptoGrad,
+        GradPeriod: state.GradPeriod,
+        GradtoPostGrad: state.GradtoPostGrad,
+        HSCFilled : state.HSCFilled,
+        HSCtoDiploma: state.HSCtoDiploma,
+        SSCtoDiploma: state.SSCtoDiploma,
+        SSCtoHSC: state.SSCtoHSC,
+        DiplomaFilled: state.DiplomaFilled,
+    };
 
         const email = localStorage.getItem('email')
         const url = BACKEND_URL + "/student/editStudentInfo";
@@ -76,7 +87,7 @@ const handleSubmit = (state) => {
             })
 }
 
-export default function Finished({state}){
+export default function Finished({state,handlePrev}){
     return( 
         <Paper component={Box} p={2}>
             <Grid container spacing={2} style={{justifyContent: "center"}}>
@@ -84,15 +95,35 @@ export default function Finished({state}){
                 {renderText({label:"Thank You for Submission!"})} 
                 </Box>  
             </Grid> 
-            <Grid container spacing={2} justifyContent='flex-middle'>
-                <Box p={2}>{JSON.stringify(state,null,4)}</Box>
-            </Grid>                 
-            <Button 
-            onClick={() => {
+            <Grid container spacing={2} style={{justifyContent: "center"}}>
+                <Box mt={1} mb={2}>
+                {renderText({label:"Please Check the details by clicking on Previous Button"})} 
+                </Box>                
+            {/* <Box p={2}>{JSON.stringify(state,null,4)}</Box> */}
+            </Grid>
+            <Grid container spacing={2} style={{justifyContent: "center"}}>
+                <Box mt={1} mb={2}>
+                {renderText({label:"After Submiting You Cannot Edit the form"})}  
+                </Box>                
+            {/* <Box p={2}>{JSON.stringify(state,null,4)}</Box> */}
+            </Grid>
+            <Grid container spacing={2} justifyContent='space-between'>
+                <Box p={2}>
+                    {renderButton({ label: 'prev', handleOnClick: handlePrev })}
+                </Box>
+                <Box p={2}>
+                <Button 
+                 variant="outlined"
+                 color="primary"
+                 size="small"
+                 style={{ marginTop: "5px" }}
+                 onClick={() => {
                 // Сlose the dialog and return the value
                 handleSubmit(state)
               }}
-              variant="text">submit</Button>      
+              >submit</Button> 
+                </Box>
+            </Grid>                      
         </Paper>
     )
 }

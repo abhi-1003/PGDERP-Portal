@@ -284,6 +284,7 @@ exports.personalDetails = async(req, res) => {
         for (const field of fields) {
           user[field] = req.body[field];
         }
+        user['applicationFilled'] = true;
         await user.save().catch((err) => {
           console.log(err);
           return res.json({ error: "couldn't update record" });

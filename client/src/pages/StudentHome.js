@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { BrowserView, isMobile, MobileView } from "react-device-detect";
+// import downloadApplicationPDF from "../components/ApplicationPDF";
 
 import {
   PDFDownloadLink,
@@ -170,9 +171,6 @@ class StudentHome extends Component {
     });
   
   } 
-
-
-
 //   async componentDidMount() {
 //     if (localStorage.getItem("pgderp-website-jwt")) {
 //     //   try {
@@ -261,6 +259,7 @@ class StudentHome extends Component {
 //   }
 
   render() {
+    console.log(this.props)
     // const MyDoc = () => (
     //   <Document>
     //     <Page style={styles.body}>
@@ -685,6 +684,35 @@ class StudentHome extends Component {
                   ) : (
                     ""
                   )}
+                  {/*
+             *Download application button
+             */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "30px",
+              }}
+            >
+              <button
+                style={{
+                  // marginTop: "20px",
+                  // marginBottom: "30px",
+                  padding: "5px",
+                  cursor: "pointer",
+                  width: "300px",
+                  height: "40px",
+                  fontSize: "20px",
+                  backgroundColor: "cadetblue",
+                  color: "white",
+                  borderRadius: "10px",
+                }}
+                // onClick={() => downloadApplicationPDF(null)}
+              >
+                Download Application
+              </button>
+            </div>
                 </Grid>
               </div>
             </div>
