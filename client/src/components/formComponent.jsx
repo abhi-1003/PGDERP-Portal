@@ -18,6 +18,8 @@ import Step2b from './steps/form_table';
 import Step1 from "./steps/SStep";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
+
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 // import Step2b from "./steps/form_table";
@@ -641,19 +643,20 @@ class FormComponent extends Component {
             { label: "Personal" },
             { label: "Educational" },
             { label: "Professional" },
+            { label: "Document Upload"},
         ];
         const getStepItems = (steps) => {
             switch (steps) {
                 case 0:
                     return (
                         <Step1
-                            state={this.state}
-                            handleOnChange={handleOnChange}
-                            handleOnChangeDate={handleOnChangeDate}
-                            handleNext={handleNext}
-                            handleChangePreferences={handleChangePreferences}
-                            otherCoursesChange = {otherCoursesChange}
-                        />
+                                state={this.state}
+                                handleOnChange={handleOnChange}
+                                handleOnChangeDate={handleOnChangeDate}
+                                handleNext={handleNext}
+                                handlePrev={handlePrev}
+                                otherCoursesChange = {otherCoursesChange}
+                            />
                     );
                 case 1:
                     return (
@@ -679,6 +682,10 @@ class FormComponent extends Component {
                         />
                     );
                 case 3:
+                    return (
+                        <Step4 />
+                    );
+                case 4:
                     return <Finished state={this.state}
                                      handleSubmit={handleSubmit}
                                      handlePrev={handlePrev}

@@ -3,6 +3,7 @@ const { GridFsStorage } = require("multer-gridfs-storage");
 const path = require("path");
 const crypto = require("crypto");
 const { mongoURI } = require("../config/configKeys");
+const Student = require("../models/student");
 
 const storage = new GridFsStorage({
   url: mongoURI,
@@ -31,24 +32,36 @@ const uploadFileGrid = multer({
 }).single("file");
 
 exports.uploadFile = (req, res) => {
-//   if (req.userRole != "student") {
-//     return res
-//       .status(403)
-//       .json({ error: "only students can upload documents" });
-//   }
-  uploadFileGrid(req, res, (err) => {
-    if (err || !req.file) {
-      console.log(err);
+  //   if (req.userRole != "student") {
+  //     return res
+  //       .status(403)
+  //       .json({ error: "only students can upload documents" });
+  //   }
+    uploadFileGrid(req, res, (err) => {
+      if (err || !req.file) {
+        console.log(err);
+        return res.status(500).json({ error: "couldn't upload file" });
+      }
+      const { filename, originalname, contentType, id } = req.file;
+      return res
+      .status(200).json({ filename, originalname, contentType, id });
+    }
+    );
+    
+};
+  
+exports.setUser = (req,res) => {
+  const email = req.body.email;
+  const doc = req.body.doc;
+  Student.findOneAndUpdate({'email':email},{$set: {"documents": doc}}, {upsert: true}, (e,u) => {
+    if(e){
       return res.status(500).json({ error: "couldn't upload file" });
     }
-    const { filename, originalname, contentType } = req.file;
-    return res
-    .status(200).json({ filename, originalname, contentType });
-  }
-  );
-  
-};
-
+    else{
+      return res.status(200).json({message: "uploaded successfully"})
+    }
+  })
+}
 //had to downgrade mongoose to 5.13.7 because of incompatible gridFS stream package
 
 exports.getFileGrid = (req, res) => {

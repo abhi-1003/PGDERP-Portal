@@ -17,6 +17,7 @@ import StudentHome from "./pages/StudentHome";
 import { OtpScript } from "./components/common/otpScript";
 import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
+import Step4 from "./components/steps/Step4";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -48,7 +49,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/doc" element={<Docs />}></Route>
         <Route
           path="/student/home"
           element={
@@ -88,7 +88,7 @@ function App() {
           path="/doc-view"
           element = {
             <DocViewer
-              filename="e6f04504d2ba35d582979cc7af23a9f91685279388302.pdf"
+              filename="a2020d3641851fc69d1be879a9a35bff1685731386851.pdf"
               contentType="application/pdf"
             />
           }

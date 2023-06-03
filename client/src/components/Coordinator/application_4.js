@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DownloadIcon from '@mui/icons-material/Download';
 import ViewIcon from '@mui/icons-material/Visibility';
-
+import DocViewer from '../../pages/DocViewer';
+import axios from 'axios';
+import { BACKEND_URL } from '../../config';
 const useStyles = makeStyles((theme) => ({
     homeContent: {
         padding: theme.spacing(4),
@@ -44,10 +46,61 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Application4(props) {
+    
     const {data}=props
     const classes = useStyles();
-
-
+    const [docSchema, setDocSchema] = useState({
+        sscEq: '',
+        hscEq: '',
+        grad: '',
+        aadharPassport: '',
+        profExp: '',
+        otCourses: '',
+        selfDeclaration: '',
+    })
+    const viewDocument = (e) => {
+        console.log(e.currentTarget.value);
+        if(docSchema[e.currentTarget.value] !== ''){
+            let filename = docSchema[e.currentTarget.value];
+            let contentType = "application/pdf";
+            axios
+            .get(BACKEND_URL + "/files/get/" + docSchema[e.currentTarget.value],
+            {
+                responseType: "blob",
+            }
+            )
+            .then((response) => {
+                console.log(response)
+                //Create a Blob from the PDF Stream
+                const file = new Blob([response.data], { type: contentType });
+                // Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                const w = window.open(
+                fileURL,
+                "",
+                "width=800,height=600,left=200,top=200"
+                );
+                w.onload = function () {
+                w.document.title = filename;
+                };
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+        }
+    }
+    useEffect(()=>{
+        const url = BACKEND_URL + '/student/getDocsById';
+        console.log(data)
+        axios.get(url, {params: {'id': data}})
+        .then(function(response){
+                console.log(response);
+                setDocSchema(response.data.doc);
+            })
+        .catch(function(err){
+            console.log(err);
+        })
+    }, [])
     return (
         <div>
             <div className={classes.homeContent}>
@@ -68,11 +121,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             SSC Equivalent (Std X/level 10) Marksheet
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                       
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' value="sscEq" onClick={viewDocument}><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -84,11 +135,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             HSC Equivalent (Std XII/level 12) Marksheet
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' value="hscEq"><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -100,11 +149,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             Graduation All Semester Grade sheets, Passing Certificate, Degree certificate
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' value="grad"><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -116,11 +163,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             Aadhar / Passport
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' value="aadharPassport"><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -132,11 +177,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             Professional Experience
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' value="profExp"><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -148,11 +191,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             Other Courses
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' vlaue="otCourses"><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -164,11 +205,9 @@ function Application4(props) {
                                         <Grid item xs={12} sm={7}>
                                             Single Document Containing Self Declaration form and Edication Declaration form
                                         </Grid>
-                                        <Grid item xs={12} sm={3}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                        </Grid>
+                                        
                                         <Grid item xs={12} sm={2}>
-                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
+                                            <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small' value="selfDeclaration"><ViewIcon />View</Button>
                                         </Grid>
                                     </Grid>
                                 </TableCell>
@@ -176,29 +215,6 @@ function Application4(props) {
                         </TableBody>
                     </Table>
                     </TableContainer>
-                    <Typography  style={{width:'100%', textAlign:'center'}}><b>Bank Details</b></Typography>
-                    <TableContainer component={Paper} className={classes.tableContainer}>
-                        <Table className={classes.table}>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell className={classes.tableCell} style={{ textAlign: 'center' }} width="30%">1</TableCell>
-                                    <TableCell className={classes.tableCell} width="70%">
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={12} sm={7}>
-                                                Single Document Containing Self Declaration form and Edication Declaration form
-                                            </Grid>
-                                            <Grid item xs={12} sm={3}>
-                                                <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><DownloadIcon />Download</Button>
-                                            </Grid>
-                                            <Grid item xs={12} sm={2}>
-                                                <Button className={classes.button} style={{ background: "#057BDB" }} variant="contained" size='small'><ViewIcon />View</Button>
-                                            </Grid>
-                                        </Grid>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer><br />
             </div>
         </div >
     )
