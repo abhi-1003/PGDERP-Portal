@@ -18,6 +18,7 @@ import { OtpScript } from "./components/common/otpScript";
 import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
 import Step4 from "./components/steps/Step4";
+import Grid from "./pages/Grid";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -93,6 +94,8 @@ function App() {
             />
           }
         ></Route>
+        <Route path="/admin-grid"
+          element = {<Grid />} />
       </Routes>
     </Router>
   );

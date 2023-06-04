@@ -239,7 +239,6 @@ exports.personalDetails = async(req, res) => {
   exports.getAllStudentDetails = async(req, res) => {
 
     let projection = "";
-    if(req.userRole == "admin"){
       Student.find()
       .lean()
       .exec()
@@ -249,10 +248,10 @@ exports.personalDetails = async(req, res) => {
       .catch((err) => {
         res.status(400).json({ error: "invalid request" });
       });
-    }
-    else{
-      return res.status(403).json("Error : Access Denied")
-    }
+    
+    // else{
+    //   return res.status(403).json("Error : Access Denied")
+    // }
   }
 
   exports.getNoStudents = async(req, res) => {
