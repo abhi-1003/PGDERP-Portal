@@ -89,10 +89,11 @@ exports.loginStudent = (req, res) => {
 
 exports.registerCoordinator = (req, res) => {
   // console.log(req.headers["pgderp-website-jwt"]);
-  if (req.userRole != "admin") {
+  if (1) {
     return res.status(403).json({ error: "Only Admin can add cooordinator" });
   }
-  const { name, email, mobile, password } = req.body;
+  const { name, email, mobile, password } = req.data;
+  console.log(req.body)
   if (!(name, email, mobile && password)) {
     return res.status(400).json({ error: "All input is required" });
   }

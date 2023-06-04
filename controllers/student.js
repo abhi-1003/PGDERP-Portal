@@ -239,7 +239,6 @@ exports.personalDetails = async(req, res) => {
   exports.getAllStudentDetails = async(req, res) => {
 
     let projection = "";
-    if(req.userRole == "admin"){
       Student.find()
       .lean()
       .exec()
@@ -249,10 +248,10 @@ exports.personalDetails = async(req, res) => {
       .catch((err) => {
         res.status(400).json({ error: "invalid request" });
       });
-    }
-    else{
-      return res.status(403).json("Error : Access Denied")
-    }
+    
+    // else{
+    //   return res.status(403).json("Error : Access Denied")
+    // }
   }
 
   exports.getNoStudents = async(req, res) => {
@@ -286,4 +285,74 @@ exports.personalDetails = async(req, res) => {
       }
     }
     
+  }
+
+  exports.getDocs = async(req, res) => {
+    const email = req.query.email;
+    try{
+      const user = await Student.findOne({email}).exec();
+      if(user){
+        console.log(296, user)
+        if(user["documents"]!==undefined){
+          return res.json({"doc": user["documents"]})
+        }
+        else{
+          return res.json({"doc": null})
+        }
+      }
+      else{
+        return res.json({"doc": null})
+      }
+    }
+    catch (error){
+      console.log(error);
+      return res.status(400).json({ error: "request failed" });
+    }
+  }
+
+  exports.getDocs = async(req, res) => {
+    const email = req.query.email;
+    try{
+      const user = await Student.findOne({email}).exec();
+      if(user){
+        console.log(296, user)
+        if(user["documents"]!==undefined){
+          return res.json({"doc": user["documents"]})
+        }
+        else{
+          return res.json({"doc": null})
+        }
+      }
+      else{
+        return res.json({"doc": null})
+      }
+    }
+    catch (error){
+      console.log(error);
+      return res.status(400).json({ error: "request failed" });
+    }
+  }
+
+  exports.getDocsById = async(req, res) => {
+    const id = req.query.id;
+    console.log(id)
+    try{
+      const user = await Student.findById(id).exec();
+      if(user){
+        console.log(296, user)
+        if(user["documents"]!==undefined){
+          return res.json({"doc": user["documents"]})
+        }
+        else{
+          return res.json({"doc": null})
+        }
+      }
+      else{
+        return res.json({"doc": null})
+      }
+    }
+    catch (error){
+      console.log(error);
+      return res.status(400).json({ error: "request failed" });
+    }
   }

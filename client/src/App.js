@@ -17,6 +17,8 @@ import StudentHome from "./pages/StudentHome";
 import { OtpScript } from "./components/common/otpScript";
 import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
+import Step4 from "./components/steps/Step4";
+import Grid from "./pages/Grid";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -43,18 +45,13 @@ function App() {
         <Route
           path="/student/form"
           element={
-            <ProtectedRoute allowedRoles={[roles.student]}>
-              <FormComponent />
-            </ProtectedRoute>
+              <FormComponent allowedRoles={[roles.student]}/>
           }
         />
-        <Route path="/doc" element={<Docs />}></Route>
         <Route
           path="/student/home"
           element={
-            <ProtectedRoute allowedRoles={[roles.student]}>
-              <StudentHome />
-            </ProtectedRoute>
+              <StudentHome allowedRoles={[roles.student]}/>
           }
         />
 
@@ -63,9 +60,7 @@ function App() {
         <Route
           path="/admin/home"
           element={
-            <ProtectedRoute allowedRoles={[roles.admin]}>
-              <AdminHome />
-            </ProtectedRoute>
+              <AdminHome allowedRoles={[roles.admin]}/>
           }
         />
 
@@ -78,9 +73,8 @@ function App() {
         <Route
           path="/admin/registerCoord"
           element={
-            <ProtectedRoute allowedRoles={[roles.admin]}>
-              <CoordinatorRegister />
-            </ProtectedRoute>
+              <CoordinatorRegister  allowedRoles={[roles.admin]}/>
+
           }
         />
         <Route path="/otpscript" element = {<OtpScript />}></Route>
@@ -88,11 +82,13 @@ function App() {
           path="/doc-view"
           element = {
             <DocViewer
-              filename="e6f04504d2ba35d582979cc7af23a9f91685279388302.pdf"
+              filename="a2020d3641851fc69d1be879a9a35bff1685731386851.pdf"
               contentType="application/pdf"
             />
           }
         ></Route>
+        <Route path="/admin/grid"
+          element = {<Grid allowedRoles={[roles.admin]}/>} />
       </Routes>
     </Router>
   );

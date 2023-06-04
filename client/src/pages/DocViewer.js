@@ -41,9 +41,6 @@ const DocViewer = (data) => {
 
   return (
     <div>
-    <div>
-      Hello
-    </div>
     <div className="previewIcon" onClick={onClick}>
       {loading ? (
         <CircularProgress size="1em" color="inherit" />

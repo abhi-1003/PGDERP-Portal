@@ -60,9 +60,11 @@ export default function UserRegister() {
         password: values.password
       };
       console.log(data);
+      const token = localStorage.getItem("pgderp-website-jwt")
       const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios
-        .post(url, data)
+        .post(url, {data, headers:{ "pgderp-website-jwt": token }
+        })
         .then(res => {
           alert(res.data.message);
         })

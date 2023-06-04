@@ -238,7 +238,7 @@ export default function Step3(
 				</Box>
 				<Box p={2}>
 					{renderButton({
-						label: "finish",
+						label: "next",
 						handleOnClick: handleNext,
 					})}
 				</Box>

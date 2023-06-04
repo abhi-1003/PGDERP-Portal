@@ -116,7 +116,15 @@ const personalInfo = {
   //   totalDeadBacklogsPG: {type: Number},
   //   totalLiveBacklogsPG: {type: Number},
   //   };
-  
+  const documents = {
+    sscEq: { type: String },
+    hscEq: { type: String },
+    grad: { type: String },
+    aadharPassport: { type: String },
+    profExp: { type: String },
+    otCourses: { type: String },
+    selfDeclaration: { type: String },
+  }
   const StudentSchema = Schema(
     {
       name: reqString,
@@ -132,6 +140,7 @@ const personalInfo = {
       verificationField: verificationField,
       pgderpID: {type: String},
       applicationFilled : {type: Boolean},
+      documents: documents
     },
     { timestamps: true }
   );

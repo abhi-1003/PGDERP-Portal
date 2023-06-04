@@ -6,10 +6,11 @@ const {
   uploadFile,
   getFileGrid,
   removeFileGrid,
+  setUser
 } = require("../controllers/file");
 
 router.post("/upload", uploadFile);
-
+router.post("/setUser", setUser);
 router.get("/get/:filename", getFileGrid);
 
 // router.delete("/delete/:filename", removeFileGrid);

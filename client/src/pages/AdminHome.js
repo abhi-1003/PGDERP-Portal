@@ -66,6 +66,10 @@ export default function AdminHome() {
     navigate("/admin/registerCoord");
   };
 
+  const wholeData = () => {
+    navigate("/admin/grid")
+  }
+
   return (
     <>
       {/* <NavBar /> */}
@@ -122,7 +126,7 @@ export default function AdminHome() {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
-                    onClick={exportToExcel}
+                    onClick={wholeData}
                     type="submit"
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
@@ -131,7 +135,7 @@ export default function AdminHome() {
                       marginLeft: "2%",
                       background: "#012d5e",
                     }}>
-                    Download Excel
+                    View whole Data
                   </Button>
                 </Grid>
               </Grid>
