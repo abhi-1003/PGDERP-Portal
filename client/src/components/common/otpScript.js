@@ -12,6 +12,7 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import { Navigate, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 export const OtpScript = () => {
   const form = useRef();
@@ -113,6 +114,9 @@ export const OtpScript = () => {
           borderRadius: "32px"
         }}
       >
+        <Typography component="h6" variant="h6">
+              Please Verify your details after OTP Verification these details cannot be modified
+        </Typography>
         <form
           ref={form}
           onSubmit={sendEmail}
@@ -161,7 +165,7 @@ export const OtpScript = () => {
               alignItems: "start",
               backgroundColor: "rgba(255, 255, 200, 0.5)",
               padding: "10px",
-              borderRadius: "16px"
+              borderRadius: "16px",
             }}
           >
             <label>Email</label>
@@ -169,6 +173,62 @@ export const OtpScript = () => {
               type="email"
               name="user_email"
               value={location.state.data.email}
+              style={{
+                fontSize: "24px",
+                borderRadius: "8px",
+                border: "0px",
+                padding: "4px"
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              margin: "8px",
+              fontSize: "24px",
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              justifyContent: "space-evenly",
+              alignItems: "start",
+              backgroundColor: "rgba(255, 255, 200, 0.5)",
+              padding: "10px",
+              borderRadius: "16px"
+            }}
+          >
+            <label>Mobile</label>
+            <input
+              type="text"
+              name="user_mobile"
+              value={location.state.data.mobile}
+              style={{
+                fontSize: "24px",
+                borderRadius: "8px",
+                border: "0px",
+                padding: "4px"
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              margin: "8px",
+              fontSize: "24px",
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              justifyContent: "space-evenly",
+              alignItems: "start",
+              backgroundColor: "rgba(255, 255, 200, 0.5)",
+              padding: "10px",
+              borderRadius: "16px"
+            }}
+          >
+            <label>Course</label>
+            <input
+              type="text"
+              name="user_course"
+              value={location.state.data.course}
               style={{
                 fontSize: "24px",
                 borderRadius: "8px",

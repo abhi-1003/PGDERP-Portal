@@ -254,11 +254,21 @@ exports.personalDetails = async(req, res) => {
     // }
   }
 
-  exports.getNoStudents = async(req, res) => {
-      Student.countDocuments().then((count_documents) => {
-        return res.json({ data: count_documents })
-      }).catch((err) => {
-        console.log(err.Message);
+  exports.getNoStudentsandEmailCheck = async(req, res) => {
+      const {email, course} = req.body;
+      Student.findOne({email}, (err, user) => {
+        if(err){
+          console.log(err)
+          return res.status(400).json({err})
+        }
+        if(user){
+          return res.send({"message" : "User with same email already registered"})
+        }
+        Student.countDocuments({"course" : course}).then((count_documents) => {
+          return res.json({ data: count_documents })
+        }).catch((err) => {
+          console.log(err.Message);
+        })
       })
   }
 

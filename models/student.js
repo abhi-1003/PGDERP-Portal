@@ -13,8 +13,6 @@ const verificationField = {
 }
 
 const personalInfo = {
-    ID: {type: String},
-    course: {type: String},
     campusPreference:{type: Array},
     lastName:{type: String},
     firstName:{type: String},
@@ -76,46 +74,6 @@ const personalInfo = {
     professionalExperience: {type: Array},
   }
   
-  // const academics = {
-  //   examinationSSC: {type: String},
-  //   instituteSSC: { type: String },
-  //   datefromSSC: {type: String},
-  //   datetoSSC: {type: String},
-  //   percentageMarksSSC: { type: Number },
-  //   examinationHSC: {type: String},
-  //   instituteHSC: { type: String },
-  //   datefromHSC: {type: String},
-  //   datetoHSC: {type: String},
-  //   percentageMarksHSC: { type: Number },
-  //   examinationDiploma: {type: String},
-  //   instituteDiploma: { type: String },
-  //   datefromDiploma: {type: String},
-  //   datetoDiploma: {type: String},
-  //   percentageMarksDiploma: { type: Number },
-  // };
-  
-  // const academicsUGPG = {
-  //   examinationUG: {type: String},
-  //   instituteUG: { type: String },
-  //   specializationUG: { type: String },
-  //   datefromUG: {type: String},
-  //   datetoUG: {type: String},
-  //   marksFinalYearUG: { type: Number },
-  //   totalAggregateUG: { type: Number },
-  //   percentageMarksUG: { type: Number },
-  //   totalDeadBacklogsUG: {type: Number},
-  //   totalLiveBacklogsUG: {type: Number},
-  //   examinationPG: {type: String},
-  //   institutePG: { type: String },
-  //   specializationPG: { type: String },
-  //   datefromPG: {type: String},
-  //   datetoPG: {type: String},
-  //   marksFinalYearPG: { type: Number },
-  //   totalAggregatePG: { type: Number },
-  //   percentageMarksPG: { type: Number },
-  //   totalDeadBacklogsPG: {type: Number},
-  //   totalLiveBacklogsPG: {type: Number},
-  //   };
   const documents = {
     sscEq: { type: String },
     hscEq: { type: String },
@@ -127,20 +85,50 @@ const personalInfo = {
   }
   const StudentSchema = Schema(
     {
+
+      // Important details - Name, Email, PWD, Mobile, Course
       name: reqString,
       email: email,
       password: reqString,
       mobile: { type: String },
+      course: {type: String},
+      registrationID: {type: String},
+
+      // Other Info Details
       personalInfo: personalInfo,
       academicsInfo: academicsInfo,
-      // academics: academics,
-      // academicsUGPG: academicsUGPG,
-      // othercourses: {type: Array},
-      // professionalExperience: {type: Array},
-      verificationField: verificationField,
-      pgderpID: {type: String},
+      professionalExperience: {type: Array},
+      documents: documents,
+
+      // Filling details
+      personalInfoFilled : {type: Boolean},
+      academicsInfoFilled : {type: Boolean},
+      professionalExperienceFilled: {type: Boolean},
+      documentsFilled : {type: Boolean},
+
+      // After filling all 4 details above it will become true and student can download
       applicationFilled : {type: Boolean},
-      documents: documents
+
+      // Editable (after whole application is filled none of the fields will be editable)
+      personalInfoEditable : {type: Boolean},
+      academicsInfoEditable : {type: Boolean},
+      professionalExperienceEditable : {type: Boolean},
+      documentsEditable : {type: Boolean},
+
+      // Verification
+      // 3 states - Pending, Modification Required, Verified
+      personalInfoVerified : {type: Boolean},
+      academicsInfoVerified: {type: Boolean},
+      professionalExperienceVerified : {type: Boolean},
+      documentsVerified : {type:Boolean},
+      applicationVerified : {type: Boolean},
+
+      // Remarks
+      personalInfoRemarks : {type: Object},
+      academicsInfoRemarks : {type: Object},
+      professionalExperienceRemarks : {type: Object},
+      documentsRemarks : {type: Object},
+      
     },
     { timestamps: true }
   );

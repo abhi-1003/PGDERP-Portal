@@ -45,13 +45,17 @@ function App() {
         <Route
           path="/student/form"
           element={
-              <FormComponent allowedRoles={[roles.student]}/>
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <FormComponent/>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/student/home"
           element={
-              <StudentHome allowedRoles={[roles.student]}/>
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <StudentHome/>
+            </ProtectedRoute>
           }
         />
 
@@ -60,7 +64,9 @@ function App() {
         <Route
           path="/admin/home"
           element={
-              <AdminHome allowedRoles={[roles.admin]}/>
+            <ProtectedRoute allowedRoles={[roles.admin]}>
+              <AdminHome/>
+              </ProtectedRoute>
           }
         />
 
@@ -73,8 +79,9 @@ function App() {
         <Route
           path="/admin/registerCoord"
           element={
-              <CoordinatorRegister  allowedRoles={[roles.admin]}/>
-
+            <ProtectedRoute allowedRoles={[roles.admin]}>
+              <CoordinatorRegister />
+              </ProtectedRoute>
           }
         />
         <Route path="/otpscript" element = {<OtpScript />}></Route>
@@ -88,7 +95,10 @@ function App() {
           }
         ></Route>
         <Route path="/admin/grid"
-          element = {<Grid allowedRoles={[roles.admin]}/>} />
+          element = {
+            <ProtectedRoute allowedRoles={[roles.admin]}>
+          <Grid/>
+        </ProtectedRoute>} />
       </Routes>
     </Router>
   );

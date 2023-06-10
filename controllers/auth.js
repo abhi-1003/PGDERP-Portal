@@ -28,9 +28,27 @@ const generateToken = (user) => {
 };
 
 exports.registerStudent = (req, res) => {
-  const { name, email, mobile, password, pgderpID } = req.body;
+  const { name, email, password, mobile, course, registrationID } = req.body;
+  
+  const personalInfoFilled = false;
+  const academicsInfoFilled = false;
+  const professionalExperienceFilled = false;
+  const documentsFilled = false;
+
   const applicationFilled = false;
-  if (!(name, email, mobile && password)) {
+
+  const personalInfoEditable = true;
+  const academicsInfoEditable = true;
+  const professionalExperienceEditable = true;
+  const documentsEditable = true;
+
+  const personalInfoVerified = false;
+  const academicsInfoVerified = false;
+  const professionalExperienceVerified = false;
+  const documentsVerified = false;
+  const applicationVerified = false;
+
+  if (!(name, email, password, mobile, course && registrationID)) {
     return res.status(400).json({ error: "All input is required" });
   }
   Student.findOne({ email })
@@ -42,7 +60,11 @@ exports.registerStudent = (req, res) => {
           .json({ error: "User Already Exist. Please Login" });
       }
       
-      const newStudent = new Student({ name, email, mobile, password, pgderpID, applicationFilled});
+      const newStudent = new Student({name, email, password, mobile, course, registrationID, 
+                                      personalInfoFilled, academicsInfoFilled, professionalExperienceFilled, documentsFilled,
+                                      applicationFilled,
+                                      personalInfoEditable, academicsInfoEditable, professionalExperienceEditable, documentsEditable,
+                                      personalInfoVerified, academicsInfoVerified, professionalExperienceVerified, documentsVerified, applicationVerified});
       newStudent
         .save()
         .then((user) => {

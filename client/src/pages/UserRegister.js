@@ -13,6 +13,11 @@ import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const theme = createTheme();
 const initialFValues = {
@@ -20,14 +25,17 @@ const initialFValues = {
   email: "",
   mobile: "",
   password: "",
-  cpassword: ""
+  cpassword: "",
+  course: ""
 };
 
 export default function UserRegister() {
   localStorage.clear();
-  const [pgderpID, setpgderpID] = useState("");
+  const [course, setCourse] = useState("");
   const navigate = useNavigate();
   const validate = (fieldValues = values) => {
+    values.course = course;
+    console.log(values)
     let temp = { ...errors };
     for (const key in fieldValues) {
       temp[key] = fieldValues[key] ? "" : "This field is required.";
@@ -49,32 +57,61 @@ export default function UserRegister() {
     if (fieldValues === values) return Object.values(temp).every(x => x === "");
   };
 
+  const handleCourseChange = (event) => {
+    setCourse(event.target.value)
+  };
+
   const { values, errors, setErrors, handleInputChange } = useForm(
     initialFValues,
     true,
     validate
   );
+
   const handleSubmit = e => {
     e.preventDefault();
     if (validate()) {
       const initial_url = BACKEND_URL + "/student/noStudents";
-      axios.get(initial_url).then(res => {
-        const ind = res.data.data.toString().padStart(4, "0");
-        const id = `ER23${ind}`;
-        // const url = BACKEND_URL + "/student/userRegister";
-        const data = {
-          name: values.fullname,
-          email: values.email,
-          mobile: values.mobile,
-          password: values.password,
-          pgderpID: id
-        };
-        console.log(data);
-        navigate("/otpscript", {
-          state: {
-            data: data
+      let course = values.course;
+      let email = values.email;
+      let body = {course, email};
+      axios.post(initial_url, body).then(res => {
+        if(res.data.message === "User with same email already registered"){
+          alert(res.data.message)
+        }
+        else{
+          const ind = res.data.data.toString().padStart(4, "0");
+          let id = "";
+
+          if(course === "PGDERP"){
+            id = `ERP23${ind}`;
           }
+          if(course === "PGDDSAI"){
+            id = `DSAI23${ind}`;
+          }
+          if(course === "PGDESIoT"){
+            id = `ESIoT23${ind}`;
+          }
+          if(course === "PGDIPDD"){
+            id = `IPDD23${ind}`;
+          }
+          if(course === "PGDIA"){
+            id = `DIA23${ind}`;
+          }
+          // const url = BACKEND_URL + "/student/userRegister";
+          const data = {
+            name: values.fullname,
+            email: values.email,
+            mobile: values.mobile,
+            password: values.password,
+            course: values.course,
+            registrationID : id,
+          };
+          navigate("/otpscript", {
+            state: {
+              data: data
+            }
         });
+        }
       });
     }
   };
@@ -165,9 +202,32 @@ export default function UserRegister() {
                     onChange={handleInputChange}
                     error={errors.cpassword}
                   />
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Course</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={course}
+                        label="Course*"
+                        onChange={handleCourseChange}
+                      >
+                        <MenuItem value={"PGDDSAI"}>Data Science and Artificial Intelligence(PGDDSAI)</MenuItem>
+                        <MenuItem value={"PGDESIoT"}>Embedded Systems for Internet of Things(PGDESIoT)</MenuItem>
+                        <MenuItem value={"PGDERP"}>Enterprise Resourse Planning(PGDERP)</MenuItem>
+                        <MenuItem value={"PGDIPDD"}>Integrated Product Design and Development(PGDIPDD)</MenuItem>
+                        <MenuItem value={"PGDIA"}>Industrial Automation(PGDIA)</MenuItem>
+                      </Select>
+                      {!course && <FormHelperText sx= {{color: "red"}}>{errors.course}</FormHelperText>}
+                      
+                    </FormControl>
+                  </Box>
                   <Grid item xs={12}>
                     <Typography component="p" variant="body2">
-                      OTP will be sent to entered Email-ID
+                      One student can register for only single course
+                    </Typography>
+                    <Typography component="p" variant="body2">
+                    OTP will be sent to entered Email-ID
                     </Typography>
                     <Button
                       type="submit"
