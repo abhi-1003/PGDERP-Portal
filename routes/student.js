@@ -3,7 +3,7 @@ const express = require("express");
 const { auth } = require("../middleware/auth");
 
 const { registerStudent, loginStudent } = require("../controllers/auth");
-const { personalDetails, academicDetails, professionalDetails,getApplicantsNames,getPersonalDetails,getAcademicDetails,getProfessionalDetails, getAllStudentDetails, getNoStudentsandEmailCheck, editStudentInfo, getDocs, getDocsById} = require("../controllers/student");
+const { getStudentMe, personalDetails, academicDetails, professionalDetails,getApplicantsNames,getPersonalDetails,getAcademicDetails,getProfessionalDetails, getAllStudentDetails, getNoStudentsandEmailCheck, editStudentInfo, getDocs, getDocsById} = require("../controllers/student");
 
 const router = express.Router();
 
@@ -22,4 +22,5 @@ router.get("/academicDetails", getAcademicDetails);
 router.get("/professionalDetails", getProfessionalDetails);
 router.get("/allStudentData", [auth, getAllStudentDetails]);
 router.post("/editStudentInfo", [auth, editStudentInfo]);
+router.post("/me", [auth, getStudentMe])
 module.exports = router;

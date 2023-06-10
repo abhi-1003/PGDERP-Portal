@@ -19,7 +19,6 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import ResponsiveDrawer from "../components/ResposiveDrawer";
 
 const styles = StyleSheet.create({
   body: {
@@ -611,10 +610,10 @@ class StudentHome extends Component {
     //     </Page>
     //   </Document>
     // );
-
-    return (
-      <ResponsiveDrawer options = {['Home', 'Fill Admission Form', 'Download Application', 'Download Self Declaration', 'Logout']}/>   
-    );
+    return(
+      <div></div>
+    )
+    
   }
 }
 

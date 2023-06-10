@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
+import bg_pic from "../components/images/coepBuilding.png"
 
 const theme = createTheme();
 const initialFValues = {
@@ -121,24 +122,29 @@ export default function UserRegister() {
       {/* <NavBar loggedin={false} /> */}
       <div
         style={{
-          background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-          position: "absolute",
+          backgroundImage: `url(${bg_pic})`,
           top: "0px",
           right: "0px",
           bottom: "0px",
           left: "0px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          minHeight: "100vh"
         }}
       >
         <Container
           component="main"
           item="true"
-          maxWidth="xs"
+          maxWidth="sm"
           style={{
-            backgroundColor: "rgba(215, 198, 165, 0.4)",
-            borderRadius: "32px"
+            backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8,
           }}
         >
           <CssBaseline />
@@ -152,15 +158,15 @@ export default function UserRegister() {
             <Avatar
               sx={{
                 bgcolor: "#012d5e",
-                width: "128px",
-                height: "128px"
+                width: "100px",
+                height: "100px"
               }}
             ></Avatar>
             <Typography component="h1" variant="h5">
-              Student Register
+              COEP PG Diploma Admissions
             </Typography>
             <Typography component="h6" variant="h6">
-              Please Enter Correct Details
+              Student Register
             </Typography>
             <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>

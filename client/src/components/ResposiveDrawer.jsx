@@ -26,6 +26,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { useLocation } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const drawerWidth = 280;
 
@@ -56,28 +58,39 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     return { Details, Verification_Status, Completion_Status, Edit};
   }
   
-  const rows = [
-    createData('Personal Information', 'Not Verified', 'Pending', 'Edit'),
-    createData('Academics Information', 'Not Verified', 'Pending', 'Edit'),
-    createData('Professional Details', 'Not Verified', 'Pending', 'Edit'),
-    createData('Documents Uploaded', 'Not Verified', 'Pending', 'Edit'),
-  ];
+  
 
-function ResponsiveDrawer(props) {
-  const { window } = props;
+function ResponsiveStudentHome() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const personal_data = location.state.student_data
+  const { window } = location.state;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const rows = [
+    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : "Not Verified", personal_data["personalInfoFilled"] ? "Completed" : "Pending", 'Edit'),
+    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : "Not Verified", personal_data["academicsInfoFilled"] ? "Completed" : "Pending", 'Edit'),
+    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : "Not Verified", personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", 'Edit'),
+    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : "Not Verified", personal_data["documentsFilled"] ? "Completed" : "Pending", 'Edit'),
+  ];
+
   const drawer = (
     <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
       <Toolbar/>
       <List>
-        {props.options && props.options.map((text, index) => (
+      {location.state.options && Object.keys(location.state.options).map((text, index) => (
           <ListItem key={text}>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate(location.state.options[text], {
+              state: {
+                student_data : location.state.student_data,
+                options: location.state.options
+              }
+            })}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -161,16 +174,16 @@ function ResponsiveDrawer(props) {
         </Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={6} sx = {{padding:"2% 1%"}}>
-          <Typography variant="h6">Name: </Typography>
+          <Typography variant="h6">Name: {personal_data.name}</Typography>
         </Grid>
         <Grid item xs={6} sx = {{padding:"2% 1%"}}>
-          <Typography variant="h6">Email-ID: </Typography>
+          <Typography variant="h6">Email-ID: {personal_data.email}</Typography>
         </Grid>
         <Grid item xs={6} sx = {{padding:"2% 1%"}}>
-          <Typography variant="h6">Course: </Typography>
+          <Typography variant="h6">Course: {personal_data.course}</Typography>
         </Grid>
         <Grid item xs={6} sx = {{padding:"2% 1%"}}>
-          <Typography variant="h6">Mobile-No:</Typography>
+          <Typography variant="h6">Mobile-No: {personal_data.mobile}</Typography>
         </Grid>
 
         {/* TABLE */}
@@ -182,7 +195,7 @@ function ResponsiveDrawer(props) {
             <StyledTableCell wrap>DETAILS</StyledTableCell>
             <StyledTableCell align="center" wrap>VERIFICATION STATUS</StyledTableCell>
             <StyledTableCell align="center" wrap>COMPLETION STATUS</StyledTableCell>
-            <StyledTableCell align="center" wrap>EDIT</StyledTableCell>
+            <StyledTableCell align="center" wrap>EDITABLE</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -210,7 +223,7 @@ function ResponsiveDrawer(props) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
+ResponsiveStudentHome.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -218,4 +231,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default ResponsiveStudentHome;

@@ -57,21 +57,15 @@ export default function UserLogin() {
         .then(res => {
           alert(res.data.message);
           let token_dict = res.data.token;
-          console.log(res.data);
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "student");
-          localStorage.setItem("name", res.data.name);
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("pgderpID", res.data.pgderpID);
-          let student_data = {
-            name : res.data.name,
-            email : res.data.email,
-            pgderpID : res.data.pgderpID
-          }
+          let student_data = res.data.data
           navigate("/student/home", {
+            
             state:{
-              student_data: student_data
+              student_data: student_data,
+              options : {'Home' : "/student/home", 'Fill Admission Form' : "/student/personalInfo", 'Download Application' : "/student/home", 'Download Self Declaration' : "/student/home", 'Logout' : "/student/login"}
             }
           });
         })
@@ -127,7 +121,7 @@ export default function UserLogin() {
                 variant="h5"
                 style={{ marginBottom: "20px" }}
               >
-                Login to PGDERP Portal
+                Login
               </Typography>
               <Form onSubmit={handleSubmit}>
                 <Grid align="center" xs={12} item>
