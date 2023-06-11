@@ -284,25 +284,41 @@ exports.personalDetails = async(req, res) => {
     if(req.userRole == "student"){
       const fields = [
         "personalInfo",
-        "academicsInfo"
+        "academicsInfo",
+        "professionalExperience",
       ];
-      const email = req.body['email'];
+      const id = req.body['id'];
       try{
-        const user = await Student.findOne({email}).exec();
+        const user = await Student.findById(id).exec();
         for (const field of fields) {
           user[field] = req.body[field];
         }
-        user['applicationFilled'] = true;
         await user.save().catch((err) => {
           console.log(err);
           return res.json({ error: "couldn't update record" });
         });
-        return res.status(200).json({user})
+        if(req.body["message"] === "Personal Info Completed"){
+          return res.send({message : "Personal Information Details Saved Successfully"})
+        }
       } catch (error) {
         res.status(400).json({ error: "request body contains invalid data" });
       }
     }
     
+  }
+
+  // Route for getting personal data of student
+  exports.getStudentMe = async(req, res) => {
+    if(req.userRole == "student"){
+      const id = req.body["id"]
+      try{
+        const user = await Student.findById(id).exec();
+        return res.send({user})
+      }
+      catch (error) {
+        res.status(400).json({ error: "request body contains invalid data" });
+      }
+    }
   }
 
   exports.getDocs = async(req, res) => {

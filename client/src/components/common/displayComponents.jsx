@@ -58,10 +58,10 @@ export const renderInputText = ({
 	label,
 	name,
 	color,
-	state,
+	stateVar,
 	handleOnChange,
 }) => {
-	const { data, errors } = state;
+	const { data, errors } = stateVar;
 	return (
 		<TextField
 			label={label}
@@ -98,56 +98,62 @@ export const renderInputSelect = ({
 	label,
 	name,
 	color,
-	state,
+	stateVar,
 	handleOnChange,
 	arr,
 }) => {
-	const { data, errors } = state;
-	return (
-		<TextField
-			label={label}
-			select
-			color={color ? color : "primary"}
-			variant="outlined"
-			name={name}
-			fullWidth={true}
-			size="small"
-			value={data[name]}
-			error={errors[name] ? true : false}
-			helperText={errors[name]}
-			onChange={handleOnChange}
-		>
-			{arr.map((option) => (
-				<MenuItem key={option.value} value={option.value}>
-					{option.label}
-				</MenuItem>
-			))}
-		</TextField>
-	);
+	if(stateVar && "data" in stateVar && "errors" in stateVar){
+		const { data, errors } = stateVar;
+		return (
+			<TextField
+				label={label}
+				select
+				color={color ? color : "primary"}
+				variant="outlined"
+				name={name}
+				fullWidth={true}
+				size="small"
+				value={data[name]}
+				error={errors[name] ? true : false}
+				helperText={errors[name]}
+				onChange={handleOnChange}
+			>
+				{arr.map((option) => (
+					<MenuItem key={option.value} value={option.value}>
+						{option.label}
+					</MenuItem>
+				))}
+			</TextField>
+		);
+	}
+	
 };
 export const renderMultiInputText = ({
 	label,
 	name,
 	color,
-	state,
+	stateVar,
 	handleOnChange,
 }) => {
-	const { data, errors } = state;
-	return (
-		<TextField
-			label={label}
-			multiline
-			color={color ? color : "primary"}
-			variant="outlined"
-			name={name}
-			fullWidth={true}
-			size="small"
-			value={data[name]}
-			error={errors[name] ? true : false}
-			helperText={errors[name]}
-			onChange={handleOnChange}
-		/>
-	);
+	if(stateVar && "data" in stateVar && "errors" in stateVar){
+		const { data, errors } = stateVar;
+		return (
+			<TextField
+				label={label}
+				multiline
+				color={color ? color : "primary"}
+				variant="outlined"
+				name={name}
+				fullWidth={true}
+				size="small"
+				value={data[name]}
+				error={errors[name] ? true : false}
+				helperText={errors[name]}
+				onChange={handleOnChange}
+			/>
+		);
+	}
+	
 };
 
 export const renderButton = ({ label, variant, color, handleOnClick }) => (

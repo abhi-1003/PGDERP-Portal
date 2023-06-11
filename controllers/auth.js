@@ -97,7 +97,7 @@ exports.loginStudent = (req, res) => {
       if (isMatch) {
         user.role = Student.modelName;
         const token = generateToken(user);
-        res.send({ message: "Login Successful", token: token, name: user.name, email:user.email, pgderpID:user.pgderpID });
+        res.send({ message: "Login Successful", token: token, data: user });
         // return res.json(token);
       } else {
         return res.status(400).json({ error: "Invalid Credentials" });

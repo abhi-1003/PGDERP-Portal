@@ -20,10 +20,11 @@ import DocViewer from "./pages/DocViewer";
 import Step4 from "./components/steps/Step4";
 import Grid from "./pages/Grid";
 import Application from "./components/Coordinator/application";
+import ResponsiveStudentHome from "./components/ResposiveDrawer";
+import PersonalInfo from "./pages/personalInfo";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
-  console.log("Helllo     " + token);
   if (token) {
     axios.defaults.headers.common["pgderp-website-jwt"] = "";
     axios.defaults.headers.common["pgderp-website-jwt"] = token;
@@ -55,7 +56,16 @@ function App() {
           path="/student/home"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <StudentHome/>
+              <ResponsiveStudentHome/>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/student/personalInfo"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <PersonalInfo/>
             </ProtectedRoute>
           }
         />
