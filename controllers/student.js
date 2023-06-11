@@ -4,9 +4,16 @@ const axios = require("axios");
 const roleToModel = require("./roles");
 const Student = require("../models/student");
 const Counter = require("../models/counter");
+const Coordinator = require("../models/coordinator");
 //sample data
 //{"ID":"12345", "course":"PGDERP","coursePreference":["vcpde","dsa"],"lastName":"kuv","firstName":"abiu","middleName":"oil","Address":"iugwouh","permanentAddress":"ohoih","email":"a@gmail.com","gender":"iqbd","phyDis":"oubdo","number":"768768798","PHname":"hbdibqkudh","PHemail":"qydiy@khvdk.com","PHnumber":"927987298","dob":"24122002","domicileState":"maharashtra","nationality":"indian"}
-
+const courseIds = {
+  'PGDERP': 'ERP',
+  'PGDDSAI': 'DSAI',
+  'PGDESIoT': 'ESIoT23',
+  'PGDIPDD': 'IPDD23',
+  'PGDIA': 'DIA23'
+}
 // Only student can access this route
 exports.personalDetails = async(req, res) => {
   if(req.userRole != "student"){
@@ -69,10 +76,11 @@ exports.personalDetails = async(req, res) => {
   // Except students all other roles can access
   exports.getApplicantsNames = async (req, res) => {
     // const email = req.query.email;
-    if(req.userRole == "student"){
-      res.status(403).json({ error: "Only Admin can access this data" });
-    }
-    const user = await Student.find({'applicationFilled':true}).sort({'pgderpId':1}).exec();
+    const email = req.query.email;
+    const coord = await Coordinator.findOne({'email': email}).exec();
+    var courses = coord.courses;
+    const user = await Student.find({'applicationFilled':false, "course": {$in: courses}}, {"name": 1, "registrationID": 1, "personalInfoVerified": 1, "academicsInfoVerified": 1, "professionalExperienceVerified": 1, "documentsVerified": 1, "applicationVerified": 1}).sort({'registrationID':1}).exec();
+    console.log(user);
     try {
       return res.json(user);
     } catch (error) {

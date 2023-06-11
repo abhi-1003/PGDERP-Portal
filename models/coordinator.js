@@ -8,6 +8,7 @@ const CoordinatorSchema = Schema(
     email: email,
     mobile: { type: String },
     password: reqString,
+    courses: {type: Array}
   },
   { timestamps: true }
 );

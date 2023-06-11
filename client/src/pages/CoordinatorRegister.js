@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
+import Checkbox from '@mui/material/Checkbox';
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,6 +13,7 @@ import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const theme = createTheme();
 const initialFValues = {
@@ -49,6 +51,17 @@ export default function UserRegister() {
     true,
     validate
   );
+  const [courses, setCourses] = useState([]);
+  const handleCheck = (event) => {
+    var updatedCourses = [...courses];
+    if (event.target.checked) {
+      updatedCourses = [...courses, event.target.value];
+    }
+    else{
+      updatedCourses.splice(courses.indexOf(event.target.value), 1);
+    }
+    setCourses(updatedCourses);
+  }
   const handleSubmit = e => {
     e.preventDefault();
     console.log("Hello");
@@ -57,7 +70,8 @@ export default function UserRegister() {
         name: values.fullname,
         email: values.email,
         mobile: values.mobile,
-        password: values.password
+        password: values.password,
+        courses: courses
       };
       console.log(data);
       const token = localStorage.getItem("pgderp-website-jwt")
@@ -160,6 +174,11 @@ export default function UserRegister() {
                     onChange={handleInputChange}
                     error={errors.cpassword}
                   />
+                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDDSAI"/>} label="PGDDSAI" />
+                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDESIoT"/>} label="PGDESIoT" />
+                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDERP"/>} label="PGDERP" />
+                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDIPDD"/>} label="PGDIPDD" />
+                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDIA"/>} label="PGDIA" />
                   <Grid item xs={12}>
                     <Button
                       type="submit"

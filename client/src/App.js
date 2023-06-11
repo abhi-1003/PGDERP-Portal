@@ -19,6 +19,7 @@ import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
 import Step4 from "./components/steps/Step4";
 import Grid from "./pages/Grid";
+import Application from "./components/Coordinator/application";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -70,7 +71,16 @@ function App() {
           }
         />
 
-        <Route path="/coordinator/*" element={<Coordinator />}></Route>
+        <Route path="/coordinator" element={
+          <ProtectedRoute allowedRoles={[roles.coordinator]}>
+          <Coordinator />
+        </ProtectedRoute>
+        }></Route>
+        <Route path="/coordinator/:id" element={
+          <ProtectedRoute allowedRoles={[roles.coordinator]}>
+          <Application />
+        </ProtectedRoute>
+        }></Route>
         <Route
           path="/coordinator/login"
           element={<CoordinatorLogin />}
