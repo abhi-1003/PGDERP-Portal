@@ -23,10 +23,6 @@ import dataa from "./data.json";
 import ReadOnlyRow from "../ReadOnlyRow";
 
 export default function Step2b(state,
-    handleOnChange,
-    handleOnChangeDate,
-    handleNext,
-    handlePrev,
     otherCoursesChange){
 
     console.log(state, otherCoursesChange)
@@ -149,7 +145,7 @@ export default function Step2b(state,
         newContacts.splice(index, 1);
         setAddFormData(newContacts);
         setContacts(newContacts);
-        state.professionalExperienceChange(newContacts)
+        // state.professionalExperienceChange(newContacts)
     };
 
     return (
@@ -162,8 +158,8 @@ export default function Step2b(state,
                             <TableCell>Name of Course Name</TableCell>
                             <TableCell>Name of University</TableCell>
                             <TableCell>Specialization</TableCell>
-                            <TableCell>Period From</TableCell>
-                            <TableCell>Period To</TableCell>
+                            <TableCell>Period From (Enter Year Only)</TableCell>
+                            <TableCell>Period To (Enter Year Only)</TableCell>
                             <TableCell>Grade/Marks(%)</TableCell>
 
                             <TableCell>Actions</TableCell>
