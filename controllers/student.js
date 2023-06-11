@@ -292,6 +292,9 @@ exports.personalDetails = async(req, res) => {
         if(req.body["message"] === "Personal Info Completed"){
           return res.send({message : "Personal Information Details Saved Successfully"})
         }
+        if(req.body["message"] === "Academics Info Completed"){
+          return res.send({message: "Academics Details Saved Successfully"})
+        }
       } catch (error) {
         res.status(400).json({ error: "request body contains invalid data" });
       }

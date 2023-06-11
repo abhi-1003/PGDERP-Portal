@@ -21,6 +21,7 @@ import Step4 from "./components/steps/Step4";
 import Grid from "./pages/Grid";
 import ResponsiveStudentHome from "./components/ResposiveDrawer";
 import PersonalInfo from "./pages/personalInfo";
+import AcademicsInfo from "./pages/academicsInfo";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -65,6 +66,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <PersonalInfo/>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/student/academicsInfo"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <AcademicsInfo/>
             </ProtectedRoute>
           }
         />
