@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Fragment }  from "react";
 import { useLocation } from "react-router-dom";
 import {
   Grid,
@@ -51,6 +52,9 @@ import { BACKEND_URL } from "../config";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import e from "cors";
+import dataa from '../components/steps/data.json'
+import ReadOnlyRow from "../components/ReadOnlyRow";
+import { nanoid } from "nanoid";
 
 const drawerWidth = 280;
 
@@ -85,6 +89,17 @@ function AcademicsInfo() {
   const [personalData, setPersonalData] = React.useState([]);
   const [validate1, setValidate1] = React.useState(false);
   const [validate2, setValidate2] = React.useState(false);
+  const [validate3, setValidate3] = React.useState(false)
+
+  const [contacts, setContacts] = React.useState(dataa);
+    const [addFormData, setAddFormData] = React.useState({
+        courseName: "",
+        uniName: "",
+        specialization: "",
+        periodFrom: "",
+        periodTo: "",
+        grade: "",
+    });
 
   const [stateVar, setStateVar] = React.useState({
     data: {
@@ -147,6 +162,10 @@ function AcademicsInfo() {
       }
     }
   }, []);
+
+  const otherCoursesChange = () =>{
+    setValidate3(false)
+}
 
   React.useEffect(() => {
     let copyErrors = { ...stateVar.errors };
@@ -480,6 +499,9 @@ function AcademicsInfo() {
             personalData.academicsInfo.professionalExperience,
         };
       }
+      if("otherCourses" in personalData.academicsInfo && personalData.academicsInfo.otherCourses.length > 0){
+        setContacts(personalData.academicsInfo.otherCourses)
+      }
     }
     setStateVar({ data: copyData, errors: copyErrors });
   }, [personalData]);
@@ -535,6 +557,49 @@ function AcademicsInfo() {
     data[name] = [value.$D, value.$M + 1, value.$y]
     setStateVar({ data: data, errors: errors });
   };
+
+  const handleDeleteClick = (contactId) => {
+    const newContacts = [...contacts];
+
+    const index = contacts.findIndex((contact) => contact.id === contactId);
+
+    newContacts.splice(index, 1);
+    setAddFormData(newContacts);
+    setContacts(newContacts);
+    // state.professionalExperienceChange(newContacts)
+};
+
+const handleAddFormSubmit = (event) => {
+  event.preventDefault();
+  const newContact = {
+      id: nanoid(),
+      courseName: addFormData.courseName,
+      uniName: addFormData.uniName,
+      specialization: addFormData.specialization,
+      periodFrom: addFormData.periodFrom,
+      periodTo: addFormData.periodTo,
+      grade: addFormData.grade,
+  };
+
+  const newContacts = [...contacts, newContact];
+  setContacts(newContacts);
+  otherCoursesChange()
+
+  // console.log(newContacts);
+};
+
+
+const handleAddFormChange = (event) => {
+  event.preventDefault();
+
+  const fieldName = event.target.getAttribute("name");
+  const fieldValue = event.target.value;
+
+  const newFormData = { ...addFormData };
+  newFormData[fieldName] = fieldValue;
+
+  setAddFormData(newFormData);
+};
 
   const handleSave1 = () => {
     const { data, errors } = stateVar;
@@ -794,12 +859,20 @@ function AcademicsInfo() {
     setValidate2(validate)
   }
 
+  const handleSave3 = () => {
+    let { data, errors} = stateVar;
+    data = {...data, otherCourses : contacts}
+    setStateVar({data: data, errors: errors})
+    setValidate3(true);
+    alert("Other Courses Details Saved Successfully")
+  }
+
 
   const handleSave = () => {
 
     console.log(validate1 , validate2)
 
-    if(validate1 && validate2) {
+    if(validate1 && validate2 && validate3) {
 
     
     
@@ -1379,18 +1452,23 @@ function AcademicsInfo() {
         >
           SAVE DETAILS
         </Button>
-        <Typography>
+        {validate1 && (
+          <div style= {{justifyContent:"center", alignItems : "center", marginTop: "8px"}}>
+            <Typography align = "center">
           SSC To HSC Gap : {stateVar.data.SSCtoHSC} years
         </Typography>
-        <Typography>
+        <Typography align = "center">
           SSC To Diploma Gap : {stateVar.data.SSCtoDiploma} years
         </Typography>
-        <Typography>
+        <Typography align = "center">
           HSC To Diploma Gap : {stateVar.data.HSCtoDiploma} years
         </Typography>
-        <Typography>
+        <Typography align = "center">
           Total Gaps : {stateVar.data.TotalGapsSchool} years
         </Typography>
+          </div>
+        )}
+        
         </Paper>
 
         <Paper component={Box} p={2}>
@@ -1762,6 +1840,144 @@ function AcademicsInfo() {
         >
           SAVE DETAILS
         </Button>
+        {validate2 && (
+          <div style= {{justifyContent:"center", alignItems : "center", marginTop: "8px"}}>
+            <Typography align = "center">
+          Total Graduation Period : {stateVar.data.GradPeriod} years
+        </Typography>
+        <Typography align = "center">
+          Gap in UG and PG : {stateVar.data.GradtoPostGrad} years
+        </Typography>
+          </div>) }
+        </Paper>
+        
+
+        <Paper component={Box} p={2}>
+          <Grid container spacing={2} style={{ justifyContent: "center" }}>
+            <Box mt={1} mb={2}>
+              {renderText({ label: 'Other Courses Details' })}
+            </Box>
+          </Grid>
+        
+          
+          <TableContainer component={Paper}>
+        <div className="app-container">
+            <form>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name of Course Name</TableCell>
+                            <TableCell>Name of University</TableCell>
+                            <TableCell>Specialization</TableCell>
+                            <TableCell>Period From (Enter Year Only)</TableCell>
+                            <TableCell>Period To (Enter Year Only)</TableCell>
+                            <TableCell>Grade/Marks(%)</TableCell>
+
+                            <TableCell>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {contacts.map((contact) => (
+                            <Fragment>
+                                <ReadOnlyRow
+                                    contact={contact}
+                                    //handleEditClick={handleEditClick}
+                                    handleDeleteClick={handleDeleteClick}
+                                />
+                            </Fragment>
+                        ))}
+                    </TableBody>
+                </Table>
+            </form>
+            <Paper component={Box} p={2}>
+                <Grid container spacing={2} p={2}>
+                    <form
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            overflow: "scroll",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <TextField
+                            label="Course Name"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="courseName"
+                            // fullWidth={true}
+                            size="small"
+                            onChange={handleAddFormChange}
+                            style={{ margin: "1px" }}
+                        />
+                        <TextField
+                            label="University Name"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="uniName"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Specialization"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="specialization"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Period From"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="periodFrom"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Period To"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="periodTo"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+                        <TextField
+                            label="Grade"
+                            // color={color ? color : "primary"}
+                            variant="outlined"
+                            name="grade"
+                            // fullWidth={true}
+                            size="small"
+                            style={{ margin: "1px" }}
+                            onChange={handleAddFormChange}
+                        />
+
+                        {renderButton({
+                            label: "Add",
+                            handleOnClick: handleAddFormSubmit,
+                        })}
+                    </form>
+                    <Button
+          variant="contained"
+          onClick={() => handleSave3()}
+          color="success"
+          style={{ margin: "0 auto", display: "flex", marginTop: "3%" }}
+        >
+          SAVE DETAILS
+        </Button>
+                </Grid>
+            </Paper>
+        </div>
+        </TableContainer>
         </Paper>
         <Button
           variant="contained"
