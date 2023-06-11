@@ -111,12 +111,13 @@ exports.loginStudent = (req, res) => {
 
 exports.registerCoordinator = (req, res) => {
   // console.log(req.headers["pgderp-website-jwt"]);
-  if (1) {
-    return res.status(403).json({ error: "Only Admin can add cooordinator" });
-  }
-  const { name, email, mobile, password } = req.data;
+  // if (1) {
+  //   return res.status(403).json({ error: "Only Admin can add cooordinator" });
+  // }
+  console.log(117, req.body.data)
+  const { name, email, mobile, password, courses } = req.body.data;
   console.log(req.body)
-  if (!(name, email, mobile && password)) {
+  if (!(name, email, mobile && password, courses)) {
     return res.status(400).json({ error: "All input is required" });
   }
   Coordinator.findOne({ email })
@@ -127,7 +128,7 @@ exports.registerCoordinator = (req, res) => {
           .send({ message: "Coordinator Already Exist. Please Login" })
           .json({ error: "Coordinator Already Exist. Please Login" });
       }
-      const newCoordinator = new Coordinator({ name, email, mobile, password });
+      const newCoordinator = new Coordinator({ name, email, mobile, password, courses });
       newCoordinator
         .save()
         .then((user) => {
@@ -159,7 +160,7 @@ exports.loginCoordinator = (req, res) => {
       if (isMatch) {
         user.role = Coordinator.modelName;
         const token = generateToken(user);
-        res.send({ message: "Login Successful", token: token });
+        res.send({ message: "Login Successful", token: token, email: email });
         // return res.json(token);
       } else {
         return res.status(400).json({ error: "Invalid Credentials" });
