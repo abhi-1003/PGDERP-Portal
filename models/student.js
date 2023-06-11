@@ -80,6 +80,7 @@ const personalInfo = {
     profExp: { type: String },
     otCourses: { type: String },
     selfDeclaration: { type: String },
+    feesPayment: {type: String},
   }
   const StudentSchema = Schema(
     {

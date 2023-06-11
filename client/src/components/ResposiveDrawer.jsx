@@ -28,6 +28,8 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useLocation } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from '../config';
+import axios from 'axios';
 
 const drawerWidth = 280;
 
@@ -64,7 +66,7 @@ function ResponsiveStudentHome() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const personal_data = location.state.student_data
+  const [personal_data, setPersonalData] = React.useState(location.state.student_data)
   const { window } = location.state;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -78,6 +80,25 @@ function ResponsiveStudentHome() {
     createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : "Not Verified", personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", 'Edit'),
     createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : "Not Verified", personal_data["documentsFilled"] ? "Completed" : "Pending", 'Edit'),
   ];
+
+  React.useEffect(() => {
+    // console.log(location.state.student_data._id)
+    if (location.state) {
+      if (location.state.student_data._id) {
+        let body = { id: location.state.student_data._id };
+        let url = BACKEND_URL + "/student/me";
+        axios
+          .post(url, body, {
+            headers: {
+              "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
+            },
+          })
+          .then((res) => {
+            setPersonalData(res.data.user)
+          });
+      }
+    }
+  }, []);
 
   const drawer = (
     <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
