@@ -21,17 +21,13 @@ export const OtpScript = () => {
   const [correctotp, setCorrectotp] = useState("");
   const [open, setOpen] = React.useState(false);
   const [otp, setOtp] = React.useState("");
-  console.log("location", location);
 
   // Setting correct otp
   var o = Math.floor(100000 + Math.random() * 900000);
 
-  console.log(o);
-
   const handleClickOpen = () => {
     setOpen(true);
     if (otp) {
-      console.log(otp);
     } else {
       alert("Please enter otp");
     }
@@ -43,12 +39,10 @@ export const OtpScript = () => {
 
   const handleOTPChange = event => {
     setOtp(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleSubmit = e => {
     const url = BACKEND_URL + "/student/userRegister";
-    console.log(otp, correctotp);
     let data = location.state.data;
     if (otp === correctotp + "") {
       axios
@@ -72,7 +66,6 @@ export const OtpScript = () => {
 
     if (location.state.data) {
       setCorrectotp(o);
-      console.log(form.current);
       emailjs
         .sendForm(
           "service_1b1vta1",
@@ -82,11 +75,10 @@ export const OtpScript = () => {
         )
         .then(
           result => {
-            console.log(result.text);
             alert("Email sent successfully");
           },
           error => {
-            console.log(error.text);
+            alert(error.text);
           }
         );
     }

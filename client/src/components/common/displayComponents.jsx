@@ -58,10 +58,10 @@ export const renderInputText = ({
 	label,
 	name,
 	color,
-	state,
+	stateVar,
 	handleOnChange,
 }) => {
-	const { data, errors } = state;
+	const { data, errors } = stateVar;
 	return (
 		<TextField
 			label={label}

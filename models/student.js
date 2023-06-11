@@ -23,7 +23,7 @@ const personalInfo = {
     phyDis:{type: String},
     PHname:{type: String},
     PHemail:{type: String},
-    PHnumber:{type: Number},
+    PHnumber:{type: String},
     dob:{type: Array},
     domicileState:{type: String},
     nationality:{type: String},

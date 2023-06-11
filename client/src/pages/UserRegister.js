@@ -36,7 +36,6 @@ export default function UserRegister() {
   const navigate = useNavigate();
   const validate = (fieldValues = values) => {
     values.course = course;
-    console.log(values)
     let temp = { ...errors };
     for (const key in fieldValues) {
       temp[key] = fieldValues[key] ? "" : "This field is required.";

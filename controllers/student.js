@@ -289,7 +289,9 @@ exports.personalDetails = async(req, res) => {
           console.log(err);
           return res.json({ error: "couldn't update record" });
         });
-        return res.status(200).json({user})
+        if(req.body["message"] === "Personal Info Completed"){
+          return res.send({message : "Personal Information Details Saved Successfully"})
+        }
       } catch (error) {
         res.status(400).json({ error: "request body contains invalid data" });
       }
