@@ -68,8 +68,8 @@ const personalInfo = {
     AggregateMarksPostGrad:{type: String},
     DeadBacklogsPostGrad:{type: String},
     AliveBacklogPostGrad:{type: String},
+    TotalGapsSchool : {type: Number},
     otherCourses:{type: Array},
-    professionalExperience: {type: Array},
   }
   
   const documents = {

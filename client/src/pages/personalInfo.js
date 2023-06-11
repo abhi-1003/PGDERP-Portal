@@ -474,6 +474,12 @@ function PersonalInfo() {
         })
         .then((res) => {
           alert(res.data.message);
+          navigate("/student/academicsInfo", {
+            state: {
+              student_data: location.state.student_data,
+              options: location.state.options,
+            },
+          })
         });
     } else {
       alert("Please fill all data first");
