@@ -342,6 +342,33 @@ exports.personalDetails = async(req, res) => {
     }
   }
 
+  exports.fullComplete = async(req,res) => {
+    if(req.userRole == "student"){
+      const id = req.body['id'];
+      try{
+        const user = await Student.findById(id).exec();
+        if(user["personalInfoFilled"] && user["academicsInfoFilled"] && user["professionalExperienceFilled"] && user["documentsFilled"]){
+          user["applicationFilled"] = true;
+          user["personalInfoEditable"] = false;
+          user["academicsInfoEditable"] = false;
+          user["professionalExperienceEditable"] = false;
+          user["documentsEditable"] = false;
+          await user.save().catch((err) => {
+            console.log(err);
+            return res.json({ error: "couldn't update record" });
+          });
+          return res.send({message : "Application Submitted Successfully"})
+        }
+        else{
+          res.send({message: "Please fill all sections!"})
+        }
+      }
+      catch (error) {
+        res.status(400).json({ error: "request body contains invalid data" });
+      }
+    }
+  }
+
   // Route for getting personal data of student
   exports.getStudentMe = async(req, res) => {
     if(req.userRole == "student"){

@@ -56,8 +56,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     // },
   }));
 
-  function createData(Details, Verification_Status, Completion_Status, Edit) {
-    return { Details, Verification_Status, Completion_Status, Edit};
+  function createData(Details, Verification_Status, Completion_Status, Edit, Link) {
+    return { Details, Verification_Status, Completion_Status, Edit, Link};
   }
   
   
@@ -75,10 +75,10 @@ function ResponsiveStudentHome() {
   };
 
   const rows = [
-    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : "Not Verified", personal_data["personalInfoFilled"] ? "Completed" : "Pending", 'Edit'),
-    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : "Not Verified", personal_data["academicsInfoFilled"] ? "Completed" : "Pending", 'Edit'),
-    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : "Not Verified", personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", 'Edit'),
-    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : "Not Verified", personal_data["documentsFilled"] ? "Completed" : "Pending", 'Edit'),
+    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : "Not Verified", personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
+    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : "Not Verified", personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
+    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : "Not Verified", personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", personal_data["professionalExperienceEditable"] ? "Edit" : "Not Editable", "/student/professionalExperience"),
+    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : "Not Verified", personal_data["documentsFilled"] ? "Completed" : "Pending", personal_data["documentsEditable"] ? "Edit" : "Not Editable", "/student/documents"),
   ];
 
   React.useEffect(() => {
@@ -99,6 +99,22 @@ function ResponsiveStudentHome() {
       }
     }
   }, []);
+
+  const handleSubmit = () => {
+    const url = BACKEND_URL + "/student/fullComplete";
+    const body = {
+      id : personal_data._id
+    }
+    axios
+    .post(url, body, {
+      headers:{
+        "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
+      }
+    })
+    .then((res) => {
+      alert(res.data.message)
+    })
+  }
 
   const drawer = (
     <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
@@ -227,14 +243,21 @@ function ResponsiveStudentHome() {
               </StyledTableCell>
               <StyledTableCell align="center">{row.Verification_Status}</StyledTableCell>
               <StyledTableCell align="center">{row.Completion_Status}</StyledTableCell>
-              <StyledTableCell align="center">{row.Edit}</StyledTableCell>
+              <StyledTableCell align="center"><Button onClick={() => navigate(row.Link, {
+              state: {
+                student_data : location.state.student_data,
+                options: location.state.options
+              }
+            })} sx = {{background : "#feca0a", color:"#012d5e", ":hover":{
+              background : "#00ABE4"
+            }}}>{row.Edit}</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
 
-        <Button variant="contained" color="success" style={{margin: '0 auto', display: "flex", marginTop:"3%"}}>
+        <Button variant="contained" onClick = {() => handleSubmit()}color="success" style={{margin: '0 auto', display: "flex", marginTop:"3%" }}>
         Submit Application
         </Button>
 

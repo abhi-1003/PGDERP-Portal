@@ -53,6 +53,7 @@ import Button from "@mui/material/Button";
 import e from "cors";
 import { CloudUpload } from "@material-ui/icons";
 import DocViewer from "./DocViewer";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const drawerWidth = 280;
 
@@ -79,226 +80,297 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // },
 }));
 
-
 function Documents() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const { window } = location.state;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [docSchema, setDocSchema] = React.useState({
-        sscEq: '',
-        hscEq: '',
-        grad: '',
-        aadharPassport: '',
-        profExp: '',
-        otCourses: '',
-        selfDeclaration: '',
-        feesPayment: ''
-    })
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { window } = location.state;
+  const [loading1, setLoading1] = React.useState(false);
+  const [loading2, setLoading2] = React.useState(false);
+  const [loading3, setLoading3] = React.useState(false);
+  const [loading4, setLoading4] = React.useState(false);
+  const [loading5, setLoading5] = React.useState(false);
+  const [loading6, setLoading6] = React.useState(false);
+  const [loading7, setLoading7] = React.useState(false);
+  const [loading8, setLoading8] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [docSchema, setDocSchema] = React.useState({
+    sscEq: "",
+    hscEq: "",
+    grad: "",
+    aadharPassport: "",
+    profExp: "",
+    otCourses: "",
+    selfDeclaration: "",
+    feesPayment: "",
+  });
 
-    const [docs,setDocs] = React.useState([
-        {
-            "name": "SSC/Equivalent (Std. X/level 10) Marksheet",
-            "status": "Pending",
-            "file": null,
-            "dbName": "sscEq",
-            "filename" : "",
-            "originalname" : ""
-        },
-        {
-            "name": "HSC/Equivalent (Std. XII/level 12) Marksheet",
-            "status": "Pending",
-            "file": null,
-            "dbName": "hscEq",
-            "filename" : "",
-            "originalname" : ""
-        },
-        {
-            "name": "Graduation All Semester Grade Sheets, Passing Certificate, Degree Certificate",
-            "status": "Pending",
-            "file": null,
-            "dbName": "grad",
-            "filename" : "",
-            "originalname" : ""
-        },
-        {
-            "name": "Aadhar/Passport",
-            "status": "Pending",
-            "file": null,
-            "dbName": "aadharPassport",
-            "filename" : "",
-            "originalname" : ""
-        },
-        {
-            "name": "Professional Experience",
-            "status": "Pending",
-            "file": null,
-            "dbName": "profExp",
-            "filename" : "",
-            "originalname" : ""
-        },
-        {
-            "name": "Other Courses",
-            "status": "Pending",
-            "file": null,
-            "dbName": "otCourses",
-            "filename" : "",
-            "originalname" : ""
-        },
-        {
-            "name": "Single Document Containing Self Declaration form and Education Declaration form",
-            "status": "Pending",
-            "file": null,
-            "dbName": "selfDeclaration",
-            "filename" : "",
-            "originalname" : ""
-        }, 
-        {
-            "name" : "Fees Payment Receipt",
-            "status" : "Pending",
-            "file" : null,
-            "dbName" : "feesPayment",
-            "filename" : "",
-            "originalname" : ""
-        }
-    ])
+  const [docs, setDocs] = React.useState([
+    {
+      name: "SSC/Equivalent (Std. X/level 10) Marksheet",
+      status: "Pending",
+      file: null,
+      dbName: "sscEq",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name: "HSC/Equivalent (Std. XII/level 12) Marksheet",
+      status: "Pending",
+      file: null,
+      dbName: "hscEq",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name:
+        "Graduation All Semester Grade Sheets, Passing Certificate, Degree Certificate",
+      status: "Pending",
+      file: null,
+      dbName: "grad",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name: "Aadhar/Passport",
+      status: "Pending",
+      file: null,
+      dbName: "aadharPassport",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name: "Professional Experience",
+      status: "Pending",
+      file: null,
+      dbName: "profExp",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name: "Other Courses",
+      status: "Pending",
+      file: null,
+      dbName: "otCourses",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name:
+        "Single Document Containing Self Declaration form and Education Declaration form",
+      status: "Pending",
+      file: null,
+      dbName: "selfDeclaration",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name: "Fees Payment Receipt",
+      status: "Pending",
+      file: null,
+      dbName: "feesPayment",
+      filename: "",
+      originalname: "",
+    },
+  ]);
 
-    function fileUpload(event, index){
-        const tempDocs = [...docs];
-        const ele = tempDocs[index];
-        const data = new FormData();
-        data.append('file',event.target.files[0],event.target.files[0].name)
-        ele.file = data;
-        setDocs(tempDocs);
-    }
+  function fileUpload(event, index) {
+    const tempDocs = [...docs];
+    const ele = tempDocs[index];
+    const data = new FormData();
+    data.append("file", event.target.files[0], event.target.files[0].name);
+    ele.file = data;
+    setDocs(tempDocs);
+  }
 
-    function fileSubmit(index){
-        const URL = BACKEND_URL + '/files/upload';
-        if(docs[index].file !== null){
-            axios.post(URL, docs[index]["file"])
-            .then(function(response){
-                console.log(response)
-                var tempDoc = docSchema;
-                setDocs({...docs, [docs[index].filename]: response.data.filename, [docs[index].originalname]: response.data.originalname
-                })
-                tempDoc[docs[index].dbName] = response.data.filename;
-                axios.post(BACKEND_URL + '/files/setUser',{'email':location.state.student_data.email,'docName':docs[index]["name"], 'doc': tempDoc})
-                .then(function(res){
-                    setDocSchema({...docSchema, [docs[index].dbName]: response.data.filename})
-                    const tempDocs = [...docs];
-                    const ele = tempDocs[index];
-                    ele.status = "Submitted";
-                    setDocs(tempDocs);
-                })
-                .catch(function(err){
-                    console.log(err);
-                })
-            })
-            .catch(function(error){console.log(error)});
-        }
-        else{
-            alert("Please upload a file!")
-        }
-    }
+  function fileSubmit(index) {
+    const URL = BACKEND_URL + "/files/upload";
+    if (docs[index].file !== null) {
+      if (index == 0) {
+        setLoading1(true);
+      }
+      if (index == 1) {
+        setLoading2(true);
+      }
+      if (index == 2) {
+        setLoading3(true);
+      }
+      if (index == 3) {
+        setLoading4(true);
+      }
+      if (index == 4) {
+        setLoading5(true);
+      }
+      if (index == 5) {
+        setLoading6(true);
+      }
+      if (index == 6) {
+        setLoading7(true);
+      }
+      if (index == 7) {
+        setLoading8(true);
+      }
 
-    const handleSave = () => {
-        let validate = true
-        Object.keys(docs).map((row) => {
-            if(docs[row]["filename"] === ""){
-                validate = false
-            }
-        })
-
-        if(validate){
-          const url = BACKEND_URL + "/student/docFilled";
-          const body = {
-            id: location.state.student_data._id,
-          };
+      axios
+        .post(URL, docs[index]["file"])
+        .then(function(response) {
+          var tempDoc = docSchema;
+          setDocs({
+            ...docs,
+            [docs[index].filename]: response.data.filename,
+            [docs[index].originalname]: response.data.originalname,
+          });
+          tempDoc[docs[index].dbName] = response.data.filename;
           axios
-          .post(url, body, {
-            headers: {
-              "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
-            },
-          })
-          .then((res) => {
-            alert(res.data.message)
-          })
-            navigate("/student/home", {
-                state: {
-                  student_data: location.state.student_data,
-                  options: location.state.options,
-                },
-              })
-        }
+            .post(BACKEND_URL + "/files/setUser", {
+              email: location.state.student_data.email,
+              docName: docs[index]["name"],
+              doc: tempDoc,
+            })
+            .then(function(res) {
+              setDocSchema({
+                ...docSchema,
+                [docs[index].dbName]: response.data.filename,
+              });
+              const tempDocs = [...docs];
+              const ele = tempDocs[index];
+              ele.status = "Submitted";
+              setDocs(tempDocs);
+              if (index == 0) {
+                setLoading1(false);
+              }
+              if (index == 1) {
+                setLoading2(false);
+              }
+              if (index == 2) {
+                setLoading3(false);
+              }
+              if (index == 3) {
+                setLoading4(false);
+              }
+              if (index == 4) {
+                setLoading5(false);
+              }
+              if (index == 5) {
+                setLoading6(false);
+              }
+              if (index == 6) {
+                setLoading7(false);
+              }
+              if (index == 7) {
+                setLoading8(false);
+              }
+            })
+            .catch(function(err) {
+              console.log(err);
+            });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    } else {
+      alert("Please upload a file!");
     }
+  }
 
-    React.useEffect(()=>{
-        const url = BACKEND_URL + '/student/getDocs';
-        axios.get(url, {params: {'email': location.state.student_data.email}})
-        .then(function(response){
-            if(response.data.doc != undefined && response.data.doc != null){
-                var tempDocs = [...docs];
-                console.log(response.data.doc)
-                for (const [k, v] of Object.entries(response.data.doc)){
-                    if(v !== ''){
-                        for(var i=0; i<tempDocs.length; i++){
-                            if(tempDocs[i].dbName === k){
-                                tempDocs[i].filename = response.data.doc[k]
-                                tempDocs[i].status = "Submitted";
-                                break;
-                            }
-                        }
-                    }
-                }
-                setDocSchema(response.data.doc);
-                setDocs(tempDocs)
-            }
-        })
-        .catch(function(err){
-            console.log(err);
-        })
-        
-    }, [])
+  const handleSave = () => {
+    let validate = true;
+    Object.keys(docs).map((row) => {
+      if (docs[row]["filename"] === "") {
+        validate = false;
+      }
+    });
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
+    if (validate && !loading1 && !loading2 && !loading3 && !loading4 && !loading5 && !loading6 && !loading7 && !loading8) {
+      const url = BACKEND_URL + "/student/docFilled";
+      const body = {
+        id: location.state.student_data._id,
       };
+      axios
+        .post(url, body, {
+          headers: {
+            "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
+          },
+        })
+        .then((res) => {
+          alert(res.data.message);
+          navigate("/student/home", {
+            state: {
+              student_data: location.state.student_data,
+              options: location.state.options,
+            },
+          });
+        });
+      
+    }
+  };
 
-      const drawer = (
-        <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
-          <Toolbar />
-          <List>
-            {location.state.options &&
-              Object.keys(location.state.options).map((text, index) => (
-                <ListItem key={text}>
-                  <ListItemButton
-                    onClick={() =>
-                      navigate(location.state.options[text], {
-                        state: {
-                          student_data: location.state.student_data,
-                          options: location.state.options,
-                        },
-                      })
-                    }
-                  >
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-          </List>
-        </div>
-      );
+  React.useEffect(() => {
+    const url = BACKEND_URL + "/student/getDocs";
+    axios
+      .get(url, { params: { email: location.state.student_data.email } })
+      .then(function(response) {
+        if (response.data.doc != undefined && response.data.doc != null) {
+          var tempDocs = [...docs];
+          console.log(response.data.doc);
+          for (const [k, v] of Object.entries(response.data.doc)) {
+            if (v !== "") {
+              for (var i = 0; i < tempDocs.length; i++) {
+                if (tempDocs[i].dbName === k) {
+                  tempDocs[i].filename = response.data.doc[k];
+                  tempDocs[i].status = "Submitted";
+                  break;
+                }
+              }
+            }
+          }
+          setDocSchema(response.data.doc);
+          setDocs(tempDocs);
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  }, [loading1, loading2, loading3, loading4, loading5, loading6, loading7, loading8]);
 
-      const container =
-      window !== undefined ? () => window().document.body : undefined;
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-      return(
-        <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>
-            <CssBaseline />
-            <AppBar
+  const drawer = (
+    <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
+      <Toolbar />
+      <List>
+        {location.state.options &&
+          Object.keys(location.state.options).map((text, index) => (
+            <ListItem key={text}>
+              <ListItemButton
+                onClick={() =>
+                  navigate(location.state.options[text], {
+                    state: {
+                      student_data: location.state.student_data,
+                      options: location.state.options,
+                    },
+                  })
+                }
+              >
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+    </div>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
+  return (
+    <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>
+      <CssBaseline />
+      <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
@@ -381,41 +453,125 @@ function Documents() {
         </Paper>
 
         <TableContainer component={Paper}>
-        <Table>
-           <TableHead>
-            <TableRow>
+          <Table>
+            <TableHead>
+              <TableRow>
                 <TableCell>Sr. No.</TableCell>
                 <TableCell>Document Name</TableCell>
                 <TableCell>Upload</TableCell>
                 <TableCell>View</TableCell>
                 <TableCell>Status</TableCell>
-            </TableRow>
-            </TableHead> 
+              </TableRow>
+            </TableHead>
             <TableBody>
-                {Object.keys(docs).map((row, i) => {
-                    return (
-                        <TableRow>
-                        <TableCell>{i+1}</TableCell>
-                        <TableCell>{docs[row]["name"]}</TableCell>
-                        <TableCell><input type="file" onChange={(event)=>fileUpload(event, i)}/><CloudUpload style={{cursor: "pointer"}} onClick={()=>fileSubmit(i)}/></TableCell>
-                        {docs[row]["filename"] && (
-                            <TableCell>
-                            <DocViewer filename = {docs[row]["filename"]} contentType="application/pdf"/>
-                            </TableCell>
-                        )}
-                        {
-                            !docs[row]["filename"] && (
-                                <TableCell>No file
-                                    </TableCell>
+              {Object.keys(docs).map((row, i) => {
+                return (
+                  <TableRow>
+                    <TableCell>{i + 1}</TableCell>
+                    <TableCell>{docs[row]["name"]}</TableCell>
+                    <TableCell>
+                      <input
+                        type="file"
+                        onChange={(event) => fileUpload(event, i)}
+                      />
+                      <CloudUpload
+                        style={{ cursor: "pointer" }}
+                        onClick={() => fileSubmit(i)}
+                      />
+                    </TableCell>
+                    {docs[row]["filename"] && (
+                      <TableCell>
+                        <DocViewer
+                          filename={docs[row]["filename"]}
+                          contentType="application/pdf"
+                        />
+                      </TableCell>
+                    )}
+                    {!docs[row]["filename"] && <TableCell>No file</TableCell>}
+                    {i == 0 && loading1 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 0 && !loading1 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
 
-                            )
-                        }
-                        <TableCell>{docs[row]["status"]}</TableCell>
-                    </TableRow>
-                    )
-                })}
+                    {i == 1 && loading2 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 1 && !loading2 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+
+                    {i == 2 && loading3 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 2 && !loading3 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+
+                    {i == 3 && loading4 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 3 && !loading4 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+
+                    {i == 4 && loading5 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 4 && !loading5 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+
+                    {i == 5 && loading6 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 5 && !loading6 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+
+                    {i == 6 && loading7 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 6 && !loading7 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+
+                    {i == 7 && loading8 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 7 && !loading8 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+                  </TableRow>
+                );
+              })}
             </TableBody>
-        </Table>
+          </Table>
         </TableContainer>
 
         <Button
@@ -424,20 +580,19 @@ function Documents() {
           color="success"
           style={{ margin: "0 auto", display: "flex", marginTop: "3%" }}
         >
-          SAVE 
+          SAVE
         </Button>
-
+      </Box>
     </Box>
-        </Box>
-      )
+  );
 }
 
 Documents.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-  };
-  
-  export default Documents;
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};
+
+export default Documents;

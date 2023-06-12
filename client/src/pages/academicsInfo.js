@@ -624,7 +624,12 @@ const handleAddFormChange = (event) => {
     if (data.SSCmarks === "") {
       errors["SSCmarks"] = "Field cannot be empty";
     } else {
-      errors["SSCmarks"] = "";
+      if((Number(data.SSCmarks) > 100 || Number(data.SSCmarks) < 0)){
+        errors["SSCmarks"] = "Enter marks less than 100 and greater than 0"
+      }
+      else{
+        errors["SSCmarks"] = "";
+      }
     }
 
     if (data.InstituteHSC !== "") {
@@ -643,7 +648,12 @@ const handleAddFormChange = (event) => {
       if (data.HSCmarks === "") {
         errors["HSCmarks"] = "Field cannot be empty";
       } else {
-        errors["HSCmarks"] = "";
+        if((Number(data.HSCmarks) > 100 || Number(data.HSCmarks) < 0)){
+          errors["HSCmarks"] = "Enter marks less than 100 and greater than 0"
+        }
+        else{
+          errors["HSCmarks"] = "";
+        }
       }
 
       if(errors["HSCFrom"]==="" && errors["HSCTo"]==="" && errors["HSCmarks"]===""){
@@ -678,7 +688,12 @@ const handleAddFormChange = (event) => {
       if (data.Diplomamarks === "") {
         errors["Diplomamarks"] = "Field cannot be empty";
       } else {
-        errors["Diplomamarks"] = "";
+        if((Number(data.Diplomamarks) > 100 || Number(data.Diplomamarks) < 0)){
+          errors["Diplomamarks"] = "Enter marks less than 100 and greater than 0"
+        }
+        else{
+          errors["Diplomamarks"] = "";
+        }
       }
 
       if(errors["DiplomaFrom"]==="" && errors["DiplomaTo"]==="" && errors["Diplomamarks"]===""){
@@ -779,14 +794,28 @@ const handleAddFormChange = (event) => {
     if (data.FinalYearMarksGrad === "") {
       errors["FinalYearMarksGrad"] = "Field cannot be empty";
     } else {
-      errors["FinalYearMarksGrad"] = "";
+      if((Number(data.FinalYearMarksGrad) > 100 || Number(data.FinalYearMarksGrad) < 0)){
+        errors["FinalYearMarksGrad"] = "Enter marks less than 100 and greater than 0"
+      }
+      else{
+        errors["FinalYearMarksGrad"] = "";
+      }
     }
 
     if (data.AggregateMarksGrad === "") {
       errors["AggregateMarksGrad"] = "Field cannot be empty";
     } else {
-      errors["AggregateMarksGrad"] = "";
+      if((Number(data.AggregateMarksGrad) > 100 || Number(data.AggregateMarksGrad) < 0)){
+        errors["AggregateMarksGrad"] = "Enter marks less than 100 and greater than 0"
+      }
+      else{
+        errors["AggregateMarksGrad"] = "";
+      }
     }
+
+    
+
+    
 
 
     if(data.InstitutePostGrad !== ""){
@@ -812,14 +841,26 @@ const handleAddFormChange = (event) => {
       if (data.FinalYearMarksPostGrad === "") {
         errors["FinalYearMarksPostGrad"] = "Field cannot be empty";
       } else {
-        errors["FinalYearMarksPostGrad"] = "";
+        if((Number(data.FinalYearMarksPostGrad) > 100 || Number(data.FinalYearMarksPostGrad) < 0)){
+          errors["FinalYearMarksPostGrad"] = "Enter marks less than 100 and greater than 0"
+        }
+        else{
+          errors["FinalYearMarksPostGrad"] = "";
+        }
       }
   
       if (data.AggregateMarksPostGrad === "") {
         errors["AggregateMarksPostGrad"] = "Field cannot be empty";
       } else {
-        errors["AggregateMarksPostGrad"] = "";
+        if((Number(data.AggregateMarksPostGrad) > 100 || Number(data.AggregateMarksPostGrad) < 0)){
+          errors["AggregateMarksPostGrad"] = "Enter marks less than 100 and greater than 0"
+        }
+        else{
+          errors["AggregateMarksPostGrad"] = "";
+        }
       }
+
+      
     }
 
     else{

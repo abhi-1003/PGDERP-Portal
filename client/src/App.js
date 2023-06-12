@@ -25,6 +25,7 @@ import PersonalInfo from "./pages/personalInfo";
 import AcademicsInfo from "./pages/academicsInfo";
 import ProfessionalExperience from "./pages/ProfessionalExperience";
 import Documents from "./pages/Documents";
+import Download from "./pages/downloadApplication";
 
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
@@ -96,6 +97,15 @@ function App() {
             element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <Documents />
+            </ProtectedRoute>
+          }
+         />
+
+<Route 
+          path = "/student/download"
+            element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <Download />
             </ProtectedRoute>
           }
          />
