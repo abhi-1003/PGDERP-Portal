@@ -58,7 +58,7 @@ export default function UserLogin() {
           let token_dict = res.data.token;
           console.log(res.data);
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
-          localStorage.setItem("pgderp-website-role", "student");
+          localStorage.setItem("pgderp-website-role", "coordinator");
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("email", res.data.email);
           navigate("/coordinator");

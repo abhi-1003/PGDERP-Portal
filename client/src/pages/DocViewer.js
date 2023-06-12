@@ -5,7 +5,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const DocViewer = (data) => {
-  console.log("doc viewer entered", data.filename, data.contentType)
   let filename = data.filename;
   let contentType = data.contentType;
   const [loading, setLoading] = useState(false);

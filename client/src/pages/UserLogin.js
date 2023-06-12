@@ -14,6 +14,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import bg_pic from "../components/images/coepBuilding.png"
 
 const theme = createTheme();
 const initialFValues = {
@@ -57,21 +58,15 @@ export default function UserLogin() {
         .then(res => {
           alert(res.data.message);
           let token_dict = res.data.token;
-          console.log(res.data);
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "student");
-          localStorage.setItem("name", res.data.name);
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("pgderpID", res.data.pgderpID);
-          let student_data = {
-            name : res.data.name,
-            email : res.data.email,
-            pgderpID : res.data.pgderpID
-          }
+          let student_data = res.data.data
           navigate("/student/home", {
+            
             state:{
-              student_data: student_data
+              student_data: student_data,
+              options : {'Home' : "/student/home", 'Fill Admission Form' : "/student/personalInfo", 'Download Application' : "/student/download", 'Download Self Declaration' : "/student/home", 'Logout' : "/student/login"}
             }
           });
         })
@@ -87,23 +82,28 @@ export default function UserLogin() {
       <ThemeProvider theme={theme}>
         <div
           style={{
-            background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-            position: "absolute",
-            top: "0px",
-            right: "0px",
-            bottom: "0px",
-            left: "0px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            backgroundImage: `url(${bg_pic})`,
+          top: "0px",
+          right: "0px",
+          bottom: "0px",
+          left: "0px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          minHeight: "100vh"
           }}
         >
           <Container
             component="main"
             maxWidth="xs"
             style={{
-              backgroundColor: "rgba(215, 198, 165, 0.4)",
-              borderRadius: "32px"
+              backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8,
             }}
           >
             <CssBaseline />
@@ -127,7 +127,7 @@ export default function UserLogin() {
                 variant="h5"
                 style={{ marginBottom: "20px" }}
               >
-                Login to PGDERP Portal
+                COEP PG Diploma Login
               </Typography>
               <Form onSubmit={handleSubmit}>
                 <Grid align="center" xs={12} item>

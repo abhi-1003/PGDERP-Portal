@@ -12,6 +12,8 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import { Navigate, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import bg_pic from "../images/coepBuilding.png"
 
 export const OtpScript = () => {
   const form = useRef();
@@ -20,17 +22,13 @@ export const OtpScript = () => {
   const [correctotp, setCorrectotp] = useState("");
   const [open, setOpen] = React.useState(false);
   const [otp, setOtp] = React.useState("");
-  console.log("location", location);
 
   // Setting correct otp
   var o = Math.floor(100000 + Math.random() * 900000);
 
-  console.log(o);
-
   const handleClickOpen = () => {
     setOpen(true);
     if (otp) {
-      console.log(otp);
     } else {
       alert("Please enter otp");
     }
@@ -42,12 +40,10 @@ export const OtpScript = () => {
 
   const handleOTPChange = event => {
     setOtp(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleSubmit = e => {
     const url = BACKEND_URL + "/student/userRegister";
-    console.log(otp, correctotp);
     let data = location.state.data;
     if (otp === correctotp + "") {
       axios
@@ -71,7 +67,6 @@ export const OtpScript = () => {
 
     if (location.state.data) {
       setCorrectotp(o);
-      console.log(form.current);
       emailjs
         .sendForm(
           "service_1b1vta1",
@@ -81,11 +76,10 @@ export const OtpScript = () => {
         )
         .then(
           result => {
-            console.log(result.text);
             alert("Email sent successfully");
           },
           error => {
-            console.log(error.text);
+            alert(error.text);
           }
         );
     }
@@ -94,25 +88,36 @@ export const OtpScript = () => {
   return (
     <div
       style={{
-        background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-        position: "absolute",
-        top: "0px",
-        right: "0px",
-        bottom: "0px",
-        left: "0px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundImage: `url(${bg_pic})`,
+          top: "0px",
+          right: "0px",
+          bottom: "0px",
+          left: "0px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          minHeight: "100vh"
       }}
     >
       <Container
         component="main"
-        maxWidth="xs"
+        maxWidth="sm"
         style={{
-          backgroundColor: "rgba(215, 198, 165, 0.4)",
-          borderRadius: "32px"
+          backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8,
         }}
       >
+        <Typography component="h6" variant="h6">
+              Please Verify your details 
+        </Typography>
+        <Typography component="h6" variant="h6">
+        After OTP Verification these details cannot be modified
+        </Typography>
         <form
           ref={form}
           onSubmit={sendEmail}
@@ -161,7 +166,7 @@ export const OtpScript = () => {
               alignItems: "start",
               backgroundColor: "rgba(255, 255, 200, 0.5)",
               padding: "10px",
-              borderRadius: "16px"
+              borderRadius: "16px",
             }}
           >
             <label>Email</label>
@@ -169,6 +174,62 @@ export const OtpScript = () => {
               type="email"
               name="user_email"
               value={location.state.data.email}
+              style={{
+                fontSize: "24px",
+                borderRadius: "8px",
+                border: "0px",
+                padding: "4px"
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              margin: "8px",
+              fontSize: "24px",
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              justifyContent: "space-evenly",
+              alignItems: "start",
+              backgroundColor: "rgba(255, 255, 200, 0.5)",
+              padding: "10px",
+              borderRadius: "16px"
+            }}
+          >
+            <label>Mobile</label>
+            <input
+              type="text"
+              name="user_mobile"
+              value={location.state.data.mobile}
+              style={{
+                fontSize: "24px",
+                borderRadius: "8px",
+                border: "0px",
+                padding: "4px"
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              margin: "8px",
+              fontSize: "24px",
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              justifyContent: "space-evenly",
+              alignItems: "start",
+              backgroundColor: "rgba(255, 255, 200, 0.5)",
+              padding: "10px",
+              borderRadius: "16px"
+            }}
+          >
+            <label>Course</label>
+            <input
+              type="text"
+              name="user_course"
+              value={location.state.data.course}
               style={{
                 fontSize: "24px",
                 borderRadius: "8px",

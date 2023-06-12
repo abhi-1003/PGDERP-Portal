@@ -16,6 +16,9 @@ import { renderText, renderButton } from "../common/displayComponents";
 import { nanoid } from "nanoid";
 import data from "./data.json";
 import ReadOnlyRowExp from "../ReadOnlyRowExp";
+import { CloudUpload } from "@material-ui/icons";
+import { BACKEND_URL } from "../../config";
+import axios from "axios";
 
 export default function Step3(
 	state,
@@ -70,6 +73,21 @@ export default function Step3(
 
 		setAddFormData(newFormData);
 	};
+
+	function fileUpload(event){
+		const data = new FormData();
+		data.append('file',event.target.files[0],event.target.files[0].name)
+		const URL = BACKEND_URL + '/files/upload';
+		axios.post(URL, data)
+		.then(function(response) {
+			var tempDoc = docSchema;
+			tempDoc[docs[0].dbName] = response.data.filename;
+			axios.post(BACKEND_URL + "/files/setUser", {'email': localStorage.getItem("email"), 'docName': docs[0]["name"], 'doc': tempDoc})
+			.then(function(res){
+				docs[0].status = "Submitted"
+			})
+		})
+	}
 	return (
 		<Paper component={Box} p={2}>
 			<Grid container spacing={2} style={{ justifyContent: "center" }}>
@@ -228,8 +246,9 @@ export default function Step3(
 				</Box>
 			</Grid>
 			<label>
-				<input type="file" />
-				<Button variant="contained" color="primary" size="small">Upload!</Button>
+				<input type="file" onChange={(event) => fileUpload(event)}/>
+				<CloudUpload style={{cursor: "pointer"}}/>
+				<h6>{docs[0].status}</h6>
 			</label>
 			</Grid>
 			<Grid container spacing={2} justifyContent="space-between">

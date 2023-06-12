@@ -28,9 +28,27 @@ const generateToken = (user) => {
 };
 
 exports.registerStudent = (req, res) => {
-  const { name, email, mobile, password, pgderpID } = req.body;
+  const { name, email, password, mobile, course, registrationID } = req.body;
+  
+  const personalInfoFilled = false;
+  const academicsInfoFilled = false;
+  const professionalExperienceFilled = false;
+  const documentsFilled = false;
+
   const applicationFilled = false;
-  if (!(name, email, mobile && password)) {
+
+  const personalInfoEditable = true;
+  const academicsInfoEditable = true;
+  const professionalExperienceEditable = true;
+  const documentsEditable = true;
+
+  const personalInfoVerified = false;
+  const academicsInfoVerified = false;
+  const professionalExperienceVerified = false;
+  const documentsVerified = false;
+  const applicationVerified = false;
+
+  if (!(name, email, password, mobile, course && registrationID)) {
     return res.status(400).json({ error: "All input is required" });
   }
   Student.findOne({ email })
@@ -42,7 +60,11 @@ exports.registerStudent = (req, res) => {
           .json({ error: "User Already Exist. Please Login" });
       }
       
-      const newStudent = new Student({ name, email, mobile, password, pgderpID, applicationFilled});
+      const newStudent = new Student({name, email, password, mobile, course, registrationID, 
+                                      personalInfoFilled, academicsInfoFilled, professionalExperienceFilled, documentsFilled,
+                                      applicationFilled,
+                                      personalInfoEditable, academicsInfoEditable, professionalExperienceEditable, documentsEditable,
+                                      personalInfoVerified, academicsInfoVerified, professionalExperienceVerified, documentsVerified, applicationVerified});
       newStudent
         .save()
         .then((user) => {
@@ -75,7 +97,7 @@ exports.loginStudent = (req, res) => {
       if (isMatch) {
         user.role = Student.modelName;
         const token = generateToken(user);
-        res.send({ message: "Login Successful", token: token, name: user.name, email:user.email, pgderpID:user.pgderpID });
+        res.send({ message: "Login Successful", token: token, data: user });
         // return res.json(token);
       } else {
         return res.status(400).json({ error: "Invalid Credentials" });
@@ -89,12 +111,13 @@ exports.loginStudent = (req, res) => {
 
 exports.registerCoordinator = (req, res) => {
   // console.log(req.headers["pgderp-website-jwt"]);
-  if (1) {
-    return res.status(403).json({ error: "Only Admin can add cooordinator" });
-  }
-  const { name, email, mobile, password } = req.data;
+  // if (1) {
+  //   return res.status(403).json({ error: "Only Admin can add cooordinator" });
+  // }
+  console.log(117, req.body.data)
+  const { name, email, mobile, password, courses } = req.body.data;
   console.log(req.body)
-  if (!(name, email, mobile && password)) {
+  if (!(name, email, mobile && password, courses)) {
     return res.status(400).json({ error: "All input is required" });
   }
   Coordinator.findOne({ email })
@@ -105,7 +128,7 @@ exports.registerCoordinator = (req, res) => {
           .send({ message: "Coordinator Already Exist. Please Login" })
           .json({ error: "Coordinator Already Exist. Please Login" });
       }
-      const newCoordinator = new Coordinator({ name, email, mobile, password });
+      const newCoordinator = new Coordinator({ name, email, mobile, password, courses });
       newCoordinator
         .save()
         .then((user) => {
@@ -137,7 +160,7 @@ exports.loginCoordinator = (req, res) => {
       if (isMatch) {
         user.role = Coordinator.modelName;
         const token = generateToken(user);
-        res.send({ message: "Login Successful", token: token });
+        res.send({ message: "Login Successful", token: token, email: email });
         // return res.json(token);
       } else {
         return res.status(400).json({ error: "Invalid Credentials" });
