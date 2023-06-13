@@ -509,7 +509,7 @@ function AcademicsInfo() {
     setStateVar({ data: copyData, errors: copyErrors });
   }, [personalData]);
 
-  console.log(personalData);
+//   console.log(personalData);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -915,7 +915,7 @@ function AcademicsInfo() {
   };
 
   const handleSave = () => {
-    console.log(validate1, validate2);
+    // console.log(validate1, validate2);
 
     if (validate1 && validate2 && validate3) {
       const { data, errors } = stateVar;

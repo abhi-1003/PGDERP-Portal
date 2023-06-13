@@ -162,7 +162,7 @@ class StudentHome extends Component {
     const storedName = localStorage.getItem("name");
     const storedEmail = localStorage.getItem("email");
     const storedAppId = localStorage.getItem("pgderpID");
-    console.log(storedName, storedEmail, storedAppId);
+    // console.log(storedName, storedEmail, storedAppId);
     this.setState({
       name: storedName,
       email: storedEmail,
@@ -258,7 +258,7 @@ class StudentHome extends Component {
 //   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     // const MyDoc = () => (
     //   <Document>
     //     <Page style={styles.body}>

@@ -144,7 +144,7 @@ function Application() {
   );
   const classes = useStyles();
   const changeVerificationStatus = (event) => {
-    console.log(147, event.target.value)
+    // console.log(147, event.target.value)
     setVerificationStatus(event.target.value);
   }
   const goToNext = (event) => {

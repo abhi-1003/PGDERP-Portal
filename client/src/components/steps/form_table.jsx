@@ -25,7 +25,7 @@ import ReadOnlyRow from "../ReadOnlyRow";
 export default function Step2b(state,
     otherCoursesChange){
 
-    console.log(state, otherCoursesChange)
+    // console.log(state, otherCoursesChange)
     const [contacts, setContacts] = useState(dataa);
     const [addFormData, setAddFormData] = useState({
         courseName: "",
@@ -57,7 +57,7 @@ export default function Step2b(state,
         newFormData[fieldName] = fieldValue;
 
         setAddFormData(newFormData);
-        console.log(contacts);
+        // console.log(contacts);
     };
 
     // const handleEditFormChange = (event) => {
@@ -87,7 +87,7 @@ export default function Step2b(state,
         const newContacts = [...contacts, newContact];
         setContacts(newContacts);
         state.otherCoursesChange(newContacts)
-        console.log(state.state)
+        // console.log(state.state)
 
         // console.log(newContacts);
     };

@@ -18,7 +18,7 @@ const DocViewer = (data) => {
       }
     )
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         //Create a Blob from the PDF Stream
         const file = new Blob([response.data], { type: contentType });
         // Build a URL from the file

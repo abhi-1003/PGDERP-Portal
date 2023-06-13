@@ -8,7 +8,7 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     localStorage.clear();
     return <Navigate to="/" />;
   }
-  console.log(token, role)
+//   console.log(token, role)
   return children;
 };
 

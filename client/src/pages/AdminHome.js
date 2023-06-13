@@ -23,7 +23,7 @@ const exportToExcel = () => {
   const XLSX = require("xlsx");
   axios.get(url).then((res) => {
     let student_data = res.data;
-    console.log(student_data);
+    // console.log(student_data);
     student_data.forEach((student) => {
       let course = "";
       let lastName = "";
@@ -39,7 +39,7 @@ const exportToExcel = () => {
         firstName = student.personalInfo.firstName;
       }
 
-      console.log(course, lastName, firstName);
+    //   console.log(course, lastName, firstName);
 
       excel_data.push({
         course,
@@ -47,7 +47,7 @@ const exportToExcel = () => {
         firstName,
       });
     });
-    console.log(excel_data);
+    // console.log(excel_data);
 
     const XLSX = require("xlsx");
     const workSheet = XLSX.utils.json_to_sheet(excel_data);

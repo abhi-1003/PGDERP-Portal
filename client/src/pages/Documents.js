@@ -311,7 +311,7 @@ function Documents() {
       .then(function(response) {
         if (response.data.doc != undefined && response.data.doc != null) {
           var tempDocs = [...docs];
-          console.log(response.data.doc);
+        //   console.log(response.data.doc);
           for (const [k, v] of Object.entries(response.data.doc)) {
             if (v !== "") {
               for (var i = 0; i < tempDocs.length; i++) {

@@ -87,7 +87,7 @@ const Grid = () => {
         .then((res) => {
             let students = res.data;
             Object.keys(students).map((student, index) => {
-                console.log(students[student])
+                // console.log(students[student])
                 let row = {}
                 if(students[student]["name"]){
                     row["Name"] = students[student]["name"];
