@@ -916,7 +916,6 @@ function AcademicsInfo() {
 
   const handleSave = () => {
     // console.log(validate1, validate2);
-
     if (validate1 && validate2 && validate3) {
       const { data, errors } = stateVar;
       let validate = true;
