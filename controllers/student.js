@@ -90,10 +90,31 @@ exports.personalDetails = async(req, res) => {
   };
 
   exports.getPersonalDetails = async (req, res) => {
-    const _id = req.query.id;
-    const user = await Student.findOne({_id}).exec();
+    const id = req.query.studentId;
+    const user = await Student.findOne({'registrationID': id}).exec();
     try {
-      return res.json(user.personalInfo);
+      return res.json({
+        'registrationId': id,
+        'course': user.course,
+        'campusPreference': user.personalInfo.campusPreference,
+        'lastName': user.personalInfo.lastName,
+        'firstName': user.personalInfo.firstName,
+        'middleName': user.personalInfo.middleName,
+        'postalAddress': user.personalInfo.Address,
+        'permanentAddress': user.personalInfo.permanentAddress,
+        'email': user.email,
+        'gender': user.personalInfo.gender,
+        'mobile': user.mobile,
+        'phyDis': user.personalInfo.phyDis,
+        'PHname': user.personalInfo.PHname,
+        'PHemail': user.personalInfo.PHemail,
+        'PHnumber': user.personalInfo.PHnumber,
+        'dob': user.personalInfo.dob,
+        'domicileState': user.personalInfo.domicileState,
+        'nationality': user.personalInfo.nationality,
+        'caste': user.personalInfo.caste,
+        'age': user.personalInfo.age
+      });
     } catch (error) {
       res.status(400).json({ error: "request body contains invalid data!!" });
       res.status(400).json(console.log(error));
