@@ -256,7 +256,7 @@ function CandidateDetails({setStep}) {
         <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "1%", margin: "auto"}}>Candidate Details</Typography>
         </Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {/* <TableContainer component={Paper} className={classes.tableContainer}>
+        <TableContainer component={Paper} className={classes.tableContainer}>
           <Table className={classes.table}>
               <TableHead className={classes.tableHead}>
                   <TableRow>
@@ -525,12 +525,12 @@ function CandidateDetails({setStep}) {
                   
               </TableBody>
           </Table>
-      </TableContainer> */}
+      </TableContainer>
       
       </Grid>
       <Grid container direction="row" justifyContent="space-around">
       <Grid item>
-          {toBeModified.length && <TextField value={remarks} onChange={(e)=>setRemarks(e.target.value)} required variant="outlined" label="Remarks" multiline minRows={5}/>}
+          {(toBeModified.length > 0) && <TextField value={remarks} onChange={(e)=>setRemarks(e.target.value)} required variant="outlined" label="Remarks" multiline minRows={5}/>}
       </Grid>
       </Grid>
       <Grid container direction="row" justifyContent="flex-end">

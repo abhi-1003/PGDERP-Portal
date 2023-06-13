@@ -79,7 +79,7 @@ exports.personalDetails = async(req, res) => {
     const email = req.query.email;
     const coord = await Coordinator.findOne({'email': email}).exec();
     var courses = coord.courses;
-    const user = await Student.find({'applicationFilled':false, "course": {$in: courses}}, {"name": 1, "registrationID": 1, "personalInfoVerified": 1, "academicsInfoVerified": 1, "professionalExperienceVerified": 1, "documentsVerified": 1, "applicationVerified": 1}).sort({'registrationID':1}).exec();
+    const user = await Student.find({'applicationFilled':true, "course": {$in: courses}}, {"name": 1, "registrationID": 1, "personalInfoVerified": 1, "academicsInfoVerified": 1, "professionalExperienceVerified": 1, "documentsVerified": 1, "applicationVerified": 1}).sort({'registrationID':1}).exec();
     console.log(user);
     try {
       return res.json(user);
