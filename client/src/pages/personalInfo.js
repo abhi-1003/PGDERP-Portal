@@ -402,7 +402,7 @@ function PersonalInfo() {
       errors["PHemail"] = "";
     }
 
-    if (data.PHnumber === "") {
+    if (data.PHnumber === "" && !new RegExp("^([0|+[0-9]{1,5})?([7-9][0-9]{9})$").test(data.PHnumber)) {
       errors["PHnumber"] = "Enter a valid 10 digit phone number";
     } else {
       errors["PHnumber"] = "";
@@ -474,6 +474,12 @@ function PersonalInfo() {
         })
         .then((res) => {
           alert(res.data.message);
+          navigate("/student/academicsInfo", {
+            state: {
+              student_data: location.state.student_data,
+              options: location.state.options,
+            },
+          })
         });
     } else {
       alert("Please fill all data first");

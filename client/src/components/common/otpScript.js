@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import { Navigate, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import bg_pic from "../images/coepBuilding.png"
 
 export const OtpScript = () => {
   const form = useRef();
@@ -87,27 +88,35 @@ export const OtpScript = () => {
   return (
     <div
       style={{
-        background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-        position: "absolute",
-        top: "0px",
-        right: "0px",
-        bottom: "0px",
-        left: "0px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundImage: `url(${bg_pic})`,
+          top: "0px",
+          right: "0px",
+          bottom: "0px",
+          left: "0px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          minHeight: "100vh"
       }}
     >
       <Container
         component="main"
-        maxWidth="xs"
+        maxWidth="sm"
         style={{
-          backgroundColor: "rgba(215, 198, 165, 0.4)",
-          borderRadius: "32px"
+          backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8,
         }}
       >
         <Typography component="h6" variant="h6">
-              Please Verify your details after OTP Verification these details cannot be modified
+              Please Verify your details 
+        </Typography>
+        <Typography component="h6" variant="h6">
+        After OTP Verification these details cannot be modified
         </Typography>
         <form
           ref={form}
