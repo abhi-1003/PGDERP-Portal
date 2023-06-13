@@ -48,7 +48,7 @@ export default function Step3(
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
 		state.professionalExperienceChange(newContacts)
-		console.log(state.state)
+		// console.log(state.state)
 	};
 	const handleDeleteClick = (contactId) => {
 		const newContacts = [...contacts];
@@ -59,7 +59,7 @@ export default function Step3(
 
 		setContacts(newContacts);
 		state.professionalExperienceChange(newContacts)
-		console.log(state.state)
+		// console.log(state.state)
 	};
 
 	const handleAddFormChange = (event) => {

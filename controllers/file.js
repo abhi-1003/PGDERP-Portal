@@ -72,7 +72,6 @@ exports.getFileGrid = (req, res) => {
   if (!filename) {
     return res.status(400).send({ err: " missing file name" });
   }
-  console.log("hello")
   gfs.files.findOne({ filename }, (err, file) => {
     if (err | !file || file.length === 0) {
       return res.status(404).send({ err: "File doesn't exist" });

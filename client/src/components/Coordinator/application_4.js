@@ -59,7 +59,7 @@ function Application4(props) {
         selfDeclaration: '',
     })
     const viewDocument = (e) => {
-        console.log(e.currentTarget.value);
+        // console.log(e.currentTarget.value);
         if(docSchema[e.currentTarget.value] !== ''){
             let filename = docSchema[e.currentTarget.value];
             let contentType = "application/pdf";
@@ -70,7 +70,7 @@ function Application4(props) {
             }
             )
             .then((response) => {
-                console.log(response)
+                // console.log(response)
                 //Create a Blob from the PDF Stream
                 const file = new Blob([response.data], { type: contentType });
                 // Build a URL from the file
@@ -91,10 +91,10 @@ function Application4(props) {
     }
     useEffect(()=>{
         const url = BACKEND_URL + '/student/getDocsById';
-        console.log(data)
+        // console.log(data)
         axios.get(url, {params: {'id': data}})
         .then(function(response){
-                console.log(response);
+                // console.log(response);
                 setDocSchema(response.data.doc);
             })
         .catch(function(err){

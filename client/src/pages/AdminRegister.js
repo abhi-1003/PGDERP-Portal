@@ -60,7 +60,7 @@ export default function AdminRegister() {
         mobile: values.mobile,
         password: values.password,
       };
-      console.log(data);
+    //   console.log(data);
       const url = BACKEND_URL + "/admin/adminRegister";
       axios
         .post(url, data)

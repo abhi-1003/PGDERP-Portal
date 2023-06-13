@@ -735,7 +735,7 @@ function Download(){
 
       const container =
     window !== undefined ? () => window().document.body : undefined;
-    console.log(personalData)
+    // console.log(personalData)
 
     return(
         <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>

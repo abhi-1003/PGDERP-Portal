@@ -114,13 +114,13 @@ function ProfessionalExperience() {
 	});
 
     const professionalExperienceChange = (value) => {
-        console.log(contacts)
+        // console.log(contacts)
     }
 
 
     const handleAddFormSubmit = (event) => {
 		event.preventDefault();
-		console.log("run");
+		// console.log("run");
 		// companyName: ""
 		// rankDesignation: ""
 		// periodFrom: ""
@@ -135,7 +135,7 @@ function ProfessionalExperience() {
 			periodTo: addFormData.periodTo,
 			workNature: addFormData.workNature,
 		};
-console.log(newContact.companyName);
+// console.log(newContact.companyName);
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
 		professionalExperienceChange(newContacts)
