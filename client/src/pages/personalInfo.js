@@ -85,9 +85,6 @@ function PersonalInfo() {
   const [personalData, setPersonalData] = React.useState([]);
   const [stateVar, setStateVar] = React.useState({
     data: {
-      campusPreference1: "",
-      campusPreference2: "",
-      campusPreference3: "",
       lastName: "",
       firstName: "",
       middleName: "",
@@ -130,17 +127,17 @@ function PersonalInfo() {
     let copyErrors = { ...stateVar.errors };
     let copyData = { ...stateVar.data };
     if ("personalInfo" in personalData) {
-      if (
-        "campusPreference" in personalData.personalInfo &&
-        personalData.personalInfo.campusPreference.length === 3
-      ) {
-        copyData = {
-          ...copyData,
-          campusPreference1: personalData.personalInfo.campusPreference[0],
-          campusPreference2: personalData.personalInfo.campusPreference[1],
-          campusPreference3: personalData.personalInfo.campusPreference[2],
-        };
-      }
+      // if (
+      //   "campusPreference" in personalData.personalInfo &&
+      //   personalData.personalInfo.campusPreference.length === 3
+      // ) {
+      //   copyData = {
+      //     ...copyData,
+      //     campusPreference1: personalData.personalInfo.campusPreference[0],
+      //     campusPreference2: personalData.personalInfo.campusPreference[1],
+      //     campusPreference3: personalData.personalInfo.campusPreference[2],
+      //   };
+      // }
       if (
         "firstName" in personalData.personalInfo &&
         personalData.personalInfo.firstName
@@ -310,41 +307,41 @@ function PersonalInfo() {
 
   const handleSave = () => {
     let { data, errors } = stateVar;
-    if (data.campusPreference1 === "") {
-      errors["campusPreference1"] = "Field cannot be empty";
-    } else {
-      errors["campusPreference1"] = "";
-    }
+    // if (data.campusPreference1 === "") {
+    //   errors["campusPreference1"] = "Field cannot be empty";
+    // } else {
+    //   errors["campusPreference1"] = "";
+    // }
 
-    if (data.campusPreference2 === "") {
-      errors["campusPreference2"] = "Field cannot be empty";
-    } else {
-      errors["campusPreference2"] = "";
-    }
+    // if (data.campusPreference2 === "") {
+    //   errors["campusPreference2"] = "Field cannot be empty";
+    // } else {
+    //   errors["campusPreference2"] = "";
+    // }
 
-    if (data.campusPreference3 === "") {
-      errors["campusPreference3"] = "Field cannot be empty";
-    } else {
-      errors["campusPreference3"] = "";
-    }
+    // if (data.campusPreference3 === "") {
+    //   errors["campusPreference3"] = "Field cannot be empty";
+    // } else {
+    //   errors["campusPreference3"] = "";
+    // }
 
-    if (
-      data.campusPreference3 === data.campusPreference2 ||
-      data.campusPreference1 === data.campusPreference2 ||
-      data.campusPreference3 === data.campusPreference1
-    ) {
-      errors["campusPreference1"] = "All preferences should be different";
-      errors["campusPreference2"] = "All preferences should be different";
-      errors["campusPreference3"] = "All preferences should be different";
-    } else if (
-      data.campusPreference1 != "" &&
-      data.campusPreference2 != "" &&
-      data.campusPreference3 != ""
-    ) {
-      errors["campusPreference1"] = "";
-      errors["campusPreference2"] = "";
-      errors["campusPreference3"] = "";
-    }
+    // if (
+    //   data.campusPreference3 === data.campusPreference2 ||
+    //   data.campusPreference1 === data.campusPreference2 ||
+    //   data.campusPreference3 === data.campusPreference1
+    // ) {
+    //   errors["campusPreference1"] = "All preferences should be different";
+    //   errors["campusPreference2"] = "All preferences should be different";
+    //   errors["campusPreference3"] = "All preferences should be different";
+    // } else if (
+    //   data.campusPreference1 != "" &&
+    //   data.campusPreference2 != "" &&
+    //   data.campusPreference3 != ""
+    // ) {
+    //   errors["campusPreference1"] = "";
+    //   errors["campusPreference2"] = "";
+    //   errors["campusPreference3"] = "";
+    // }
 
     if (data.firstName === "") {
       errors["firstName"] = "Field cannot be empty";
@@ -438,15 +435,15 @@ function PersonalInfo() {
     setStateVar({ data: data, errors: errors });
     data = {
       ...data,
-      campusPreference: [
-        data.campusPreference1,
-        data.campusPreference2,
-        data.campusPreference3,
-      ],
+      // campusPreference: [
+      //   data.campusPreference1,
+      //   data.campusPreference2,
+      //   data.campusPreference3,
+      // ],
     };
-    delete data["campusPreference1"];
-    delete data["campusPreference2"];
-    delete data["campusPreference3"];
+    // delete data["campusPreference1"];
+    // delete data["campusPreference2"];
+    // delete data["campusPreference3"];
 
     let validate = true;
 
@@ -606,7 +603,7 @@ function PersonalInfo() {
                   </StyledTableCell>
                 </StyledTableRow>
 
-                <StyledTableRow>
+                {/* <StyledTableRow>
                   <StyledTableCell sx={{ padding: "16px" }}>
                     <Box mb={0.5} mt={0.5} mr={0}>
                       {renderText1({
@@ -666,7 +663,7 @@ function PersonalInfo() {
                       </Grid>
                     </Grid>
                   </StyledTableCell>
-                </StyledTableRow>
+                </StyledTableRow> */}
 
                 <StyledTableRow>
                   <StyledTableCell>
@@ -682,6 +679,7 @@ function PersonalInfo() {
                           name: "firstName",
                           stateVar,
                           handleOnChange: handleOnChange,
+                          personalData: personalData,
                         })}
                       </Grid>
                       <Grid item xs={12} sm={3}>
@@ -690,6 +688,7 @@ function PersonalInfo() {
                           name: "middleName",
                           stateVar,
                           handleOnChange: handleOnChange,
+                          personalData: personalData,
                         })}
                       </Grid>
                       <Grid item xs={12} sm={3}>
@@ -698,6 +697,7 @@ function PersonalInfo() {
                           name: "lastName",
                           stateVar,
                           handleOnChange: handleOnChange,
+                          personalData: personalData,
                         })}
                       </Grid>
                     </Grid>{" "}
@@ -717,6 +717,7 @@ function PersonalInfo() {
                       name: "Address",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -734,6 +735,7 @@ function PersonalInfo() {
                       name: "permanentAddress",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -770,6 +772,7 @@ function PersonalInfo() {
                         { value: "female", label: "Female" },
                         { value: "Other", label: "Other" },
                       ],
+                      personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -793,6 +796,7 @@ function PersonalInfo() {
                         { value: "Yes", label: "Yes" },
                         { value: "No", label: "No" },
                       ],
+                      personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -823,6 +827,7 @@ function PersonalInfo() {
                       name: "PHname",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -840,6 +845,7 @@ function PersonalInfo() {
                       name: "PHemail",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -859,6 +865,7 @@ function PersonalInfo() {
                       name: "PHnumber",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -874,7 +881,7 @@ function PersonalInfo() {
                   {personalData &&
                     "personalInfo" in personalData &&
                     "dob" in personalData.personalInfo &&
-                    personalData.personalInfo.dob.length === 3 && (
+                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -901,6 +908,21 @@ function PersonalInfo() {
                             </DemoItem>
                           </DemoContainer>
                         </LocalizationProvider>
+                      </StyledTableCell>
+                    )}
+
+{personalData &&
+                    "personalInfo" in personalData &&
+                    "dob" in personalData.personalInfo &&
+                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==true && (
+                      <StyledTableCell>
+                        {renderInputTextDisabled({
+                      label: personalData.personalInfo.dob[0] +
+                      "-" +
+                      personalData.personalInfo.dob[1] +
+                      "-" +
+                      personalData.personalInfo.dob[2],
+                    })}
                       </StyledTableCell>
                     )}
                 
@@ -962,6 +984,7 @@ function PersonalInfo() {
                         name: "domicileState",
                         stateVar,
                         handleOnChange: handleOnChange,
+                        personalData: personalData
                         })}
                     </StyledTableCell>
                 </StyledTableRow>
@@ -981,6 +1004,7 @@ function PersonalInfo() {
                         name: "caste",
                         stateVar,
                         handleOnChange: handleOnChange,
+                        personalData: personalData
                         })}
                     </StyledTableCell>
                 </StyledTableRow>
@@ -1000,6 +1024,7 @@ function PersonalInfo() {
                         name: "nationality",
                         stateVar,
                         handleOnChange: handleOnChange,
+                        personalData: personalData
                         })}
                     </StyledTableCell>
                 </StyledTableRow>

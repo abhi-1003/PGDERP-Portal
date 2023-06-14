@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import UserLogin from "./pages/UserLogin";
-import FormComponent from "./components/formComponent";
 import UserRegister from "./pages/UserRegister";
 import AdminHome from "./pages/AdminHome";
 import Home from "./pages/Home";
@@ -48,14 +47,7 @@ function App() {
         <Route path="/" element={<Home />} exact></Route>
         <Route path="/student/login" element={<UserLogin />} exact></Route>
         <Route path="/student/register" element={<UserRegister />}></Route>
-        <Route
-          path="/student/form"
-          element={
-            <ProtectedRoute allowedRoles={[roles.student]}>
-              <FormComponent />
-            </ProtectedRoute>
-          }
-        />
+        
         <Route
           path="/student/home"
           element={

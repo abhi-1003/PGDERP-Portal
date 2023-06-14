@@ -842,7 +842,7 @@ function Download() {
         <Text style={styles.declare}>
           I have read all the rules of admission and after understanding these
           rules, I have filled this application form for admission to PG Diploma
-          in COEP Technological University for the academic year 2022-23. The
+          in COEP Technological University for the academic year 2023-24. The
           information given by me in this application is true to the best of my
           knowledge and belief. At any later state, if it is found that I have
           furnished wrong information and/or submitted false certificate(s), I

@@ -117,6 +117,9 @@ function ProfessionalExperience() {
         // console.log(contacts)
     }
 
+    const handleAddFormSubmitDisabled = (event) => {
+      //
+    }
 
     const handleAddFormSubmit = (event) => {
 		event.preventDefault();
@@ -138,6 +141,16 @@ function ProfessionalExperience() {
 // console.log(newContact.companyName);
 		const newContacts = [...contacts, newContact];
 		setContacts(newContacts);
+    var getValue1= document.getElementById("t1");
+      getValue1.value = "";
+      var getValue2= document.getElementById("t2");
+      getValue2.value = "";
+      var getValue3= document.getElementById("t3");
+      getValue3.value = "";
+      var getValue4= document.getElementById("t4");
+      getValue4.value = "";
+      var getValue5= document.getElementById("t5");
+      getValue5.value = "";
 		professionalExperienceChange(newContacts)
 	};
 	const handleDeleteClick = (contactId) => {
@@ -150,6 +163,10 @@ function ProfessionalExperience() {
 		setContacts(newContacts);
 		professionalExperienceChange(newContacts)
 	};
+
+  const handleDeleteClickDisabled = (contactId) => {
+    //
+  }
 
 	const handleEditClick = (event, contact) => {
 		event.preventDefault();
@@ -351,7 +368,7 @@ return (
             {renderText({ label: "Professional Experience Details" })}
           </Box>
         </Grid>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{marginBottom : "20px"}}>
 
         <TableHead>
 					<TableRow>
@@ -365,18 +382,40 @@ return (
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{contacts.map((contact) => (
-						<Fragment>
-							<ReadOnlyRowExp
-								contact={contact}
-								handleEditClick={handleEditClick}
-								handleDeleteClick={handleDeleteClick}
-							/>
-						</Fragment>
-					))}
+          {personalData && personalData["applicationFilled"] && (
+            contacts.map((contact) => (
+              <Fragment>
+                <ReadOnlyRowExp
+                  contact={contact}
+                  handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClickDisabled}
+                />
+              </Fragment>
+            ))
+          )}
+          {personalData && personalData["applicationFilled"]==false && (
+            contacts.map((contact) => (
+              <Fragment>
+                <ReadOnlyRowExp
+                  contact={contact}
+                  handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClick}
+                />
+              </Fragment>
+            ))
+          )}
 				</TableBody>
                 </TableContainer>
-			<form>
+			<form
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        overflow: "scroll",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px"
+      }}
+    >
 				<TextField
 					label="Name of the company"
 					// color={color ? color : "primary"}
@@ -386,6 +425,7 @@ return (
 					size="small"
 					onChange={handleAddFormChange}
 					style={{ margin: "1px" }}
+          id = "t1"
 				/>
 				<TextField
 					label="Designation and Rank"
@@ -396,6 +436,7 @@ return (
 					size="small"
 					style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
+          id = "t2"
 				/>
 
 				<TextField
@@ -407,6 +448,7 @@ return (
 					size="small"
 					style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
+          id = "t3"
 				/>
 				<TextField
 					label="Period To"
@@ -417,6 +459,7 @@ return (
 					size="small"
 					style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
+          id = "t4"
 				/>
 				<TextField
 					label="Nature of Work"
@@ -427,6 +470,7 @@ return (
 					size="small"
 					style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
+          id = "t5"
 				/>
 				{/* <input
           type="text"
@@ -450,10 +494,24 @@ return (
           onChange={handleAddFormChange}
         /> */}
 
-				{renderButton({
-					label: "Add",
-					handleOnClick: handleAddFormSubmit,
-				})}
+        {
+          personalData && personalData["applicationFilled"] && (
+            renderButton({
+              label: "Add",
+              handleOnClick: handleAddFormSubmitDisabled,
+            })
+          )
+        }
+
+{
+          personalData && personalData["applicationFilled"]==false && (
+            renderButton({
+              label: "Add",
+              handleOnClick: handleAddFormSubmit,
+            })
+          )
+        }
+
 			</form>
         
       </Paper>

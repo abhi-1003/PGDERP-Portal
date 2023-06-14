@@ -13,7 +13,6 @@ const verificationField = {
 }
 
 const personalInfo = {
-    campusPreference:{type: Array},
     lastName:{type: String},
     firstName:{type: String},
     middleName:{type: String},

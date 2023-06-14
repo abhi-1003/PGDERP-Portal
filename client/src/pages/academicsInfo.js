@@ -572,6 +572,14 @@ function AcademicsInfo() {
     // state.professionalExperienceChange(newContacts)
   };
 
+  const handleDeleteClickDisabled = contactId => {
+    
+  };
+
+  const handleAddFormSubmitDisabled = event => {
+
+  }
+
   const handleAddFormSubmit = event => {
     event.preventDefault();
     if (
@@ -591,6 +599,19 @@ function AcademicsInfo() {
 
       const newContacts = [...contacts, newContact];
       setContacts(newContacts);
+
+      var getValue1= document.getElementById("t1");
+      getValue1.value = "";
+      var getValue2= document.getElementById("t2");
+      getValue2.value = "";
+      var getValue3= document.getElementById("t3");
+      getValue3.value = "";
+      var getValue4= document.getElementById("t4");
+      getValue4.value = "";
+      var getValue5= document.getElementById("t5");
+      getValue5.value = "";
+      var getValue6= document.getElementById("t6");
+      getValue6.value = "";
       otherCoursesChange();
     } else {
       setOtherCoursesError("Please enter a valid year");
@@ -1060,7 +1081,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "InstituteSSC",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
 
@@ -1068,7 +1090,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "SSCFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.SSCFrom.length === 3 && (
+                    personalData.academicsInfo.SSCFrom.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1101,7 +1123,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "SSCFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.SSCFrom.length === 0 && (
+                    personalData.academicsInfo.SSCFrom.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1124,12 +1146,27 @@ function AcademicsInfo() {
                       </StyledTableCell>
                     )}
 
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "SSCFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.SSCFrom[0] +
+                      "-" +
+                      personalData.academicsInfo.SSCFrom[1] +
+                      "-" +
+                      personalData.academicsInfo.SSCFrom[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
+
                   {/* SSC TO */}
 
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "SSCTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.SSCTo.length === 3 && (
+                    personalData.academicsInfo.SSCTo.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1162,7 +1199,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "SSCTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.SSCTo.length === 0 && (
+                    personalData.academicsInfo.SSCTo.length === 0 && personalData.applicationFilled==false &&  (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1184,15 +1221,35 @@ function AcademicsInfo() {
                         </LocalizationProvider>
                       </StyledTableCell>
                     )}
+                    
+                    {personalData &&
+                    "academicsInfo" in personalData &&
+                    "SSCTo" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.SSCTo[0] +
+                      "-" +
+                      personalData.academicsInfo.SSCTo[1] +
+                      "-" +
+                      personalData.academicsInfo.SSCTo[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   <StyledTableCell sx={{ padding: "4px" }}>
                     {renderInputText({
                       label: "",
                       name: "SSCmarks",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
+
+
                 </StyledTableRow>
+
+                
 
                 <StyledTableRow>
                   <StyledTableCell sx={{ padding: "4px" }}>HSC</StyledTableCell>
@@ -1202,7 +1259,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "InstituteHSC",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
 
@@ -1210,7 +1268,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "HSCFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.HSCFrom.length === 3 && (
+                    personalData.academicsInfo.HSCFrom.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1243,7 +1301,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "HSCFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.HSCFrom.length === 0 && (
+                    personalData.academicsInfo.HSCFrom.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1266,12 +1324,26 @@ function AcademicsInfo() {
                       </StyledTableCell>
                     )}
 
+
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "HSCFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.HSCFrom[0] +
+                      "-" +
+                      personalData.academicsInfo.HSCFrom[1] +
+                      "-" +
+                      personalData.academicsInfo.HSCFrom[2]
+                    })}
+                      </StyledTableCell>
+                    )}
                   {/* HSC TO */}
 
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "HSCTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.HSCTo.length === 3 && (
+                    personalData.academicsInfo.HSCTo.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1304,7 +1376,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "HSCTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.HSCTo.length === 0 && (
+                    personalData.academicsInfo.HSCTo.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1326,12 +1398,29 @@ function AcademicsInfo() {
                         </LocalizationProvider>
                       </StyledTableCell>
                     )}
+
+
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "HSCTo" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.HSCTo[0] +
+                      "-" +
+                      personalData.academicsInfo.HSCTo[1] +
+                      "-" +
+                      personalData.academicsInfo.HSCTo[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   <StyledTableCell sx={{ padding: "4px" }}>
                     {renderInputText({
                       label: "",
                       name: "HSCmarks",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -1347,7 +1436,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "InstituteDiploma",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
 
@@ -1355,7 +1445,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "DiplomaFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.DiplomaFrom.length === 3 && (
+                    personalData.academicsInfo.DiplomaFrom.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1388,7 +1478,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "DiplomaFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.DiplomaFrom.length === 0 && (
+                    personalData.academicsInfo.DiplomaFrom.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1411,12 +1501,26 @@ function AcademicsInfo() {
                       </StyledTableCell>
                     )}
 
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "DiplomaFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.DiplomaFrom[0] +
+                      "-" +
+                      personalData.academicsInfo.DiplomaFrom[1] +
+                      "-" +
+                      personalData.academicsInfo.DiplomaFrom[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   {/* DIPLOMA TO */}
 
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "DiplomaTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.DiplomaTo.length === 3 && (
+                    personalData.academicsInfo.DiplomaTo.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1449,7 +1553,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "DiplomaTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.DiplomaTo.length === 0 && (
+                    personalData.academicsInfo.DiplomaTo.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1471,12 +1575,28 @@ function AcademicsInfo() {
                         </LocalizationProvider>
                       </StyledTableCell>
                     )}
+
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "DiplomaTo" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.DiplomaTo[0] +
+                      "-" +
+                      personalData.academicsInfo.DiplomaTo[1] +
+                      "-" +
+                      personalData.academicsInfo.DiplomaTo[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   <StyledTableCell sx={{ padding: "4px" }}>
                     {renderInputText({
                       label: "",
                       name: "Diplomamarks",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -1548,7 +1668,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "InstituteGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
 
@@ -1647,7 +1768,7 @@ function AcademicsInfo() {
                           value: "Bachelor of Computer Applications - B.C.A.",
                           label: "Bachelor of Computer Applications - B.C.A."
                         }
-                      ]
+                      ],personalData
                     })}
                   </StyledTableCell>
 
@@ -1655,7 +1776,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "GradFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.GradFrom.length === 3 && (
+                    personalData.academicsInfo.GradFrom.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1688,7 +1809,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "GradFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.GradFrom.length === 0 && (
+                    personalData.academicsInfo.GradFrom.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1711,12 +1832,26 @@ function AcademicsInfo() {
                       </StyledTableCell>
                     )}
 
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "GradFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.GradFrom[0] +
+                      "-" +
+                      personalData.academicsInfo.GradFrom[1] +
+                      "-" +
+                      personalData.academicsInfo.GradFrom[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   {/* GRAD TO */}
 
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "GradTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.GradTo.length === 3 && (
+                    personalData.academicsInfo.GradTo.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1749,7 +1884,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "GradTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.GradTo.length === 0 && (
+                    personalData.academicsInfo.GradTo.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1771,12 +1906,28 @@ function AcademicsInfo() {
                         </LocalizationProvider>
                       </StyledTableCell>
                     )}
+
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "GradTo" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.GradTo[0] +
+                      "-" +
+                      personalData.academicsInfo.GradTo[1] +
+                      "-" +
+                      personalData.academicsInfo.GradTo[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   <StyledTableCell sx={{ padding: "4px" }}>
                     {renderInputText({
                       label: "",
                       name: "FinalYearMarksGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                   <StyledTableCell sx={{ padding: "4px" }}>
@@ -1784,7 +1935,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "AggregateMarksGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                   <StyledTableCell>
@@ -1792,7 +1944,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "DeadBacklogsGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -1807,7 +1960,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "InstitutePostGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
 
@@ -1821,7 +1975,7 @@ function AcademicsInfo() {
                         { value: "M.E/M.Tech", label: "M.E/M.Tech" },
                         { value: "MBA", label: "MBA" },
                         { value: "M.Com.", label: "M.Com." }
-                      ]
+                      ],personalData
                     })}
                   </StyledTableCell>
 
@@ -1829,7 +1983,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "PostGradFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.PostGradFrom.length === 3 && (
+                    personalData.academicsInfo.PostGradFrom.length === 3 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1862,7 +2016,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "PostGradFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.PostGradFrom.length === 0 && (
+                    personalData.academicsInfo.PostGradFrom.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1885,12 +2039,26 @@ function AcademicsInfo() {
                       </StyledTableCell>
                     )}
 
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "PostGradFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.PostGradFrom[0] +
+                      "-" +
+                      personalData.academicsInfo.PostGradFrom[1] +
+                      "-" +
+                      personalData.academicsInfo.PostGradFrom[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   {/* GRAD TO */}
 
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "PostGradTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.PostGradTo.length === 3 && (
+                    personalData.academicsInfo.PostGradTo.length === 3 && personalData.applicationFilled==false &&  (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1923,7 +2091,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "PostGradTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.PostGradTo.length === 0 && (
+                    personalData.academicsInfo.PostGradTo.length === 0 && personalData.applicationFilled==false && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1945,12 +2113,28 @@ function AcademicsInfo() {
                         </LocalizationProvider>
                       </StyledTableCell>
                     )}
+
+{personalData &&
+                    "academicsInfo" in personalData &&
+                    "PostGradTo" in personalData.academicsInfo && personalData.applicationFilled==true && (
+                      <StyledTableCell sx={{ padding: "4px" }}>
+                        {renderInputTextDisabled({
+                      label: personalData.academicsInfo.PostGradTo[0] +
+                      "-" +
+                      personalData.academicsInfo.PostGradTo[1] +
+                      "-" +
+                      personalData.academicsInfo.PostGradTo[2]
+                    })}
+                      </StyledTableCell>
+                    )}
+
                   <StyledTableCell sx={{ padding: "4px" }}>
                     {renderInputText({
                       label: "",
                       name: "FinalYearMarksPostGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                   <StyledTableCell sx={{ padding: "4px" }}>
@@ -1958,7 +2142,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "AggregateMarksPostGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                   <StyledTableCell>
@@ -1966,7 +2151,8 @@ function AcademicsInfo() {
                       label: "",
                       name: "DeadBacklogsPostGrad",
                       stateVar,
-                      handleOnChange: handleOnChange
+                      handleOnChange: handleOnChange,
+                      personalData: personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -2016,7 +2202,7 @@ function AcademicsInfo() {
           <TableContainer component={Paper}>
             <div className="app-container">
               <form>
-                <Table>
+                <Table style={{marginBottom : "20px"}}>
                   <TableHead>
                     <TableRow>
                       <TableCell>Name of Course Name</TableCell>
@@ -2030,27 +2216,41 @@ function AcademicsInfo() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {contacts.map(contact => (
-                      <Fragment>
-                        <ReadOnlyRow
-                          contact={contact}
-                          //handleEditClick={handleEditClick}
-                          handleDeleteClick={handleDeleteClick}
-                        />
-                      </Fragment>
-                    ))}
+                    {personalData && personalData["applicationFilled"] && (
+                      contacts.map(contact => (
+                        <Fragment>
+                          <ReadOnlyRow
+                            contact={contact}
+                            //handleEditClick={handleEditClick}
+                            handleDeleteClick={handleDeleteClickDisabled}
+                          />
+                        </Fragment>
+                      ))
+                    )}
+                   {personalData && personalData["applicationFilled"]==false && (
+                      contacts.map(contact => (
+                        <Fragment>
+                          <ReadOnlyRow
+                            contact={contact}
+                            //handleEditClick={handleEditClick}
+                            handleDeleteClick={handleDeleteClick}
+                          />
+                        </Fragment>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </form>
               <Paper component={Box} p={2}>
-                <Grid container spacing={2} p={2}>
+                <Grid container spacing={2} p={4}>
                   <form
                     style={{
                       display: "flex",
                       flexDirection: "row",
                       overflow: "scroll",
                       alignItems: "center",
-                      justifyContent: "center"
+                      justifyContent: "center",
+                      padding: "20px"
                     }}
                   >
                     <TextField
@@ -2062,6 +2262,7 @@ function AcademicsInfo() {
                       size="small"
                       onChange={handleAddFormChange}
                       style={{ margin: "1px" }}
+                      id = "t1"
                     />
                     <TextField
                       label="University Name"
@@ -2072,6 +2273,7 @@ function AcademicsInfo() {
                       size="small"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
+                      id = "t2"
                     />
                     <TextField
                       label="Specialization"
@@ -2082,6 +2284,7 @@ function AcademicsInfo() {
                       size="small"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
+                      id = "t3"
                     />
                     <TextField
                       label="Period From"
@@ -2092,6 +2295,7 @@ function AcademicsInfo() {
                       size="small"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
+                      id = "t4"
                     />
                     <TextField
                       label="Period To"
@@ -2102,6 +2306,7 @@ function AcademicsInfo() {
                       size="small"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
+                      id = "t5"
                     />
                     <TextField
                       label="Grade"
@@ -2112,12 +2317,21 @@ function AcademicsInfo() {
                       size="small"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
+                      id = "t6"
                     />
 
-                    {renderButton({
-                      label: "Add",
-                      handleOnClick: handleAddFormSubmit
-                    })}
+                    {personalData && personalData["applicationFilled"] && (
+                        renderButton({
+                          label: "Add",
+                          handleOnClick: handleAddFormSubmitDisabled
+                        }))
+                    }
+                    {personalData && personalData["applicationFilled"]==false && (
+                        renderButton({
+                          label: "Add",
+                          handleOnClick: handleAddFormSubmit
+                        }))
+                    }
                   </form>
                   <Button
                     variant="contained"

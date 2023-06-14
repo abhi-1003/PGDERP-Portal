@@ -172,13 +172,15 @@ function Prerequisites() {
             DOWNLOAD EDUCATIONAL MARKS DETAILS DECLARATION
           </Button>
           <Paper component={Box} p={2} m={2}>
-            <Grid container spacing={2} style={{ justifyContent: "center" }}>
-              <Box mt={1} mb={2}>
+          <Box mt={1} mb={2}>
                 {renderText({
                   label: "Prerequisites for Online Application Submission",
                   variant: "h5"
                 })}
               </Box>
+            <Grid container spacing={2} style={{ justifyContent: "center" }}>
+             
+              
               <Box mt={1} mb={2}>
                 {renderText({
                   label:
@@ -190,7 +192,7 @@ function Prerequisites() {
               <Box mt={1} mb={2}>
                 {renderText({
                   label:
-                    "Before proceeding to fill up the Online Application Form, please ensure that you have the following Scanned Images (Maximum upload size of each document is 3 MB, Accepted Image File types are .pdf, .jpeg, .jpg, .png):",
+                    "Before proceeding to fill up the Online Application Form, please ensure that you have the following Scanned Images (Maximum upload size of each document is 1.5 MB, Accepted Image File types are .pdf, .jpeg, .jpg, .png):",
                   color: "black",
                   variant: "h7",
                   align: "justify"
