@@ -17,7 +17,7 @@ import { Styles } from "./common/styles";
 import Step2b from "./steps/form_table";
 import Step1 from "./steps/SStep";
 import Step2 from "./steps/Step2";
-import Step3 from "./steps/Step3";
+// import Step3 from "./steps/Step3";
 import Step4 from "./steps/Step4";
 
 import { BACKEND_URL } from "../config";
@@ -642,13 +642,14 @@ class FormComponent extends Component {
           );
         case 2:
           return (
-            <Step3
-              state={this.state}
-              handleOnChange={handleOnChange}
-              handleNext={handleNext}
-              handlePrev={handlePrev}
-              professionalExperienceChange={professionalExperienceChange}
-            />
+            <></>
+            // <Step3
+            //   state={this.state}
+            //   handleOnChange={handleOnChange}
+            //   handleNext={handleNext}
+            //   handlePrev={handlePrev}
+            //   professionalExperienceChange={professionalExperienceChange}
+            // />
           );
         case 3:
           return <Step4 />;

@@ -31,6 +31,12 @@ const personalInfo = {
     age: {type: Number},
   };
 
+  const pageModification = {
+    type: {type: String},
+    fields: {type: Array},
+    remarks: {type: String}
+}
+
   const academicsInfo = {
     DiplomaFilled: {type: Boolean},
     DroptoGrad: {type: Number},
@@ -127,6 +133,9 @@ const personalInfo = {
       academicsInfoRemarks : {type: Object},
       professionalExperienceRemarks : {type: Object},
       documentsRemarks : {type: Object},
+
+      // Modifications
+      modifications: [pageModification]
       
     },
     { timestamps: true }

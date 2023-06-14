@@ -61,6 +61,7 @@ export default function UserLogin() {
           localStorage.setItem("pgderp-website-role", "coordinator");
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("email", res.data.email);
+          localStorage.setItem("step", "1")
           navigate("/coordinator");
         })
         .catch(err => {

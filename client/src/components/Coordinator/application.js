@@ -43,23 +43,28 @@ import FormLabel from '@mui/material/FormLabel';
 import { TextField } from "@mui/material";
 import CandidateDetails from "./CandidateDetails";
 import EducationalDetails from "./EducationalDetails";
-
-
-
+import ProfessionalExperience from "./ProfessionalExperience";
+import OtherDocuments from "./OtherDocuments";
+import Coordinator from "./coordinator";
 function Application() {
   const lstep = localStorage.getItem('step')==="null"?"1":localStorage.getItem('step');
   console.log(lstep)
   const [step, setStep] = useState(lstep)
   localStorage.setItem('step', step)
+  const navigate = useNavigate();
   const getStepItems = (step) => {
     console.log(step);
     switch(step){
       case "1": 
         return <CandidateDetails setStep={setStep}/>;
       case "2":
-        return <EducationalDetails />;
+        return <EducationalDetails setStep={setStep}/>;
+      case "3":
+        return <ProfessionalExperience setStep={setStep} />
+      case "4":
+        return <OtherDocuments setStep={setStep} />
       default:
-        return <h1>Page does not exist</h1>
+        return <Coordinator />
     }
   }
   return (

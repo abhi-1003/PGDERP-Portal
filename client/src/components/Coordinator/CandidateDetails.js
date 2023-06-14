@@ -41,6 +41,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { TextField } from "@mui/material";
+import DocViewer from "../../pages/DocViewer";
 
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -105,7 +106,7 @@ function CandidateDetails({setStep}) {
   const [remarks, setRemarks] = useState('');
   const [toBeModified, setToBeModified] = useState([]);
   const [toBeVerified, setToBeVerified] = useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const urlParams = new URLSearchParams(window.location.search);
 
   useEffect(()=>{
@@ -184,6 +185,24 @@ function CandidateDetails({setStep}) {
   }
   const goToNext = (event) => {
     // push the verification status and go to next page
+    const url = BACKEND_URL + '/student/modification';
+    console.log(189, toBeModified)
+    if(toBeModified.length > 0){
+      console.log('hello')
+      axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'type': 'candidateDetails'})
+      .then((response)=>{
+        console.log(response.data)
+        if(response.data.status){
+          alert('Saved successfully')
+        }
+        else{
+          alert('Not saved successfully')
+        }
+      })
+      .catch((err)=>{
+        console.log(200, err);
+      })
+    }
     const currStep = parseInt(localStorage.getItem("step"));
     console.log(153, currStep);
     localStorage.setItem('step', null);
@@ -257,7 +276,7 @@ function CandidateDetails({setStep}) {
         </Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <TableContainer component={Paper} className={classes.tableContainer}>
-          <Table className={classes.table}>
+          {data !== null && <Table className={classes.table}>
               <TableHead className={classes.tableHead}>
                   <TableRow>
                       <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Sr.No.</b></StyledTableCell>
@@ -301,7 +320,7 @@ function CandidateDetails({setStep}) {
                               {data.campusPreference!==undefined? data.campusPreference.map((pre) => {
                                   return (
                                       <Grid item xs={12} sm={4}>
-                                          <b>{pre}</b>
+                                          {pre}
                                       </Grid>
                                   )
                               }):null}
@@ -324,13 +343,13 @@ function CandidateDetails({setStep}) {
                       <StyledTableCell className={classes.StyledTableCell} width="45%">
                           <Grid container spacing={2} style={{ marginBottom: "1px" }}>
                               <Grid item xs={12} sm={4}>
-                                  <b>{data['lastName']}</b> <br/> <b>Surname</b>
+                                  {data['lastName']} <br/> <b>Surname</b>
                               </Grid>
                               <Grid item xs={12} sm={4}>
-                                  <b>{data['firstName']}</b><br/> <b>First Name</b>
+                                  {data['firstName']} <br/> <b>First Name</b>
                               </Grid>
                               <Grid item xs={12} sm={4}>
-                                  <b>{data['middleName']}</b><br/> <b>Father/Husband's Name</b>
+                                  {data['middleName']} <br/> <b>Father/Husband's Name</b>
                               </Grid>
                           </Grid>
                           
@@ -522,9 +541,25 @@ function CandidateDetails({setStep}) {
                         </FormControl>
                       </StyledTableCell>
                   </StyledTableRow>
-                  
+                  <StyledTableRow>
+                      <StyledTableCell className={classes.StyledTableCell} width="10%">17</StyledTableCell>
+                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Aadhar / Passport Document</b></StyledTableCell>
+                      <StyledTableCell className={classes.StyledTableCell} width="45%">
+                        <DocViewer 
+                        filename={data['aadharPassport']}
+                        contentType="application/pdf"/>
+                      </StyledTableCell>
+                      <StyledTableCell className={classes.StyledTableCell} width="25%">
+                        <FormControl>
+                        <RadioGroup>
+                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="aadharPassport"/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="aadharPassport"/>} label="Accepted" />
+                        </RadioGroup>
+                        </FormControl>
+                      </StyledTableCell>
+                  </StyledTableRow>
               </TableBody>
-          </Table>
+          </Table>  }
       </TableContainer>
       
       </Grid>
@@ -534,14 +569,20 @@ function CandidateDetails({setStep}) {
       </Grid>
       </Grid>
       <Grid container direction="row" justifyContent="flex-end">
+        {console.log(toBeVerified.length, toBeModified.length)}
           <Grid item>
-              {((toBeModified.length + toBeVerified.length!==16) || (toBeModified.length!==0 && remarks===''))? 
+              {((toBeModified.length + toBeVerified.length)!==17)? 
+              <Button disabled variant="contained">
+                Next
+              </Button>:
+              (toBeModified.length>0 && remarks.length===0)?
               <Button disabled variant="contained">
                 Next
               </Button>:
               <Button onClick={goToNext} variant="contained" style={{backgroundColor: "#01257D", color: "#FFFFFF"}}>
               Next
-            </Button>}
+            </Button>
+              }
           </Grid>
       </Grid>
       </Box>

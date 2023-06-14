@@ -93,6 +93,7 @@ exports.personalDetails = async(req, res) => {
     const id = req.query.studentId;
     const user = await Student.findOne({'registrationID': id}).exec();
     try {
+      // console.log(user)
       return res.json({
         'registrationId': id,
         'course': user.course,
@@ -113,7 +114,8 @@ exports.personalDetails = async(req, res) => {
         'domicileState': user.personalInfo.domicileState,
         'nationality': user.personalInfo.nationality,
         'caste': user.personalInfo.caste,
-        'age': user.personalInfo.age
+        'age': user.personalInfo.age,
+        'aadharPassport': user.documents.aadharPassport
       });
     } catch (error) {
       res.status(400).json({ error: "request body contains invalid data!!" });
@@ -212,12 +214,14 @@ exports.personalDetails = async(req, res) => {
 
   exports.getAcademicDetails = async (req, res) => {
     // const email = "prernat20.comp@coeptech.ac.in";
-    const _id = req.query.id;
-    const user = await Student.findOne({_id}).exec();
+    const id = req.query.studentId;
+    console.log(id)
+    const user = await Student.findOne({'registrationID': id}).exec();
+    console.log(user)
     let data = {};
     try {
       if (user && user['academicsInfo'] !== undefined) {
-        return res.json(user['academicsInfo'])
+        return res.json(Object.assign({}, user['academicsInfo'], {'sscEq': user.documents.sscEq, 'hscEq': user.documents.hscEq, 'grad': user.documents.grad, 'otCourses': user.documents.otCourses}))
       } else {
         return res.json({ error: "no user found" });
       }
@@ -248,12 +252,13 @@ exports.personalDetails = async(req, res) => {
   };
 
   exports.getProfessionalDetails = async(req,res) => {
-    const _id = req.query.id;
-    const user = await Student.findOne({_id}).exec();
+    const id = req.query.id;
+    console.log(256, id)
+    const user = await Student.findOne({'registrationID': id}).exec();
     try {
       if (user) {
-        if(user['academicsInfo']['professionalExperience'] !== undefined){
-          return res.json(user['academicsInfo']['professionalExperience']);
+        if(user['professionalExperience'] !== undefined){
+          return res.json(Object.assign({}, {'exps': user['professionalExperience']}, {'profExp': user.documents.profExp}));
         }
         return res.json([]);
       } else {
@@ -264,6 +269,29 @@ exports.personalDetails = async(req, res) => {
       return res.status(400).json({ error: "request failed" });
     }
   }
+
+  exports.getOtherDocs = async(req,res) => {
+    const id = req.query.id;
+    console.log(id)
+    const user = await Student.findOne({'registrationID': id}).exec();
+    try {
+      if (user) {
+        if(user['professionalExperience'] !== undefined){
+          return res.json({
+            'selfDeclaration': user.documents.selfDeclaration,
+            'feesPayment': user.documents.feesPayment
+          });
+        }
+        return res.json([]);
+      } else {
+        return res.json({ error: "no user found" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ error: "request failed" });
+    }
+  }
+
 
   exports.getAllStudentDetails = async(req, res) => {
 
@@ -471,5 +499,101 @@ exports.personalDetails = async(req, res) => {
     catch (error){
       console.log(error);
       return res.status(400).json({ error: "request failed" });
+    }
+  }
+  
+  exports.modifications = async(req, res) => {
+    console.log(req.body)
+    const id = req.body.studentId;
+    const remarks = req.body.remarks;
+    const type = req.body.type;
+    const fields = req.body.modifications;
+    const user = await Student.findOne({'registrationID': id}).exec();
+    try {
+      if(user){
+        if(user.modifications !== undefined){
+          let modifications = user.modifications;
+          let flag = 0;
+          for(var i = 0; i<modifications.length; i++){
+            if(modifications[i].type === type){
+              flag = 1;
+              modifications[i].fields = fields;
+              modifications[i].remarks = remarks;
+              break;
+            }
+          }
+          if(flag === 0){
+            modifications.push({'type': type, 'fields': fields, 'remarks': remarks});
+            user.modifications = modifications;
+          }
+          await user.save().catch((err)=>{
+            if(err){
+              console.log(504, err);
+              return res.json({'status': false});
+            }
+            else{
+              return res.json({'status': true});
+            }
+          })
+        }
+        else{
+          user.modifications = [{'type': type, 'fields': fields, 'remarks': remarks}];
+          await user.save().catch((err)=>{
+            if(err){
+              console.log(516, err);
+              return res.json({'status': false})
+            }
+            else{
+              return res.json({'status': true})
+            }
+          })
+        }
+      }
+      else{
+        return res.json({'status': true})
+      }
+    }
+    catch (err) {
+      console.log(530, err);
+      return res.json({'status': false});
+    }    
+  }
+
+  exports.changeVerificationStatus = async(req,res) => {
+    const id = req.body.studentId;
+    console.log(564, 'id')
+    const user = await Student.findOne({'registrationID': id}).exec();
+    try{
+      if(user){
+        const modifications = user.modifications;
+        let flag = 0;
+        for(i = 0; i < modifications.length; i++){
+          if(Object.keys(modifications[i]).length>0){
+            flag = 1;
+            break;
+          }
+        }
+        if(flag === 0){
+          user.applicationVerified = true;
+          await user.save().catch((err)=>{
+            if(err){
+              console.log(504, err);
+              return res.json({'status': false});
+            }
+            else{
+              return res.json({'status': true});
+            }
+          })
+        }
+        else{
+          return res.json({'status': true})
+        }
+      }
+      else{
+        return res.json({'status': true})
+      }
+    }
+    catch{
+      return res.json({'status': false})
     }
   }
