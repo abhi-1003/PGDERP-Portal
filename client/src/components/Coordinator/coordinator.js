@@ -92,6 +92,7 @@ function Coordinator() {
     }
   };
   const studentClick = (e) => {
+    localStorage.setItem('studentId', e)
     navigate(`/coordinator/${e}`)
   }
   const drawer = (
