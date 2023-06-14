@@ -67,9 +67,9 @@ export default function UserLogin() {
               student_data: student_data,
               options: {
                 Home: "/student/home",
+                "Prerequisites": "/student/prerequisites",
                 "Fill Application Form": "/student/personalInfo",
                 "Download Application": "/student/download",
-                "Download Self Declaration": "/student/home",
                 Logout: "/student/login"
               }
             }

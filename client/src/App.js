@@ -26,7 +26,7 @@ import AcademicsInfo from "./pages/academicsInfo";
 import ProfessionalExperience from "./pages/ProfessionalExperience";
 import Documents from "./pages/Documents";
 import Download from "./pages/downloadApplication";
-
+import Prerequisites from "./pages/prerequisites";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -52,7 +52,7 @@ function App() {
           path="/student/form"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <FormComponent/>
+              <FormComponent />
             </ProtectedRoute>
           }
         />
@@ -60,7 +60,7 @@ function App() {
           path="/student/home"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <ResponsiveStudentHome/>
+              <ResponsiveStudentHome />
             </ProtectedRoute>
           }
         />
@@ -69,7 +69,7 @@ function App() {
           path="/student/personalInfo"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <PersonalInfo/>
+              <PersonalInfo />
             </ProtectedRoute>
           }
         />
@@ -78,37 +78,45 @@ function App() {
           path="/student/academicsInfo"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <AcademicsInfo/>
+              <AcademicsInfo />
             </ProtectedRoute>
           }
         />
 
-        <Route 
-          path = "/student/professionalExperience"
-            element={
+        <Route
+          path="/student/professionalExperience"
+          element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <ProfessionalExperience />
             </ProtectedRoute>
           }
-         />
+        />
 
-<Route 
-          path = "/student/documents"
-            element={
+        <Route
+          path="/student/documents"
+          element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <Documents />
             </ProtectedRoute>
           }
-         />
+        />
 
-<Route 
-          path = "/student/download"
-            element={
+        <Route
+          path="/student/download"
+          element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <Download />
             </ProtectedRoute>
           }
-         />
+        />
+        <Route
+          path="/student/prerequisites"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <Prerequisites />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/admin/login" element={<AdminLogin />} exact></Route>
         <Route path="/admin/register" element={<AdminRegister />}></Route>
@@ -116,21 +124,27 @@ function App() {
           path="/admin/home"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
-              <AdminHome/>
-              </ProtectedRoute>
+              <AdminHome />
+            </ProtectedRoute>
           }
         />
 
-        <Route path="/coordinator" element={
-          <ProtectedRoute allowedRoles={[roles.coordinator]}>
-          <Coordinator />
-        </ProtectedRoute>
-        }></Route>
-        <Route path="/coordinator/:id" element={
-          <ProtectedRoute allowedRoles={[roles.coordinator]}>
-          <Application />
-        </ProtectedRoute>
-        }></Route>
+        <Route
+          path="/coordinator"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <Coordinator />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coordinator/:id"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <Application />
+            </ProtectedRoute>
+          }
+        ></Route>
         <Route
           path="/coordinator/login"
           element={<CoordinatorLogin />}
@@ -141,10 +155,10 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
               <CoordinatorRegister />
-              </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
-        <Route path="/otpscript" element = {<OtpScript />}></Route>
+        <Route path="/otpscript" element={<OtpScript />}></Route>
         {/* <Route
           path="/doc-view"
           element = {
@@ -154,11 +168,14 @@ function App() {
             />
           }
         ></Route> */}
-        <Route path="/admin/grid"
-          element = {
+        <Route
+          path="/admin/grid"
+          element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
-          <Grid/>
-        </ProtectedRoute>} />
+              <Grid />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
