@@ -401,6 +401,7 @@ exports.personalDetails = async(req, res) => {
           user["personalInfoEditable"] = false;
           user["academicsInfoEditable"] = false;
           user["professionalExperienceEditable"] = false;
+          user["arrayModi"] = [];
           user["documentsEditable"] = false;
           await user.save().catch((err) => {
             console.log(err);

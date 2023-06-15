@@ -63,7 +63,7 @@ export const renderInputText = ({
 	personalData
 }) => {
 	const { data, errors } = stateVar;
-	if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true){
+	if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true && personalData.arrayModi.includes(name) == false){
 		return (
 			<TextField
 				label={label}
@@ -123,7 +123,7 @@ export const renderInputSelect = ({
 }) => {
 	if(stateVar && "data" in stateVar && "errors" in stateVar){
 		const { data, errors } = stateVar;
-		if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true){
+		if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true && personalData.arrayModi.includes(name) == false){
 			return (
 				<TextField
 					label={label}
@@ -181,7 +181,7 @@ export const renderMultiInputText = ({
 }) => {
 	if(stateVar && "data" in stateVar && "errors" in stateVar){
 		const { data, errors } = stateVar;
-		if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true){
+		if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true && personalData.arrayModi.includes(name) == false){
 			return (
 				<TextField
 					label={label}

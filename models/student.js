@@ -86,6 +86,8 @@ const personalInfo = {
     otCourses: { type: String },
     selfDeclaration: { type: String },
     feesPayment: {type: String},
+    photo: {type: String},
+    sign: {type:String}
   }
   const StudentSchema = Schema(
     {
@@ -134,7 +136,10 @@ const personalInfo = {
       documentsRemarks : {type: Object},
 
       // Modifications
-      modifications: [pageModification]
+      modifications: [pageModification],
+
+      // array of all modifications
+      arrayModi : {type: Array}
       
     },
     { timestamps: true }

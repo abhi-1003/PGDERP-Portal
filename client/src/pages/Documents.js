@@ -99,6 +99,7 @@ function Documents() {
   const [loading7, setLoading7] = React.useState(false);
   const [loading8, setLoading8] = React.useState(false);
   const [loading9, setLoading9] = React.useState(false);
+  const [loading10, setLoading10] = React.useState(false);
   const [ot, setOt] = React.useState(true);
   const [pf, setPf] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -189,6 +190,14 @@ function Documents() {
       filename: "",
       originalname: "",
     },
+    {
+      name: "Candidate Signature",
+      status: "Pending",
+      file: null,
+      dbName: "sign",
+      filename: "",
+      originalname: "",
+    },
   ]);
 
   function fileUpload(event, index) {
@@ -229,6 +238,9 @@ function Documents() {
       }
       if(index==8){
         setLoading9(true)
+      }
+      if(index == 9){
+        setLoading10(true)
       }
 
       axios
@@ -282,6 +294,9 @@ function Documents() {
               }
               if(index==8){
                 setLoading9(false)
+              }
+              if(index == 9){
+                setLoading10(false)
               }
             })
             .catch(function(err) {
@@ -613,12 +628,17 @@ function Documents() {
     <span>Upload</span>
 </div>  
                     </TableCell>
-                    {docs[row]["filename"] && (
+                    {docs[row]["filename"] && i!=8 && i!=9 && (
                       <TableCell>
                         <DocViewer
                           filename={docs[row]["filename"]}
                           contentType="application/pdf"
                         />
+                      </TableCell>
+                    )}
+                    {docs[row]["filename"] && i==8 && i==9 && (
+                      <TableCell>
+                        <Typography>PNG FILE</Typography>
                       </TableCell>
                     )}
                     {!docs[row]["filename"] && <TableCell>No file</TableCell>}
@@ -701,7 +721,22 @@ function Documents() {
                     {i == 7 && !loading8 && (
                       <TableCell>{docs[row]["status"]}</TableCell>
                     )}
+                    {i == 8 && loading9 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
                     {i == 8 && !loading9 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+                    {i == 9 && loading10 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 9 && !loading10 && (
                       <TableCell>{docs[row]["status"]}</TableCell>
                     )}
                   </TableRow>

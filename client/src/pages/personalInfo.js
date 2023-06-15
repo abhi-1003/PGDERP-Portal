@@ -881,7 +881,7 @@ function PersonalInfo() {
                   {personalData &&
                     "personalInfo" in personalData &&
                     "dob" in personalData.personalInfo &&
-                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==false && (
+                    personalData.personalInfo.dob.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("dob") && personalData.personalInfoEditable==true)) && (
                       <StyledTableCell>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -914,7 +914,7 @@ function PersonalInfo() {
 {personalData &&
                     "personalInfo" in personalData &&
                     "dob" in personalData.personalInfo &&
-                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==true && (
+                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==true && personalData.personalInfoEditable == false && (
                       <StyledTableCell>
                         {renderInputTextDisabled({
                       label: personalData.personalInfo.dob[0] +
