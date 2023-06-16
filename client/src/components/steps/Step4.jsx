@@ -84,7 +84,7 @@ export default function Step4() {
     }
     function fileSubmit(index){
         const URL = BACKEND_URL + '/files/upload';
-        console.log(docs[index].file)
+        // console.log(docs[index].file)
         if(docs[index].file !== null){
             axios.post(URL, docs[index]["file"])
             .then(function(response){

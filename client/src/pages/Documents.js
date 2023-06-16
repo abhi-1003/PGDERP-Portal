@@ -55,6 +55,12 @@ import { CloudUpload } from "@material-ui/icons";
 import DocViewer from "./DocViewer";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 const drawerWidth = 280;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -92,6 +98,10 @@ function Documents() {
   const [loading6, setLoading6] = React.useState(false);
   const [loading7, setLoading7] = React.useState(false);
   const [loading8, setLoading8] = React.useState(false);
+  const [loading9, setLoading9] = React.useState(false);
+  const [loading10, setLoading10] = React.useState(false);
+  const [ot, setOt] = React.useState(true);
+  const [pf, setPf] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [docSchema, setDocSchema] = React.useState({
     sscEq: "",
@@ -102,6 +112,7 @@ function Documents() {
     otCourses: "",
     selfDeclaration: "",
     feesPayment: "",
+    photo: ""
   });
 
   const [docs, setDocs] = React.useState([
@@ -171,6 +182,22 @@ function Documents() {
       filename: "",
       originalname: "",
     },
+    {
+      name: "Candidate Photograph",
+      status: "Pending",
+      file: null,
+      dbName: "photo",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name: "Candidate Signature",
+      status: "Pending",
+      file: null,
+      dbName: "sign",
+      filename: "",
+      originalname: "",
+    },
   ]);
 
   function fileUpload(event, index) {
@@ -208,6 +235,12 @@ function Documents() {
       }
       if (index == 7) {
         setLoading8(true);
+      }
+      if(index==8){
+        setLoading9(true)
+      }
+      if(index == 9){
+        setLoading10(true)
       }
 
       axios
@@ -259,6 +292,12 @@ function Documents() {
               if (index == 7) {
                 setLoading8(false);
               }
+              if(index==8){
+                setLoading9(false)
+              }
+              if(index == 9){
+                setLoading10(false)
+              }
             })
             .catch(function(err) {
               console.log(err);
@@ -268,17 +307,36 @@ function Documents() {
           console.log(error);
         });
     } else {
-      alert("Please upload a file!");
+      alert("Please choose a file!");
     }
   }
 
   const handleSave = () => {
     let validate = true;
     Object.keys(docs).map((row) => {
-      if (docs[row]["filename"] === "") {
-        validate = false;
+      if(row==4 && pf){
+        if (docs[row]["filename"] === "") {
+          validate = false;
+        }
       }
+
+      if(row==5 && ot){
+        if (docs[row]["filename"] === "") {
+          validate = false;
+        }
+      }
+
+      if(row!=4 && row!=5){
+        if (docs[row]["filename"] === "") {
+          validate = false;
+        }
+      }
+      
     });
+
+    if(validate==false){
+      alert("All mandatory documents are to be uploaded!")
+    }
 
     if (validate && !loading1 && !loading2 && !loading3 && !loading4 && !loading5 && !loading6 && !loading7 && !loading8) {
       const url = BACKEND_URL + "/student/docFilled";
@@ -311,7 +369,7 @@ function Documents() {
       .then(function(response) {
         if (response.data.doc != undefined && response.data.doc != null) {
           var tempDocs = [...docs];
-          console.log(response.data.doc);
+        //   console.log(response.data.doc);
           for (const [k, v] of Object.entries(response.data.doc)) {
             if (v !== "") {
               for (var i = 0; i < tempDocs.length; i++) {
@@ -335,6 +393,24 @@ function Documents() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleChangeot = (event) => {
+    if(event.target.value == "yes"){
+      setOt(true)
+    }
+    else{
+      setOt(false)
+    }
+  }
+
+  const handleChangepf = (event) => {
+    if(event.target.value == "yes"){
+      setPf(true)
+    }
+    else{
+      setPf(false)
+    }
+  }
 
   const drawer = (
     <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
@@ -453,11 +529,49 @@ function Documents() {
         </Paper>
 
         <TableContainer component={Paper}>
+        <Table>
+            <TableHead />
+            <TableBody>
+              <TableRow>
+                <TableCell >
+                <FormControl >
+      <FormLabel id="demo-row-radio-buttons-group-label">Do you have Other Courses Documents?</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        defaultValue={"yes"}
+      >
+        <FormControlLabel value="yes" control={<Radio onChange={handleChangeot}/>} label="Yes" align/>
+        <FormControlLabel value="no" control={<Radio onChange={handleChangeot}/>} label="No" />
+      </RadioGroup>
+    </FormControl>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell >
+                <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">Do you have Professional Experience Documents?</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        defaultValue={"yes"}
+      >
+        <FormControlLabel value="yes" control={<Radio onChange={handleChangepf}/>} label="Yes" />
+        <FormControlLabel value="no" control={<Radio onChange={handleChangepf}/>} label="No" />
+      </RadioGroup>
+    </FormControl>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Sr. No.</TableCell>
                 <TableCell>Document Name</TableCell>
+                <TableCell>Choose File</TableCell>
                 <TableCell>Upload</TableCell>
                 <TableCell>View</TableCell>
                 <TableCell>Status</TableCell>
@@ -466,25 +580,65 @@ function Documents() {
             <TableBody>
               {Object.keys(docs).map((row, i) => {
                 return (
-                  <TableRow>
+                  <>
+                <TableRow>
                     <TableCell>{i + 1}</TableCell>
-                    <TableCell>{docs[row]["name"]}</TableCell>
-                    <TableCell>
+                    <TableCell>{docs[row]["name"]}
+                    {i!=4 && i!=5 && (
+                      <Typography color="red">Mandatory</Typography>
+                    )}
+
+                    {i==4 && pf && (
+                      <Typography color="red">Mandatory</Typography>
+                    )}
+
+                    {i==5 && ot && (
+                      <Typography color="red">Mandatory</Typography>
+                    )}
+                    
+                    </TableCell>
+                    {location.state.student_data.applicationFilled && (
+                      <TableCell>
+                        <Typography>Documents Submitted</Typography>
+                      </TableCell>
+                    )}
+                    {
+                      location.state.student_data.applicationFilled ==false && (
+                        <TableCell>
                       <input
                         type="file"
                         onChange={(event) => fileUpload(event, i)}
+                        style={{color: "transparent"}}
                       />
-                      <CloudUpload
-                        style={{ cursor: "pointer" }}
+                      
+                    </TableCell>
+                      )
+                    }
+                    
+                    <TableCell>
+                    <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+}}>
+    <CloudUpload
+                        style={{ cursor: "cursor" }}
                         onClick={() => fileSubmit(i)}
                       />
+    <span>Upload</span>
+</div>  
                     </TableCell>
-                    {docs[row]["filename"] && (
+                    {docs[row]["filename"] && i!=8 && i!=9 && (
                       <TableCell>
                         <DocViewer
                           filename={docs[row]["filename"]}
                           contentType="application/pdf"
                         />
+                      </TableCell>
+                    )}
+                    {docs[row]["filename"] && i==8 && i==9 && (
+                      <TableCell>
+                        <Typography>PNG FILE</Typography>
                       </TableCell>
                     )}
                     {!docs[row]["filename"] && <TableCell>No file</TableCell>}
@@ -567,7 +721,26 @@ function Documents() {
                     {i == 7 && !loading8 && (
                       <TableCell>{docs[row]["status"]}</TableCell>
                     )}
+                    {i == 8 && loading9 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 8 && !loading9 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
+                    {i == 9 && loading10 && (
+                      <TableCell>
+                        <CircularProgress />
+                        {docs[row]["status"]}
+                      </TableCell>
+                    )}
+                    {i == 9 && !loading10 && (
+                      <TableCell>{docs[row]["status"]}</TableCell>
+                    )}
                   </TableRow>
+                  </>
                 );
               })}
             </TableBody>

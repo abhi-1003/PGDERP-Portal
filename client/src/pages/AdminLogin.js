@@ -51,7 +51,7 @@ export default function AdminLogin() {
         email: values.email,
         password: values.password
       };
-      console.log(data);
+    //   console.log(data);
       const url = BACKEND_URL + "/admin/loginAdmin";
       axios
         .post(url, data)

@@ -47,10 +47,10 @@ function Application2(props) {
         axios
         .get(url)
         .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             setData(response.data);
             setLoading(true);
-            console.log(response.data)
+            // console.log(response.data)
             // console.log(response.data.academicsInfo.InstituteSSC)
         })
         .catch((error) => {

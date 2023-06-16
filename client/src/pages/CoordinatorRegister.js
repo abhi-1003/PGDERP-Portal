@@ -64,7 +64,6 @@ export default function UserRegister() {
   }
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("Hello");
     if (validate()) {
       const data = {
         name: values.fullname,
@@ -73,7 +72,7 @@ export default function UserRegister() {
         password: values.password,
         courses: courses
       };
-      console.log(data);
+    //   console.log(data);
       const token = localStorage.getItem("pgderp-website-jwt")
       const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios

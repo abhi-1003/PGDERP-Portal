@@ -81,7 +81,7 @@ const handleSubmit = (state) => {
             personalInfo : personalInfo,
             academicsInfo : academicsInfo
         }
-        console.log(body)
+        // console.log(body)
         axios
             .post(url, body)
             .then((res) => {

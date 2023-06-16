@@ -56,11 +56,12 @@ export default function UserLogin() {
         .then(res => {
           alert(res.data.message);
           let token_dict = res.data.token;
-          console.log(res.data);
+        //   console.log(res.data);
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "coordinator");
           localStorage.setItem("name", res.data.name);
           localStorage.setItem("email", res.data.email);
+          localStorage.setItem("step", "1")
           navigate("/coordinator");
         })
         .catch(err => {

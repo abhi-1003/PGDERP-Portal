@@ -13,7 +13,6 @@ const verificationField = {
 }
 
 const personalInfo = {
-    campusPreference:{type: Array},
     lastName:{type: String},
     firstName:{type: String},
     middleName:{type: String},
@@ -30,6 +29,12 @@ const personalInfo = {
     caste:{type: String},
     age: {type: Number},
   };
+
+  const pageModification = {
+    type: {type: String},
+    fields: {type: Array},
+    remarks: {type: String}
+}
 
   const academicsInfo = {
     DiplomaFilled: {type: Boolean},
@@ -81,6 +86,8 @@ const personalInfo = {
     otCourses: { type: String },
     selfDeclaration: { type: String },
     feesPayment: {type: String},
+    photo: {type: String},
+    sign: {type:String}
   }
   const StudentSchema = Schema(
     {
@@ -127,6 +134,12 @@ const personalInfo = {
       academicsInfoRemarks : {type: Object},
       professionalExperienceRemarks : {type: Object},
       documentsRemarks : {type: Object},
+
+      // Modifications
+      modifications: [pageModification],
+
+      // array of all modifications
+      arrayModi : {type: Array}
       
     },
     { timestamps: true }

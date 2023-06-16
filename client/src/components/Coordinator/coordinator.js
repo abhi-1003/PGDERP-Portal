@@ -74,6 +74,7 @@ function Coordinator() {
     setMobileOpen(!mobileOpen);
   };
   useEffect(()=>{
+    localStorage.setItem('step', "1")
     axios.get(BACKEND_URL + '/student/applicants', {params: {'email': localStorage.getItem("email")}})
     .then((response)=>{
       setRows(response.data)
@@ -92,6 +93,7 @@ function Coordinator() {
     }
   };
   const studentClick = (e) => {
+    localStorage.setItem('studentId', e)
     navigate(`/coordinator/${e}`)
   }
   const drawer = (
