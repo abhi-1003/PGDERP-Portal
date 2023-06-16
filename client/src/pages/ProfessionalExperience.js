@@ -382,7 +382,7 @@ return (
 					</TableRow>
 				</TableHead>
 				<TableBody>
-          {personalData && personalData["applicationFilled"] && !personalData["arrayModi"].includes("professionalExperience") && (
+          {personalData && personalData["applicationFilled"] && !personalData["modifications"].includes("professionalExperience") && (
             contacts.map((contact) => (
               <Fragment>
                 <ReadOnlyRowExp
@@ -393,7 +393,7 @@ return (
               </Fragment>
             ))
           )}
-          {personalData && (personalData["applicationFilled"]==false || (personalData["professionalExperienceFilled"] == false && personalData["arrayModi"].includes("professionalExperience"))) &&  (
+          {personalData && (personalData["applicationFilled"]==false || (personalData["professionalExperienceFilled"] == false && personalData["modifications"].includes("professionalExperience"))) &&  (
             contacts.map((contact) => (
               <Fragment>
                 <ReadOnlyRowExp
@@ -495,7 +495,7 @@ return (
         /> */}
 
         {
-          personalData && personalData["applicationFilled"] && personalData["arrayModi"].includes("professionalExperience") == false && (
+          personalData && personalData["applicationFilled"] && personalData["modifications"].includes("professionalExperience") == false && (
             renderButton({
               label: "Add",
               handleOnClick: handleAddFormSubmitDisabled,
@@ -504,7 +504,7 @@ return (
         }
 
 {
-          personalData && (personalData["applicationFilled"]==false || (personalData["professionalExperienceFilled"] == false && personalData["arrayModi"].includes("professionalExperience"))) && (
+          personalData && (personalData["applicationFilled"]==false || (personalData["professionalExperienceFilled"] == false && personalData["modifications"].includes("professionalExperience"))) && (
             renderButton({
               label: "Add",
               handleOnClick: handleAddFormSubmit,

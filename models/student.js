@@ -135,11 +135,11 @@ const personalInfo = {
       professionalExperienceRemarks : {type: Object},
       documentsRemarks : {type: Object},
 
-      // Modifications
-      modifications: [pageModification],
+      // verified
+      verified: {type: Array},
 
       // array of all modifications
-      arrayModi : {type: Array}
+      modifications : {type: Array}
       
     },
     { timestamps: true }

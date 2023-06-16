@@ -42,6 +42,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { TextField } from "@mui/material";
 import DocViewer from "../../pages/DocViewer";
+import ArticleIcon from '@mui/icons-material/Article';
 
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -107,7 +108,9 @@ function EducationalDetails({setStep}) {
   const [remarks, setRemarks] = useState('');
   const [toBeModified, setToBeModified] = useState([]);
   const [toBeVerified, setToBeVerified] = useState([]);
-  const [k, setK] = useState(3)
+  const [k, setK] = useState(12);
+  const [nowVerified, setNowVerified] = useState([]);
+
   const options = [
     {
       "value": "Home",
@@ -116,6 +119,10 @@ function EducationalDetails({setStep}) {
     {
       "value": "Logout",
       "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
     }
   ];
   const handleDrawerToggle = () => {
@@ -129,27 +136,38 @@ function EducationalDetails({setStep}) {
     } else if (e.target.textContent === "Home"){
       navigate("/coordinator");
     }
+    else if(e.target.textContent === "Download List"){
+      navigate("/coordinator/list")
+    }
   };
   useEffect(()=>{
     const url = BACKEND_URL + '/student/academicDetails';
     let t = k;
     axios.get(url, {params: {'studentId': localStorage.getItem('studentId')}})
     .then((response)=>{
-      if(response.data.HSCFilled){
+      console.log(response.data)
+      if(['InstituteSSC', 'SSCFrom', 'SSCTo', 'SSCmarks', 'sscEq'].every((i)=>response.data.verified.includes(i))){
+        t -= 5
+      }
+      if(['InstituteGrad', 'SpecializationGrad', 'GradFrom', 'GradTo', 'FinalYearMarksGrad', 'AggregateMarksGrad', 'grad'].every((i)=>response.data.verified.includes(i))){
+        t -= 7
+      }
+      if(response.data.academicInfo.HSCFilled && !['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq'].every((i)=>response.data.verified.includes(i))){
+        t += 5
+      }
+      if(response.data.academicInfo.DiplomaFilled && !['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks'].every((i)=>response.data.verified.includes(i))){
+        t += 4
+      }
+      if(response.data.academicInfo.PostGradFrom.length > 0 && !['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad'].every((i)=>response.data.verified.includes(i))){
+        t += 6
+      }
+      if(response.data.academicInfo.otherCourses.length && !['otherCourses', 'otCourses'].every((i)=>response.data.verified.includes(i))){
         t += 2
       }
-      if(response.data.DiplomaFilled){
-        t += 1
-      }
-      if(response.data.PostGradFrom.length > 0){
-        t += 1
-      }
-      if(response.data.otherCourses.length){
-        t += 2
-      }
-      console.log(k)
+      console.log(t)
       setK(t)
-      setData(response.data);
+      setData(response.data.academicInfo);
+      setNowVerified(response.data.verified)
     })
     .catch((err)=>{
       console.log(err);
@@ -176,33 +194,39 @@ function EducationalDetails({setStep}) {
   const changeVerificationStatus = (event) => {
     let temp = [...toBeModified];
     let temp2 = [...toBeVerified];
+    let e = event.target.id.split(',');
+    console.log(e)
+    console.log(event.target.value)
     if(event.target.value === 'modification'){
-      if(!temp.includes(event.target.id)){
-        temp.push(event.target.id);
-      }
-      if(temp2.includes(event.target.id)){
-        temp2.splice(temp2.indexOf(event.target.id), 1);
+      for(var i = 0; i<e.length; i++){
+        if(!temp.includes(e[i])){
+          temp.push(e[i]);
+        }
+        if(temp2.includes(e[i])){
+          temp2.splice(temp2.indexOf(e[i]), 1);
+        }
       }
     }
     else{
-      const i = temp.indexOf(event.target.id);
-      if(i>-1){
-        temp.splice(i, 1);
-      }
-      if(!temp2.includes(event.target.id)){
-        temp2.push(event.target.id);
+      for(var j = 0; j <e.length; j++){
+        var i = temp.indexOf(e[j]);
+        if(i>-1){
+          temp.splice(i, 1);
+        }
+        if(!temp2.includes(e[j])){
+          temp2.push(e[j]);
+        }
       }
     }
+    console.log(temp2);
+    console.log(temp)
     setToBeVerified(temp2);
     setToBeModified(temp);
   }
   const goToNext = (event) => {
     // push the verification status and go to next page
     const url = BACKEND_URL + '/student/modification';
-    console.log(189, toBeModified)
-    if(toBeModified.length > 0){
-      console.log('hello')
-      axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'type': 'educationalDetails'})
+    axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'verified': toBeVerified, 'type': 'academicInfo'})
       .then((response)=>{
         console.log(response.data)
         if(response.data.status){
@@ -215,7 +239,6 @@ function EducationalDetails({setStep}) {
       .catch((err)=>{
         console.log(200, err);
       })
-    }
     const currStep = parseInt(localStorage.getItem("step"));
     console.log(153, currStep);
     localStorage.setItem('step', null);
@@ -306,6 +329,7 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>From</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>To</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Percentage Marks%</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="10%"><b>View Document</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="35%"><b>Verification</b></StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -316,13 +340,21 @@ function EducationalDetails({setStep}) {
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['SSCFrom'][0]}/{data['SSCFrom'][1]}/{data['SSCFrom'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['SSCTo'][0]}/{data['SSCTo'][1]}/{data['SSCTo'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['SSCmarks']}</StyledTableCell>
+                  <StyledTableCell><DocViewer filename={data['sscEq']} contentType="application/pdf"/></StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
+                    {['InstituteSSC', 'SSCFrom', 'SSCTo', 'SSCmarks', 'sscEq'].every((i)=>nowVerified.includes(i))?
+                    <FormControl>
                     <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="ssc" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="ssc" value="accepted"/>} label="Accepted" />
+                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstituteSSC', 'SSCFrom', 'SSCTo', 'SSCmarks', 'sscEq']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstituteSSC', 'SSCFrom', 'SSCTo', 'SSCmarks', 'sscEq']} value="accepted"/>} label="Accepted" />
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl>:<FormControl>
+                    <RadioGroup>
+                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstituteSSC', 'SSCFrom', 'SSCTo', 'SSCmarks', 'sscEq']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstituteSSC', 'SSCFrom', 'SSCTo', 'SSCmarks', 'sscEq']} value="accepted"/>} label="Accepted" />
+                    </RadioGroup>
+                  </FormControl>}
+                  
                 </StyledTableCell>
               </StyledTableRow>
               {(data['HSCFilled'] === true) && <StyledTableRow>
@@ -331,13 +363,25 @@ function EducationalDetails({setStep}) {
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['HSCFrom'][0]}/{data['HSCFrom'][1]}/{data['HSCFrom'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['HSCTo'][0]}/{data['HSCTo'][1]}/{data['HSCTo'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['HSCmarks']}</StyledTableCell>
+              <StyledTableCell><DocViewer filename={data['hscEq']} contentType="application/pdf"/></StyledTableCell>
+                  
                   <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
+                  {['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq'].every((i)=>nowVerified.includes(i))?
+                    <FormControl>
                     <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="hsc" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="hsc" value="accepted"/>} label="Accepted" />
+                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq']} value="accepted"/>} label="Accepted" />
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl>:
+                  <FormControl>
+                  <RadioGroup>
+                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq']} value="modification"/>} label="Modification Required" />
+                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq']} value="accepted"/>} label="Accepted" />
+                  </RadioGroup>
+                </FormControl>
+                  }
+
+                  
                 </StyledTableCell>
               </StyledTableRow>}
               {(data['DiplomaFilled'] === true) && <StyledTableRow>
@@ -346,46 +390,23 @@ function EducationalDetails({setStep}) {
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['DiplomaFrom'][0]}/{data['DiplomaFrom'][1]}/{data['DiplomaFrom'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['DiplomaTo'][0]}/{data['DiplomaTo'][1]}/{data['DiplomaTo'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['Diplomamarks']}</StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
+                    {['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks'].every((i)=>nowVerified.includes(i))?<FormControl>
                     <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="diploma" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="diploma" value="accepted"/>} label="Accepted" />
+                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="accepted"/>} label="Accepted" />
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl>:
+                  <FormControl>
+                  <RadioGroup>
+                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="modification"/>} label="Modification Required" />
+                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="accepted"/>} label="Accepted" />
+                  </RadioGroup>
+                </FormControl>}
+                  
                 </StyledTableCell>
               </StyledTableRow>}
-              <StyledTableRow>
-                <StyledTableCell>SSC Eq. Document</StyledTableCell>
-                <StyledTableCell><DocViewer filename={data['sscEq']} contentType="application/pdf"/></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
-                    <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="sscEq" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="sscEq" value="accepted"/>} label="Accepted" />
-                    </RadioGroup>
-                  </FormControl>
-                </StyledTableCell>
-              </StyledTableRow>
-              {(data['HSCFilled'] === true) && 
-              <StyledTableRow>
-              <StyledTableCell>HSC Eq. Document</StyledTableCell>
-              <StyledTableCell><DocViewer filename={data['hscEq']} contentType="application/pdf"/></StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
-                    <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="hscEq" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="hscEq" value="accepted"/>} label="Accepted" />
-                    </RadioGroup>
-                  </FormControl>
-                </StyledTableCell>
-            </StyledTableRow>}
               </TableBody>
             </Table>
         </TableContainer>
@@ -402,7 +423,7 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>To</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Final Year Percentage of Marks %</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Aggregate Percentage of Marks %</b></StyledTableCell>
-                    <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Total No. of Backlogs</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="10%"><b>View Document</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Verification</b></StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -415,14 +436,23 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['GradTo'][0]}/{data['GradTo'][1]}/{data['GradTo'][2]}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['FinalYearMarksGrad']}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['AggregateMarksGrad']}</StyledTableCell>
-                    <StyledTableCell className={classes.StyledTableCell} width="10%">Dead: {data['DeadBacklogsGrad']} <br /> Alive: {data['AliveBacklogGrad']}</StyledTableCell>
+                    <StyledTableCell><DocViewer filename={data['grad']} contentType="application/pdf"/></StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">
+                      {['InstituteGrad', 'SpecializationGrad', 'GradFrom', 'GradTo', 'FinalYearMarksGrad', 'AggregateMarksGrad', 'grad'].every((i)=>nowVerified.includes(i))?
                       <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="grad" value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="grad" value="accepted"/>} label="Accepted" />
-                        </RadioGroup>
-                      </FormControl>
+                      <RadioGroup>
+                      <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstituteGrad', 'SpecializationGrad', 'GradFrom', 'GradTo', 'FinalYearMarksGrad', 'AggregateMarksGrad', 'grad']} value="modification"/>} label="Modification Required" />
+                      <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstituteGrad', 'SpecializationGrad', 'GradFrom', 'GradTo', 'FinalYearMarksGrad', 'AggregateMarksGrad', 'grad']} value="accepted"/>} label="Accepted" />
+                      </RadioGroup>
+                    </FormControl>:
+                    <FormControl>
+                    <RadioGroup>
+                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstituteGrad', 'SpecializationGrad', 'GradFrom', 'GradTo', 'FinalYearMarksGrad', 'AggregateMarksGrad', 'grad']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstituteGrad', 'SpecializationGrad', 'GradFrom', 'GradTo', 'FinalYearMarksGrad', 'AggregateMarksGrad', 'grad']} value="accepted"/>} label="Accepted" />
+                    </RadioGroup>
+                  </FormControl>
+                      }
+                      
                     </StyledTableCell>
 
                 </TableRow>
@@ -434,35 +464,23 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['PostGradTo'][0]}/{data['PostGradTo'][1]}/{data['PostGradTo'][2]}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['FinalYearMarksPostGrad']}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['AggregateMarksPostGrad']}</StyledTableCell>
-                    <StyledTableCell className={classes.StyledTableCell} width="10%">Dead: {data['DeadBacklogsPostGrad']} <br /> Alive: {data['AliveBacklogPostGrad']}</StyledTableCell>
+                    <StyledTableCell><DocViewer filename={data['grad']} contentType="application/pdf"/></StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">
-                      <FormControl>
+                      {['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad'].every((i)=>nowVerified.includes(i))?<FormControl>
                         <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="postGrad" value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="postGrad" value="accepted"/>} label="Accepted" />
+                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="modification"/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="accepted"/>} label="Accepted" />
                         </RadioGroup>
-                      </FormControl>
+                      </FormControl>:
+                      <FormControl>
+                      <RadioGroup>
+                      <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="modification"/>} label="Modification Required" />
+                      <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="accepted"/>} label="Accepted" />
+                      </RadioGroup>
+                    </FormControl>}
+                      
                     </StyledTableCell>
                 </TableRow>}
-                <TableRow>
-                  <StyledTableCell>Graduation Document</StyledTableCell>
-                  <StyledTableCell><DocViewer filename={data['grad']} contentType="application/pdf"/></StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                  <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
-                    <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="grad" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="grad" value="accepted"/>} label="Accepted" />
-                    </RadioGroup>
-                  </FormControl>
-                </StyledTableCell>
-
-                </TableRow>
               </TableBody>
             </Table>
         </TableContainer>
@@ -478,6 +496,7 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>From</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>To</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Grade</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="10%"><b>View Document</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Verification</b></StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -491,34 +510,27 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{item.periodFrom}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{item.periodTo}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{item.grade}</StyledTableCell>
+                    <StyledTableCell><DocViewer filename={data['otCourses']} contentType="application/pdf"/></StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">
+                      {['otherCourses', 'otCourses'].every((i)=>nowVerified.includes(i))?
                       <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="otherCourses" value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="otherCourses" value="accepted"/>} label="Accepted" />
-                        </RadioGroup>
-                      </FormControl>
+                      <RadioGroup>
+                      <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['otherCourses', 'otCourses']} value="modification"/>} label="Modification Required" />
+                      <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['otherCourses', 'otCourses']} value="accepted"/>} label="Accepted" />
+                      </RadioGroup>
+                    </FormControl>:
+                    <FormControl>
+                    <RadioGroup>
+                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['otherCourses', 'otCourses']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['otherCourses', 'otCourses']} value="accepted"/>} label="Accepted" />
+                    </RadioGroup>
+                  </FormControl>
+                      }
+                      
                     </StyledTableCell>
                 </TableRow>
                 )
               })}
-              {data['otherCourses'].length>0 && 
-              <TableRow>
-                <StyledTableCell>Other Courses Document</StyledTableCell>
-                <StyledTableCell><DocViewer filename={data['otCourses']} contentType="application/pdf"/></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell className={classes.StyledTableCell} width="35%">
-                  <FormControl>
-                    <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="otCourses" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="otCourses" value="accepted"/>} label="Accepted" />
-                    </RadioGroup>
-                  </FormControl>
-                </StyledTableCell>
-                </TableRow>}
               </TableBody>
             </Table>
         </TableContainer>
@@ -537,8 +549,8 @@ function EducationalDetails({setStep}) {
             </Button>
         </Grid>
           <Grid item>
-            {console.log(k)}
-              {((toBeModified.length + toBeVerified.length)!==k)? 
+            {/* {console.log(k, nowVerified.length)} */}
+              {((toBeModified.length + toBeVerified.length )!==(k))? 
               <Button disabled variant="contained">
                 Next
               </Button>:

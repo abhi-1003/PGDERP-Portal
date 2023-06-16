@@ -89,12 +89,29 @@ exports.personalDetails = async(req, res) => {
     }
   };
 
+  exports.getCoordinatorSections = async (req, res) => {
+    const email = req.query.email;
+    try{
+      const coord = await Coordinator.findOne({'email': email}).exec();
+      if(coord){
+        return res.json(coord.courses);
+      }
+      else{
+        return res.json([])
+      }
+    }
+    catch(e){
+      console.log(e);
+      return res.json([])
+    }
+  }
+
   exports.getPersonalDetails = async (req, res) => {
     const id = req.query.studentId;
     const user = await Student.findOne({'registrationID': id}).exec();
     try {
       // console.log(user)
-      return res.json({
+      return res.json({'personalDetails':{
         'registrationId': id,
         'course': user.course,
         'campusPreference': user.personalInfo.campusPreference,
@@ -116,7 +133,7 @@ exports.personalDetails = async(req, res) => {
         'caste': user.personalInfo.caste,
         'age': user.personalInfo.age,
         'aadharPassport': user.documents.aadharPassport
-      });
+      }, 'verified': user.verified, 'modifications': user.modifications});
     } catch (error) {
       res.status(400).json({ error: "request body contains invalid data!!" });
       res.status(400).json(console.log(error));
@@ -221,7 +238,12 @@ exports.personalDetails = async(req, res) => {
     let data = {};
     try {
       if (user && user['academicsInfo'] !== undefined) {
-        return res.json(Object.assign({}, user['academicsInfo'], {'sscEq': user.documents.sscEq, 'hscEq': user.documents.hscEq, 'grad': user.documents.grad, 'otCourses': user.documents.otCourses}))
+        let acad = Object.assign({}, user['academicsInfo'], {'sscEq': user.documents.sscEq, 'hscEq': user.documents.hscEq, 'grad': user.documents.grad, 'otCourses': user.documents.otCourses})
+        return res.json({
+          'academicInfo': acad,
+          'modifications': user.modifications,
+          'verified': user.verified
+        })
       } else {
         return res.json({ error: "no user found" });
       }
@@ -258,7 +280,8 @@ exports.personalDetails = async(req, res) => {
     try {
       if (user) {
         if(user['professionalExperience'] !== undefined){
-          return res.json(Object.assign({}, {'exps': user['professionalExperience']}, {'profExp': user.documents.profExp}));
+          let prof = Object.assign({}, {'exps': user['professionalExperience']}, {'profExp': user.documents.profExp});
+          return res.json({'professionalExperience': prof, 'modifications': user.modifications, 'verified': user.verified});
         }
         return res.json([]);
       } else {
@@ -276,13 +299,13 @@ exports.personalDetails = async(req, res) => {
     const user = await Student.findOne({'registrationID': id}).exec();
     try {
       if (user) {
-        if(user['professionalExperience'] !== undefined){
+        
           return res.json({
-            'selfDeclaration': user.documents.selfDeclaration,
-            'feesPayment': user.documents.feesPayment
+            'otherDocs': {'selfDeclaration': user.documents.selfDeclaration,
+            'feesPayment': user.documents.feesPayment}, 'modifications': user.modifications,
+            'verified': user.verified
           });
-        }
-        return res.json([]);
+        
       } else {
         return res.json({ error: "no user found" });
       }
@@ -401,7 +424,7 @@ exports.personalDetails = async(req, res) => {
           user["personalInfoEditable"] = false;
           user["academicsInfoEditable"] = false;
           user["professionalExperienceEditable"] = false;
-          user["arrayModi"] = [];
+          user["modifications"] = [];
           user["documentsEditable"] = false;
           await user.save().catch((err) => {
             console.log(err);
@@ -503,51 +526,271 @@ exports.personalDetails = async(req, res) => {
     }
   }
   
+  exports.getDataByCourse = async(req, res) => {
+    const course = req.query.course;
+    console.log(531, course)
+    try{
+      const users = await Student.find({'course': course}).exec();
+      if(users){
+        let result = [];
+        users.forEach((user)=>{
+          result.push({'Registration ID': user.registrationID, 'Course': user.course, 'Name': user.name, 'Mobile No.': user.mobile, 'Email Address': user.email})
+        })
+        return res.json(result);
+      }
+      else{
+        return res.json([])
+      }
+    }
+    catch(e){
+      console.log(e);
+      return res.json([])
+    }
+  }
+
   exports.modifications = async(req, res) => {
-    console.log(req.body)
+    console.log(513, req.body);
     const id = req.body.studentId;
     const remarks = req.body.remarks;
+    const modifications = req.body.modifications;
+    const verified = req.body.verified;
     const type = req.body.type;
-    const fields = req.body.modifications;
     const user = await Student.findOne({'registrationID': id}).exec();
     try {
       if(user){
         if(user.modifications !== undefined){
-          let modifications = user.modifications;
-          let flag = 0;
-          for(var i = 0; i<modifications.length; i++){
-            if(modifications[i].type === type){
-              flag = 1;
-              modifications[i].fields = fields;
-              modifications[i].remarks = remarks;
-              break;
+          let Umod = user.modifications;
+          
+          for(var i = 0; i < modifications.length; i++){
+            if(!Umod.includes(modifications[i])){
+              Umod.push(modifications[i])
             }
           }
-          if(flag === 0){
-            modifications.push({'type': type, 'fields': fields, 'remarks': remarks});
-            user.modifications = modifications;
-          }
-          await user.save().catch((err)=>{
-            if(err){
-              console.log(504, err);
-              return res.json({'status': false});
+
+          user.modifications=Umod;
+          if(user.verified !== undefined){
+            let Uver = user.verified;
+            for(var i = 0; i < verified.length; i++){
+              if(!Uver.includes(verified[i])){
+                Uver.push(verified[i])
+              }
+            }
+            user.verified=Uver;
+            if(modifications.length){
+              if(type === 'personalInfo'){
+                user.personalInfoEditable = true;
+                user.personalInfoVerified = false;
+                user.personalInfoFilled = false;
+                user.personalInfoRemarks = remarks;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = false;
+                user.academicsInfoEditable = true;
+                user.academicsInfoFilled = false;
+                user.academicsInfoRemarks = remarks;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = false;
+                user.professionalExperienceEditable = true;
+                user.professionalExperienceFilled = false;
+                user.professionalExperienceRemarks = remarks;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = false;
+                user.documentsEditable = true;
+                user.documentsFilled = false;
+                user.documentsRemarks = remarks;
+              }
             }
             else{
-              return res.json({'status': true});
+              if(type === 'personalInfo'){
+                user.personalInfoVerified = true;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = true;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = true;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = true;
+              }
             }
-          })
+            await user.save().catch((err)=>{
+              if(err){
+                console.log(504, err);
+                return res.json({'status': false});
+              }
+              else{
+                return res.json({'status': true});
+              }
+            })
+          }
+          else{
+            if(modifications.length){
+              if(type === 'personalInfo'){
+                user.personalInfoEditable = true;
+                user.personalInfoVerified = false;
+                user.personalInfoFilled = false;
+                user.personalInfoRemarks = remarks;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = false;
+                user.academicsInfoEditable = true;
+                user.academicsInfoFilled = false;
+                user.academicsInfoRemarks = remarks;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = false;
+                user.professionalExperienceEditable = true;
+                user.professionalExperienceFilled = false;
+                user.professionalExperienceRemarks = remarks;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = false;
+                user.documentsEditable = true;
+                user.documentsFilled = false;
+                user.documentsRemarks = remarks;
+              }
+            }
+            else{
+              if(type === 'personalInfo'){
+                user.personalInfoVerified = true;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = true;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = true;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = true;
+              }
+            }
+            user.verified = verified;
+            await user.save().catch((err)=>{
+              if(err){
+                console.log(516, err);
+                return res.json({'status': false})
+              }
+              else{
+                return res.json({'status': true})
+              }
+            })
+          }
         }
         else{
-          user.modifications = [{'type': type, 'fields': fields, 'remarks': remarks}];
-          await user.save().catch((err)=>{
-            if(err){
-              console.log(516, err);
-              return res.json({'status': false})
+          user.modifications = modifications;
+          if(user.verified !== undefined){
+            let Uver = user.verified;
+            for(var i = 0; i < verified.length; i++){
+              if(!Uver.includes(verified[i])){
+                Uver.push(verified[i])
+              }
+            }
+            user.verified=Uver;
+            if(modifications.length){
+              if(type === 'personalInfo'){
+                user.personalInfoEditable = true;
+                user.personalInfoVerified = false;
+                user.personalInfoFilled = false;
+                user.personalInfoRemarks = remarks;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = false;
+                user.academicsInfoEditable = true;
+                user.academicsInfoFilled = false;
+                user.academicsInfoRemarks = remarks;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = false;
+                user.professionalExperienceEditable = true;
+                user.professionalExperienceFilled = false;
+                user.professionalExperienceRemarks = remarks;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = false;
+                user.documentsEditable = true;
+                user.documentsFilled = false;
+                user.documentsRemarks = remarks;
+              }
             }
             else{
-              return res.json({'status': true})
+              if(type === 'personalInfo'){
+                user.personalInfoVerified = true;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = true;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = true;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = true;
+              }
             }
-          })
+            await user.save().catch((err)=>{
+              if(err){
+                console.log(504, err);
+                return res.json({'status': false});
+              }
+              else{
+                return res.json({'status': true});
+              }
+            })
+          }
+          else{
+            user.verified = verified;
+            if(modifications.length){
+              if(type === 'personalInfo'){
+                user.personalInfoEditable = true;
+                user.personalInfoVerified = false;
+                user.personalInfoFilled = false;
+                user.personalInfoRemarks = remarks;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = false;
+                user.academicsInfoEditable = true;
+                user.academicsInfoFilled = false;
+                user.academicsInfoRemarks = remarks;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = false;
+                user.professionalExperienceEditable = true;
+                user.professionalExperienceFilled = false;
+                user.professionalExperienceRemarks = remarks;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = false;
+                user.documentsEditable = true;
+                user.documentsFilled = false;
+                user.documentsRemarks = remarks;
+              }
+            }
+            else{
+              if(type === 'personalInfo'){
+                user.personalInfoVerified = true;
+              }
+              else if(type === 'academicInfo'){
+                user.academicsInfoVerified = true;
+              }
+              else if(type === 'professionalExperience'){
+                user.professionalExperienceVerified = true;
+              }
+              else if(type === 'documents'){
+                user.documentsVerified = true;
+              }
+            }
+            await user.save().catch((err)=>{
+              if(err){
+                console.log(516, err);
+                return res.json({'status': false})
+              }
+              else{
+                return res.json({'status': true})
+              }
+            })
+          }
         }
       }
       else{
@@ -566,23 +809,15 @@ exports.personalDetails = async(req, res) => {
     const user = await Student.findOne({'registrationID': id}).exec();
     try{
       if(user){
-        const modifications = user.modifications;
-        let flag = 0;
-        for(i = 0; i < modifications.length; i++){
-          if(Object.keys(modifications[i]).length>0){
-            flag = 1;
-            break;
-          }
-        }
-        if(flag === 0){
+        if(user.personalInfoVerified && user.academicsInfoVerified && user.professionalExperienceVerified && user.documentsVerified){
           user.applicationVerified = true;
           await user.save().catch((err)=>{
             if(err){
-              console.log(504, err);
-              return res.json({'status': false});
+              console.log(516, err);
+              return res.json({'status': false})
             }
             else{
-              return res.json({'status': true});
+              return res.json({'status': true})
             }
           })
         }

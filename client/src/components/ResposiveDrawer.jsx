@@ -75,10 +75,10 @@ function ResponsiveStudentHome() {
   };
 
   const rows = [
-    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["arrayModi"].length>0 ? "Modification Required": "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
-    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["arrayModi"].length>0 ? "Modification Required": "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
-    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : (personal_data["arrayModi"].length>0 ? "Modification Required": "Not Verified"), personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", personal_data["professionalExperienceEditable"] ? "Edit" : "Not Editable", "/student/professionalExperience"),
-    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : (personal_data["arrayModi"].length>0 ? "Modification Required": "Not Verified"), personal_data["documentsFilled"] ? "Completed" : "Pending", personal_data["documentsEditable"] ? "Edit" : "Not Editable", "/student/documents"),
+    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
+    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
+    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", personal_data["professionalExperienceEditable"] ? "Edit" : "Not Editable", "/student/professionalExperience"),
+    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["documentsFilled"] ? "Completed" : "Pending", personal_data["documentsEditable"] ? "Edit" : "Not Editable", "/student/documents"),
   ];
 
   React.useEffect(() => {

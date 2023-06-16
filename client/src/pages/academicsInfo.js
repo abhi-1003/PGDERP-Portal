@@ -1091,7 +1091,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "SSCFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.SSCFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("SSCFrom") && personalData.academicsInfoEditable == true))  && (
+                    personalData.academicsInfo.SSCFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("SSCFrom") && personalData.academicsInfoEditable == true))  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1149,7 +1149,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "SSCFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (!personalData.arrayModi.includes("SSCFrom")) && (
+                    "SSCFrom" in personalData.academicsInfo && personalData.applicationFilled==true && (!personalData.modifications.includes("SSCFrom")) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.SSCFrom[0] +
@@ -1167,7 +1167,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "SSCTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.SSCTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("SSCTo") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.SSCTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("SSCTo") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1225,7 +1225,7 @@ function AcademicsInfo() {
                     
                     {personalData &&
                     "academicsInfo" in personalData &&
-                    "SSCTo" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.arrayModi.includes("SSCTo") && (
+                    "SSCTo" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.modifications.includes("SSCTo") && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.SSCTo[0] +
@@ -1269,7 +1269,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "HSCFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.HSCFrom.length === 3 &&(personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("HSCFrom") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.HSCFrom.length === 3 &&(personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("HSCFrom") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1328,7 +1328,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "HSCFrom" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.arrayModi.includes("HSCFrom") && (
+                    "HSCFrom" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.modifications.includes("HSCFrom") && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.HSCFrom[0] +
@@ -1346,7 +1346,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "HSCTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.HSCTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("HSCTo") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.HSCTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("HSCTo") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1405,7 +1405,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "HSCTo" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.arrayModi.includes("HSCTo")  && (
+                    "HSCTo" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.modifications.includes("HSCTo")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.HSCTo[0] +
@@ -1448,7 +1448,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "DiplomaFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.DiplomaFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("DiplomaFrom") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.DiplomaFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("DiplomaFrom") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1506,7 +1506,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "DiplomaFrom" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.arrayModi.includes("DiplomaFrom")  && (
+                    "DiplomaFrom" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.modifications.includes("DiplomaFrom")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.DiplomaFrom[0] +
@@ -1523,7 +1523,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "DiplomaTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.DiplomaTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("DiplomaTo") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.DiplomaTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("DiplomaTo") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1581,7 +1581,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "DiplomaTo" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.arrayModi.includes("DiplomaTo")  && (
+                    "DiplomaTo" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.modifications.includes("DiplomaTo")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.DiplomaTo[0] +
@@ -1779,7 +1779,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "GradFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.GradFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("GradFrom") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.GradFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("GradFrom") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1837,7 +1837,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "GradFrom" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.arrayModi.includes("GradFrom")  && (
+                    "GradFrom" in personalData.academicsInfo && personalData.applicationFilled==true && !personalData.modifications.includes("GradFrom")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.GradFrom[0] +
@@ -1854,7 +1854,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "GradTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.GradTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("GradTo") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.GradTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("GradTo") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -1912,7 +1912,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "GradTo" in personalData.academicsInfo && personalData.applicationFilled==true &&  !personalData.arrayModi.includes("GradTo")  && (
+                    "GradTo" in personalData.academicsInfo && personalData.applicationFilled==true &&  !personalData.modifications.includes("GradTo")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.GradTo[0] +
@@ -1986,7 +1986,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "PostGradFrom" in personalData.academicsInfo &&
-                    personalData.academicsInfo.PostGradFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("PostGradFrom") && personalData.academicsInfoEditable == true)) && (
+                    personalData.academicsInfo.PostGradFrom.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("PostGradFrom") && personalData.academicsInfoEditable == true)) && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -2044,7 +2044,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "PostGradFrom" in personalData.academicsInfo && personalData.applicationFilled==true &&  !personalData.arrayModi.includes("PostGradFrom")  && (
+                    "PostGradFrom" in personalData.academicsInfo && personalData.applicationFilled==true &&  !personalData.modifications.includes("PostGradFrom")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.PostGradFrom[0] +
@@ -2061,7 +2061,7 @@ function AcademicsInfo() {
                   {personalData &&
                     "academicsInfo" in personalData &&
                     "PostGradTo" in personalData.academicsInfo &&
-                    personalData.academicsInfo.PostGradTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("PostGradTo") && personalData.academicsInfoEditable == true)) &&  (
+                    personalData.academicsInfo.PostGradTo.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("PostGradTo") && personalData.academicsInfoEditable == true)) &&  (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -2119,7 +2119,7 @@ function AcademicsInfo() {
 
 {personalData &&
                     "academicsInfo" in personalData &&
-                    "PostGradTo" in personalData.academicsInfo && personalData.applicationFilled==true &&  !personalData.arrayModi.includes("PostGradTo")  && (
+                    "PostGradTo" in personalData.academicsInfo && personalData.applicationFilled==true &&  !personalData.modifications.includes("PostGradTo")  && (
                       <StyledTableCell sx={{ padding: "4px" }}>
                         {renderInputTextDisabled({
                       label: personalData.academicsInfo.PostGradTo[0] +
@@ -2219,7 +2219,7 @@ function AcademicsInfo() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {personalData && personalData["applicationFilled"] && !personalData["arrayModi"].includes("otherCourses") && (
+                    {personalData && personalData["applicationFilled"] && !personalData["modifications"].includes("otherCourses") && (
                       contacts.map(contact => (
                         <Fragment>
                           <ReadOnlyRow
@@ -2230,7 +2230,7 @@ function AcademicsInfo() {
                         </Fragment>
                       ))
                     )}
-                   {personalData && (personalData["applicationFilled"]==false || (personalData["academicsInfoFilled"] == false && personalData["arrayModi"].includes("otherCourses"))) && (
+                   {personalData && (personalData["applicationFilled"]==false || (personalData["academicsInfoFilled"] == false && personalData["modifications"].includes("otherCourses"))) && (
                       contacts.map(contact => (
                         <Fragment>
                           <ReadOnlyRow
@@ -2329,7 +2329,7 @@ function AcademicsInfo() {
                           handleOnClick: handleAddFormSubmitDisabled
                         }))
                     }
-                    {personalData && (personalData["applicationFilled"]==false || (personalData["academicsInfoFilled"] == false && personalData["arrayModi"].includes("otherCourses"))) && (
+                    {personalData && (personalData["applicationFilled"]==false || (personalData["academicsInfoFilled"] == false && personalData["modifications"].includes("otherCourses"))) && (
                         renderButton({
                           label: "Add",
                           handleOnClick: handleAddFormSubmit

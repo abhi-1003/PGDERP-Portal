@@ -42,7 +42,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { TextField } from "@mui/material";
 import DocViewer from "../../pages/DocViewer";
-
+import ArticleIcon from '@mui/icons-material/Article';
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -107,7 +107,8 @@ function EducationalDetails({setStep}) {
   const [remarks, setRemarks] = useState('');
   const [toBeModified, setToBeModified] = useState([]);
   const [toBeVerified, setToBeVerified] = useState([]);
-  const [k, setK] = useState(3)
+  const [k, setK] = useState(2);
+  const [nowVerified, setNowVerified] = useState([]);
   const options = [
     {
       "value": "Home",
@@ -116,6 +117,10 @@ function EducationalDetails({setStep}) {
     {
       "value": "Logout",
       "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
     }
   ];
   const handleDrawerToggle = () => {
@@ -129,6 +134,9 @@ function EducationalDetails({setStep}) {
     } else if (e.target.textContent === "Home"){
       navigate("/coordinator");
     }
+    else if(e.target.textContent === "Download List"){
+      navigate("/coordinator/list")
+    }
   };
   useEffect(()=>{
     const url = BACKEND_URL + '/student/professionalDetails';
@@ -136,8 +144,13 @@ function EducationalDetails({setStep}) {
     console.log(url)
     axios.get(url, {params: {'id': localStorage.getItem('studentId')}})
     .then((response)=>{
-        console.log(response.data)
-      setData(response.data);
+      console.log(response.data)
+      if(['professionalExperience', 'profExp'].every((i)=>response.data.verified.includes(i))){
+        t -= 2
+      }
+      setData(response.data.professionalExperience);
+      setNowVerified(response.data.verified)
+      setK(t)
     })
     .catch((err)=>{
       console.log(err);
@@ -164,46 +177,51 @@ function EducationalDetails({setStep}) {
   const changeVerificationStatus = (event) => {
     let temp = [...toBeModified];
     let temp2 = [...toBeVerified];
+    let e = event.target.id.split(',');
+    console.log(e)
+    console.log(event.target.value)
     if(event.target.value === 'modification'){
-      if(!temp.includes(event.target.id)){
-        temp.push(event.target.id);
-      }
-      if(temp2.includes(event.target.id)){
-        temp2.splice(temp2.indexOf(event.target.id), 1);
+      for(var i = 0; i<e.length; i++){
+        if(!temp.includes(e[i])){
+          temp.push(e[i]);
+        }
+        if(temp2.includes(e[i])){
+          temp2.splice(temp2.indexOf(e[i]), 1);
+        }
       }
     }
     else{
-      const i = temp.indexOf(event.target.id);
-      if(i>-1){
-        temp.splice(i, 1);
-      }
-      if(!temp2.includes(event.target.id)){
-        temp2.push(event.target.id);
+      for(var j = 0; j <e.length; j++){
+        var i = temp.indexOf(e[j]);
+        if(i>-1){
+          temp.splice(i, 1);
+        }
+        if(!temp2.includes(e[j])){
+          temp2.push(e[j]);
+        }
       }
     }
+    console.log(temp2);
+    console.log(temp)
     setToBeVerified(temp2);
     setToBeModified(temp);
   }
   const goToNext = (event) => {
     // push the verification status and go to next page
     const url = BACKEND_URL + '/student/modification';
-    console.log(189, toBeModified)
-    if(toBeModified.length > 0){
-      console.log('hello')
-      axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'type': 'professionalExperience'})
-      .then((response)=>{
-        console.log(response.data)
-        if(response.data.status){
-          alert('Saved successfully')
-        }
-        else{
-          alert('Not saved successfully')
-        }
-      })
-      .catch((err)=>{
-        console.log(200, err);
-      })
-    }
+    axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'verified': toBeVerified, 'type': 'professionalExperience'})
+    .then((response)=>{
+      console.log(response.data)
+      if(response.data.status){
+        alert('Saved successfully')
+      }
+      else{
+        alert('Not saved successfully')
+      }
+    })
+    .catch((err)=>{
+      console.log(200, err);
+    })
     const currStep = parseInt(localStorage.getItem("step"));
     console.log(153, currStep);
     localStorage.setItem('step', null);
@@ -284,7 +302,7 @@ function EducationalDetails({setStep}) {
         <Box display="flex" justifyContent="center" alignItems="center">
         {data !== null && <Grid container style={{alignItems: 'center', alignContent: 'center'}} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <TableContainer component={Paper} className={classes.tableContainer}>
-        <Typography variant='h6' margin={2} >Other Courses</Typography>
+        <Typography variant='h6' margin={2} >Professional Experience</Typography>
         <Table className={classes.table}>
               <TableHead className={classes.tableHead}>
               <TableRow>
@@ -293,6 +311,7 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>From</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>To</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="20%"><b>Nature of Work</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="20%"><b>View Document</b></StyledTableCell>
                     <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Verification</b></StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -305,33 +324,25 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{item['periodFrom']}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{item['periodTo']}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="20%">{item['workNature']}</StyledTableCell>
+                    <StyledTableCell className={classes.StyledTableCell} width="25%"><DocViewer filename={data['profExp']} contentType="application/pdf"/></StyledTableCell>
                     <StyledTableCell className={classes.tabStyledTableCellleHeadCell} width="10%">
+                    {['professionalExperience', 'profExp'].every((i)=>nowVerified.includes(i))?
                     <FormControl>
                     <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="professional" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="professional" value="accepted"/>} label="Accepted" />
+                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={["professionalExperience", 'profExp']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio disabled onChange={changeVerificationStatus} id={["professionalExperience", 'profExp']} value="accepted"/>} label="Accepted" />
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl>:
+                  <FormControl>
+                  <RadioGroup>
+                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={["professionalExperience", 'profExp']} value="modification"/>} label="Modification Required" />
+                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={["professionalExperience", 'profExp']} value="accepted"/>} label="Accepted" />
+                  </RadioGroup>
+                </FormControl>}
                     </StyledTableCell>
                   </TableRow>
                 )
               })}
-              {data['exps'].length > 0 && 
-              <TableRow>
-              <StyledTableCell className={classes.StyledTableCell} width="25%"><b>Professional Experience Document</b></StyledTableCell>
-              <StyledTableCell className={classes.StyledTableCell} width="25%"><DocViewer filename={data['profExp']} contentType="application/pdf"/></StyledTableCell>
-              <StyledTableCell className={classes.StyledTableCell} width="10%"></StyledTableCell>
-              <StyledTableCell className={classes.StyledTableCell} width="10%"></StyledTableCell>
-              <StyledTableCell className={classes.StyledTableCell} width="20%"></StyledTableCell>
-              <StyledTableCell className={classes.tabStyledTableCellleHeadCell} width="10%">
-              <FormControl>
-              <RadioGroup>
-              <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="profExp" value="modification"/>} label="Modification Required" />
-              <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="profExp" value="accepted"/>} label="Accepted" />
-              </RadioGroup>
-            </FormControl>
-              </StyledTableCell>
-            </TableRow>}
               </TableBody>
             </Table>
         </TableContainer>
@@ -349,7 +360,7 @@ function EducationalDetails({setStep}) {
             </Button>
         </Grid>
           <Grid item>
-              {((toBeModified.length + toBeVerified.length)!==2 && !((toBeModified.length + toBeVerified.length)===0 && data['exps'].length===0))? 
+              {((toBeModified.length + toBeVerified.length)!==k)? 
               <Button disabled variant="contained" >
                 Next
               </Button>:

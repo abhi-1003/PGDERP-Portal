@@ -26,6 +26,7 @@ import ProfessionalExperience from "./pages/ProfessionalExperience";
 import Documents from "./pages/Documents";
 import Download from "./pages/downloadApplication";
 import Prerequisites from "./pages/prerequisites";
+import CoordinatorDownload from "./components/Coordinator/coordinatorDownload";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -141,6 +142,14 @@ function App() {
           path="/coordinator/login"
           element={<CoordinatorLogin />}
           exact
+        ></Route>
+        <Route
+          path="/coordinator/list"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <CoordinatorDownload />
+            </ProtectedRoute>
+          }
         ></Route>
         <Route
           path="/admin/registerCoord"

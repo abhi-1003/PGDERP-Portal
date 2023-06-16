@@ -196,7 +196,7 @@ function Download() {
   const [personalData, setPersonalData] = React.useState([]);
 
   React.useEffect(() => {
-    // console.log(location.state.student_data._id)
+    console.log(location.state.student_data._id)
     if (location.state) {
       if (location.state.student_data._id) {
         let body = { id: location.state.student_data._id };

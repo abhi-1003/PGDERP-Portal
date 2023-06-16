@@ -42,6 +42,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { TextField } from "@mui/material";
 import DocViewer from "../../pages/DocViewer";
+import ArticleIcon from '@mui/icons-material/Article';
 
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -107,14 +108,29 @@ function CandidateDetails({setStep}) {
   const [toBeModified, setToBeModified] = useState([]);
   const [toBeVerified, setToBeVerified] = useState([]);
   const [data, setData] = useState(null);
+  const [nowVerified, setNowVerified] = useState([]);
   const urlParams = new URLSearchParams(window.location.search);
-
+  const [k, setK] = useState(5);
   useEffect(()=>{
+    let t = k;
     const url = BACKEND_URL + '/student/personalDetails';
     axios.get(url, {params: {'studentId': localStorage.getItem('studentId')}})
     .then((response)=>{
       console.log(response.data)
-      setData(response.data);
+      if(['dob', 'age'].every((i)=>response.data.verified.includes(i))){
+        t -= 2;
+      }
+      if(['domicileState', 'nationality'].every((i)=>response.data.verified.includes(i))){
+        t -= 2
+      }
+      if(response.data.verified.includes('aadharPassport')){
+        t -= 1
+      }
+      setK(t)
+      setData(response.data.personalDetails);
+      // setToBeVerified(response.data.verified);
+      setNowVerified(response.data.verified);
+      
     })
     .catch((err)=>{
       console.log(err)
@@ -128,6 +144,10 @@ function CandidateDetails({setStep}) {
     {
       "value": "Logout",
       "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
     }
   ];
   const handleDrawerToggle = () => {
@@ -140,6 +160,9 @@ function CandidateDetails({setStep}) {
       navigate("/");
     } else if (e.target.textContent === "Home"){
       navigate("/coordinator");
+    }
+    else if(e.target.textContent === "Download List"){
+      navigate("/coordinator/list")
     }
   };
   const drawer = (
@@ -163,46 +186,51 @@ function CandidateDetails({setStep}) {
   const changeVerificationStatus = (event) => {
     let temp = [...toBeModified];
     let temp2 = [...toBeVerified];
+    let e = event.target.id.split(',');
+    console.log(e)
+    console.log(event.target.value)
     if(event.target.value === 'modification'){
-      if(!temp.includes(event.target.id)){
-        temp.push(event.target.id);
-      }
-      if(temp2.includes(event.target.id)){
-        temp2.splice(temp2.indexOf(event.target.id), 1);
+      for(var i = 0; i<e.length; i++){
+        if(!temp.includes(e[i])){
+          temp.push(e[i]);
+        }
+        if(temp2.includes(e[i])){
+          temp2.splice(temp2.indexOf(e[i]), 1);
+        }
       }
     }
     else{
-      const i = temp.indexOf(event.target.id);
-      if(i>-1){
-        temp.splice(i, 1);
-      }
-      if(!temp2.includes(event.target.id)){
-        temp2.push(event.target.id);
+      for(var j = 0; j <e.length; j++){
+        var i = temp.indexOf(e[j]);
+        if(i>-1){
+          temp.splice(i, 1);
+        }
+        if(!temp2.includes(e[j])){
+          temp2.push(e[j]);
+        }
       }
     }
+    console.log(temp2);
+    console.log(temp)
     setToBeVerified(temp2);
     setToBeModified(temp);
   }
   const goToNext = (event) => {
     // push the verification status and go to next page
     const url = BACKEND_URL + '/student/modification';
-    console.log(189, toBeModified)
-    if(toBeModified.length > 0){
-      console.log('hello')
-      axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'type': 'candidateDetails'})
-      .then((response)=>{
-        console.log(response.data)
-        if(response.data.status){
-          alert('Saved successfully')
-        }
-        else{
-          alert('Not saved successfully')
-        }
-      })
-      .catch((err)=>{
-        console.log(200, err);
-      })
-    }
+    axios.post(url, {'studentId': localStorage.getItem('studentId'), 'modifications': toBeModified, 'remarks': remarks, 'verified': toBeVerified, 'type': 'personalInfo'})
+    .then((response)=>{
+      console.log(response.data)
+      if(response.data.status){
+        alert('Saved successfully')
+      }
+      else{
+        alert('Not saved successfully')
+      }
+    })
+    .catch((err)=>{
+      console.log(200, err);
+    })
     const currStep = parseInt(localStorage.getItem("step"));
     console.log(153, currStep);
     localStorage.setItem('step', null);
@@ -282,205 +310,14 @@ function CandidateDetails({setStep}) {
                       <StyledTableCell className={classes.tableHeadCell} width="10%"><b>Sr.No.</b></StyledTableCell>
                       <StyledTableCell className={classes.tableHeadCell} width="20%"><b>Candidate Details</b></StyledTableCell>
                       <StyledTableCell className={classes.tableHeadCell} width="45%"><b></b></StyledTableCell>
+                      <StyledTableCell className={classes.tableHeadCell} width="45%"><b></b></StyledTableCell>
                       <StyledTableCell className={classes.tableHeadCell} width="25%">Verification</StyledTableCell>
                   </TableRow>
               </TableHead>
               <TableBody>
+
                   <StyledTableRow>
                       <StyledTableCell className={classes.StyledTableCell} width="10%">1</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Candidate Id</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data["registrationId"]}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="registrationID" value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="registrationID" value="accepted"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">2</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Course</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data["course"]}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="course" value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="course"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">3</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Campus Preferences</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">
-                          <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                              {data.campusPreference!==undefined? data.campusPreference.map((pre) => {
-                                  return (
-                                      <Grid item xs={12} sm={4}>
-                                          {pre}
-                                      </Grid>
-                                  )
-                              }):null}
-                              
-                          </Grid>
-                          
-                      </StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                          <RadioGroup>
-                          <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="campusPreference" value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="campusPreference"/>} label="Accepted" />
-                          </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">4</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Name</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">
-                          <Grid container spacing={2} style={{ marginBottom: "1px" }}>
-                              <Grid item xs={12} sm={4}>
-                                  {data['lastName']} <br/> <b>Surname</b>
-                              </Grid>
-                              <Grid item xs={12} sm={4}>
-                                  {data['firstName']} <br/> <b>First Name</b>
-                              </Grid>
-                              <Grid item xs={12} sm={4}>
-                                  {data['middleName']} <br/> <b>Father/Husband's Name</b>
-                              </Grid>
-                          </Grid>
-                          
-                      </StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="name"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="name"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">5</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Postal Address</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['postalAddress']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="Address"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="Address"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">6</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Permanent Address</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['permanentAddress']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                       <FormControl>
-                       <RadioGroup>
-                       <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="permanentAddress"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="permanentAddress"/>} label="Accepted" />
-                       </RadioGroup>
-                       </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">7</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Email-Id</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['email']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="email"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="email"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">8</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Gender</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['gender']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="gender"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="gender"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">9</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Physical Disabilities</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['phyDis']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="phyDis"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="phyDis"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">10</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Phone No. with STD Code</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['mobile']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="mobile"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="mobile"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">11</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Parents/Husband's Name</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['PHname']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="PHname"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="PHname"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">12</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Parents/Husband's Email-Id</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['PHemail']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="PHemail"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="PHemail"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">13</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Parents/Husband's Mobile No.</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['PHnumber']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup></RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="PHnumber"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="PHnumber"/>} label="Accepted" />
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">14</StyledTableCell>
                       <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Date of Birth</b></StyledTableCell>
                       <StyledTableCell className={classes.StyledTableCell} width="45%">
                           <Grid container spacing={2} style={{ marginBottom: "1px" }}>
@@ -494,17 +331,28 @@ function CandidateDetails({setStep}) {
                               </Grid>
                           </Grid>
                       </StyledTableCell>
+                      <StyledTableCell>
+                        <DocViewer 
+                        filename={data['aadharPassport']}
+                        contentType="application/pdf"/>
+                      </StyledTableCell>
                       <StyledTableCell className={classes.StyledTableCell} width="25%">
+                        {(nowVerified.includes('dob') && nowVerified.includes('age'))? <FormControl>
+                        <RadioGroup>
+                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} value="modification" id={['dob', 'age', 'aadharPassport']}/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} value="accepted" id={['dob', 'age', 'aadharPassport']}/>} label="Accepted" />
+                        </RadioGroup>
+                        </FormControl>:
                         <FormControl>
                         <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="dob"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="dob"/>} label="Accepted" />
+                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id={['dob', 'age', 'aadharPassport']}/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id={['dob', 'age', 'aadharPassport']}/>} label="Accepted" />
                         </RadioGroup>
-                        </FormControl>
+                        </FormControl>}
                       </StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">15</StyledTableCell>
+                      <StyledTableCell className={classes.StyledTableCell} width="10%">2</StyledTableCell>
                       <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Domicile State of Candidate</b></StyledTableCell>
                       <StyledTableCell className={classes.StyledTableCell} width="45%">
                           <Grid container spacing={2} style={{ marginBottom: "1px" }}>
@@ -519,43 +367,25 @@ function CandidateDetails({setStep}) {
                               </Grid>
                           </Grid>
                       </StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="domicileState"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="domicileState"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">16</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Caste</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">{data['caste']}</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="25%">
-                        <FormControl>
-                        <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="caste"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="caste"/>} label="Accepted" />
-                        </RadioGroup>
-                        </FormControl>
-                      </StyledTableCell>
-                  </StyledTableRow>
-                  <StyledTableRow>
-                      <StyledTableCell className={classes.StyledTableCell} width="10%">17</StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="20%"><b>Aadhar / Passport Document</b></StyledTableCell>
-                      <StyledTableCell className={classes.StyledTableCell} width="45%">
+                      <StyledTableCell>
                         <DocViewer 
                         filename={data['aadharPassport']}
                         contentType="application/pdf"/>
                       </StyledTableCell>
                       <StyledTableCell className={classes.StyledTableCell} width="25%">
+                        {(nowVerified.includes('domicileState') && nowVerified.includes('nationality'))?
                         <FormControl>
                         <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id="aadharPassport"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id="aadharPassport"/>} label="Accepted" />
+                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} value="modification" id={['domicileState', 'nationality', 'aadharPassport']}/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} value="accepted" id={['domicileState', 'nationality', 'aadharPassport']}/>} label="Accepted" />
                         </RadioGroup>
-                        </FormControl>
+                        </FormControl>:
+                        <FormControl>
+                        <RadioGroup>
+                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id={['domicileState', 'nationality', 'aadharPassport']}/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id={['domicileState', 'nationality', 'aadharPassport']}/>} label="Accepted" />
+                        </RadioGroup>
+                        </FormControl>}
                       </StyledTableCell>
                   </StyledTableRow>
               </TableBody>
@@ -570,8 +400,9 @@ function CandidateDetails({setStep}) {
       </Grid>
       <Grid container direction="row" justifyContent="flex-end">
         {console.log(toBeVerified.length, toBeModified.length)}
+        {console.log(k)}
           <Grid item>
-              {((toBeModified.length + toBeVerified.length)!==17)? 
+              {((toBeModified.length + toBeVerified.length)!==k)? 
               <Button disabled variant="contained">
                 Next
               </Button>:

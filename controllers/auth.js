@@ -172,6 +172,23 @@ exports.loginCoordinator = (req, res) => {
     });
 };
 
+exports.getCoordinatorSections = (req, res) => {
+  const email = req.query.email;
+  try{
+    const coord = Coordinator.findOne({'email': email}).exec();
+    if(coord){
+      return coord.courses;
+    }
+    else{
+      return []
+    }
+  }
+  catch(e){
+    console.log(e);
+    return [];
+  }
+}
+
 exports.loginAdmin = (req, res) => {
   const { email, password } = req.body;
   // Validate user input
