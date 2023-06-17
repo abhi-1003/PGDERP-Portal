@@ -44,7 +44,9 @@ import { TextField } from "@mui/material";
 import DocViewer from "../../pages/DocViewer";
 import ArticleIcon from '@mui/icons-material/Article';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
-
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -156,8 +158,8 @@ function OtherDocuments({setStep}) {
       if(!response.data.verified.includes('selfDeclaration')){
         t += 1
       }
-      if(!response.data.verified.includes('feesPayment')){
-        t += 1
+      if(!["feesPayment", "bank", "refNo", "amt", "date"].every((i)=>response.data.verified.includes(i))){
+        t += 5
       }
       setData(response.data.otherDocs);
       setNowVerified(response.data.verified);
@@ -322,9 +324,10 @@ function OtherDocuments({setStep}) {
         <Table className={classes.table}>
               <TableHead className={classes.tableHead}>
               <TableRow>
-                    <StyledTableCell className={classes.tableHeadCell} width="25%"><b>Name of the Document</b></StyledTableCell>
-                    <StyledTableCell className={classes.tableHeadCell} width="50%"><b>View Document</b></StyledTableCell>
-                    <StyledTableCell className={classes.tableHeadCell} width="25%"><b>Verification</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="20%"><b>Name of the Document</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="10%"><b>View Document</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="50%"><b>Details</b></StyledTableCell>
+                    <StyledTableCell className={classes.tableHeadCell} width="20%"><b>Verification</b></StyledTableCell>
                     
                 </TableRow>
               </TableHead>
@@ -332,6 +335,7 @@ function OtherDocuments({setStep}) {
                 <TableRow>
                 <StyledTableCell>Self Declaration</StyledTableCell>
                 <StyledTableCell><DocViewer filename={data['selfDeclaration']}/></StyledTableCell>
+                <StyledTableCell></StyledTableCell>
                 <StyledTableCell className={classes.tabStyledTableCellleHeadCell} width="10%">
                     {nowVerified.includes('selfDeclaration')?<FormControl>
                     <RadioGroup>
@@ -350,18 +354,34 @@ function OtherDocuments({setStep}) {
                 <TableRow>
                 <StyledTableCell>Fees Payment</StyledTableCell>
                 <StyledTableCell><DocViewer filename={data['feesPayment']}/></StyledTableCell>
+                <StyledTableCell><Card>
+                <CardContent>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Bank Name: {data['bank']}
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Reference Number: {data['refNo']}
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Amount: {data['amt']}
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                            Date of Payment: {data['date'][0]} / {data['date'][1]} / {data['date'][2]}
+                        </Typography>
+                        </CardContent>
+                  </Card></StyledTableCell>
                 <StyledTableCell className={classes.tabStyledTableCellleHeadCell} width="10%">
-                    {nowVerified.includes('feesPayment')?
+                    {["feesPayment", "bank", "refNo", "amt", "date"].every((i)=>nowVerified.includes(i))?
                     <FormControl>
                     <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id="feesPayment" value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio disabled onChange={changeVerificationStatus} id="feesPayment" value="accepted"/>} label="Accepted" />
+                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={["feesPayment", "bank", "refNo", "amt", "date"]} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio disabled onChange={changeVerificationStatus} id={["feesPayment", "bank", "refNo", "amt", "date"]}  value="accepted"/>} label="Accepted" />
                     </RadioGroup>
                   </FormControl>:
                   <FormControl>
                   <RadioGroup>
-                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id="feesPayment" value="modification"/>} label="Modification Required" />
-                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id="feesPayment" value="accepted"/>} label="Accepted" />
+                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={["feesPayment", "bank", "refNo", "amt", "date"]}  value="modification"/>} label="Modification Required" />
+                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={["feesPayment", "bank", "refNo", "amt", "date"]}  value="accepted"/>} label="Accepted" />
                   </RadioGroup>
                 </FormControl>}
                     </StyledTableCell>

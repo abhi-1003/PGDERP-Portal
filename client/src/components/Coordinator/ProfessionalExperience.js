@@ -158,6 +158,9 @@ function EducationalDetails({setStep}) {
       if(['professionalExperience', 'profExp'].every((i)=>response.data.verified.includes(i))){
         t -= 2
       }
+      if(response.data.professionalExperience.exps.length === 0 && t!=0){
+        t -= 2
+      }
       setData(response.data.professionalExperience);
       setNowVerified(response.data.verified)
       setK(t)
