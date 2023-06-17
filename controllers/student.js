@@ -302,7 +302,7 @@ exports.personalDetails = async(req, res) => {
         
           return res.json({
             'otherDocs': {'selfDeclaration': user.documents.selfDeclaration,
-            'feesPayment': user.documents.feesPayment}, 'modifications': user.modifications,
+            'feesPayment': user.documents.feesPayment, 'bank': user.feesDetails.bank, 'refNo': user.feesDetails.refNo, 'amt': user.feesDetails.amt, 'date': user.feesDetails.date}, 'modifications': user.modifications,
             'verified': user.verified
           });
         
@@ -426,7 +426,7 @@ exports.personalDetails = async(req, res) => {
       const id = req.body['id'];
       try{
         const user = await Student.findById(id).exec();
-        if(user["personalInfoFilled"] && user["academicsInfoFilled"] && user["professionalExperienceFilled"] && user["documentsFilled"]){
+        if(user["personalInfoFilled"] && user["academicsInfoFilled"] && user["professionalExperienceFilled"] && user["documentsFilled"] && user["feesDetailsFilled"]){
           user["applicationFilled"] = true;
           user["personalInfoEditable"] = false;
           user["academicsInfoEditable"] = false;
