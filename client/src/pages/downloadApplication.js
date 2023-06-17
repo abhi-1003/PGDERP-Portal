@@ -835,7 +835,12 @@ function Download() {
                   </View>
                 </View>
 
-                <View style={styles.tableRow}>
+                
+              </>
+            )
+          )}
+
+<View style={styles.tableRow}>
             <View style={styles.tableColHeader}>
               <Text style={styles.tableCellHeader}>
                 Fees Payment Details
@@ -880,9 +885,6 @@ function Download() {
               </Text>
             </View>
           </View>
-              </>
-            )
-          )}
         </View>
         <Text style={styles.declareHead}>Declaration:</Text>
         <Text style={styles.declare}>

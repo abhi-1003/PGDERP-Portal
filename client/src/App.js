@@ -17,7 +17,6 @@ import { OtpScript } from "./components/common/otpScript";
 import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
 import Step4 from "./components/steps/Step4";
-import Grid from "./pages/Grid";
 import Application from "./components/Coordinator/application";
 import ResponsiveStudentHome from "./components/ResposiveDrawer";
 import PersonalInfo from "./pages/personalInfo";
@@ -30,6 +29,7 @@ import CoordinatorDownload from "./components/Coordinator/coordinatorDownload";
 import CoordinatorIndividual from "./components/Coordinator/coordinatorIndividual";
 import IndiStudent from "./components/Coordinator/indiStudent";
 import FeesDetails from "./pages/fees";
+import GridAdmin from "./pages/Grid";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -201,7 +201,7 @@ function App() {
           path="/admin/grid"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
-              <Grid />
+              <GridAdmin />
             </ProtectedRoute>
           }
         />
