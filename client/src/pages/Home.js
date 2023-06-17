@@ -179,7 +179,7 @@ export default function Home() {
                             width: "100%"
                           }}
                         >
-                          Co-ordinaator Login
+                          Co-ordinator Login
                         </Button>
                       </Grid>
                       <Grid

@@ -50,7 +50,12 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import e from "cors";
+
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 280;
 
@@ -266,7 +271,29 @@ function PersonalInfo() {
                 }
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <EditIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 4 && (
+                    <LogoutIcon />
+                  )
+                }
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -460,6 +487,7 @@ function PersonalInfo() {
         personalInfo: personalInfo,
         academicsInfo: personalData.academicsInfo,
         professionalExperience: personalData.professionalExperience,
+        feesDetails: personalData.feesDetails,
         id: personalData._id,
         message: "Personal Info Completed"
       };
@@ -881,7 +909,7 @@ function PersonalInfo() {
                   {personalData &&
                     "personalInfo" in personalData &&
                     "dob" in personalData.personalInfo &&
-                    personalData.personalInfo.dob.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.arrayModi.includes("dob") && personalData.personalInfoEditable==true)) && (
+                    personalData.personalInfo.dob.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("dob") && personalData.personalInfoEditable==true)) && (
                       <StyledTableCell>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -914,7 +942,7 @@ function PersonalInfo() {
 {personalData &&
                     "personalInfo" in personalData &&
                     "dob" in personalData.personalInfo &&
-                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==true && personalData.personalInfoEditable == false && (
+                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==true && (!personalData.modifications.includes("dob")) && (
                       <StyledTableCell>
                         {renderInputTextDisabled({
                       label: personalData.personalInfo.dob[0] +

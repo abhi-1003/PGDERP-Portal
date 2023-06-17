@@ -18,6 +18,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ArticleIcon from '@mui/icons-material/Article';
+
 import {
   Grid,
   Paper,
@@ -44,15 +48,15 @@ import {
   RenderDate,
   MultipleSelect,
   renderInputTextDisabled
-} from "../components/common/displayComponents";
+} from "../common/displayComponents";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../../config";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import e from "cors";
 import { saveAs } from "file-saver";
-import pic from "../components/images/header.jpg";
+import pic from "../images/header.jpg";
 
 import {
   PDFDownloadLink,
@@ -64,6 +68,7 @@ import {
   Image,
   pdf
 } from "@react-pdf/renderer";
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 
 const drawerWidth = 280;
 
@@ -189,30 +194,54 @@ const styles = StyleSheet.create({
 });
 
 function Download() {
-  const location = useLocation();
+  const queryParameters = new URLSearchParams(window.location.search)
   const navigate = useNavigate();
-  const { window } = location.state;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [personalData, setPersonalData] = React.useState([]);
-
+  
   React.useEffect(() => {
-    console.log(location.state.student_data._id)
-    if (location.state) {
-      if (location.state.student_data._id) {
-        let body = { id: location.state.student_data._id };
-        let url = BACKEND_URL + "/student/me";
+        let url = BACKEND_URL + "/student/getAppData";
+        console.log(queryParameters.get("id"))
         axios
-          .post(url, body, {
-            headers: {
-              "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt")
-            }
-          })
+          .get(url, {params: {'userRole': 'coordinator', 'id': queryParameters.get("id")}})
           .then(res => {
+            console.log(res.data)
             setPersonalData(res.data.user);
           });
-      }
-    }
   });
+  const options = [
+    {
+      "value": "Home",
+      "icons": <HomeIcon />
+    },
+    {
+      "value": "Logout",
+      "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download Individual Applications",
+      "icons": <DocumentScannerIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
+    }
+  ];
+  const changeStatus = (e) => {
+    handleDrawerToggle();
+    if (e.target.textContent === "Logout") {
+      localStorage.clear();
+      navigate("/");
+    } else if (e.target.textContent === "Home"){
+      navigate("/coordinator");
+    }
+    else if(e.target.textContent === "Download List"){
+      navigate("/coordinator/list")
+    }
+    else if(e.target.textContent === "Download Individual Applications"){
+      navigate("/coordinator/download")
+    }
+  };
   const MyDoc = () => (
     <Document>
       <Page style={styles.body}>
@@ -834,57 +863,9 @@ function Download() {
                     <Text style={styles.tableCell}>{""}</Text>
                   </View>
                 </View>
-
-                
               </>
             )
           )}
-
-<View style={styles.tableRow}>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>
-                Fees Payment Details
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.tableRow}>
-            <View style={styles.tableCol1}>
-              <Text style={styles.tableCell}>Bank Name</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>
-                {personalData.feesDetails.bank}
-              </Text>
-            </View>
-            <View style={styles.tableCol1}>
-              <Text style={styles.tableCell}>Reference No</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>
-                {personalData.feesDetails.refNo}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.tableRow}>
-            <View style={styles.tableCol1}>
-              <Text style={styles.tableCell}>Amount</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>
-                {personalData.feesDetails.amt}
-              </Text>
-            </View>
-            <View style={styles.tableCol1}>
-              <Text style={styles.tableCell}>Payment Date</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>
-                {personalData.feesDetails.date[0] + "-" + personalData.feesDetails.date[1] + "-" + personalData.feesDetails.date[2]}
-              </Text>
-            </View>
-          </View>
         </View>
         <Text style={styles.declareHead}>Declaration:</Text>
         <Text style={styles.declare}>
@@ -908,37 +889,23 @@ function Download() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
   const drawer = (
-    <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
-      <Toolbar />
+    <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
+      <Toolbar/>
       <List>
-        {location.state.options &&
-          Object.keys(location.state.options).map((text, index) => (
-            <ListItem key={text}>
-              <ListItemButton
-                onClick={() =>
-                  navigate(location.state.options[text], {
-                    state: {
-                      student_data: location.state.student_data,
-                      options: location.state.options
-                    }
-                  })
-                }
-              >
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+        {options && options.map((item, index) => (
+          <ListItem key={item.value}>
+            <ListItemButton onClick={changeStatus}>
+              <ListItemIcon>
+                {item.icons}
+              </ListItemIcon>
+              <ListItemText primary={item.value} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </div>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
   // console.log(personalData)
 
   return (
@@ -973,7 +940,6 @@ function Download() {
         aria-label="mailbox folders"
       >
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}

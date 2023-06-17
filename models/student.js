@@ -89,6 +89,13 @@ const personalInfo = {
     photo: {type: String},
     sign: {type:String}
   }
+
+  const feesDetails = {
+    bank : {type: String},
+    refNo : {type: String},
+    amt : {type: String},
+    date : {type: Array},
+  }
   const StudentSchema = Schema(
     {
 
@@ -105,12 +112,14 @@ const personalInfo = {
       academicsInfo: academicsInfo,
       professionalExperience: {type: Array},
       documents: documents,
+      feesDetails: feesDetails,
 
       // Filling details
       personalInfoFilled : {type: Boolean},
       academicsInfoFilled : {type: Boolean},
       professionalExperienceFilled: {type: Boolean},
       documentsFilled : {type: Boolean},
+      feesDetailsFilled : {type:Boolean},
 
       // After filling all 4 details above it will become true and student can download
       applicationFilled : {type: Boolean},
@@ -120,6 +129,7 @@ const personalInfo = {
       academicsInfoEditable : {type: Boolean},
       professionalExperienceEditable : {type: Boolean},
       documentsEditable : {type: Boolean},
+      feesDetailsEditable : {type: Boolean},
 
       // Verification
       // 3 states - Pending, Modification Required, Verified
@@ -127,19 +137,21 @@ const personalInfo = {
       academicsInfoVerified: {type: Boolean},
       professionalExperienceVerified : {type: Boolean},
       documentsVerified : {type:Boolean},
+      feesDetailsVerified : {type: Boolean},
       applicationVerified : {type: Boolean},
 
       // Remarks
       personalInfoRemarks : {type: Object},
       academicsInfoRemarks : {type: Object},
       professionalExperienceRemarks : {type: Object},
+      feesDetailsRemarks : {type: Object},
       documentsRemarks : {type: Object},
 
-      // Modifications
-      modifications: [pageModification],
+      // verified
+      verified: {type: Array},
 
       // array of all modifications
-      arrayModi : {type: Array}
+      modifications : {type: Array}
       
     },
     { timestamps: true }

@@ -34,7 +34,14 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import CoordinatorDownload from "./coordinatorDownload";
 import ArticleIcon from '@mui/icons-material/Article';
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import SearchBar from "material-ui-search-bar";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -58,42 +65,40 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   //   border: 0,
   // },
 }));
-function Coordinator() {
+function CoordinatorIndividual() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  
-  const [rows, setRows] = useState([]);
+  const options = [
+  {
+    "value": "Home",
+    "icons": <HomeIcon />
+  },
+  {
+    "value": "Logout",
+    "icons": <LogoutIcon />
+  },
+  {
+    "value": "Download List",
+    "icons": <ArticleIcon />
+  }
+];
+  const [rows, setRows] = useState(null);
+  const [origRows, setOrigRows] = useState(null);
+  const [searched, setSearched] = useState("");
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   useEffect(()=>{
-    localStorage.setItem('step', "1")
+    
     axios.get(BACKEND_URL + '/student/applicants', {params: {'email': localStorage.getItem("email")}})
     .then((response)=>{
       setRows(response.data)
+      setOrigRows(response.data)
     })
     .catch((err)=>{
       console.log(err)
     })
   }, [])
-  const options = [
-    {
-      "value": "Home",
-      "icons": <HomeIcon />
-    },
-    {
-      "value": "Logout",
-      "icons": <LogoutIcon />
-    },
-    {
-      "value": "Download Individual Applications",
-      "icons": <DocumentScannerIcon />
-    },
-    {
-      "value": "Download List",
-      "icons": <ArticleIcon />
-    }
-  ];
   const changeStatus = (e) => {
     handleDrawerToggle();
     if (e.target.textContent === "Logout") {
@@ -105,17 +110,7 @@ function Coordinator() {
     else if(e.target.textContent === "Download List"){
       navigate("/coordinator/list")
     }
-    else if(e.target.textContent === "Download Individual Applications"){
-      navigate("/coordinator/download")
-    }
   };
-  const applicationDownload = (id) => {
-    return <CoordinatorDownload id={id} />
-  }
-  const studentClick = (e) => {
-    localStorage.setItem('studentId', e)
-    navigate(`/coordinator/${e}`)
-  }
   const drawer = (
     <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
       <Toolbar/>
@@ -133,7 +128,39 @@ function Coordinator() {
       </List>
     </div>
   );
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+  const exportToCSV = (apiData, fileName) => {
+    const ws = XLSX.utils.json_to_sheet(apiData);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, fileName + fileExtension);
+};
+    
+  const download = (i) => {
+    const url = BACKEND_URL + '/student/getData';
+    axios.get(url, {params: {'course': i}})
+    .then((response)=>{
+        console.log(response.data)
+        exportToCSV(response.data, `${i}`)
+    })
+    .catch((e)=>{
+        console.log(e)
+    })
+  }
+  const requestSearch = (searchedVal) => {
+    const filteredRows = origRows.filter((row) => {
+      return row.name.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setRows(filteredRows);
+  };
 
+  const cancelSearch = () => {
+    setSearched("");
+    requestSearch(searched);
+  };
   // const container = window !== undefined ? () => window().document.body : undefined;
   return (
     <Box bgcolor = "#E5EDF1" sx={{ display: 'flex', minHeight:"100vh" }}>
@@ -198,37 +225,44 @@ function Coordinator() {
       >
         <Toolbar />
         <Box display="flex" justifyContent="center" alignItems="center">
-        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "3%", margin: "auto"}}>Student Information </Typography>
+        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "3%", margin: "auto"}}>Download Student Applications</Typography>
         </Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <TableContainer sx ={{paddingLeft: "2%", paddingTop: "3%"}}>
-        <Table  aria-label="customized table" sx ={{paddingLeft: "2%"}}>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell wrap>Registration ID</StyledTableCell>
-            <StyledTableCell align="center" wrap>Name</StyledTableCell>
-            <StyledTableCell align="center" wrap>Status</StyledTableCell>
-            <StyledTableCell align="center" wrap>Download</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow style={{cursor: "pointer"}} key={row.registrationID} onClick={()=>studentClick(row.registrationID)}>
-              <StyledTableCell component="th" scope="row">
-                {row.registrationID}
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.name}</StyledTableCell>
-              <StyledTableCell align="center">{row.applicationVerified ? "Verified": "Pending"}</StyledTableCell>
-              <StyledTableCell align="center"><DownloadIcon onClick={()=>applicationDownload(row.registrationID)}/></StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <SearchBar
+          value={searched}
+          onChange={(searchVal) => requestSearch(searchVal)}
+          onCancelSearch={() => cancelSearch()}
+        />
+        {rows!==null && (
+            <TableContainer sx ={{paddingLeft: "2%", paddingTop: "3%"}}>
+            <Table  aria-label="customized table" sx ={{paddingLeft: "2%"}}>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell wrap>Registration ID</StyledTableCell>
+                <StyledTableCell align="center" wrap>Name</StyledTableCell>
+                <StyledTableCell align="center" wrap>Status</StyledTableCell>
+                <StyledTableCell align="center" wrap>Download</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <StyledTableRow key={row.registrationID}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.registrationID}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.name}</StyledTableCell>
+                  <StyledTableCell align="center">{row.applicationVerified ? "Verified": "Pending"}</StyledTableCell>
+                  <StyledTableCell align="center"><DownloadIcon onClick={()=>navigate(`/coordinator/get?id=${row.registrationID}`)}/></StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        )}
       </Grid>
       </Box>
-      </Box>
+    </Box>
   )
 }
 
-export default Coordinator
+export default CoordinatorIndividual

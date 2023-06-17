@@ -17,7 +17,6 @@ import { OtpScript } from "./components/common/otpScript";
 import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
 import Step4 from "./components/steps/Step4";
-import Grid from "./pages/Grid";
 import Application from "./components/Coordinator/application";
 import ResponsiveStudentHome from "./components/ResposiveDrawer";
 import PersonalInfo from "./pages/personalInfo";
@@ -26,6 +25,11 @@ import ProfessionalExperience from "./pages/ProfessionalExperience";
 import Documents from "./pages/Documents";
 import Download from "./pages/downloadApplication";
 import Prerequisites from "./pages/prerequisites";
+import CoordinatorDownload from "./components/Coordinator/coordinatorDownload";
+import CoordinatorIndividual from "./components/Coordinator/coordinatorIndividual";
+import IndiStudent from "./components/Coordinator/indiStudent";
+import FeesDetails from "./pages/fees";
+import GridAdmin from "./pages/Grid";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -71,6 +75,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <AcademicsInfo />
+            </ProtectedRoute>
+          }
+        />
+
+<Route
+          path="/student/fees"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <FeesDetails />
             </ProtectedRoute>
           }
         />
@@ -143,6 +156,30 @@ function App() {
           exact
         ></Route>
         <Route
+          path="/coordinator/list"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <CoordinatorDownload />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coordinator/download"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <CoordinatorIndividual />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coordinator/get"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <IndiStudent />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
           path="/admin/registerCoord"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
@@ -164,7 +201,7 @@ function App() {
           path="/admin/grid"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
-              <Grid />
+              <GridAdmin />
             </ProtectedRoute>
           }
         />
