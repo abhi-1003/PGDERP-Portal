@@ -29,6 +29,7 @@ import Prerequisites from "./pages/prerequisites";
 import CoordinatorDownload from "./components/Coordinator/coordinatorDownload";
 import CoordinatorIndividual from "./components/Coordinator/coordinatorIndividual";
 import IndiStudent from "./components/Coordinator/indiStudent";
+import FeesDetails from "./pages/fees";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -74,6 +75,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
               <AcademicsInfo />
+            </ProtectedRoute>
+          }
+        />
+
+<Route
+          path="/student/fees"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <FeesDetails />
             </ProtectedRoute>
           }
         />

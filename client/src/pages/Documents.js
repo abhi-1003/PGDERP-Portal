@@ -61,6 +61,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 const drawerWidth = 280;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -430,7 +436,29 @@ function Documents() {
                 }
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <EditIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 4 && (
+                    <LogoutIcon />
+                  )
+                }
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>

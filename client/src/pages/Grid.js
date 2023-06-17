@@ -57,7 +57,7 @@ const Grid = () => {
   columnDefs.push({ field: "PG Final Year Marks" });
   columnDefs.push({ field: "PG Aggregation Marks" });
   columnDefs.push({ field: "PG Dead Backlog" });
-  columnDefs.push({ field: "PG Alive Backlog" });
+  columnDefs.push({ field: "PG Alive Backlog"});
 
 
     const searchDivStyle = {backgroundColor:"#dedede", padding:10}

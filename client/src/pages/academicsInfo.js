@@ -55,6 +55,11 @@ import e from "cors";
 import dataa from "../components/steps/data.json";
 import ReadOnlyRow from "../components/ReadOnlyRow";
 import { nanoid } from "nanoid";
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 280;
 
@@ -533,7 +538,29 @@ function AcademicsInfo() {
                 }
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <EditIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 4 && (
+                    <LogoutIcon />
+                  )
+                }
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -955,6 +982,7 @@ function AcademicsInfo() {
           personalInfo: personalData.personalInfo,
           academicsInfo: academicsInfo,
           professionalExperience: personalData.professionalExperience,
+          feesDetails: personalData.feesDetails,
           id: personalData._id,
           message: "Academics Info Completed"
         };

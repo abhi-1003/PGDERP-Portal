@@ -34,6 +34,7 @@ exports.registerStudent = (req, res) => {
   const academicsInfoFilled = false;
   const professionalExperienceFilled = false;
   const documentsFilled = false;
+  const feesDetailsFilled = false;
 
   const applicationFilled = false;
 
@@ -41,12 +42,14 @@ exports.registerStudent = (req, res) => {
   const academicsInfoEditable = true;
   const professionalExperienceEditable = true;
   const documentsEditable = true;
+  const feesDetailsEditable = true;
 
   const personalInfoVerified = false;
   const academicsInfoVerified = false;
   const professionalExperienceVerified = false;
   const documentsVerified = false;
   const applicationVerified = false;
+  const feesDetailsVerified = false;
 
   if (!(name, email, password, mobile, course && registrationID)) {
     return res.status(400).json({ error: "All input is required" });
@@ -61,10 +64,10 @@ exports.registerStudent = (req, res) => {
       }
       
       const newStudent = new Student({name, email, password, mobile, course, registrationID, 
-                                      personalInfoFilled, academicsInfoFilled, professionalExperienceFilled, documentsFilled,
+                                      personalInfoFilled, academicsInfoFilled, professionalExperienceFilled, documentsFilled,feesDetailsFilled,
                                       applicationFilled,
-                                      personalInfoEditable, academicsInfoEditable, professionalExperienceEditable, documentsEditable,
-                                      personalInfoVerified, academicsInfoVerified, professionalExperienceVerified, documentsVerified, applicationVerified});
+                                      personalInfoEditable, academicsInfoEditable, professionalExperienceEditable, documentsEditable,feesDetailsEditable,
+                                      personalInfoVerified, academicsInfoVerified, professionalExperienceVerified, documentsVerified, feesDetailsVerified,applicationVerified});
       newStudent
         .save()
         .then((user) => {

@@ -834,6 +834,52 @@ function Download() {
                     <Text style={styles.tableCell}>{""}</Text>
                   </View>
                 </View>
+
+                <View style={styles.tableRow}>
+            <View style={styles.tableColHeader}>
+              <Text style={styles.tableCellHeader}>
+                Fees Payment Details
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Bank Name</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.bank}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Reference No</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.refNo}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Amount</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.amt}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Payment Date</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.date[0] + "-" + personalData.feesDetails.date[1] + "-" + personalData.feesDetails.date[2]}
+              </Text>
+            </View>
+          </View>
               </>
             )
           )}

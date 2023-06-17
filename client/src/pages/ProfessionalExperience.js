@@ -57,6 +57,12 @@ import ReadOnlyRowExp from "../components/ReadOnlyRowExp";
 import { CloudUpload } from "@material-ui/icons";
 import { Fragment  } from "react";
 
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 const drawerWidth = 280;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -244,7 +250,29 @@ const drawer = (
               }
             >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <EditIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 4 && (
+                    <LogoutIcon />
+                  )
+                }
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -266,6 +294,7 @@ const container =
         personalInfo: personalData.personalInfo,
         academicsInfo: personalData.academicsInfo,
         professionalExperience: data.professionalExperience,
+        feesDetails: personalData.feesDetails,
         id : personalData._id,
         message: "Professional Experience Completed"
     }
@@ -278,7 +307,7 @@ const container =
         })
         .then((res) => {
             alert(res.data.message)
-            navigate("/student/documents", {
+            navigate("/student/fees", {
               state: {
                 student_data: location.state.student_data,
                 options: location.state.options,

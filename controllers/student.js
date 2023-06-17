@@ -358,6 +358,7 @@ exports.personalDetails = async(req, res) => {
         "personalInfo",
         "academicsInfo",
         "professionalExperience",
+        "feesDetails"
       ];
       const id = req.body['id'];
       try{
@@ -372,6 +373,9 @@ exports.personalDetails = async(req, res) => {
           }
           if(req.body["message"] === "Professional Experience Completed"){
             user["professionalExperienceFilled"] = true
+          }
+          if(req.body["message"] === "Fees Details Completed"){
+            user["feesDetailsFilled"] = true
           }
         }
         
@@ -388,6 +392,9 @@ exports.personalDetails = async(req, res) => {
         if(req.body["message"] === "Professional Experience Completed"){
           return res.send({message: "Professional Experience Details Saved Successfully"})
         }
+        if(req.body["message"] === "Fees Details Completed"){
+            return res.send({message: "Fees Details Saved Successfully"})
+          }
       } catch (error) {
         res.status(400).json({ error: "request body contains invalid data" });
       }
@@ -424,6 +431,7 @@ exports.personalDetails = async(req, res) => {
           user["personalInfoEditable"] = false;
           user["academicsInfoEditable"] = false;
           user["professionalExperienceEditable"] = false;
+          user["feesDetailsEditable"] = false;
           user["modifications"] = [];
           user["documentsEditable"] = false;
           await user.save().catch((err) => {
