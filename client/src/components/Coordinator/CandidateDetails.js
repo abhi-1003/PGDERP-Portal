@@ -43,6 +43,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { TextField } from "@mui/material";
 import DocViewer from "../../pages/DocViewer";
 import ArticleIcon from '@mui/icons-material/Article';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -136,6 +137,10 @@ function CandidateDetails({setStep}) {
       console.log(err)
     })
   }, [])
+  
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
   const options = [
     {
       "value": "Home",
@@ -146,13 +151,14 @@ function CandidateDetails({setStep}) {
       "icons": <LogoutIcon />
     },
     {
+      "value": "Download Individual Applications",
+      "icons": <DocumentScannerIcon />
+    },
+    {
       "value": "Download List",
       "icons": <ArticleIcon />
     }
   ];
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
   const changeStatus = (e) => {
     handleDrawerToggle();
     if (e.target.textContent === "Logout") {
@@ -163,6 +169,9 @@ function CandidateDetails({setStep}) {
     }
     else if(e.target.textContent === "Download List"){
       navigate("/coordinator/list")
+    }
+    else if(e.target.textContent === "Download Individual Applications"){
+      navigate("/coordinator/download")
     }
   };
   const drawer = (

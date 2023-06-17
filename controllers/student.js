@@ -444,10 +444,25 @@ exports.personalDetails = async(req, res) => {
 
   // Route for getting personal data of student
   exports.getStudentMe = async(req, res) => {
-    if(req.userRole == "student"){
+    if(req.userRole == "student" || req.userRole == "coordinator"){
       const id = req.body["id"]
       try{
         const user = await Student.findById(id).exec();
+        return res.send({user})
+      }
+      catch (error) {
+        res.status(400).json({ error: "request body contains invalid data" });
+      }
+    }
+  }
+
+  exports.getStudent = async(req, res) => {
+    if(req.query.userRole == "student" || req.query.userRole == "coordinator"){
+      const id = req.query.id;
+      console.log(id)
+      try{
+        const user = await Student.findOne({'registrationID': id}).exec();
+        console.log(user)
         return res.send({user})
       }
       catch (error) {

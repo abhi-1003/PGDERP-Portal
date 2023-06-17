@@ -39,6 +39,8 @@ import * as XLSX from "xlsx";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -65,20 +67,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Coordinator() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  const options = [
-  {
-    "value": "Home",
-    "icons": <HomeIcon />
-  },
-  {
-    "value": "Logout",
-    "icons": <LogoutIcon />
-  },
-  {
-    "value": "Download List",
-    "icons": <ArticleIcon />
-  }
-];
+  
   const [rows, setRows] = useState(null);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -94,6 +83,24 @@ function Coordinator() {
       console.log(err)
     })
   }, [])
+  const options = [
+    {
+      "value": "Home",
+      "icons": <HomeIcon />
+    },
+    {
+      "value": "Logout",
+      "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download Individual Applications",
+      "icons": <DocumentScannerIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
+    }
+  ];
   const changeStatus = (e) => {
     handleDrawerToggle();
     if (e.target.textContent === "Logout") {
@@ -104,6 +111,9 @@ function Coordinator() {
     }
     else if(e.target.textContent === "Download List"){
       navigate("/coordinator/list")
+    }
+    else if(e.target.textContent === "Download Individual Applications"){
+      navigate("/coordinator/download")
     }
   };
   const drawer = (
