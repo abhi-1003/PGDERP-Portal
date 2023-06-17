@@ -623,6 +623,10 @@ exports.personalDetails = async(req, res) => {
                 user.documentsEditable = true;
                 user.documentsFilled = false;
                 user.documentsRemarks = remarks;
+                user.feesDetailsVerified = false;
+                user.feesDetailsEditable = true;
+                user.feesDetailsFilled = false;
+                user.feesDetailsRemarks = remarks;
               }
             }
             else{
@@ -637,6 +641,7 @@ exports.personalDetails = async(req, res) => {
               }
               else if(type === 'documents'){
                 user.documentsVerified = true;
+                user.feesDetailsVerified = true;
               }
             }
             await user.save().catch((err)=>{
@@ -674,6 +679,10 @@ exports.personalDetails = async(req, res) => {
                 user.documentsEditable = true;
                 user.documentsFilled = false;
                 user.documentsRemarks = remarks;
+                user.feesDetailsVerified = false;
+                user.feesDetailsEditable = true;
+                user.feesDetailsFilled = false;
+                user.feesDetailsRemarks = remarks;
               }
             }
             else{
@@ -688,6 +697,7 @@ exports.personalDetails = async(req, res) => {
               }
               else if(type === 'documents'){
                 user.documentsVerified = true;
+                user.feesDetailsVerified = true;
               }
             }
             user.verified = verified;
@@ -736,6 +746,10 @@ exports.personalDetails = async(req, res) => {
                 user.documentsEditable = true;
                 user.documentsFilled = false;
                 user.documentsRemarks = remarks;
+                user.feesDetailsVerified = false;
+                user.feesDetailsEditable = true;
+                user.feesDetailsFilled = false;
+                user.feesDetailsRemarks = remarks;
               }
             }
             else{
@@ -750,6 +764,7 @@ exports.personalDetails = async(req, res) => {
               }
               else if(type === 'documents'){
                 user.documentsVerified = true;
+                user.feesDetailsVerified = true;
               }
             }
             await user.save().catch((err)=>{
@@ -788,6 +803,10 @@ exports.personalDetails = async(req, res) => {
                 user.documentsEditable = true;
                 user.documentsFilled = false;
                 user.documentsRemarks = remarks;
+                user.feesDetailsVerified = false;
+                user.feesDetailsEditable = true;
+                user.feesDetailsFilled = false;
+                user.feesDetailsRemarks = remarks;
               }
             }
             else{
@@ -802,6 +821,7 @@ exports.personalDetails = async(req, res) => {
               }
               else if(type === 'documents'){
                 user.documentsVerified = true;
+                user.feesDetailsVerified = true;
               }
             }
             await user.save().catch((err)=>{
