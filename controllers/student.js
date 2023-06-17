@@ -426,7 +426,7 @@ exports.personalDetails = async(req, res) => {
       const id = req.body['id'];
       try{
         const user = await Student.findById(id).exec();
-        if(user["personalInfoFilled"] && user["academicsInfoFilled"] && user["professionalExperienceFilled"] && user["documentsFilled"]){
+        if(user["personalInfoFilled"] && user["academicsInfoFilled"] && user["professionalExperienceFilled"] && user["documentsFilled"] && user["feesDetailsFilled"]){
           user["applicationFilled"] = true;
           user["personalInfoEditable"] = false;
           user["academicsInfoEditable"] = false;
