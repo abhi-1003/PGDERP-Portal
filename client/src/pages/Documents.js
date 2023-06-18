@@ -54,18 +54,22 @@ import e from "cors";
 import { CloudUpload } from "@material-ui/icons";
 import DocViewer from "./DocViewer";
 import CircularProgress from "@mui/material/CircularProgress";
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
-import HomeIcon from '@mui/icons-material/Home';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import EditIcon from '@mui/icons-material/Edit';
-import DownloadIcon from '@mui/icons-material/Download';
-import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from "@mui/icons-material/Home";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import EditIcon from "@mui/icons-material/Edit";
+import DownloadIcon from "@mui/icons-material/Download";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+import { saveAs } from "file-saver";
 
 const drawerWidth = 280;
 
@@ -118,7 +122,7 @@ function Documents() {
     otCourses: "",
     selfDeclaration: "",
     feesPayment: "",
-    photo: ""
+    photo: "",
   });
 
   const [docs, setDocs] = React.useState([
@@ -210,141 +214,169 @@ function Documents() {
     const tempDocs = [...docs];
     const ele = tempDocs[index];
     const data = new FormData();
-    data.append("file", event.target.files[0], event.target.files[0].name);
-    ele.file = data;
-    setDocs(tempDocs);
+    let v = true;
+    if (index == 8 || index == 9) {
+      if (event.target.files[0].type != "image/png") {
+        v = false;
+        alert("Please Upload PNG file");
+      }
+    } else {
+      if (event.target.files[0].type != "application/pdf") {
+        v = false;
+        alert("Please Upload PDF file");
+      }
+    }
+
+    if (v) {
+      data.append("file", event.target.files[0], event.target.files[0].name);
+      ele.file = data;
+      setDocs(tempDocs);
+    }
   }
 
   function fileSubmit(index) {
     const URL = BACKEND_URL + "/files/upload";
-    if (docs[index].file !== null) {
-      if (index == 0) {
-        setLoading1(true);
-      }
-      if (index == 1) {
-        setLoading2(true);
-      }
-      if (index == 2) {
-        setLoading3(true);
-      }
-      if (index == 3) {
-        setLoading4(true);
-      }
-      if (index == 4) {
-        setLoading5(true);
-      }
-      if (index == 5) {
-        setLoading6(true);
-      }
-      if (index == 6) {
-        setLoading7(true);
-      }
-      if (index == 7) {
-        setLoading8(true);
-      }
-      if(index==8){
-        setLoading9(true)
-      }
-      if(index == 9){
-        setLoading10(true)
-      }
+    let v = true;
+    if (v) {
+      //console.log(docs[index])
+      if (docs[index].file !== null) {
+        if (index == 0) {
+          setLoading1(true);
+        }
+        if (index == 1) {
+          setLoading2(true);
+        }
+        if (index == 2) {
+          setLoading3(true);
+        }
+        if (index == 3) {
+          setLoading4(true);
+        }
+        if (index == 4) {
+          setLoading5(true);
+        }
+        if (index == 5) {
+          setLoading6(true);
+        }
+        if (index == 6) {
+          setLoading7(true);
+        }
+        if (index == 7) {
+          setLoading8(true);
+        }
+        if (index == 8) {
+          setLoading9(true);
+        }
+        if (index == 9) {
+          setLoading10(true);
+        }
 
-      axios
-        .post(URL, docs[index]["file"])
-        .then(function(response) {
-          var tempDoc = docSchema;
-          setDocs({
-            ...docs,
-            [docs[index].filename]: response.data.filename,
-            [docs[index].originalname]: response.data.originalname,
-          });
-          tempDoc[docs[index].dbName] = response.data.filename;
-          axios
-            .post(BACKEND_URL + "/files/setUser", {
-              email: location.state.student_data.email,
-              docName: docs[index]["name"],
-              doc: tempDoc,
-            })
-            .then(function(res) {
-              setDocSchema({
-                ...docSchema,
-                [docs[index].dbName]: response.data.filename,
-              });
-              const tempDocs = [...docs];
-              const ele = tempDocs[index];
-              ele.status = "Submitted";
-              setDocs(tempDocs);
-              if (index == 0) {
-                setLoading1(false);
-              }
-              if (index == 1) {
-                setLoading2(false);
-              }
-              if (index == 2) {
-                setLoading3(false);
-              }
-              if (index == 3) {
-                setLoading4(false);
-              }
-              if (index == 4) {
-                setLoading5(false);
-              }
-              if (index == 5) {
-                setLoading6(false);
-              }
-              if (index == 6) {
-                setLoading7(false);
-              }
-              if (index == 7) {
-                setLoading8(false);
-              }
-              if(index==8){
-                setLoading9(false)
-              }
-              if(index == 9){
-                setLoading10(false)
-              }
-            })
-            .catch(function(err) {
-              console.log(err);
+        axios
+          .post(URL, docs[index]["file"])
+          .then(function(response) {
+            var tempDoc = docSchema;
+            setDocs({
+              ...docs,
+              [docs[index].filename]: response.data.filename,
+              [docs[index].originalname]: response.data.originalname,
             });
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    } else {
-      alert("Please choose a file!");
+            tempDoc[docs[index].dbName] = response.data.filename;
+            axios
+              .post(BACKEND_URL + "/files/setUser", {
+                email: location.state.student_data.email,
+                docName: docs[index]["name"],
+                doc: tempDoc,
+              })
+              .then(function(res) {
+                setDocSchema({
+                  ...docSchema,
+                  [docs[index].dbName]: response.data.filename,
+                });
+                const tempDocs = [...docs];
+                const ele = tempDocs[index];
+                ele.status = "Submitted";
+                setDocs(tempDocs);
+                if (index == 0) {
+                  setLoading1(false);
+                }
+                if (index == 1) {
+                  setLoading2(false);
+                }
+                if (index == 2) {
+                  setLoading3(false);
+                }
+                if (index == 3) {
+                  setLoading4(false);
+                }
+                if (index == 4) {
+                  setLoading5(false);
+                }
+                if (index == 5) {
+                  setLoading6(false);
+                }
+                if (index == 6) {
+                  setLoading7(false);
+                }
+                if (index == 7) {
+                  setLoading8(false);
+                }
+                if (index == 8) {
+                  setLoading9(false);
+                }
+                if (index == 9) {
+                  setLoading10(false);
+                }
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        alert("Please choose a file!");
+      }
     }
   }
 
   const handleSave = () => {
     let validate = true;
     Object.keys(docs).map((row) => {
-      if(row==4 && pf){
+      if (row == 4 && pf) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
       }
 
-      if(row==5 && ot){
+      if (row == 5 && ot) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
       }
 
-      if(row!=4 && row!=5){
+      if (row != 4 && row != 5) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
       }
-      
     });
 
-    if(validate==false){
-      alert("All mandatory documents are to be uploaded!")
+    if (validate == false) {
+      alert("All mandatory documents are to be uploaded!");
     }
 
-    if (validate && !loading1 && !loading2 && !loading3 && !loading4 && !loading5 && !loading6 && !loading7 && !loading8) {
+    if (
+      validate &&
+      !loading1 &&
+      !loading2 &&
+      !loading3 &&
+      !loading4 &&
+      !loading5 &&
+      !loading6 &&
+      !loading7 &&
+      !loading8
+    ) {
       const url = BACKEND_URL + "/student/docFilled";
       const body = {
         id: location.state.student_data._id,
@@ -364,7 +396,6 @@ function Documents() {
             },
           });
         });
-      
     }
   };
 
@@ -375,7 +406,7 @@ function Documents() {
       .then(function(response) {
         if (response.data.doc != undefined && response.data.doc != null) {
           var tempDocs = [...docs];
-        //   console.log(response.data.doc);
+          //   console.log(response.data.doc);
           for (const [k, v] of Object.entries(response.data.doc)) {
             if (v !== "") {
               for (var i = 0; i < tempDocs.length; i++) {
@@ -394,29 +425,54 @@ function Documents() {
       .catch(function(err) {
         console.log(err);
       });
-  }, [loading1, loading2, loading3, loading4, loading5, loading6, loading7, loading8]);
+  }, [
+    loading1,
+    loading2,
+    loading3,
+    loading4,
+    loading5,
+    loading6,
+    loading7,
+    loading8,
+    loading9,
+    loading10,
+  ]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleChangeot = (event) => {
-    if(event.target.value == "yes"){
-      setOt(true)
+    if (event.target.value == "yes") {
+      setOt(true);
+    } else {
+      setOt(false);
     }
-    else{
-      setOt(false)
-    }
-  }
+  };
 
   const handleChangepf = (event) => {
-    if(event.target.value == "yes"){
-      setPf(true)
+    if (event.target.value == "yes") {
+      setPf(true);
+    } else {
+      setPf(false);
     }
-    else{
-      setPf(false)
-    }
-  }
+  };
+
+  const downloadImage = (filename, docName) => {
+    let contentType = "image/png";
+    axios
+      .get(BACKEND_URL + "/files/get/" + filename, {
+        responseType: "blob",
+      })
+      .then((response) => {
+        //console.log(response)
+        const file = new Blob([response.data], { type: contentType });
+        const fileURL = URL.createObjectURL(file);
+        saveAs(fileURL, docName + ".png");
+      });
+  };
+
+  //console.log(docs)
 
   const drawer = (
     <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
@@ -436,29 +492,11 @@ function Documents() {
                 }
               >
                 <ListItemIcon>
-                {index === 0 && (
-                  <HomeIcon />
-                )}
-                {
-                  index === 1 && (
-                    <AppRegistrationIcon />
-                  )
-                }
-                {
-                  index === 2 && (
-                    <EditIcon />
-                  )
-                }
-                {
-                  index === 3 && (
-                    <DownloadIcon />
-                  )
-                }
-                {
-                  index === 4 && (
-                    <LogoutIcon />
-                  )
-                }
+                  {index === 0 && <HomeIcon />}
+                  {index === 1 && <AppRegistrationIcon />}
+                  {index === 2 && <EditIcon />}
+                  {index === 3 && <DownloadIcon />}
+                  {index === 4 && <LogoutIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -554,42 +592,68 @@ function Documents() {
               {renderText({ label: "Important Documents Uploading" })}
             </Box>
           </Grid>
+          <Grid container spacing={2} style={{ justifyContent: "center" }}>
+          <Box mt={1} mb={2}>
+              {renderText({ label: "Document No. 1-8 : PDF & Document 9-10 : PNG" })}
+            </Box>
+          </Grid>
         </Paper>
 
         <TableContainer component={Paper}>
-        <Table>
+          <Table>
             <TableHead />
             <TableBody>
               <TableRow>
-                <TableCell >
-                <FormControl >
-      <FormLabel id="demo-row-radio-buttons-group-label">Do you have Other Courses Documents?</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        defaultValue={"yes"}
-      >
-        <FormControlLabel value="yes" control={<Radio onChange={handleChangeot}/>} label="Yes" align/>
-        <FormControlLabel value="no" control={<Radio onChange={handleChangeot}/>} label="No" />
-      </RadioGroup>
-    </FormControl>
+                <TableCell>
+                  <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Do you have Other Courses Documents?
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      defaultValue={"yes"}
+                    >
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio onChange={handleChangeot} />}
+                        label="Yes"
+                        align
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio onChange={handleChangeot} />}
+                        label="No"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell >
-                <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Do you have Professional Experience Documents?</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        defaultValue={"yes"}
-      >
-        <FormControlLabel value="yes" control={<Radio onChange={handleChangepf}/>} label="Yes" />
-        <FormControlLabel value="no" control={<Radio onChange={handleChangepf}/>} label="No" />
-      </RadioGroup>
-    </FormControl>
+                <TableCell>
+                  <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
+                      Do you have Professional Experience Documents?
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      defaultValue={"yes"}
+                    >
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio onChange={handleChangepf} />}
+                        label="Yes"
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio onChange={handleChangepf} />}
+                        label="No"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -609,165 +673,177 @@ function Documents() {
               {Object.keys(docs).map((row, i) => {
                 return (
                   <>
-                <TableRow>
-                    <TableCell>{i + 1}</TableCell>
-                    <TableCell>{docs[row]["name"]}
-                    {i!=4 && i!=5 && (
-                      <Typography color="red">Mandatory</Typography>
-                    )}
-
-                    {i==4 && pf && (
-                      <Typography color="red">Mandatory</Typography>
-                    )}
-
-                    {i==5 && ot && (
-                      <Typography color="red">Mandatory</Typography>
-                    )}
-                    
-                    </TableCell>
-                    {location.state.student_data.applicationFilled && (
+                    <TableRow>
+                      <TableCell>{i + 1}</TableCell>
                       <TableCell>
-                        <Typography>Documents Submitted</Typography>
+                        {docs[row]["name"]}
+                        {i != 4 && i != 5 && (
+                          <Typography color="red">Mandatory</Typography>
+                        )}
+
+                        {i == 4 && pf && (
+                          <Typography color="red">Mandatory</Typography>
+                        )}
+
+                        {i == 5 && ot && (
+                          <Typography color="red">Mandatory</Typography>
+                        )}
                       </TableCell>
-                    )}
-                    {
-                      location.state.student_data.applicationFilled ==false && (
+                      {location.state.student_data.applicationFilled && (
                         <TableCell>
-                      <input
-                        type="file"
-                        onChange={(event) => fileUpload(event, i)}
-                        style={{color: "transparent"}}
-                      />
-                      
-                    </TableCell>
-                      )
-                    }
-                    
-                    <TableCell>
-                    <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-}}>
-    <CloudUpload
-                        style={{ cursor: "cursor" }}
-                        onClick={() => fileSubmit(i)}
-                      />
-    <span>Upload</span>
-</div>  
-                    </TableCell>
-                    {docs[row]["filename"] && i!=8 && i!=9 && (
-                      <TableCell>
-                        <DocViewer
-                          filename={docs[row]["filename"]}
-                          contentType="application/pdf"
-                        />
-                      </TableCell>
-                    )}
-                    {docs[row]["filename"] && i==8 && i==9 && (
-                      <TableCell>
-                        <Typography>PNG FILE</Typography>
-                      </TableCell>
-                    )}
-                    {!docs[row]["filename"] && <TableCell>No file</TableCell>}
-                    {i == 0 && loading1 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 0 && !loading1 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                          <Typography>Documents Submitted</Typography>
+                        </TableCell>
+                      )}
+                      {location.state.student_data.applicationFilled ==
+                        false && (
+                        <TableCell>
+                          <input
+                            type="file"
+                            onChange={(event) => fileUpload(event, i)}
+                            style={{ color: "transparent" }}
+                          />
+                        </TableCell>
+                      )}
 
-                    {i == 1 && loading2 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 1 && !loading2 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                      {/* {docs[row].file && ( */}
+                        <TableCell>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <CloudUpload
+                              style={{ cursor: "cursor" }}
+                              onClick={() => fileSubmit(i)}
+                            />
+                            <span>Upload</span>
+                          </div>
+                        </TableCell>
+                      {/* )} */}
 
-                    {i == 2 && loading3 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 2 && !loading3 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                      {docs[row]["filename"] && i != 8 && i != 9 && (
+                        <TableCell>
+                          <DocViewer
+                            filename={docs[row]["filename"]}
+                            contentType="application/pdf"
+                          />
+                        </TableCell>
+                      )}
+                      {docs[row]["filename"] && (i == 8 || i == 9) && (
+                        <TableCell>
+                          <Button
+                            onClick={() => {
+                              downloadImage(
+                                docs[row]["filename"],
+                                docs[row]["dbName"]
+                              );
+                            }}
+                          >
+                            Click to View
+                          </Button>
+                        </TableCell>
+                      )}
+                      {!docs[row]["filename"] && <TableCell>No file</TableCell>}
+                      {i == 0 && loading1 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 0 && !loading1 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
 
-                    {i == 3 && loading4 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 3 && !loading4 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                      {i == 1 && loading2 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 1 && !loading2 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
 
-                    {i == 4 && loading5 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 4 && !loading5 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                      {i == 2 && loading3 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 2 && !loading3 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
 
-                    {i == 5 && loading6 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 5 && !loading6 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                      {i == 3 && loading4 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 3 && !loading4 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
 
-                    {i == 6 && loading7 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 6 && !loading7 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
+                      {i == 4 && loading5 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 4 && !loading5 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
 
-                    {i == 7 && loading8 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 7 && !loading8 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
-                    {i == 8 && loading9 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 8 && !loading9 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
-                    {i == 9 && loading10 && (
-                      <TableCell>
-                        <CircularProgress />
-                        {docs[row]["status"]}
-                      </TableCell>
-                    )}
-                    {i == 9 && !loading10 && (
-                      <TableCell>{docs[row]["status"]}</TableCell>
-                    )}
-                  </TableRow>
+                      {i == 5 && loading6 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 5 && !loading6 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
+
+                      {i == 6 && loading7 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 6 && !loading7 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
+
+                      {i == 7 && loading8 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 7 && !loading8 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
+                      {i == 8 && loading9 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 8 && !loading9 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
+                      {i == 9 && loading10 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 9 && !loading10 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
+                    </TableRow>
                   </>
                 );
               })}
@@ -783,7 +859,33 @@ function Documents() {
         >
           SAVE
         </Button>
+        <Box sx={{height:"70px"}} />
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon />
+          </IconButton>
+          <Typography color="inherit">
+          http://www.coep.org.in/
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <CallIcon />
+          </IconButton>
+          <Typography color="inherit">
+          9876543210
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
