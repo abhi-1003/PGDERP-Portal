@@ -19,6 +19,15 @@ import { useLocation } from "react-router-dom";
 import { Grid, Paper } from "@material-ui/core";
 import { renderText } from "../components/common/displayComponents";
 import Button from "@mui/material/Button";
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+import HomeIcon from "@mui/icons-material/Home";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import EditIcon from "@mui/icons-material/Edit";
+import DownloadIcon from "@mui/icons-material/Download";
+import LogoutIcon from "@mui/icons-material/Logout";
+
 const drawerWidth = 280;
 function Prerequisites() {
   const location = useLocation();
@@ -54,7 +63,11 @@ function Prerequisites() {
                 }
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 && <HomeIcon />}
+                  {index === 1 && <AppRegistrationIcon />}
+                  {index === 2 && <EditIcon />}
+                  {index === 3 && <DownloadIcon />}
+                  {index === 4 && <LogoutIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -254,7 +267,33 @@ function Prerequisites() {
             </Grid>
           </Paper>
         </Paper>
+        <Box sx={{height:"70px"}} />
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon />
+          </IconButton>
+          <Typography color="inherit">
+          http://www.coep.org.in/
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <CallIcon />
+          </IconButton>
+          <Typography color="inherit">
+          9876543210
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }

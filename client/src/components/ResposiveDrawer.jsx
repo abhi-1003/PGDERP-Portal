@@ -37,6 +37,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DownloadIcon from '@mui/icons-material/Download';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 const drawerWidth = 280;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -73,6 +76,7 @@ function ResponsiveStudentHome() {
   const location = useLocation();
   const navigate = useNavigate();
   const [personal_data, setPersonalData] = React.useState(location.state.student_data)
+  const [reload, setReload] = React.useState(false);
   const { window } = location.state;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -105,9 +109,10 @@ function ResponsiveStudentHome() {
           });
       }
     }
-  }, []);
+  }, [reload]);
 
   const handleSubmit = () => {
+    setReload(true)
     const url = BACKEND_URL + "/student/fullComplete";
     const body = {
       id : personal_data._id
@@ -122,7 +127,7 @@ function ResponsiveStudentHome() {
       alert(res.data.message)
       navigate("/student/home", {
         state: {
-          student_data : location.state.student_data,
+          student_data : personal_data,
           options: location.state.options
         }
       })
@@ -137,7 +142,7 @@ function ResponsiveStudentHome() {
           <ListItem key={text}>
             <ListItemButton onClick={() => navigate(location.state.options[text], {
               state: {
-                student_data : location.state.student_data,
+                student_data : personal_data,
                 options: location.state.options
               }
             })}>
@@ -242,25 +247,25 @@ function ResponsiveStudentHome() {
       >
         <Toolbar />
         <Box display="flex" justifyContent="center" alignItems="center">
-        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "3%", margin: "auto"}}>Student Information </Typography>
+        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "1%", margin: "auto"}}>Student Information </Typography>
         </Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Name: {personal_data.name}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Email-ID: {personal_data.email}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Course: {personal_data.course}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Mobile-No: {personal_data.mobile}</Typography>
         </Grid>
 
         {/* TABLE */}
 
-        <TableContainer sx ={{paddingLeft: "2%", paddingTop: "3%"}}>
+        <TableContainer sx ={{paddingLeft: "2%", paddingTop: "0.1%"}}>
         <Table  aria-label="customized table" sx ={{paddingLeft: "2%"}}>
         <TableHead>
           <TableRow>
@@ -280,7 +285,7 @@ function ResponsiveStudentHome() {
               <StyledTableCell align="center">{row.Completion_Status}</StyledTableCell>
               <StyledTableCell align="center"><Button onClick={() => navigate(row.Link, {
               state: {
-                student_data : location.state.student_data,
+                student_data : personal_data,
                 options: location.state.options
               }
             })} sx = {{background : "#feca0a", color:"#012d5e", ":hover":{
@@ -297,7 +302,33 @@ function ResponsiveStudentHome() {
         </Button>
 
       </Grid>
+      <Box sx={{height:"70px"}} />
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon />
+          </IconButton>
+          <Typography color="inherit">
+          http://www.coep.org.in/
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <CallIcon />
+          </IconButton>
+          <Typography color="inherit">
+          9876543210
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }

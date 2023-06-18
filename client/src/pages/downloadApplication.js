@@ -18,6 +18,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
   Grid,
   Paper,
@@ -64,6 +66,12 @@ import {
   Image,
   pdf
 } from "@react-pdf/renderer";
+
+import HomeIcon from "@mui/icons-material/Home";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import EditIcon from "@mui/icons-material/Edit";
+import DownloadIcon from "@mui/icons-material/Download";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 280;
 
@@ -167,6 +175,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  photo: {
+    width: "30%",
+    height: "150px",
+    padding: 0,
+    marginBottom: 5,
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  signImg: {
+    width: "20%",
+    height: "100px",
+    marginBottom: 5,
+    marginLeft: "70%",
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "right",
+    justifyContent: "right"
+  },
   declareHead: {
     fontSize: 11,
     marginTop: 5
@@ -194,9 +222,10 @@ function Download() {
   const { window } = location.state;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [personalData, setPersonalData] = React.useState([]);
+  const [sign, setSign] = React.useState(null);
+  const [photo, setPhoto] = React.useState(null);
 
   React.useEffect(() => {
-    console.log(location.state.student_data._id)
     if (location.state) {
       if (location.state.student_data._id) {
         let body = { id: location.state.student_data._id };
@@ -207,18 +236,42 @@ function Download() {
               "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt")
             }
           })
-          .then(res => {
+          .then((res) => {
             setPersonalData(res.data.user);
+            let contentType = "image/png";
+            axios
+              .get(BACKEND_URL + "/files/get/" + res.data.user.documents.sign, {
+                responseType: "blob",
+              })
+              .then(function(response){
+                const file = new Blob([response.data], { type: contentType });
+                setSign(URL.createObjectURL(file));
+              })
+              axios
+              .get(BACKEND_URL + "/files/get/" + res.data.user.documents.photo, {
+                responseType: "blob",
+              })
+              .then(function(response){
+                const file = new Blob([response.data], { type: contentType });
+                setPhoto(URL.createObjectURL(file));
+              })
           });
       }
     }
-  });
+  }, []);
   const MyDoc = () => (
     <Document>
       <Page style={styles.body}>
         <View style={styles.view}>
           <Image style={styles.image} src={pic} alt="image" />
         </View>
+        {
+          photo && (
+            <View style={styles.view}>
+          <Image style={styles.photo} src={photo} alt="image" />
+        </View>
+          )
+        }
         <View style={styles.table}>
           <View style={styles.tableRow}>
             <View style={styles.tableColHeader}>
@@ -898,8 +951,11 @@ function Download() {
           be forfeited. Further, I will be subject to legal and/or penal action
           as per the provisions of the law.
         </Text>
-        <Text style={styles.place}>Place :</Text>
-        <Text style={styles.date}>Date :</Text>
+        {/* <Text style={styles.place}>Place :</Text>
+        <Text style={styles.date}>Date :</Text> */}
+        <View style={styles.view}>
+          <Image style={styles.signImg} src={sign} alt="image" />
+        </View>
         <Text style={styles.sign}>Signature of Candidate</Text>
       </Page>
     </Document>
@@ -927,7 +983,11 @@ function Download() {
                 }
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 && <HomeIcon />}
+                  {index === 1 && <AppRegistrationIcon />}
+                  {index === 2 && <EditIcon />}
+                  {index === 3 && <DownloadIcon />}
+                  {index === 4 && <LogoutIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -1023,7 +1083,7 @@ function Download() {
           {personalData["personalInfoFilled"] &&
           personalData["academicsInfoFilled"] &&
           personalData["professionalExperienceFilled"] &&
-          personalData["documentsFilled"] ? (
+          personalData["documentsFilled"] && personalData["feesDetailsFilled"] && photo && sign ? (
             <PDFDownloadLink document={<MyDoc />} fileName="Application.pdf">
               <Button
                 variant="contained"
@@ -1044,6 +1104,31 @@ function Download() {
           )}
         </Paper>
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon />
+          </IconButton>
+          <Typography color="inherit">
+          http://www.coep.org.in/
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <CallIcon />
+          </IconButton>
+          <Typography color="inherit">
+          9876543210
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
