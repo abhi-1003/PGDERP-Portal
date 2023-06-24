@@ -14,7 +14,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Grid, Paper } from "@material-ui/core";
 import { renderText } from "../components/common/displayComponents";
@@ -205,7 +205,7 @@ function Prerequisites() {
               <Box mt={1} mb={2}>
                 {renderText({
                   label:
-                    "Before proceeding to fill up the Online Application Form, please ensure that you have the following Scanned Images (Maximum upload size of each document is 1.5 MB, Accepted Image File types are .pdf, .jpeg, .jpg, .png):",
+                    "Before proceeding to fill up the Online Application Form, please ensure that you have the following Scanned Images (Maximum upload size of each document is 1.5 MB, Accepted File Types for documents : .pdf & Images : .img):",
                   color: "black",
                   variant: "h7",
                   align: "justify"
@@ -273,26 +273,22 @@ function Prerequisites() {
         <Toolbar>
         <Box sx={{ flexGrow: 0.4 }} />
         <IconButton color="inherit">
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon/>
           </IconButton>
           <Typography color="inherit">
+            <a href="http://www.coep.org.in/" target="_blank" rel="noopener noreferrer">
           http://www.coep.org.in/
+          </a>
           </Typography>
-          <Box sx={{ flexGrow: 0.2 }} />
+          <Box sx={{ flexGrow: 0.3 }} />
           <IconButton color="inherit">
             <MailIcon />
           </IconButton>
           <Typography color="inherit">
           pgdadmission@coeptech.ac.in
           </Typography>
-          <Box sx={{ flexGrow: 0.2 }} />
-          <IconButton color="inherit">
-            <CallIcon />
-          </IconButton>
-          <Typography color="inherit">
-          9876543210
-          </Typography>
         </Toolbar>
+        
       </AppBar>
     </Box>
   );

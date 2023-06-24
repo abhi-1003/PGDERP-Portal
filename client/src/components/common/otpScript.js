@@ -69,10 +69,10 @@ export const OtpScript = () => {
       setCorrectotp(o);
       emailjs
         .sendForm(
-          "service_1b1vta1",
-          "template_h0rjjjp",
+          "service_6wjn715",
+          "template_x77v08c",
           form.current,
-          "Fzahey56Ues6-1qtI"
+          "IWz8BxDawjTZYvnbQ"
         )
         .then(
           result => {
