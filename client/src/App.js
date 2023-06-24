@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import UserLogin from "./pages/UserLogin";
 import UserRegister from "./pages/UserRegister";
@@ -48,7 +48,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} exact></Route>
+        <Route path="/" exact element = {<Navigate to="/student/register" />}></Route>
         <Route path="/student/login" element={<UserLogin />} exact></Route>
         <Route path="/student/register" element={<UserRegister />}></Route>
         
