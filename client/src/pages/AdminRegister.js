@@ -13,6 +13,7 @@ import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import bg_pic from "../components/images/coepBuilding.png"
 
 const theme = createTheme();
 const initialFValues = {
@@ -79,18 +80,28 @@ export default function AdminRegister() {
       {/* <NavBar loggedin={false} /> */}
       <div
         style={{
-          background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-          position: "absolute",
+          backgroundImage: `url(${bg_pic})`,
           top: "0px",
           right: "0px",
           bottom: "0px",
           left: "0px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          minHeight: "100vh"
         }}>
         <Container
           component="main"
           item="true"
-          maxWidth="xs"
-          style={{ marginTop: "90px" }}>
+          maxWidth="sm"
+          style={{
+            backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8, }}>
           <CssBaseline />
           <Box
             sx={{
