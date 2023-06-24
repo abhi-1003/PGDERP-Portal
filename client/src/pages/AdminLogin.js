@@ -14,11 +14,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import bg_pic from "../components/images/coepBuilding.png";
 
 const theme = createTheme();
 const initialFValues = {
   email: "",
-  password: ""
+  password: "",
 };
 
 export default function AdminLogin() {
@@ -35,7 +36,8 @@ export default function AdminLogin() {
     if ("password" in fieldValues)
       temp.password = fieldValues.password ? "" : "This field is required.";
     setErrors(temp);
-    if (fieldValues === values) return Object.values(temp).every(x => x === "");
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
   };
 
   const { values, errors, setErrors, handleInputChange } = useForm(
@@ -44,18 +46,18 @@ export default function AdminLogin() {
     validate
   );
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
       const data = {
         email: values.email,
-        password: values.password
+        password: values.password,
       };
-    //   console.log(data);
+      //   console.log(data);
       const url = BACKEND_URL + "/admin/loginAdmin";
       axios
         .post(url, data)
-        .then(res => {
+        .then((res) => {
           alert(res.data.message);
           let token_dict = res.data.token;
           // console.log(token_dict.token)
@@ -63,16 +65,16 @@ export default function AdminLogin() {
           localStorage.setItem("pgderp-website-role", "admin");
           navigate("/admin/home", {
             state: {
-              options : {
-                "Home" : "/admin/home",
-                "Add Co-ordinator" : "/admin/registerCoord",
-                "View Data" : "/admin/grid",
-                "Logout" : "/admin/login"
-              }
-            }
+              options: {
+                Home: "/admin/home",
+                "Add Co-ordinator": "/admin/registerCoord",
+                "View Data": "/admin/grid",
+                Logout: "/admin/login",
+              },
+            },
           });
         })
-        .catch(err => {
+        .catch((err) => {
           alert("Invalid credentials. Login again");
           console.log(err.response || err);
         });
@@ -84,46 +86,47 @@ export default function AdminLogin() {
       <ThemeProvider theme={theme}>
         <div
           style={{
-            background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-            position: "absolute",
+            backgroundImage: `url(${bg_pic})`,
             top: "0px",
             right: "0px",
             bottom: "0px",
             left: "0px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
+            justifyContent: "center",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundSize: "cover",
+            minHeight: "100vh",
+          }}>
           <Container
-            component="main"
-            maxWidth="xs"
-            style={{
-              backgroundColor: "rgba(215, 198, 165, 0.4)",
-              borderRadius: "32px"
-            }}
-          >
+          component="main"
+          item="true"
+          maxWidth="sm"
+          style={{
+            backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8,
+            }}>
             <CssBaseline />
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center"
-              }}
-            >
+                alignItems: "center",
+              }}>
               <Avatar
                 sx={{
                   m: 3,
                   bgcolor: "#012d5e",
                   width: "128px",
-                  height: "128px"
-                }}
-              ></Avatar>
+                  height: "128px",
+                }}></Avatar>
               <Typography
                 component="h1"
                 variant="h5"
-                style={{ marginBottom: "20px" }}
-              >
+                style={{ marginBottom: "20px" }}>
                 Admin Login
               </Typography>
               <Form onSubmit={handleSubmit}>
@@ -157,9 +160,8 @@ export default function AdminLogin() {
                           color: "#012d5e",
                           fontSize: "18px",
                           fontWeight: "bold",
-                          letterSpacing: "2px"
-                        }}
-                      >
+                          letterSpacing: "2px",
+                        }}>
                         Login
                       </Button>
                     </Grid>
@@ -167,18 +169,16 @@ export default function AdminLogin() {
                       container
                       spacing={20}
                       style={{
-                        alignItems: "center"
-                      }}
-                    >
+                        alignItems: "center",
+                      }}>
                       <Grid item xs>
                         <Link
                           href="/"
                           variant="body2"
                           style={{
                             textDecoration: "none",
-                            color: "#1d8ffe"
-                          }}
-                        >
+                            color: "#1d8ffe",
+                          }}>
                           {"Home Page"}
                         </Link>
                       </Grid>
@@ -188,9 +188,8 @@ export default function AdminLogin() {
                           variant="body2"
                           style={{
                             textDecoration: "none",
-                            color: "#1d8ffe"
-                          }}
-                        >
+                            color: "#1d8ffe",
+                          }}>
                           {"Register Admin"}
                         </Link>
                       </Grid>

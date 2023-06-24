@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import { Navigate, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import bg_pic from "../images/coepBuilding.png"
+import bg_pic from "../images/coepBuilding.png";
 
 export const OtpScript = () => {
   const form = useRef();
@@ -22,6 +22,8 @@ export const OtpScript = () => {
   const [correctotp, setCorrectotp] = useState("");
   const [open, setOpen] = React.useState(false);
   const [otp, setOtp] = React.useState("");
+
+  const [loading, setLoading] = React.useState(false);
 
   // Setting correct otp
   var o = Math.floor(100000 + Math.random() * 900000);
@@ -38,21 +40,21 @@ export const OtpScript = () => {
     setOpen(false);
   };
 
-  const handleOTPChange = event => {
+  const handleOTPChange = (event) => {
     setOtp(event.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     const url = BACKEND_URL + "/student/userRegister";
     let data = location.state.data;
     if (otp === correctotp + "") {
       axios
         .post(url, data)
-        .then(res => {
+        .then((res) => {
           alert(res.data.message);
           navigate("/student/login");
         })
-        .catch(res => {
+        .catch((res) => {
           alert("User already exists");
           navigate("/student/register");
         });
@@ -62,11 +64,12 @@ export const OtpScript = () => {
     }
   };
 
-  const sendEmail = e => {
+  const sendEmail = (e) => {
     e.preventDefault();
 
     if (location.state.data) {
       setCorrectotp(o);
+      setLoading(true);
       emailjs
         .sendForm(
           "service_6wjn715",
@@ -75,10 +78,11 @@ export const OtpScript = () => {
           "IWz8BxDawjTZYvnbQ"
         )
         .then(
-          result => {
+          (result) => {
             alert("Email sent successfully");
+            setLoading(false);
           },
-          error => {
+          (error) => {
             alert(error.text);
           }
         );
@@ -89,34 +93,32 @@ export const OtpScript = () => {
     <div
       style={{
         backgroundImage: `url(${bg_pic})`,
-          top: "0px",
-          right: "0px",
-          bottom: "0px",
-          left: "0px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          backgroundSize: "cover",
-          minHeight: "100vh"
-      }}
-    >
+        top: "0px",
+        right: "0px",
+        bottom: "0px",
+        left: "0px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        minHeight: "100vh",
+      }}>
       <Container
         component="main"
         maxWidth="sm"
         style={{
           backgroundColor: "#E5EDF1",
-            borderRadius: "32px",
-            opacity: 0.8,
-        }}
-      >
+          borderRadius: "32px",
+          opacity: 0.8,
+        }}>
         <Typography component="h6" variant="h6">
-              Please Verify your details 
+          Please Verify your details
         </Typography>
         <Typography component="h6" variant="h6">
-        After OTP Verification these details cannot be modified
+          After OTP Verification these details cannot be modified
         </Typography>
         <form
           ref={form}
@@ -125,9 +127,8 @@ export const OtpScript = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
+            justifyContent: "center",
+          }}>
           <div
             style={{
               margin: "8px",
@@ -139,9 +140,8 @@ export const OtpScript = () => {
               alignItems: "start",
               backgroundColor: "rgba(255, 255, 200, 0.5)",
               padding: "10px",
-              borderRadius: "16px"
-            }}
-          >
+              borderRadius: "16px",
+            }}>
             <label>Name</label>
             <input
               type="text"
@@ -150,7 +150,7 @@ export const OtpScript = () => {
                 fontSize: "24px",
                 borderRadius: "8px",
                 border: "0px",
-                padding: "4px"
+                padding: "4px",
               }}
               value={location.state.data.name}
             />
@@ -167,8 +167,7 @@ export const OtpScript = () => {
               backgroundColor: "rgba(255, 255, 200, 0.5)",
               padding: "10px",
               borderRadius: "16px",
-            }}
-          >
+            }}>
             <label>Email</label>
             <input
               type="email"
@@ -178,7 +177,7 @@ export const OtpScript = () => {
                 fontSize: "24px",
                 borderRadius: "8px",
                 border: "0px",
-                padding: "4px"
+                padding: "4px",
               }}
             />
           </div>
@@ -194,9 +193,8 @@ export const OtpScript = () => {
               alignItems: "start",
               backgroundColor: "rgba(255, 255, 200, 0.5)",
               padding: "10px",
-              borderRadius: "16px"
-            }}
-          >
+              borderRadius: "16px",
+            }}>
             <label>Mobile</label>
             <input
               type="text"
@@ -206,7 +204,7 @@ export const OtpScript = () => {
                 fontSize: "24px",
                 borderRadius: "8px",
                 border: "0px",
-                padding: "4px"
+                padding: "4px",
               }}
             />
           </div>
@@ -222,9 +220,8 @@ export const OtpScript = () => {
               alignItems: "start",
               backgroundColor: "rgba(255, 255, 200, 0.5)",
               padding: "10px",
-              borderRadius: "16px"
-            }}
-          >
+              borderRadius: "16px",
+            }}>
             <label>Course</label>
             <input
               type="text"
@@ -234,35 +231,62 @@ export const OtpScript = () => {
                 fontSize: "24px",
                 borderRadius: "8px",
                 border: "0px",
-                padding: "4px"
+                padding: "4px",
               }}
             />
           </div>
 
           <label style={{ display: "none" }}>OTP</label>
           <input name="user_otp" value={o} style={{ display: "none" }} />
-          <input
-            style={{
-              fontSize: "24px",
-              backgroundColor: "#feca0a",
-              color: "#012d5e",
-              borderRadius: "4px",
-              borderRadius: "12px",
-              cursor: "pointer",
-              fontWeight: "bold",
-              padding: "10px 15px",
-              textAlign: "center",
-              transition: "200ms",
-              width: "100%",
-              boxSizing: "border-box",
-              border: "0",
-              fontSize: "16px",
-              userSelect: "none",
-              lineHeight: "28px"
-            }}
-            type="submit"
-            value="Send Email"
-          />
+          {!loading && (
+            <input
+              style={{
+                fontSize: "24px",
+                backgroundColor: "#feca0a",
+                color: "#012d5e",
+                borderRadius: "4px",
+                borderRadius: "12px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                padding: "10px 15px",
+                textAlign: "center",
+                transition: "200ms",
+                width: "100%",
+                boxSizing: "border-box",
+                border: "0",
+                fontSize: "16px",
+                userSelect: "none",
+                lineHeight: "28px",
+              }}
+              type="submit"
+              value="Send Email"
+            />
+          )}
+          {loading && (
+            <Button
+              style={{
+                fontSize: "24px",
+                backgroundColor: "#feca0a",
+                color: "#012d5e",
+                borderRadius: "4px",
+                borderRadius: "12px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                padding: "10px 15px",
+                textAlign: "center",
+                transition: "200ms",
+                width: "100%",
+                boxSizing: "border-box",
+                border: "0",
+                fontSize: "16px",
+                userSelect: "none",
+                touchAction: "manipulation",
+                margin: "10px",
+              }}
+              onClick={() => handleClickOpen()}>
+              Sending Email Please Wait
+            </Button>
+          )}
           <Button
             style={{
               fontSize: "24px",
@@ -281,10 +305,9 @@ export const OtpScript = () => {
               fontSize: "16px",
               userSelect: "none",
               touchAction: "manipulation",
-              margin: "10px"
+              margin: "10px",
             }}
-            onClick={() => handleClickOpen()}
-          >
+            onClick={() => handleClickOpen()}>
             Enter OTP
           </Button>
 

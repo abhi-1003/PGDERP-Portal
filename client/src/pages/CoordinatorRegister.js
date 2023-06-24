@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -13,9 +13,10 @@ import { useForm, Form } from "./Form";
 import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import bg_pic from "../components/images/coepBuilding.png";
 
 const theme = createTheme();
 const initialFValues = {
@@ -23,7 +24,7 @@ const initialFValues = {
   email: "",
   mobile: "",
   password: "",
-  cpassword: ""
+  cpassword: "",
 };
 export default function UserRegister() {
   const location = useLocation();
@@ -47,7 +48,8 @@ export default function UserRegister() {
       temp.cpassword = "Passwords do not match. ";
     }
     setErrors(temp);
-    if (fieldValues === values) return Object.values(temp).every(x => x === "");
+    if (fieldValues === values)
+      return Object.values(temp).every((x) => x === "");
   };
 
   const { values, errors, setErrors, handleInputChange } = useForm(
@@ -60,15 +62,14 @@ export default function UserRegister() {
     var updatedCourses = [...courses];
     if (event.target.checked) {
       updatedCourses = [...courses, event.target.value];
-    }
-    else{
+    } else {
       updatedCourses.splice(courses.indexOf(event.target.value), 1);
     }
     setCourses(updatedCourses);
-  }
+  };
 
   const navigate = useNavigate();
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
       const data = {
@@ -76,74 +77,72 @@ export default function UserRegister() {
         email: values.email,
         mobile: values.mobile,
         password: values.password,
-        courses: courses
+        courses: courses,
       };
-    //   console.log(data);
-      const token = localStorage.getItem("pgderp-website-jwt")
+      //   console.log(data);
+      const token = localStorage.getItem("pgderp-website-jwt");
       const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios
-        .post(url, {data, headers:{ "pgderp-website-jwt": token }
-        })
-        .then(res => {
+        .post(url, { data, headers: { "pgderp-website-jwt": token } })
+        .then((res) => {
           alert(res.data.message);
           navigate("/admin/home", {
             state: {
-              options: location.state.options
-            }
-          })
+              options: location.state.options,
+            },
+          });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err.response || err);
         });
     }
   };
-  
 
   return (
     <ThemeProvider theme={theme}>
       <div
         style={{
-          background: "linear-gradient(to bottom, #42a7f5, #dae9eb)",
-          position: "absolute",
+          backgroundImage: `url(${bg_pic})`,
           top: "0px",
           right: "0px",
           bottom: "0px",
           left: "0px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
+          justifyContent: "center",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          minHeight: "100vh",
+        }}>
         <Container
           component="main"
           item="true"
-          maxWidth="xs"
+          maxWidth="sm"
           style={{
-            backgroundColor: "rgba(215, 198, 165, 0.4)",
-            borderRadius: "32px"
-          }}
-        >
+            backgroundColor: "#E5EDF1",
+            borderRadius: "32px",
+            opacity: 0.8,
+          }}>
           <CssBaseline />
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
+              alignItems: "center",
+            }}>
             <Avatar
               sx={{
                 m: 3,
                 bgcolor: "#012d5e",
                 width: "128px",
-                height: "128px"
-              }}
-            ></Avatar>
+                height: "128px",
+              }}></Avatar>
             <Typography
               component="h1"
               variant="h5"
-              style={{ marginBottom: "20px" }}
-            >
+              style={{ marginBottom: "20px" }}>
               Add Co-ordinator Details
             </Typography>
             <Form onSubmit={handleSubmit}>
@@ -185,12 +184,36 @@ export default function UserRegister() {
                     onChange={handleInputChange}
                     error={errors.cpassword}
                   />
-                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDBA" />} label = "PGDBA"/>
-                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDDSAI"/>} label="PGDDSAI" />
-                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDESIoT"/>} label="PGDESIoT" />
-                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDERP"/>} label="PGDERP" />
-                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDIPDD"/>} label="PGDIPDD" />
-                  <FormControlLabel control={<Checkbox onChange={handleCheck} value="PGDIA"/>} label="PGDIA" />
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleCheck} value="PGDBA" />}
+                    label="PGDBA"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox onChange={handleCheck} value="PGDDSAI" />
+                    }
+                    label="PGDDSAI"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox onChange={handleCheck} value="PGDESIoT" />
+                    }
+                    label="PGDESIoT"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleCheck} value="PGDERP" />}
+                    label="PGDERP"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox onChange={handleCheck} value="PGDIPDD" />
+                    }
+                    label="PGDIPDD"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox onChange={handleCheck} value="PGDIA" />}
+                    label="PGDIA"
+                  />
                   <Grid item xs={12}>
                     <Button
                       type="submit"
@@ -204,9 +227,8 @@ export default function UserRegister() {
                         color: "#012d5e",
                         fontSize: "18px",
                         fontWeight: "bold",
-                        letterSpacing: "2px"
-                      }}
-                    >
+                        letterSpacing: "2px",
+                      }}>
                       Register
                     </Button>
                   </Grid>
@@ -217,9 +239,8 @@ export default function UserRegister() {
                       variant="body2"
                       style={{
                         textDecoration: "none",
-                        color: "#1d8ffe"
-                      }}
-                    >
+                        color: "#1d8ffe",
+                      }}>
                       {"Already Registered? Log In"}
                     </Link>
                   </Grid>
