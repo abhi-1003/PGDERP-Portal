@@ -20,7 +20,7 @@ export const SidebarData = [
     link: "/student/home",
   },
   {
-    title: "Fill Admission Form",
+    title: "Fill Application Form",
     user: "Candidate",
     icon: <ModeIcon />,
     link: "/student/form",

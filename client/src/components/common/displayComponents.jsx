@@ -60,8 +60,26 @@ export const renderInputText = ({
 	color,
 	stateVar,
 	handleOnChange,
+	personalData
 }) => {
 	const { data, errors } = stateVar;
+	if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true && personalData.modifications.includes(name) == false){
+		return (
+			<TextField
+				label={label}
+				color={color ? color : "primary"}
+				variant="outlined"
+				name={name}
+				fullWidth={true}
+				size="small"
+				value={data[name]}
+				error={name !== "phyDis" ? (errors[name] ? true : false) : false}
+				helperText={name !== "phyDis" ? errors[name] : ""}
+				onChange={handleOnChange}
+				disabled
+			/>
+		);
+	}
 	return (
 		<TextField
 			label={label}
@@ -101,9 +119,34 @@ export const renderInputSelect = ({
 	stateVar,
 	handleOnChange,
 	arr,
+	personalData
 }) => {
 	if(stateVar && "data" in stateVar && "errors" in stateVar){
 		const { data, errors } = stateVar;
+		if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true && personalData.modifications.includes(name) == false){
+			return (
+				<TextField
+					label={label}
+					select
+					color={color ? color : "primary"}
+					variant="outlined"
+					name={name}
+					fullWidth={true}
+					size="small"
+					value={data[name]}
+					error={errors[name] ? true : false}
+					helperText={errors[name]}
+					onChange={handleOnChange}
+					disabled
+				>
+					{arr.map((option) => (
+						<MenuItem key={option.value} value={option.value}>
+							{option.label}
+						</MenuItem>
+					))}
+				</TextField>
+			);
+		}
 		return (
 			<TextField
 				label={label}
@@ -134,9 +177,28 @@ export const renderMultiInputText = ({
 	color,
 	stateVar,
 	handleOnChange,
+	personalData
 }) => {
 	if(stateVar && "data" in stateVar && "errors" in stateVar){
 		const { data, errors } = stateVar;
+		if(personalData && "applicationFilled" in personalData && personalData.applicationFilled==true && personalData.modifications.includes(name) == false){
+			return (
+				<TextField
+					label={label}
+					multiline
+					color={color ? color : "primary"}
+					variant="outlined"
+					name={name}
+					fullWidth={true}
+					size="small"
+					value={data[name]}
+					error={errors[name] ? true : false}
+					helperText={errors[name]}
+					onChange={handleOnChange}
+					disabled
+				/>
+			)
+		}
 		return (
 			<TextField
 				label={label}

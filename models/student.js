@@ -13,7 +13,6 @@ const verificationField = {
 }
 
 const personalInfo = {
-    campusPreference:{type: Array},
     lastName:{type: String},
     firstName:{type: String},
     middleName:{type: String},
@@ -30,6 +29,12 @@ const personalInfo = {
     caste:{type: String},
     age: {type: Number},
   };
+
+  const pageModification = {
+    type: {type: String},
+    fields: {type: Array},
+    remarks: {type: String}
+}
 
   const academicsInfo = {
     DiplomaFilled: {type: Boolean},
@@ -80,6 +85,16 @@ const personalInfo = {
     profExp: { type: String },
     otCourses: { type: String },
     selfDeclaration: { type: String },
+    feesPayment: {type: String},
+    photo: {type: String},
+    sign: {type:String}
+  }
+
+  const feesDetails = {
+    bank : {type: String},
+    refNo : {type: String},
+    amt : {type: String},
+    date : {type: Array},
   }
   const StudentSchema = Schema(
     {
@@ -97,12 +112,14 @@ const personalInfo = {
       academicsInfo: academicsInfo,
       professionalExperience: {type: Array},
       documents: documents,
+      feesDetails: feesDetails,
 
       // Filling details
       personalInfoFilled : {type: Boolean},
       academicsInfoFilled : {type: Boolean},
       professionalExperienceFilled: {type: Boolean},
       documentsFilled : {type: Boolean},
+      feesDetailsFilled : {type:Boolean},
 
       // After filling all 4 details above it will become true and student can download
       applicationFilled : {type: Boolean},
@@ -112,6 +129,7 @@ const personalInfo = {
       academicsInfoEditable : {type: Boolean},
       professionalExperienceEditable : {type: Boolean},
       documentsEditable : {type: Boolean},
+      feesDetailsEditable : {type: Boolean},
 
       // Verification
       // 3 states - Pending, Modification Required, Verified
@@ -119,13 +137,21 @@ const personalInfo = {
       academicsInfoVerified: {type: Boolean},
       professionalExperienceVerified : {type: Boolean},
       documentsVerified : {type:Boolean},
+      feesDetailsVerified : {type: Boolean},
       applicationVerified : {type: Boolean},
 
       // Remarks
       personalInfoRemarks : {type: Object},
       academicsInfoRemarks : {type: Object},
       professionalExperienceRemarks : {type: Object},
+      feesDetailsRemarks : {type: Object},
       documentsRemarks : {type: Object},
+
+      // verified
+      verified: {type: Array},
+
+      // array of all modifications
+      modifications : {type: Array}
       
     },
     { timestamps: true }

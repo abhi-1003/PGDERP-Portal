@@ -14,6 +14,8 @@ import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { Navigate, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const theme = createTheme();
 const initialFValues = {
@@ -24,6 +26,8 @@ const initialFValues = {
   cpassword: ""
 };
 export default function UserRegister() {
+  const location = useLocation();
+  const { window } = location.state;
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     for (const key in fieldValues) {
@@ -62,9 +66,10 @@ export default function UserRegister() {
     }
     setCourses(updatedCourses);
   }
+
+  const navigate = useNavigate();
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("Hello");
     if (validate()) {
       const data = {
         name: values.fullname,
@@ -73,7 +78,7 @@ export default function UserRegister() {
         password: values.password,
         courses: courses
       };
-      console.log(data);
+    //   console.log(data);
       const token = localStorage.getItem("pgderp-website-jwt")
       const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios
@@ -81,12 +86,18 @@ export default function UserRegister() {
         })
         .then(res => {
           alert(res.data.message);
+          navigate("/admin/home", {
+            state: {
+              options: location.state.options
+            }
+          })
         })
         .catch(err => {
           console.log(err.response || err);
         });
     }
   };
+  
 
   return (
     <ThemeProvider theme={theme}>

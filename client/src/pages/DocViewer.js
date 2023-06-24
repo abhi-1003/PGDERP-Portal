@@ -5,7 +5,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const DocViewer = (data) => {
-  console.log("doc viewer entered", data.filename, data.contentType)
   let filename = data.filename;
   let contentType = data.contentType;
   const [loading, setLoading] = useState(false);
@@ -19,7 +18,7 @@ const DocViewer = (data) => {
       }
     )
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         //Create a Blob from the PDF Stream
         const file = new Blob([response.data], { type: contentType });
         // Build a URL from the file

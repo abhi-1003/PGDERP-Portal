@@ -28,6 +28,17 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useLocation } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from '../config';
+import axios from 'axios';
+
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const drawerWidth = 280;
 
@@ -54,8 +65,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     // },
   }));
 
-  function createData(Details, Verification_Status, Completion_Status, Edit) {
-    return { Details, Verification_Status, Completion_Status, Edit};
+  function createData(Details, Verification_Status, Completion_Status, Edit, Link) {
+    return { Details, Verification_Status, Completion_Status, Edit, Link};
   }
   
   
@@ -64,7 +75,8 @@ function ResponsiveStudentHome() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const personal_data = location.state.student_data
+  const [personal_data, setPersonalData] = React.useState(location.state.student_data)
+  const [reload, setReload] = React.useState(false);
   const { window } = location.state;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -73,11 +85,54 @@ function ResponsiveStudentHome() {
   };
 
   const rows = [
-    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : "Not Verified", personal_data["personalInfoFilled"] ? "Completed" : "Pending", 'Edit'),
-    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : "Not Verified", personal_data["academicsInfoFilled"] ? "Completed" : "Pending", 'Edit'),
-    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : "Not Verified", personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", 'Edit'),
-    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : "Not Verified", personal_data["documentsFilled"] ? "Completed" : "Pending", 'Edit'),
+    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
+    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
+    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", personal_data["professionalExperienceEditable"] ? "Edit" : "Not Editable", "/student/professionalExperience"),
+    createData('Fees Details', personal_data["feesDetailsVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["feesDetailsFilled"] ? "Completed" : "Pending", personal_data["feesDetailsEditable"] ? "Edit" : "Not Editable", "/student/fees"),
+    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["documentsFilled"] ? "Completed" : "Pending", personal_data["documentsEditable"] ? "Edit" : "Not Editable", "/student/documents"),
   ];
+
+  React.useEffect(() => {
+    // console.log(location.state.student_data._id)
+    if (location.state) {
+      if (location.state.student_data._id) {
+        let body = { id: location.state.student_data._id };
+        let url = BACKEND_URL + "/student/me";
+        axios
+          .post(url, body, {
+            headers: {
+              "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
+            },
+          })
+          .then((res) => {
+            setPersonalData(res.data.user)
+          });
+      }
+    }
+  }, [reload]);
+
+  const handleSubmit = () => {
+    setReload(true)
+    const url = BACKEND_URL + "/student/fullComplete";
+    const body = {
+      id : personal_data._id
+    }
+    axios
+    .post(url, body, {
+      headers:{
+        "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
+      }
+    })
+    .then((res) => {
+      alert(res.data.message)
+      navigate("/student/home", {
+        state: {
+          student_data : personal_data,
+          options: location.state.options
+        }
+      })
+    })
+  }
 
   const drawer = (
     <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
@@ -87,12 +142,34 @@ function ResponsiveStudentHome() {
           <ListItem key={text}>
             <ListItemButton onClick={() => navigate(location.state.options[text], {
               state: {
-                student_data : location.state.student_data,
+                student_data : personal_data,
                 options: location.state.options
               }
             })}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <EditIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 4 && (
+                    <LogoutIcon />
+                  )
+                }
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -170,25 +247,25 @@ function ResponsiveStudentHome() {
       >
         <Toolbar />
         <Box display="flex" justifyContent="center" alignItems="center">
-        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "3%", margin: "auto"}}>Student Information </Typography>
+        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "1%", margin: "auto"}}>Student Information </Typography>
         </Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Name: {personal_data.name}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Email-ID: {personal_data.email}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Course: {personal_data.course}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"2% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
           <Typography variant="h6">Mobile-No: {personal_data.mobile}</Typography>
         </Grid>
 
         {/* TABLE */}
 
-        <TableContainer sx ={{paddingLeft: "2%", paddingTop: "3%"}}>
+        <TableContainer sx ={{paddingLeft: "2%", paddingTop: "0.1%"}}>
         <Table  aria-label="customized table" sx ={{paddingLeft: "2%"}}>
         <TableHead>
           <TableRow>
@@ -206,19 +283,52 @@ function ResponsiveStudentHome() {
               </StyledTableCell>
               <StyledTableCell align="center">{row.Verification_Status}</StyledTableCell>
               <StyledTableCell align="center">{row.Completion_Status}</StyledTableCell>
-              <StyledTableCell align="center">{row.Edit}</StyledTableCell>
+              <StyledTableCell align="center"><Button onClick={() => navigate(row.Link, {
+              state: {
+                student_data : personal_data,
+                options: location.state.options
+              }
+            })} sx = {{background : "#feca0a", color:"#012d5e", ":hover":{
+              background : "#00ABE4"
+            }}}>{row.Edit}</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
 
-        <Button variant="contained" color="success" style={{margin: '0 auto', display: "flex", marginTop:"3%"}}>
+        <Button variant="contained" onClick = {() => handleSubmit()}color="success" style={{margin: '0 auto', display: "flex", marginTop:"3%" }}>
         Submit Application
         </Button>
 
       </Grid>
+      <Box sx={{height:"70px"}} />
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon />
+          </IconButton>
+          <Typography color="inherit">
+          http://www.coep.org.in/
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <CallIcon />
+          </IconButton>
+          <Typography color="inherit">
+          9876543210
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }

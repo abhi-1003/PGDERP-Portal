@@ -5,6 +5,7 @@ const { auth } = require("../middleware/auth");
 const {
   registerCoordinator,
   loginCoordinator,
+  getCoordinatorSections
 } = require("../controllers/auth");
 
 const router = express.Router();

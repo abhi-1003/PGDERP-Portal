@@ -4,9 +4,11 @@ import { renderText, renderButton, renderInputText, renderText1 } from '../commo
 import { BACKEND_URL } from "../../config";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import { Navigate } from "react-router-dom"
 
 const handleSubmit = (state) => {
     const data = state.data;
+    
 
         const personalInfo = {
         ID:data.ID,
@@ -79,12 +81,13 @@ const handleSubmit = (state) => {
             personalInfo : personalInfo,
             academicsInfo : academicsInfo
         }
-        console.log(body)
+        // console.log(body)
         axios
             .post(url, body)
             .then((res) => {
                 alert(res.data);
             })
+            Navigate("/student-home");
 }
 
 export default function Finished({state,handlePrev}){

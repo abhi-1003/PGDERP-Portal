@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import UserLogin from "./pages/UserLogin";
-import FormComponent from "./components/formComponent";
 import UserRegister from "./pages/UserRegister";
 import AdminHome from "./pages/AdminHome";
 import Home from "./pages/Home";
@@ -18,12 +17,19 @@ import { OtpScript } from "./components/common/otpScript";
 import Docs from "./components/steps/docs";
 import DocViewer from "./pages/DocViewer";
 import Step4 from "./components/steps/Step4";
-import Grid from "./pages/Grid";
 import Application from "./components/Coordinator/application";
 import ResponsiveStudentHome from "./components/ResposiveDrawer";
 import PersonalInfo from "./pages/personalInfo";
 import AcademicsInfo from "./pages/academicsInfo";
-
+import ProfessionalExperience from "./pages/ProfessionalExperience";
+import Documents from "./pages/Documents";
+import Download from "./pages/downloadApplication";
+import Prerequisites from "./pages/prerequisites";
+import CoordinatorDownload from "./components/Coordinator/coordinatorDownload";
+import CoordinatorIndividual from "./components/Coordinator/coordinatorIndividual";
+import IndiStudent from "./components/Coordinator/indiStudent";
+import FeesDetails from "./pages/fees";
+import GridAdmin from "./pages/Grid";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -45,19 +51,12 @@ function App() {
         <Route path="/" element={<Home />} exact></Route>
         <Route path="/student/login" element={<UserLogin />} exact></Route>
         <Route path="/student/register" element={<UserRegister />}></Route>
-        <Route
-          path="/student/form"
-          element={
-            <ProtectedRoute allowedRoles={[roles.student]}>
-              <FormComponent/>
-            </ProtectedRoute>
-          }
-        />
+        
         <Route
           path="/student/home"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <ResponsiveStudentHome/>
+              <ResponsiveStudentHome />
             </ProtectedRoute>
           }
         />
@@ -66,7 +65,7 @@ function App() {
           path="/student/personalInfo"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <PersonalInfo/>
+              <PersonalInfo />
             </ProtectedRoute>
           }
         />
@@ -75,7 +74,51 @@ function App() {
           path="/student/academicsInfo"
           element={
             <ProtectedRoute allowedRoles={[roles.student]}>
-              <AcademicsInfo/>
+              <AcademicsInfo />
+            </ProtectedRoute>
+          }
+        />
+
+<Route
+          path="/student/fees"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <FeesDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/student/professionalExperience"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <ProfessionalExperience />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/student/documents"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <Documents />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/student/download"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <Download />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/prerequisites"
+          element={
+            <ProtectedRoute allowedRoles={[roles.student]}>
+              <Prerequisites />
             </ProtectedRoute>
           }
         />
@@ -86,36 +129,66 @@ function App() {
           path="/admin/home"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
-              <AdminHome/>
-              </ProtectedRoute>
+              <AdminHome />
+            </ProtectedRoute>
           }
         />
 
-        <Route path="/coordinator" element={
-          <ProtectedRoute allowedRoles={[roles.coordinator]}>
-          <Coordinator />
-        </ProtectedRoute>
-        }></Route>
-        <Route path="/coordinator/:id" element={
-          <ProtectedRoute allowedRoles={[roles.coordinator]}>
-          <Application />
-        </ProtectedRoute>
-        }></Route>
+        <Route
+          path="/coordinator"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <Coordinator />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coordinator/:id"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <Application />
+            </ProtectedRoute>
+          }
+        ></Route>
         <Route
           path="/coordinator/login"
           element={<CoordinatorLogin />}
           exact
         ></Route>
         <Route
+          path="/coordinator/list"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <CoordinatorDownload />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coordinator/download"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <CoordinatorIndividual />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coordinator/get"
+          element={
+            <ProtectedRoute allowedRoles={[roles.coordinator]}>
+              <IndiStudent />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
           path="/admin/registerCoord"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
               <CoordinatorRegister />
-              </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
-        <Route path="/otpscript" element = {<OtpScript />}></Route>
-        <Route
+        <Route path="/otpscript" element={<OtpScript />}></Route>
+        {/* <Route
           path="/doc-view"
           element = {
             <DocViewer
@@ -123,12 +196,15 @@ function App() {
               contentType="application/pdf"
             />
           }
-        ></Route>
-        <Route path="/admin/grid"
-          element = {
+        ></Route> */}
+        <Route
+          path="/admin/grid"
+          element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
-          <Grid/>
-        </ProtectedRoute>} />
+              <GridAdmin />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );

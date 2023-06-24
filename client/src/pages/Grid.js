@@ -4,8 +4,133 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
-const Grid = () => {
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import NavBar from "../components/Navbar/Navbar";
+import { useForm, Form } from "./Form";
+import { Navigate, useNavigate } from "react-router-dom";
+import Input from "./Input";
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PropTypes from "prop-types";
+import AppBar from "@mui/material/AppBar";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import { useLocation } from "react-router-dom";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableContainer,
+  TextField,
+} from "@material-ui/core";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {
+  renderText,
+  renderButton,
+  renderInputText,
+  renderText1,
+  renderMultiInputText,
+  renderInputSelect,
+  renderDate,
+  RenderDate,
+  MultipleSelect,
+  renderInputTextDisabled,
+} from "../components/common/displayComponents";
+import { styled } from "@mui/material/styles";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+
+
+const drawerWidth = 280;
+
+const GridAdmin = () => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { window } = location.state;
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
+      <Toolbar />
+      <List>
+        {location.state.options &&
+          Object.keys(location.state.options).map((text, index) => (
+            <ListItem key={text}>
+              <ListItemButton
+                onClick={() =>
+                  navigate(location.state.options[text], {
+                    state: {
+                      options: location.state.options,
+                    },
+                  })
+                }
+              >
+                <ListItemIcon>
+                {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <LogoutIcon />
+                  )
+                }
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+    </div>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
     const gridRef= useRef();
 
@@ -57,8 +182,7 @@ const Grid = () => {
   columnDefs.push({ field: "PG Final Year Marks" });
   columnDefs.push({ field: "PG Aggregation Marks" });
   columnDefs.push({ field: "PG Dead Backlog" });
-  columnDefs.push({ field: "PG Alive Backlog" });
-
+  columnDefs.push({ field: "PG Alive Backlog"});
 
     const searchDivStyle = {backgroundColor:"#dedede", padding:10}
 
@@ -87,7 +211,7 @@ const Grid = () => {
         .then((res) => {
             let students = res.data;
             Object.keys(students).map((student, index) => {
-                console.log(students[student])
+                // console.log(students[student])
                 let row = {}
                 if(students[student]["name"]){
                     row["Name"] = students[student]["name"];
@@ -98,10 +222,16 @@ const Grid = () => {
                 if(students[student]["mobile"]){
                     row["Mobile"] = students[student]["mobile"];
                 }
-                if(students[student]["personalInfo"]){
-                    if("ID" in students[student]["personalInfo"]){
-                        row["ID"] = students[student]["personalInfo"]["ID"];
-                    }
+                if(students[student]["course"]){
+                  row["Course"] = students[student]["course"]
+
+                }
+                if(students[student]["registrationID"]){
+                  row["ID"] = students[student]["registrationID"]
+                  
+                }
+                if(students[student]["course"]){
+                    
                     if("course" in students[student]["personalInfo"]){
                         row["Course"] = students[student]["personalInfo"]["course"];
                     }
@@ -251,6 +381,7 @@ const Grid = () => {
                         students[student]["academicsInfo"]["AliveBacklogPostGrad"];
                     }
                 }
+                
                 all_rows.push(row);
             })
             setRowData(all_rows)
@@ -273,13 +404,102 @@ const Grid = () => {
         gridRef.current.api.setQuickFilter(e.target.value)
     }
     return(
-        <div>
-            <button onClick={() => onExportClick()}>Export</button>
-            <select onChange={(e) => onPaginationChange(e.target.value)}>
+
+      <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>
+        <CssBaseline />
+        <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          backgroundColor: "#00ABE4",
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div">
+            COEP PG - Diploma Admission Portal
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
+      >
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+        <Drawer
+          bg
+          variant="permanent"
+          sx={{
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
+      </Box>
+      <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        p: 3,
+        width: { sm: `calc(100% - ${drawerWidth}px)` },
+      }}
+    >
+      <Toolbar />
+        <Paper component={Box} p={2}>
+        <Grid container spacing={2} style={{ justifyContent: "center" }}>
+            <Box mt={1} mb={2}>
+              {renderText({ label: "STUDENTS DATA" })}
+            </Box>
+          </Grid>
+
+          <Button
+            variant="contained"
+            onClick={() => onExportClick()}
+            color="success"
+            style={{ margin: "0 auto", display: "flex", marginTop: "3%" }}
+          >
+            EXPORT DATA
+          </Button>
+          <FormControl style ={{width:"50%", margin: "0 auto", display: "flex", marginTop: "1%", marginBottom:"1%"}}>
+        <InputLabel id="demo-simple-select-label">Page Size</InputLabel>
+            <Select onChange={(e) => onPaginationChange(e.target.value)}>
                 <option value = '10'>10</option>
                 <option value = '25'>25</option>
                 <option value = '50'>50</option>
-            </select>
+            </Select>
+            </FormControl>
             <div style={searchDivStyle}>
                 <input type="search" style={searchStyle} onChange={onFilterTextChange} placeholder="Enter..."/>
             </div>
@@ -301,8 +521,11 @@ const Grid = () => {
                 />
             </div>
 
-        </div>
+        </Paper>
+        </Box>
+      </Box>
+            
     )
 }
 
-export default Grid;
+export default GridAdmin;

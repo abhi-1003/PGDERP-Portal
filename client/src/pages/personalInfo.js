@@ -17,6 +17,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Navigate, useNavigate } from "react-router-dom";
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useLocation } from "react-router-dom";
 import {
   Grid,
@@ -50,7 +52,12 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import e from "cors";
+
+import HomeIcon from '@mui/icons-material/Home';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
+import DownloadIcon from '@mui/icons-material/Download';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 280;
 
@@ -85,9 +92,6 @@ function PersonalInfo() {
   const [personalData, setPersonalData] = React.useState([]);
   const [stateVar, setStateVar] = React.useState({
     data: {
-      campusPreference1: "",
-      campusPreference2: "",
-      campusPreference3: "",
       lastName: "",
       firstName: "",
       middleName: "",
@@ -130,17 +134,17 @@ function PersonalInfo() {
     let copyErrors = { ...stateVar.errors };
     let copyData = { ...stateVar.data };
     if ("personalInfo" in personalData) {
-      if (
-        "campusPreference" in personalData.personalInfo &&
-        personalData.personalInfo.campusPreference.length === 3
-      ) {
-        copyData = {
-          ...copyData,
-          campusPreference1: personalData.personalInfo.campusPreference[0],
-          campusPreference2: personalData.personalInfo.campusPreference[1],
-          campusPreference3: personalData.personalInfo.campusPreference[2],
-        };
-      }
+      // if (
+      //   "campusPreference" in personalData.personalInfo &&
+      //   personalData.personalInfo.campusPreference.length === 3
+      // ) {
+      //   copyData = {
+      //     ...copyData,
+      //     campusPreference1: personalData.personalInfo.campusPreference[0],
+      //     campusPreference2: personalData.personalInfo.campusPreference[1],
+      //     campusPreference3: personalData.personalInfo.campusPreference[2],
+      //   };
+      // }
       if (
         "firstName" in personalData.personalInfo &&
         personalData.personalInfo.firstName
@@ -269,7 +273,29 @@ function PersonalInfo() {
                 }
               >
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 && (
+                  <HomeIcon />
+                )}
+                {
+                  index === 1 && (
+                    <AppRegistrationIcon />
+                  )
+                }
+                {
+                  index === 2 && (
+                    <EditIcon />
+                  )
+                }
+                {
+                  index === 3 && (
+                    <DownloadIcon />
+                  )
+                }
+                {
+                  index === 4 && (
+                    <LogoutIcon />
+                  )
+                }
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -310,41 +336,41 @@ function PersonalInfo() {
 
   const handleSave = () => {
     let { data, errors } = stateVar;
-    if (data.campusPreference1 === "") {
-      errors["campusPreference1"] = "Field cannot be empty";
-    } else {
-      errors["campusPreference1"] = "";
-    }
+    // if (data.campusPreference1 === "") {
+    //   errors["campusPreference1"] = "Field cannot be empty";
+    // } else {
+    //   errors["campusPreference1"] = "";
+    // }
 
-    if (data.campusPreference2 === "") {
-      errors["campusPreference2"] = "Field cannot be empty";
-    } else {
-      errors["campusPreference2"] = "";
-    }
+    // if (data.campusPreference2 === "") {
+    //   errors["campusPreference2"] = "Field cannot be empty";
+    // } else {
+    //   errors["campusPreference2"] = "";
+    // }
 
-    if (data.campusPreference3 === "") {
-      errors["campusPreference3"] = "Field cannot be empty";
-    } else {
-      errors["campusPreference3"] = "";
-    }
+    // if (data.campusPreference3 === "") {
+    //   errors["campusPreference3"] = "Field cannot be empty";
+    // } else {
+    //   errors["campusPreference3"] = "";
+    // }
 
-    if (
-      data.campusPreference3 === data.campusPreference2 ||
-      data.campusPreference1 === data.campusPreference2 ||
-      data.campusPreference3 === data.campusPreference1
-    ) {
-      errors["campusPreference1"] = "All preferences should be different";
-      errors["campusPreference2"] = "All preferences should be different";
-      errors["campusPreference3"] = "All preferences should be different";
-    } else if (
-      data.campusPreference1 != "" &&
-      data.campusPreference2 != "" &&
-      data.campusPreference3 != ""
-    ) {
-      errors["campusPreference1"] = "";
-      errors["campusPreference2"] = "";
-      errors["campusPreference3"] = "";
-    }
+    // if (
+    //   data.campusPreference3 === data.campusPreference2 ||
+    //   data.campusPreference1 === data.campusPreference2 ||
+    //   data.campusPreference3 === data.campusPreference1
+    // ) {
+    //   errors["campusPreference1"] = "All preferences should be different";
+    //   errors["campusPreference2"] = "All preferences should be different";
+    //   errors["campusPreference3"] = "All preferences should be different";
+    // } else if (
+    //   data.campusPreference1 != "" &&
+    //   data.campusPreference2 != "" &&
+    //   data.campusPreference3 != ""
+    // ) {
+    //   errors["campusPreference1"] = "";
+    //   errors["campusPreference2"] = "";
+    //   errors["campusPreference3"] = "";
+    // }
 
     if (data.firstName === "") {
       errors["firstName"] = "Field cannot be empty";
@@ -438,15 +464,15 @@ function PersonalInfo() {
     setStateVar({ data: data, errors: errors });
     data = {
       ...data,
-      campusPreference: [
-        data.campusPreference1,
-        data.campusPreference2,
-        data.campusPreference3,
-      ],
+      // campusPreference: [
+      //   data.campusPreference1,
+      //   data.campusPreference2,
+      //   data.campusPreference3,
+      // ],
     };
-    delete data["campusPreference1"];
-    delete data["campusPreference2"];
-    delete data["campusPreference3"];
+    // delete data["campusPreference1"];
+    // delete data["campusPreference2"];
+    // delete data["campusPreference3"];
 
     let validate = true;
 
@@ -463,6 +489,7 @@ function PersonalInfo() {
         personalInfo: personalInfo,
         academicsInfo: personalData.academicsInfo,
         professionalExperience: personalData.professionalExperience,
+        feesDetails: personalData.feesDetails,
         id: personalData._id,
         message: "Personal Info Completed"
       };
@@ -606,7 +633,7 @@ function PersonalInfo() {
                   </StyledTableCell>
                 </StyledTableRow>
 
-                <StyledTableRow>
+                {/* <StyledTableRow>
                   <StyledTableCell sx={{ padding: "16px" }}>
                     <Box mb={0.5} mt={0.5} mr={0}>
                       {renderText1({
@@ -666,7 +693,7 @@ function PersonalInfo() {
                       </Grid>
                     </Grid>
                   </StyledTableCell>
-                </StyledTableRow>
+                </StyledTableRow> */}
 
                 <StyledTableRow>
                   <StyledTableCell>
@@ -682,6 +709,7 @@ function PersonalInfo() {
                           name: "firstName",
                           stateVar,
                           handleOnChange: handleOnChange,
+                          personalData: personalData,
                         })}
                       </Grid>
                       <Grid item xs={12} sm={3}>
@@ -690,6 +718,7 @@ function PersonalInfo() {
                           name: "middleName",
                           stateVar,
                           handleOnChange: handleOnChange,
+                          personalData: personalData,
                         })}
                       </Grid>
                       <Grid item xs={12} sm={3}>
@@ -698,6 +727,7 @@ function PersonalInfo() {
                           name: "lastName",
                           stateVar,
                           handleOnChange: handleOnChange,
+                          personalData: personalData,
                         })}
                       </Grid>
                     </Grid>{" "}
@@ -717,6 +747,7 @@ function PersonalInfo() {
                       name: "Address",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -734,6 +765,7 @@ function PersonalInfo() {
                       name: "permanentAddress",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -770,6 +802,7 @@ function PersonalInfo() {
                         { value: "female", label: "Female" },
                         { value: "Other", label: "Other" },
                       ],
+                      personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -793,6 +826,7 @@ function PersonalInfo() {
                         { value: "Yes", label: "Yes" },
                         { value: "No", label: "No" },
                       ],
+                      personalData
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -823,6 +857,7 @@ function PersonalInfo() {
                       name: "PHname",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -840,6 +875,7 @@ function PersonalInfo() {
                       name: "PHemail",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -859,6 +895,7 @@ function PersonalInfo() {
                       name: "PHnumber",
                       stateVar,
                       handleOnChange: handleOnChange,
+                      personalData: personalData,
                     })}
                   </StyledTableCell>
                 </StyledTableRow>
@@ -874,7 +911,7 @@ function PersonalInfo() {
                   {personalData &&
                     "personalInfo" in personalData &&
                     "dob" in personalData.personalInfo &&
-                    personalData.personalInfo.dob.length === 3 && (
+                    personalData.personalInfo.dob.length === 3 && (personalData.applicationFilled==false || (personalData.applicationFilled==true && personalData.modifications.includes("dob") && personalData.personalInfoEditable==true)) && (
                       <StyledTableCell>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]}>
@@ -901,6 +938,21 @@ function PersonalInfo() {
                             </DemoItem>
                           </DemoContainer>
                         </LocalizationProvider>
+                      </StyledTableCell>
+                    )}
+
+{personalData &&
+                    "personalInfo" in personalData &&
+                    "dob" in personalData.personalInfo &&
+                    personalData.personalInfo.dob.length === 3 && personalData.applicationFilled==true && (!personalData.modifications.includes("dob")) && (
+                      <StyledTableCell>
+                        {renderInputTextDisabled({
+                      label: personalData.personalInfo.dob[0] +
+                      "-" +
+                      personalData.personalInfo.dob[1] +
+                      "-" +
+                      personalData.personalInfo.dob[2],
+                    })}
                       </StyledTableCell>
                     )}
                 
@@ -962,6 +1014,7 @@ function PersonalInfo() {
                         name: "domicileState",
                         stateVar,
                         handleOnChange: handleOnChange,
+                        personalData: personalData
                         })}
                     </StyledTableCell>
                 </StyledTableRow>
@@ -981,6 +1034,7 @@ function PersonalInfo() {
                         name: "caste",
                         stateVar,
                         handleOnChange: handleOnChange,
+                        personalData: personalData
                         })}
                     </StyledTableCell>
                 </StyledTableRow>
@@ -1000,6 +1054,7 @@ function PersonalInfo() {
                         name: "nationality",
                         stateVar,
                         handleOnChange: handleOnChange,
+                        personalData: personalData
                         })}
                     </StyledTableCell>
                 </StyledTableRow>
@@ -1016,7 +1071,33 @@ function PersonalInfo() {
         >
           SAVE & GO TO NEXT
         </Button>
+        <Box sx={{height:"70px"}} />
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon />
+          </IconButton>
+          <Typography color="inherit">
+          http://www.coep.org.in/
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+          <Box sx={{ flexGrow: 0.2 }} />
+          <IconButton color="inherit">
+            <CallIcon />
+          </IconButton>
+          <Typography color="inherit">
+          9876543210
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }

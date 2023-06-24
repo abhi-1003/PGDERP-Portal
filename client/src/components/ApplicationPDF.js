@@ -453,5 +453,5 @@ export default function downloadApplicationPDF(candidateID = null) {
 //       console.log(err);
 //       alert("could not download application. Try again");
 //     });
-console.log("Entered application pdf")
+// console.log("Entered application pdf")
 }

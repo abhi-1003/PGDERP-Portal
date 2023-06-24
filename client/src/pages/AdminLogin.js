@@ -51,7 +51,7 @@ export default function AdminLogin() {
         email: values.email,
         password: values.password
       };
-      console.log(data);
+    //   console.log(data);
       const url = BACKEND_URL + "/admin/loginAdmin";
       axios
         .post(url, data)
@@ -61,7 +61,16 @@ export default function AdminLogin() {
           // console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "admin");
-          navigate("/admin/home");
+          navigate("/admin/home", {
+            state: {
+              options : {
+                "Home" : "/admin/home",
+                "Add Co-ordinator" : "/admin/registerCoord",
+                "View Data" : "/admin/grid",
+                "Logout" : "/admin/login"
+              }
+            }
+          });
         })
         .catch(err => {
           alert("Invalid credentials. Login again");
