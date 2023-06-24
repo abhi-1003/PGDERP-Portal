@@ -227,7 +227,10 @@ function Download() {
 
   React.useEffect(() => {
     if (location.state) {
-      if (location.state.student_data._id) {
+      if (location.state.student_data._id && location.state.student_data["personalInfoFilled"] &&
+      location.state.student_data["academicsInfoFilled"] &&
+      location.state.student_data["professionalExperienceFilled"] &&
+      location.state.student_data["documentsFilled"] && location.state.student_data["feesDetailsFilled"] ) {
         let body = { id: location.state.student_data._id };
         let url = BACKEND_URL + "/student/me";
         axios
@@ -1083,6 +1086,12 @@ function Download() {
           {personalData["personalInfoFilled"] &&
           personalData["academicsInfoFilled"] &&
           personalData["professionalExperienceFilled"] &&
+          personalData["documentsFilled"] && personalData["feesDetailsFilled"] && !photo && !sign  ? (
+            <div>Loading ...</div>
+          ) : (
+          personalData["personalInfoFilled"] &&
+          personalData["academicsInfoFilled"] &&
+          personalData["professionalExperienceFilled"] &&
           personalData["documentsFilled"] && personalData["feesDetailsFilled"] && photo && sign ? (
             <PDFDownloadLink document={<MyDoc />} fileName="Application.pdf">
               <Button
@@ -1101,33 +1110,31 @@ function Download() {
             </PDFDownloadLink>
           ) : (
             <div>Save all sections first</div>
-          )}
+          )
+
+        )}
         </Paper>
       </Box>
       <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
         <Toolbar>
         <Box sx={{ flexGrow: 0.4 }} />
         <IconButton color="inherit">
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon/>
           </IconButton>
           <Typography color="inherit">
+            <a href="http://www.coep.org.in/" target="_blank" rel="noopener noreferrer">
           http://www.coep.org.in/
+          </a>
           </Typography>
-          <Box sx={{ flexGrow: 0.2 }} />
+          <Box sx={{ flexGrow: 0.3 }} />
           <IconButton color="inherit">
             <MailIcon />
           </IconButton>
           <Typography color="inherit">
           pgdadmission@coeptech.ac.in
           </Typography>
-          <Box sx={{ flexGrow: 0.2 }} />
-          <IconButton color="inherit">
-            <CallIcon />
-          </IconButton>
-          <Typography color="inherit">
-          9876543210
-          </Typography>
         </Toolbar>
+        
       </AppBar>
     </Box>
   );

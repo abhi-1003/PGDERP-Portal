@@ -308,26 +308,22 @@ function ResponsiveStudentHome() {
         <Toolbar>
         <Box sx={{ flexGrow: 0.4 }} />
         <IconButton color="inherit">
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon/>
           </IconButton>
           <Typography color="inherit">
+            <a href="http://www.coep.org.in/" target="_blank" rel="noopener noreferrer">
           http://www.coep.org.in/
+          </a>
           </Typography>
-          <Box sx={{ flexGrow: 0.2 }} />
+          <Box sx={{ flexGrow: 0.3 }} />
           <IconButton color="inherit">
             <MailIcon />
           </IconButton>
           <Typography color="inherit">
           pgdadmission@coeptech.ac.in
           </Typography>
-          <Box sx={{ flexGrow: 0.2 }} />
-          <IconButton color="inherit">
-            <CallIcon />
-          </IconButton>
-          <Typography color="inherit">
-          9876543210
-          </Typography>
         </Toolbar>
+        
       </AppBar>
     </Box>
   );
