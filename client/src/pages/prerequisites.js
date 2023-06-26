@@ -205,7 +205,7 @@ function Prerequisites() {
               <Box mt={1} mb={2}>
                 {renderText({
                   label:
-                    "Before proceeding to fill up the Online Application Form, please ensure that you have the following Scanned Images (Maximum upload size of each document is 1.5 MB, Accepted File Types for documents : .pdf & Images : .img):",
+                    "Before proceeding to fill up the Online Application Form, please ensure that you have the following Scanned Images (Maximum upload size of each document is 512 Kb, Accepted File Types for documents : .pdf & Images : .img):",
                   color: "black",
                   variant: "h7",
                   align: "justify"

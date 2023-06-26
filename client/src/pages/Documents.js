@@ -227,6 +227,13 @@ function Documents() {
       }
     }
 
+    const fileSizeLimit = 512 * 1024;
+    if (event.target.files[0].size > fileSizeLimit) {
+      v = false;
+      alert("Please upload a file smaller than 512kb.");
+    }
+
+
     if (v) {
       data.append("file", event.target.files[0], event.target.files[0].name);
       ele.file = data;
@@ -714,11 +721,14 @@ function Documents() {
                               flexWrap: "wrap",
                             }}
                           >
-                            <CloudUpload
-                              style={{ cursor: "cursor" }}
-                              onClick={() => fileSubmit(i)}
-                            />
-                            <span>Upload</span>
+                            <div 
+                              style={{ cursor: "pointer",
+                                       display: "flex",
+                                       alignItems: "center", }}
+                              onClick={() => fileSubmit(i)}>
+                              <CloudUpload />
+                              <span>Upload</span>
+                            </div>
                           </div>
                         </TableCell>
                       {/* )} */}
