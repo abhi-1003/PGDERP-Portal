@@ -30,6 +30,7 @@ import CoordinatorIndividual from "./components/Coordinator/coordinatorIndividua
 import IndiStudent from "./components/Coordinator/indiStudent";
 import FeesDetails from "./pages/fees";
 import GridAdmin from "./pages/Grid";
+import FeesDetailsAdmin from "./pages/FeesDetailsAdmin";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -202,6 +203,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
               <GridAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/feesDetails"
+          element={
+            <ProtectedRoute allowedRoles={[roles.admin]}>
+              <FeesDetailsAdmin />
             </ProtectedRoute>
           }
         />

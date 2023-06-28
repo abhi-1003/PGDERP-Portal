@@ -69,6 +69,7 @@ export default function AdminLogin() {
                 Home: "/admin/home",
                 "Add Co-ordinator": "/admin/registerCoord",
                 "View Data": "/admin/grid",
+                "Fees Details": "/admin/feesDetails",
                 Logout: "/admin/login",
               },
             },

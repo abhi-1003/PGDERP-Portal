@@ -18,6 +18,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import EditIcon from '@mui/icons-material/Edit';
 import DownloadIcon from '@mui/icons-material/Download';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -173,6 +174,11 @@ export default function AdminHome() {
                 }
                 {
                   index === 3 && (
+                    <AccountBalanceIcon />
+                  )
+                }
+                {
+                  index === 4 && (
                     <LogoutIcon />
                   )
                 }
