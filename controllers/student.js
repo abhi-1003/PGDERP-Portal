@@ -7,8 +7,8 @@ const Counter = require("../models/counter");
 const Coordinator = require("../models/coordinator");
 //sample data
 //{"ID":"12345", "course":"PGDERP","coursePreference":["vcpde","dsa"],"lastName":"kuv","firstName":"abiu","middleName":"oil","Address":"iugwouh","permanentAddress":"ohoih","email":"a@gmail.com","gender":"iqbd","phyDis":"oubdo","number":"768768798","PHname":"hbdibqkudh","PHemail":"qydiy@khvdk.com","PHnumber":"927987298","dob":"24122002","domicileState":"maharashtra","nationality":"indian"}
+//PGDBA: "BA",
 const courseIds = {
-  PGDBA: "BA",
   PGDERP: "ERP",
   PGDDSAI: "DSAI",
   PGDESIoT: "ESIoT23",
