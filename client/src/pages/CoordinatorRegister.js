@@ -184,10 +184,10 @@ export default function UserRegister() {
                     onChange={handleInputChange}
                     error={errors.cpassword}
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={<Checkbox onChange={handleCheck} value="PGDBA" />}
                     label="PGDBA"
-                  />
+                  /> */}
                   <FormControlLabel
                     control={
                       <Checkbox onChange={handleCheck} value="PGDDSAI" />

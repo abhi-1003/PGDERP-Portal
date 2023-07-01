@@ -81,9 +81,9 @@ export default function UserRegister() {
         else{
           const ind = res.data.data.toString().padStart(4, "0");
           let id = "";
-          if(course === "PGDBA"){
-            id = `BA23${ind}`;
-          }
+          // if(course === "PGDBA"){
+          //   id = `BA23${ind}`;
+          // }
           if(course === "PGDERP"){
             id = `ERP23${ind}`;
           }
@@ -220,7 +220,7 @@ export default function UserRegister() {
                         label="Course*"
                         onChange={handleCourseChange}
                       >
-                        <MenuItem value = {"PGDBA"}>Building Automation(PGDBA)</MenuItem>
+                        {/* <MenuItem value = {"PGDBA"}>Building Automation(PGDBA)</MenuItem> */}
                         <MenuItem value={"PGDDSAI"}>Data Science and Artificial Intelligence(PGDDSAI)</MenuItem>
                         <MenuItem value={"PGDESIoT"}>Embedded Systems for Internet of Things(PGDESIoT)</MenuItem>
                         <MenuItem value={"PGDERP"}>Enterprise Resourse Planning(PGDERP)</MenuItem>
