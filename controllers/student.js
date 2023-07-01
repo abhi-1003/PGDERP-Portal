@@ -28,6 +28,7 @@ exports.personalDetails = async (req, res) => {
     firstName,
     middleName,
     Address,
+    Pincode,
     permanentAddress,
     email,
     gender,
@@ -51,6 +52,7 @@ exports.personalDetails = async (req, res) => {
     user.personalInfo.firstName = firstName;
     user.personalInfo.middleName = middleName;
     user.personalInfo.Address = Address;
+    user.personalInfo.Pincode = Pincode;
     user.personalInfo.permanentAddress = permanentAddress;
     user.personalInfo.email = email;
     user.personalInfo.gender = gender;
@@ -131,6 +133,7 @@ exports.getPersonalDetails = async (req, res) => {
         firstName: user.personalInfo.firstName,
         middleName: user.personalInfo.middleName,
         postalAddress: user.personalInfo.Address,
+        Pincode: user.personalInfo.Pincode,
         permanentAddress: user.personalInfo.permanentAddress,
         email: user.email,
         gender: user.personalInfo.gender,

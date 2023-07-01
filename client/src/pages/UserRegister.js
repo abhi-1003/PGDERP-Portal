@@ -160,14 +160,15 @@ export default function UserRegister() {
               sx={{
                 bgcolor: "#012d5e",
                 width: "100px",
-                height: "100px"
+                height: "100px",
+                marginTop: "5px"
               }}
             ></Avatar>
             <Typography component="h1" variant="h5">
               COEP PG Diploma Admissions
             </Typography>
             <Typography component="h6" variant="h6">
-              Student Register
+              Application Form
             </Typography>
             <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
@@ -264,6 +265,21 @@ export default function UserRegister() {
                       }}
                     >
                       {"Already Registered? Log In"}
+                    </Link>
+                  </Grid>
+                  <Grid item xs>
+                    <Link
+                      href="/files/How to Apply for PGD Courses 2023.pdf"
+                      download="How to Apply for PGD Courses 2023"
+                      target="_blank"
+                      rel="nonreferrer"
+                      variant="body2"
+                      style={{
+                        textDecoration: "none",
+                        alignItems: "center"
+                      }}
+                    >
+                      {"Need Help? Click Here"}
                     </Link>
                   </Grid>
                 </Grid>

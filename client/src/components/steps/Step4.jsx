@@ -38,7 +38,7 @@ export default function Step4() {
             "dbName": "sscEq"
         },
         {
-            "name": "HSC/Equivalent (Std. XII/level 12) Marksheet",
+            "name": "HSC/Diploma (All semester grade sheets, passing certificate)",
             "status": "Pending",
             "file": null,
             "dbName": "hscEq"
@@ -48,6 +48,12 @@ export default function Step4() {
             "status": "Pending",
             "file": null,
             "dbName": "grad"
+        },
+        {
+            "name": "Post Graduation All Semester Grade Sheets, Passing Certificate, Degree Certificate",
+            "status": "Pending",
+            "file": null,
+            "dbName": "postGrad"
         },
         {
             "name": "Aadhar/Passport",

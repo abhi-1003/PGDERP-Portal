@@ -202,7 +202,23 @@ export default function UserLogin() {
                           {"Don't have an account? Register"}
                         </Link>
                       </Grid>
+                      
                     </Grid>
+                    <Grid item xs sx={{ p: 1}}>
+                        <Link
+                          href="/files/How to Apply for PGD Courses 2023.pdf"
+                          download="How to Apply for PGD Courses 2023"
+                          target="_blank"
+                          rel="nonreferrer"
+                          variant="body2"
+                          style={{
+                            textDecoration: "none",
+                            alignItems: "center"
+                          }}
+                        >
+                          {"Need Help? Click Here"}
+                        </Link>
+                      </Grid>
                   </Grid>
                 </Grid>
               </Form>

@@ -132,6 +132,7 @@ const GridAdmin = () => {
   columnDefs.push({ field: "Middle Name" });
   columnDefs.push({ field: "Last Name" });
   columnDefs.push({ field: "Address" });
+  columnDefs.push({ field: "Pincode" });
   columnDefs.push({ field: "Permanent Address" });
   columnDefs.push({ field: "Gender" });
   columnDefs.push({ field: "Physical Disability" });
@@ -265,6 +266,9 @@ const GridAdmin = () => {
             }
             if ("Address" in students[student]["personalInfo"]) {
               row["Address"] = students[student]["personalInfo"]["Address"];
+            }
+            if ("Pincode" in students[student]["personalInfo"]) {
+              row["Pincode"] = students[student]["personalInfo"]["Pincode"];
             }
             if ("permanentAddress" in students[student]["personalInfo"]) {
               row["Permanent Address"] =

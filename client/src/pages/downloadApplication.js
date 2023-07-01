@@ -337,6 +337,17 @@ function Download() {
 
           <View style={styles.tableRow}>
             <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Pincode</Text>
+            </View>
+            <View style={styles.tableCol3}>
+              <Text style={styles.tableCell}>
+                {personalData.personalInfo.Pincode}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
               <Text style={styles.tableCell}>Permanent Address</Text>
             </View>
             <View style={styles.tableCol3}>

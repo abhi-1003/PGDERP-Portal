@@ -96,6 +96,7 @@ function PersonalInfo() {
       firstName: "",
       middleName: "",
       Address: "",
+      Pincode: "",
       permanentAddress: "",
       gender: "",
       phyDis: "",
@@ -178,6 +179,13 @@ function PersonalInfo() {
         personalData.personalInfo.Address
       ) {
         copyData = { ...copyData, Address: personalData.personalInfo.Address };
+      }
+
+      if (
+        "Pincode" in personalData.personalInfo &&
+        personalData.personalInfo.Pincode
+      ) {
+        copyData = { ...copyData, Pincode: personalData.personalInfo.Pincode };
       }
 
       if (
@@ -394,6 +402,12 @@ function PersonalInfo() {
       errors["Address"] = "Field cannot be empty";
     } else {
       errors["Address"] = "";
+    }
+
+    if (data.Pincode === "") {
+      errors["Pincode"] = "Field cannot be empty";
+    } else {
+      errors["Pincode"] = "";
     }
 
     if (data.permanentAddress === "") {
@@ -742,6 +756,8 @@ function PersonalInfo() {
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell>
+                  <Grid container spacing={4} style={{ marginBottom: "1px" }}>
+                  <Grid item xs={12} sm={8}>
                     {renderMultiInputText({
                       label: "",
                       name: "Address",
@@ -749,6 +765,17 @@ function PersonalInfo() {
                       handleOnChange: handleOnChange,
                       personalData: personalData,
                     })}
+                      </Grid>
+                    <Grid item xs={12} sm={2} >
+                    {renderMultiInputText({
+                      label: "Pincode",
+                      name: "Pincode",
+                      stateVar,
+                      handleOnChange: handleOnChange,
+                      personalData: personalData,
+                    })}
+                  </Grid>
+                  </Grid>
                   </StyledTableCell>
                 </StyledTableRow>
 

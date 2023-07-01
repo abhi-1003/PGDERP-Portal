@@ -110,6 +110,7 @@ function Documents() {
   const [loading8, setLoading8] = React.useState(false);
   const [loading9, setLoading9] = React.useState(false);
   const [loading10, setLoading10] = React.useState(false);
+  const [loading11, setLoading11] = React.useState(false);
   const [ot, setOt] = React.useState(true);
   const [pf, setPf] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -117,6 +118,7 @@ function Documents() {
     sscEq: "",
     hscEq: "",
     grad: "",
+    postGrad: "",
     aadharPassport: "",
     profExp: "",
     otCourses: "",
@@ -135,7 +137,7 @@ function Documents() {
       originalname: "",
     },
     {
-      name: "HSC/Equivalent (Std. XII/level 12) Marksheet",
+      name: "HSC/Diploma (All semester grade sheets, passing certificate)",
       status: "Pending",
       file: null,
       dbName: "hscEq",
@@ -148,6 +150,15 @@ function Documents() {
       status: "Pending",
       file: null,
       dbName: "grad",
+      filename: "",
+      originalname: "",
+    },
+    {
+      name:
+        "Post Graduation All Semester Grade Sheets, Passing Certificate, Degree Certificate",
+      status: "Pending",
+      file: null,
+      dbName: "postGrad",
       filename: "",
       originalname: "",
     },
@@ -215,7 +226,7 @@ function Documents() {
     const ele = tempDocs[index];
     const data = new FormData();
     let v = true;
-    if (index == 8 || index == 9) {
+    if (index == 9 || index == 10) {
       if (event.target.files[0].type != "image/png") {
         v = false;
         alert("Please Upload PNG file");
@@ -277,6 +288,9 @@ function Documents() {
         if (index == 9) {
           setLoading10(true);
         }
+        if (index == 10) {
+          setLoading11(true);
+        }
 
         axios
           .post(URL, docs[index]["file"])
@@ -333,6 +347,9 @@ function Documents() {
                 if (index == 9) {
                   setLoading10(false);
                 }
+                if (index == 10) {
+                  setLoading11(false);
+                }
               })
               .catch(function(err) {
                 console.log(err);
@@ -350,19 +367,19 @@ function Documents() {
   const handleSave = () => {
     let validate = true;
     Object.keys(docs).map((row) => {
-      if (row == 4 && pf) {
+      if (row == 5 && pf) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
       }
 
-      if (row == 5 && ot) {
+      if (row == 6 && ot) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
       }
 
-      if (row != 4 && row != 5) {
+      if (row != 5 && row != 6) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
@@ -382,7 +399,8 @@ function Documents() {
       !loading5 &&
       !loading6 &&
       !loading7 &&
-      !loading8
+      !loading8 &&
+      !loading9
     ) {
       const url = BACKEND_URL + "/student/docFilled";
       const body = {
@@ -443,6 +461,7 @@ function Documents() {
     loading8,
     loading9,
     loading10,
+    loading11,
   ]);
 
   const handleDrawerToggle = () => {
@@ -601,7 +620,7 @@ function Documents() {
           </Grid>
           <Grid container spacing={2} style={{ justifyContent: "center" }}>
           <Box mt={1} mb={2}>
-              {renderText({ label: "Document No. 1-8 : PDF & Document 9-10 : PNG" })}
+              {renderText({ label: "Document No. 1-9: PDF & Document 10-11: PNG" })}
             </Box>
           </Grid>
         </Paper>
@@ -684,15 +703,15 @@ function Documents() {
                       <TableCell>{i + 1}</TableCell>
                       <TableCell>
                         {docs[row]["name"]}
-                        {i != 4 && i != 5 && (
+                        {i != 5 && i != 6 && (
                           <Typography color="red">Mandatory</Typography>
                         )}
 
-                        {i == 4 && pf && (
+                        {i == 5 && pf && (
                           <Typography color="red">Mandatory</Typography>
                         )}
 
-                        {i == 5 && ot && (
+                        {i == 6 && ot && (
                           <Typography color="red">Mandatory</Typography>
                         )}
                       </TableCell>
@@ -733,7 +752,7 @@ function Documents() {
                         </TableCell>
                       {/* )} */}
 
-                      {docs[row]["filename"] && i != 8 && i != 9 && (
+                      {docs[row]["filename"] && i != 9 && i != 10 && (
                         <TableCell>
                           <DocViewer
                             filename={docs[row]["filename"]}
@@ -741,7 +760,7 @@ function Documents() {
                           />
                         </TableCell>
                       )}
-                      {docs[row]["filename"] && (i == 8 || i == 9) && (
+                      {docs[row]["filename"] && (i == 9 || i == 10) && (
                         <TableCell>
                           <Button
                             onClick={() => {
