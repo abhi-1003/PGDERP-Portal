@@ -30,7 +30,7 @@ import { useLocation } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
 import { BACKEND_URL } from '../config';
 import axios from 'axios';
-
+import Header from './Header'
 import HomeIcon from '@mui/icons-material/Home';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import EditIcon from '@mui/icons-material/Edit';
@@ -246,26 +246,29 @@ function ResponsiveStudentHome() {
         sx={{flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
+
+          <Header />
+
         <Box display="flex" justifyContent="center" alignItems="center">
-        <Typography variant="h5" sx = {{paddingTop: "1%", paddingBottom: "1%", margin: "auto"}}>Student Information </Typography>
+        <Typography variant="h4" sx = {{paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "600", marginBottom: "15px"}}>Student Information </Typography>
         </Box>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
+        <Grid container rowSpacing={0.1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
           <Typography variant="h6">Name: {personal_data.name}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
           <Typography variant="h6">Email-ID: {personal_data.email}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
           <Typography variant="h6">Course: {personal_data.course}</Typography>
         </Grid>
-        <Grid item xs={6} sx = {{padding:"1% 1%"}}>
+        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
           <Typography variant="h6">Mobile-No: {personal_data.mobile}</Typography>
         </Grid>
 
         {/* TABLE */}
 
-        <TableContainer sx ={{paddingLeft: "2%", paddingTop: "0.1%"}}>
+        <TableContainer sx ={{marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%"}}>
         <Table  aria-label="customized table" sx ={{paddingLeft: "2%"}}>
         <TableHead>
           <TableRow>

@@ -19,6 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 import bg_pic from "../components/images/coepBuilding.png"
+import Header from '../components/Header'
 
 const theme = createTheme();
 const initialFValues = {
@@ -129,6 +130,7 @@ export default function UserRegister() {
           bottom: "0px",
           left: "0px",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           backgroundPosition: "center",
@@ -138,6 +140,8 @@ export default function UserRegister() {
           minHeight: "100vh"
         }}
       >
+            <Header />
+
         <Container
           component="main"
           item="true"
@@ -146,6 +150,7 @@ export default function UserRegister() {
             backgroundColor: "#E5EDF1",
             borderRadius: "32px",
             opacity: 0.8,
+            paddingBottom: "5px"
           }}
         >
           <CssBaseline />
@@ -159,8 +164,8 @@ export default function UserRegister() {
             <Avatar
               sx={{
                 bgcolor: "#012d5e",
-                width: "90px",
-                height: "90px",
+                width: "100px",
+                height: "100px",
                 marginTop: "4px"
               }}
             ></Avatar>

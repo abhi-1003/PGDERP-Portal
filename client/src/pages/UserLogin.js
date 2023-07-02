@@ -15,6 +15,7 @@ import Input from "./Input";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import bg_pic from "../components/images/coepBuilding.png";
+import Header from '../components/Header'
 
 const theme = createTheme();
 const initialFValues = {
@@ -93,6 +94,7 @@ export default function UserLogin() {
             bottom: "0px",
             left: "0px",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             backgroundPosition: "center",
@@ -102,6 +104,8 @@ export default function UserLogin() {
             minHeight: "100vh"
           }}
         >
+
+          <Header />
           <Container
             component="main"
             maxWidth="xs"
@@ -130,7 +134,7 @@ export default function UserLogin() {
               <Typography
                 component="h1"
                 variant="h5"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: "20px", fontWeight: "600" }}
               >
                 COEP PG Diploma Login
               </Typography>

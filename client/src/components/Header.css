@@ -1,0 +1,23 @@
+.header-container2{
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0 15px 0;
+}
+
+.header-container2 img{
+    object-fit: cover;
+    max-height: 140px;
+}
+
+@media (max-width: 600px) {
+    .header-container2 #logo1{
+        width: 100%;
+    }
+
+    .header-container2 #logo2 {
+        display: none;
+    }
+}
