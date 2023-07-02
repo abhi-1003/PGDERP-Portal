@@ -586,20 +586,27 @@ function AcademicsInfo() {
   const today = dayjs();
 
   const handleOnChangeDate = (name, value) => {
-    const newFormData = { ...addFormData };
-    let d = value.$D
-    let m = value.$M + 1
-    let y = value.$y
-    newFormData[name] = d + "-" + m + "-" + y
-
-    if(name == "periodFrom"){
-      setPeriodFromDate(
-        dayjs(
-          y + "-" + m + "-" + d
+    if(name==="periodFrom" || name==="periodTo"){
+      const newFormData = { ...addFormData };
+      let d = value.$D
+      let m = value.$M + 1
+      let y = value.$y
+      newFormData[name] = y + "-" + m + "-" + d;
+  
+      if(name == "periodFrom" || name == "periodTo"){
+        setPeriodFromDate(
+          dayjs(
+            y + "-" + m + "-" + d
+          )
         )
-      )
+      }
+      setAddFormData(newFormData);
     }
-    setAddFormData(newFormData);
+    else{
+      let { data, errors } = stateVar;
+      data[name] = [value.$D, value.$M + 1, value.$y];
+      setStateVar({ data: data, errors: errors });
+    }   
   };
 
   const handleDeleteClick = contactId => {
@@ -623,9 +630,10 @@ function AcademicsInfo() {
 
   const handleAddFormSubmit = event => {
     event.preventDefault();
+    console.log(addFormData.periodFrom);
     if (
-      addFormData.periodFrom.length == 4 &&
-      addFormData.periodTo.length == 4
+      addFormData.periodFrom.length !== 0 &&
+      addFormData.periodTo.length !== 0 && addFormData.periodTo > addFormData.periodFrom
     ) {
       setOtherCoursesError("");
       const newContact = {
@@ -655,7 +663,7 @@ function AcademicsInfo() {
       setPeriodToDate(getValue5.value);
       var getValue6= document.getElementById("t6");
       getValue6.value = "";
-      otherCoursesChange();
+      otherCoursesChange(newContacts);
     } else {
       setOtherCoursesError("Please enter a valid year");
     }
