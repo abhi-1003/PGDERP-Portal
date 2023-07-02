@@ -114,6 +114,7 @@ function ProfessionalExperience() {
 	});
 
   const [periodFromDate, setPeriodFromDate] = React.useState(null);
+  const [periodToDate, setPeriodToDate] = React.useState(null);
 
     const [addFormData, setAddFormData] = React.useState({
 		companyName: "",
@@ -162,6 +163,7 @@ function ProfessionalExperience() {
       setPeriodFromDate(getValue3.value)
       var getValue4= document.getElementById("t4");
       getValue4.value = "";
+      setPeriodToDate(getValue4.value)
       var getValue5= document.getElementById("t5");
       getValue5.value = "";
 		professionalExperienceChange(newContacts)
@@ -475,9 +477,9 @@ return (
 					variant="outlined"
 					name="companyName"
 					// fullWidth={true}
-					size="small"
+					size="medium"
 					onChange={handleAddFormChange}
-					style={{ margin: "1px" }}
+					//style={{ margin: "1px" }}
           id = "t1"
 				/>
 				<TextField
@@ -486,8 +488,8 @@ return (
 					variant="outlined"
 					name="rankDesignation"
 					// fullWidth={true}
-					size="small"
-					style={{ margin: "1px" }}
+					size="medium"
+					//style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
           id = "t2"
 				/>
@@ -497,7 +499,7 @@ return (
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={["DatePicker"]}>
                           {" "}
-                          <DemoItem label="Period From">
+                          <DemoItem label="">
                             <DatePicker
                               disableFuture
                               // views={['year', 'month', 'day']}
@@ -530,7 +532,33 @@ return (
 					onChange={handleAddFormChange}
           id = "t3"
 				/> */}
-				<TextField
+        {
+          personalData && "professionalExperience" in  personalData && personalData.professionalExperienceEditable === true && (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={["DatePicker"]}>
+                          {" "}
+                          <DemoItem label="">
+                            <DatePicker
+                              disableFuture
+                              // views={['year', 'month', 'day']}
+                              slotProps={{
+                                textField: {
+                                    required: true,
+                                    id: 't4'
+                                }
+                            }}
+                            value = {periodToDate}
+                              name="periodTo"
+                              onChange={(value) => {
+                                handleOnChangeDate("periodTo", value)
+                              }}
+                            ></DatePicker>
+                          </DemoItem>
+                        </DemoContainer>
+            </LocalizationProvider>
+          )
+        }
+				{/* <TextField
 					label="Period To"
 					// color={color ? color : "primary"}
 					variant="outlined"
@@ -540,15 +568,15 @@ return (
 					style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
           id = "t4"
-				/>
+				/> */}
 				<TextField
 					label="Nature of Work"
 					// color={color ? color : "primary"}
 					variant="outlined"
 					name="workNature"
 					// fullWidth={true}
-					size="small"
-					style={{ margin: "1px" }}
+					size="medium"
+					//style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
           id = "t5"
 				/>
