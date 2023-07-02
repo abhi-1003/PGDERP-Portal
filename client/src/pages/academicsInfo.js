@@ -97,7 +97,8 @@ function AcademicsInfo() {
   const [validate1, setValidate1] = React.useState(false);
   const [validate2, setValidate2] = React.useState(false);
   const [validate3, setValidate3] = React.useState(false);
-
+  const [periodFromDate, setPeriodFromDate] = React.useState(null);
+  const [periodToDate, setPeriodToDate] = React.useState(null);
   const [contacts, setContacts] = React.useState(dataa);
   const [addFormData, setAddFormData] = React.useState({
     courseName: "",
@@ -585,9 +586,20 @@ function AcademicsInfo() {
   const today = dayjs();
 
   const handleOnChangeDate = (name, value) => {
-    let { data, errors } = stateVar;
-    data[name] = [value.$D, value.$M + 1, value.$y];
-    setStateVar({ data: data, errors: errors });
+    const newFormData = { ...addFormData };
+    let d = value.$D
+    let m = value.$M + 1
+    let y = value.$y
+    newFormData[name] = d + "-" + m + "-" + y
+
+    if(name == "periodFrom"){
+      setPeriodFromDate(
+        dayjs(
+          y + "-" + m + "-" + d
+        )
+      )
+    }
+    setAddFormData(newFormData);
   };
 
   const handleDeleteClick = contactId => {
@@ -637,8 +649,10 @@ function AcademicsInfo() {
       getValue3.value = "";
       var getValue4= document.getElementById("t4");
       getValue4.value = "";
+      setPeriodFromDate(getValue4.value);
       var getValue5= document.getElementById("t5");
       getValue5.value = "";
+      setPeriodToDate(getValue5.value);
       var getValue6= document.getElementById("t6");
       getValue6.value = "";
       otherCoursesChange();
@@ -648,7 +662,7 @@ function AcademicsInfo() {
 
     // console.log(newContacts);
   };
-
+  
   const handleAddFormChange = event => {
     event.preventDefault();
 
@@ -2241,8 +2255,8 @@ function AcademicsInfo() {
                       <TableCell>Name of Course Name</TableCell>
                       <TableCell>Name of University</TableCell>
                       <TableCell>Specialization</TableCell>
-                      <TableCell>Period From (Enter Year Only)</TableCell>
-                      <TableCell>Period To (Enter Year Only)</TableCell>
+                      <TableCell>Period From</TableCell>
+                      <TableCell>Period To</TableCell>
                       <TableCell>Grade/Marks(%)</TableCell>
 
                       <TableCell>Actions</TableCell>
@@ -2292,7 +2306,7 @@ function AcademicsInfo() {
                       variant="outlined"
                       name="courseName"
                       // fullWidth={true}
-                      size="small"
+                      size="medium"
                       onChange={handleAddFormChange}
                       style={{ margin: "1px" }}
                       id = "t1"
@@ -2303,7 +2317,7 @@ function AcademicsInfo() {
                       variant="outlined"
                       name="uniName"
                       // fullWidth={true}
-                      size="small"
+                      size="medium"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
                       id = "t2"
@@ -2314,12 +2328,35 @@ function AcademicsInfo() {
                       variant="outlined"
                       name="specialization"
                       // fullWidth={true}
-                      size="small"
+                      size="medium"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
                       id = "t3"
                     />
-                    <TextField
+                    
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={["DatePicker"]}>
+                          {" "}
+                          <DemoItem label="">
+                            <DatePicker
+                              disableFuture
+                              // views={['year', 'month', 'day']}
+                              slotProps={{
+                                textField: {
+                                    required: true,
+                                    id: 't4'
+                                }
+                            }}
+                            value = {periodFromDate}
+                              name="periodFrom"
+                              onChange={(value) => {
+                                handleOnChangeDate("periodFrom", value)
+                              }}
+                            ></DatePicker>
+                          </DemoItem>
+                        </DemoContainer>
+            </LocalizationProvider>
+                    {/* <TextField
                       label="Period From"
                       // color={color ? color : "primary"}
                       variant="outlined"
@@ -2329,8 +2366,30 @@ function AcademicsInfo() {
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
                       id = "t4"
-                    />
-                    <TextField
+                    /> */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={["DatePicker"]}>
+                          {" "}
+                          <DemoItem label="">
+                            <DatePicker
+                              disableFuture
+                              // views={['year', 'month', 'day']}
+                              slotProps={{
+                                textField: {
+                                    required: true,
+                                    id: 't5'
+                                }
+                            }}
+                            value = {periodToDate}
+                              name="periodTo"
+                              onChange={(value) => {
+                                handleOnChangeDate("periodTo", value)
+                              }}
+                            ></DatePicker>
+                          </DemoItem>
+                        </DemoContainer>
+            </LocalizationProvider>
+                    {/* <TextField
                       label="Period To"
                       // color={color ? color : "primary"}
                       variant="outlined"
@@ -2340,14 +2399,14 @@ function AcademicsInfo() {
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
                       id = "t5"
-                    />
+                    /> */}
                     <TextField
                       label="Grade"
                       // color={color ? color : "primary"}
                       variant="outlined"
                       name="grade"
                       // fullWidth={true}
-                      size="small"
+                      size="medium"
                       style={{ margin: "1px" }}
                       onChange={handleAddFormChange}
                       id = "t6"
