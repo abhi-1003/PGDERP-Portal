@@ -127,11 +127,12 @@ function CandidateDetails({setStep}) {
       if(response.data.verified.includes('aadharPassport')){
         t -= 1
       }
+      console.log("value of t", t)
       setK(t)
       setData(response.data.personalDetails);
       // setToBeVerified(response.data.verified);
       setNowVerified(response.data.verified);
-      
+      console.log(134, response.data.verified);
     })
     .catch((err)=>{
       console.log(err)
@@ -219,8 +220,8 @@ function CandidateDetails({setStep}) {
         }
       }
     }
-    console.log(temp2);
-    console.log(temp)
+    console.log("verified", temp2);
+    console.log("modified", temp)
     setToBeVerified(temp2);
     setToBeModified(temp);
   }
@@ -348,14 +349,14 @@ function CandidateDetails({setStep}) {
                       <StyledTableCell className={classes.StyledTableCell} width="25%">
                         {(nowVerified.includes('dob') && nowVerified.includes('age'))? <FormControl>
                         <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} value="modification" id={['dob', 'age', 'aadharPassport']}/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} value="accepted" id={['dob', 'age', 'aadharPassport']}/>} label="Accepted" />
+                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} value="modification" id={['dob', 'age']}/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} value="accepted" id={['dob', 'age']}/>} label="Accepted" />
                         </RadioGroup>
                         </FormControl>:
                         <FormControl>
                         <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id={['dob', 'age', 'aadharPassport']}/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id={['dob', 'age', 'aadharPassport']}/>} label="Accepted" />
+                        <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} value="modification" id={['dob', 'age']}/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} value="accepted" id={['dob', 'age']}/>} label="Accepted" />
                         </RadioGroup>
                         </FormControl>}
                       </StyledTableCell>
