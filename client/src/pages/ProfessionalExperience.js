@@ -109,15 +109,17 @@ function ProfessionalExperience() {
 		companyName: "",
 		rankDesignation: "",
 		periodFrom: "",
-		periodFrom: "",
+		periodTo: "",
 		workNature: "",
 	});
+
+  const [periodFromDate, setPeriodFromDate] = React.useState(null);
 
     const [addFormData, setAddFormData] = React.useState({
 		companyName: "",
 		rankDesignation: "",
 		periodFrom: "",
-		periodFrom: "",
+		periodTo: "",
 		workNature: "",
 	});
 
@@ -138,6 +140,8 @@ function ProfessionalExperience() {
 		// periodFrom: ""
 		// workNature: ""
 
+    //console.log(addFormData)
+
 		const newContact = {
 			id: nanoid(),
 			companyName: addFormData.companyName,
@@ -154,7 +158,8 @@ function ProfessionalExperience() {
       var getValue2= document.getElementById("t2");
       getValue2.value = "";
       var getValue3= document.getElementById("t3");
-      getValue3.value = "";
+      getValue3.value = ""
+      setPeriodFromDate(getValue3.value)
       var getValue4= document.getElementById("t4");
       getValue4.value = "";
       var getValue5= document.getElementById("t5");
@@ -201,6 +206,23 @@ function ProfessionalExperience() {
 
 		setAddFormData(newFormData);
 	};
+
+  const handleOnChangeDate = (name, value) => {
+    const newFormData = { ...addFormData };
+    let d = value.$D
+    let m = value.$M + 1
+    let y = value.$y
+    newFormData[name] = d + "-" + m + "-" + y
+
+    if(name == "periodFrom"){
+      setPeriodFromDate(
+        dayjs(
+          y + "-" + m + "-" + d
+        )
+      )
+    }
+    setAddFormData(newFormData);
+  }
 
 
 
@@ -470,7 +492,34 @@ return (
           id = "t2"
 				/>
 
-				<TextField
+        {
+          personalData && "professionalExperience" in  personalData && personalData.professionalExperienceEditable === true && (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={["DatePicker"]}>
+                          {" "}
+                          <DemoItem label="Period From">
+                            <DatePicker
+                              disableFuture
+                              // views={['year', 'month', 'day']}
+                              slotProps={{
+                                textField: {
+                                    required: true,
+                                    id: 't3'
+                                }
+                            }}
+                            value = {periodFromDate}
+                              name="periodFrom"
+                              onChange={(value) => {
+                                handleOnChangeDate("periodFrom", value)
+                              }}
+                            ></DatePicker>
+                          </DemoItem>
+                        </DemoContainer>
+            </LocalizationProvider>
+          )
+        }
+
+				{/* <TextField
 					label="Period From"
 					// color={color ? color : "primary"}
 					variant="outlined"
@@ -480,7 +529,7 @@ return (
 					style={{ margin: "1px" }}
 					onChange={handleAddFormChange}
           id = "t3"
-				/>
+				/> */}
 				<TextField
 					label="Period To"
 					// color={color ? color : "primary"}
