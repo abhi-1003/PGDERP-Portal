@@ -159,9 +159,9 @@ export default function UserRegister() {
             <Avatar
               sx={{
                 bgcolor: "#012d5e",
-                width: "100px",
-                height: "100px",
-                marginTop: "5px"
+                width: "90px",
+                height: "90px",
+                marginTop: "4px"
               }}
             ></Avatar>
             <Typography component="h1" variant="h5">
@@ -233,7 +233,10 @@ export default function UserRegister() {
                   </Box>
                   <Grid item xs={12}>
                     <Typography component="p" variant="body2">
-                      One student can register for only single course
+                      One email can be used for only 1 course.
+                    </Typography>
+                    <Typography component="p" variant="body2">
+                    To register for multiple courses, use multiple emails to register.
                     </Typography>
                     <Typography component="p" variant="body2">
                     OTP will be sent to entered Email-ID
@@ -261,6 +264,7 @@ export default function UserRegister() {
                       href="/student/login"
                       variant="body2"
                       style={{
+                        color: "blue",
                         alignItems: "center"
                       }}
                     >
@@ -275,6 +279,8 @@ export default function UserRegister() {
                       rel="nonreferrer"
                       variant="body2"
                       style={{
+                        color: "black",
+                        fontWeight: 600,
                         textDecoration: "none",
                         alignItems: "center"
                       }}

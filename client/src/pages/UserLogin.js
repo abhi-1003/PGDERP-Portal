@@ -184,7 +184,8 @@ export default function UserLogin() {
                           variant="body2"
                           style={{
                             textDecoration: "none",
-                            color: "#1d8ffe"
+                            color: "#1d8ffe",
+                            color: "blue"
                           }}
                         >
                           {"Home Page"}
@@ -196,7 +197,8 @@ export default function UserLogin() {
                           variant="body2"
                           style={{
                             textDecoration: "none",
-                            color: "#1d8ffe"
+                            color: "#1d8ffe",
+                            color: "blue"
                           }}
                         >
                           {"Don't have an account? Register"}
@@ -212,6 +214,8 @@ export default function UserLogin() {
                           rel="nonreferrer"
                           variant="body2"
                           style={{
+                            color: "black",
+                            fontWeight: 600,
                             textDecoration: "none",
                             alignItems: "center"
                           }}
