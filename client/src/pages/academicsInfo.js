@@ -55,6 +55,13 @@ import e from "cors";
 import dataa from "../components/steps/data.json";
 import ReadOnlyRow from "../components/ReadOnlyRow";
 import { nanoid } from "nanoid";
+
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+
 import HomeIcon from '@mui/icons-material/Home';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import EditIcon from '@mui/icons-material/Edit';
@@ -108,6 +115,7 @@ function AcademicsInfo() {
     periodTo: "",
     grade: ""
   });
+  const [ot, setOt] = React.useState(true);
   const [otherCoursesError, setOtherCoursesError] = React.useState("");
   const [stateVar, setStateVar] = React.useState({
     data: {
@@ -173,6 +181,14 @@ function AcademicsInfo() {
 
   const otherCoursesChange = () => {
     setValidate3(false);
+  };
+
+  const handleChangeot = (event) => {
+    if (event.target.value == "graduated") {
+      setOt(true);
+    } else {
+      setOt(false);
+    }
   };
 
   React.useEffect(() => {
@@ -586,20 +602,34 @@ function AcademicsInfo() {
   const today = dayjs();
 
   const handleOnChangeDate = (name, value) => {
-    const newFormData = { ...addFormData };
-    let d = value.$D
-    let m = value.$M + 1
-    let y = value.$y
-    newFormData[name] = d + "-" + m + "-" + y
-
-    if(name == "periodFrom"){
-      setPeriodFromDate(
-        dayjs(
-          y + "-" + m + "-" + d
+    if(name==="periodFrom" || name==="periodTo"){
+      const newFormData = { ...addFormData };
+      let d = value.$D
+      let m = value.$M + 1
+      let y = value.$y
+      newFormData[name] = y + "-" + m + "-" + d;
+  
+      if(name == "periodFrom"){
+        setPeriodFromDate(
+          dayjs(
+            y + "-" + m + "-" + d
+          )
         )
-      )
+      }
+      else{
+        setPeriodToDate(
+          dayjs(
+            y + "-" + m + "-" + d
+          )
+        )
+      }
+      setAddFormData(newFormData);
     }
-    setAddFormData(newFormData);
+    else{
+      let { data, errors } = stateVar;
+      data[name] = [value.$D, value.$M + 1, value.$y];
+      setStateVar({ data: data, errors: errors });
+    }   
   };
 
   const handleDeleteClick = contactId => {
@@ -623,9 +653,10 @@ function AcademicsInfo() {
 
   const handleAddFormSubmit = event => {
     event.preventDefault();
+    console.log(addFormData.periodFrom);
     if (
-      addFormData.periodFrom.length == 4 &&
-      addFormData.periodTo.length == 4
+      addFormData.periodFrom.length !== 0 &&
+      addFormData.periodTo.length !== 0 && addFormData.periodTo > addFormData.periodFrom
     ) {
       setOtherCoursesError("");
       const newContact = {
@@ -655,7 +686,7 @@ function AcademicsInfo() {
       setPeriodToDate(getValue5.value);
       var getValue6= document.getElementById("t6");
       getValue6.value = "";
-      otherCoursesChange();
+      otherCoursesChange(newContacts);
     } else {
       setOtherCoursesError("Please enter a valid year");
     }
@@ -860,7 +891,7 @@ function AcademicsInfo() {
       errors["GradTo"] = "";
     }
 
-    if (data.FinalYearMarksGrad === "") {
+    if (data.FinalYearMarksGrad === "" && ot===true) {
       errors["FinalYearMarksGrad"] = "Field cannot be empty";
     } else {
       if (
@@ -1690,6 +1721,35 @@ function AcademicsInfo() {
               })}
             </Box>
           </Grid>
+          <TableBody>
+              <TableRow>
+                <TableCell>
+                <FormControl>
+                    <FormLabel sx={{p:"5px"}} id="demo-row-radio-buttons-group-label">
+                      Have you completed Your Graduation?
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      defaultValue={"graduated"}
+                    >
+                      <FormControlLabel
+                        value="graduated"
+                        control={<Radio onChange={handleChangeot} />}
+                        label="Graduated"
+                        align
+                      />
+                      <FormControlLabel
+                        value="appeared"
+                        control={<Radio onChange={handleChangeot} />}
+                        label="Appeared"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  </TableCell>
+                  </TableRow>
+                  </TableBody>
           <TableContainer component={Paper}>
             <Table aria-label="Graduation and Post-Graduation Academics Details">
               <TableHead>
@@ -1905,7 +1965,7 @@ function AcademicsInfo() {
                             {" "}
                             <DemoItem label="">
                               <DatePicker
-                                disableFuture
+                      
                                 // views={['year', 'month', 'day']}
                                 name="GradTo"
                                 defaultValue={dayjs(
@@ -1938,7 +1998,7 @@ function AcademicsInfo() {
                             {" "}
                             <DemoItem label="">
                               <DatePicker
-                                disableFuture
+                          
                                 // views={['year', 'month', 'day']}
                                 name="GradTo"
                                 onChange={value =>
