@@ -55,6 +55,13 @@ import e from "cors";
 import dataa from "../components/steps/data.json";
 import ReadOnlyRow from "../components/ReadOnlyRow";
 import { nanoid } from "nanoid";
+
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+
 import HomeIcon from '@mui/icons-material/Home';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import EditIcon from '@mui/icons-material/Edit';
@@ -108,6 +115,7 @@ function AcademicsInfo() {
     periodTo: "",
     grade: ""
   });
+  const [ot, setOt] = React.useState(true);
   const [otherCoursesError, setOtherCoursesError] = React.useState("");
   const [stateVar, setStateVar] = React.useState({
     data: {
@@ -173,6 +181,14 @@ function AcademicsInfo() {
 
   const otherCoursesChange = () => {
     setValidate3(false);
+  };
+
+  const handleChangeot = (event) => {
+    if (event.target.value == "graduated") {
+      setOt(true);
+    } else {
+      setOt(false);
+    }
   };
 
   React.useEffect(() => {
@@ -593,8 +609,15 @@ function AcademicsInfo() {
       let y = value.$y
       newFormData[name] = y + "-" + m + "-" + d;
   
-      if(name == "periodFrom" || name == "periodTo"){
+      if(name == "periodFrom"){
         setPeriodFromDate(
+          dayjs(
+            y + "-" + m + "-" + d
+          )
+        )
+      }
+      else{
+        setPeriodToDate(
           dayjs(
             y + "-" + m + "-" + d
           )
@@ -868,7 +891,7 @@ function AcademicsInfo() {
       errors["GradTo"] = "";
     }
 
-    if (data.FinalYearMarksGrad === "") {
+    if (data.FinalYearMarksGrad === "" && ot===true) {
       errors["FinalYearMarksGrad"] = "Field cannot be empty";
     } else {
       if (
@@ -1698,6 +1721,35 @@ function AcademicsInfo() {
               })}
             </Box>
           </Grid>
+          <TableBody>
+              <TableRow>
+                <TableCell>
+                <FormControl>
+                    <FormLabel sx={{p:"5px"}} id="demo-row-radio-buttons-group-label">
+                      Have you completed Your Graduation?
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      defaultValue={"graduated"}
+                    >
+                      <FormControlLabel
+                        value="graduated"
+                        control={<Radio onChange={handleChangeot} />}
+                        label="Graduated"
+                        align
+                      />
+                      <FormControlLabel
+                        value="appeared"
+                        control={<Radio onChange={handleChangeot} />}
+                        label="Appeared"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  </TableCell>
+                  </TableRow>
+                  </TableBody>
           <TableContainer component={Paper}>
             <Table aria-label="Graduation and Post-Graduation Academics Details">
               <TableHead>
@@ -1913,7 +1965,7 @@ function AcademicsInfo() {
                             {" "}
                             <DemoItem label="">
                               <DatePicker
-                                disableFuture
+                      
                                 // views={['year', 'month', 'day']}
                                 name="GradTo"
                                 defaultValue={dayjs(
@@ -1946,7 +1998,7 @@ function AcademicsInfo() {
                             {" "}
                             <DemoItem label="">
                               <DatePicker
-                                disableFuture
+                          
                                 // views={['year', 'month', 'day']}
                                 name="GradTo"
                                 onChange={value =>

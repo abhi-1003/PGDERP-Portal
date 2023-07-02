@@ -223,6 +223,13 @@ function ProfessionalExperience() {
         )
       )
     }
+    else{
+      setPeriodToDate(
+        dayjs(
+          y + "-" + m + "-" + d
+        )
+      )
+    }
     setAddFormData(newFormData);
   }
 

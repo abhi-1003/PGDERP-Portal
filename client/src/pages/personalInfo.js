@@ -1020,7 +1020,7 @@ function PersonalInfo() {
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell sx={{ padding: "8px" }}>
-                    {renderInputTextDisabled({
+                  {renderText1({
                       label: stateVar["data"]["age"],
                     })}
                   </StyledTableCell>
