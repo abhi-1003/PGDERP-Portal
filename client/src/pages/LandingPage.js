@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -23,9 +23,55 @@ import { Paper } from "@material-ui/core";
 import { renderText } from "../components/common/displayComponents";
 import './landingPage.css';
 
+import SBPdf from '../docs/SB-CollectProcedure.pdf'
+import selfDec from '../docs/Self-Declaration.docx'
+import declaration from '../docs/declaration.docx'
+import undertaking from '../docs/undertaking.docx'
+import contacts from '../docs/contacts.pdf'
+
 const drawerWidth = 280;
 
 function Sidebar(props) {
+    const [cards] = useState([
+        {
+            title: 'Undertaking',
+            text: 'For the applicant whose final semester result is awaited',
+            name: undertaking,
+            download: 'UNDERTAKING.docx'
+        },
+        {
+            title: 'Declaration',
+            text: 'Educational marks declaration by the college',
+            name: declaration,
+            download: 'Educational_Marks_Declaration.docx'
+        },
+        {
+            title: 'SB-Collect',
+            text: 'Procedures and steps for payment',
+            name: SBPdf,
+            download: 'SB-CollectProcedure.pdf'
+        },
+        {
+            title: 'Self-Declaration',
+            text: 'Professional and educational gap, along with declaration of marks.',
+            name: selfDec,
+            download: 'Self-Declaration.docx'
+        },
+        {
+            title: 'Contacts',
+            text: 'For any query contact us at given phone numbers',
+            name: contacts,
+            download: 'COEP_contacts_us.pdf'
+        },
+    ])
+    const downloadFile=(index, downloadName)=>{
+        const aTag = document.createElement('a');
+        aTag.href = cards[index].name
+        aTag.setAttribute('download',downloadName);
+        document.body.appendChild(aTag);
+        aTag.click();
+        document.body.removeChild(aTag);
+    }
     const navigate = useNavigate();
 
     const { window } = props;
@@ -137,7 +183,22 @@ function Sidebar(props) {
                     {/* <Outlet /> */}
                     <Paper component={Box} p={2} style={{marginTop: "60px"}}>
                         <Box mt={1} mb={2}>
-                            <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus recusandae commodi, deserunt id molestias dolorem ratione eligendi aperiam reiciendis saepe nesciunt? Tenetur, dolorem. Harum numquam necessitatibus omnis accusantium dolores veniam!</h4>
+                            <div className='cards'>
+                                {
+                                    cards.map((card, i)=>(
+                                        <div key={i} className='card'>
+                                            <h3>
+                                                {card.title}
+                                            </h3>
+                                            <p>
+                                                {card.text}
+                                            </p>
+                                            <button className='btn' onClick={()=>{downloadFile(i, card.download)}}>Download</button>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            {/* <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus recusandae commodi, deserunt id molestias dolorem ratione eligendi aperiam reiciendis saepe nesciunt? Tenetur, dolorem. Harum numquam necessitatibus omnis accusantium dolores veniam!</h4> */}
                         </Box>
                     </Paper>
                 </Box>

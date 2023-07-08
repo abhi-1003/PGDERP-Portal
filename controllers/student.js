@@ -10,6 +10,7 @@ const Coordinator = require("../models/coordinator");
 //PGDBA: "BA",
 const courseIds = {
   PGDERP: "ERP",
+  PGDEM: "EM23",
   PGDDSAI: "DSAI",
   PGDESIoT: "ESIoT23",
   PGDIPDD: "IPDD23",
