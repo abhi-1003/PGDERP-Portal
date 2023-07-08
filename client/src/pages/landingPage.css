@@ -1,0 +1,41 @@
+.landing-page-header-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.landing-page-header-container2{
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 0 10px 0;
+}
+
+.landing-page-header-container2 img{
+    object-fit: cover;
+    max-height: 110px;
+    mix-blend-mode: multiply;
+}
+
+.landing-page-header-container2 #logo2{
+    margin-left: 5px;
+}
+
+@media (max-width: 600px) {
+    .landing-page-header-container2 #logo1{
+        width: 100%;
+    }
+
+    .landing-page-header-container2 #logo2 {
+        display: none;
+    }
+}
+
+.sidebar-logo{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

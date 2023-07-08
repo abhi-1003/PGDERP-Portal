@@ -31,6 +31,7 @@ import IndiStudent from "./components/Coordinator/indiStudent";
 import FeesDetails from "./pages/fees";
 import GridAdmin from "./pages/Grid";
 import FeesDetailsAdmin from "./pages/FeesDetailsAdmin";
+import LandingPage from "./pages/LandingPage";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -49,7 +50,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" exact element = {<Navigate to="/student/register" />}></Route>
+        <Route path="/" exact element={<LandingPage />}></Route>
         <Route path="/student/login" element={<UserLogin />} exact></Route>
         <Route path="/student/register" element={<UserRegister />}></Route>
         
