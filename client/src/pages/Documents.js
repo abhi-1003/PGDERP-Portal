@@ -113,6 +113,7 @@ function Documents() {
   const [loading11, setLoading11] = React.useState(false);
   const [ot, setOt] = React.useState(true);
   const [pf, setPf] = React.useState(true);
+  const [pg, setPg] = React.useState(true);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [docSchema, setDocSchema] = React.useState({
     sscEq: "",
@@ -367,6 +368,12 @@ function Documents() {
   const handleSave = () => {
     let validate = true;
     Object.keys(docs).map((row) => {
+      if (row == 3 && pg) {
+        if (docs[row]["filename"] === "") {
+          validate = false;
+        }
+      }
+
       if (row == 5 && pf) {
         if (docs[row]["filename"] === "") {
           validate = false;
@@ -379,7 +386,7 @@ function Documents() {
         }
       }
 
-      if (row != 5 && row != 6) {
+      if (row != 5 && row != 6 && row != 3) {
         if (docs[row]["filename"] === "") {
           validate = false;
         }
@@ -466,6 +473,14 @@ function Documents() {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleChangepg = (event) => {
+    if (event.target.value == "yes") {
+      setPg(true);
+    } else {
+      setPg(false);
+    }
   };
 
   const handleChangeot = (event) => {
@@ -635,6 +650,33 @@ function Documents() {
                 <TableCell>
                   <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">
+                      Do you have Post Graduate Documents?
+                    </FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      defaultValue={"yes"}
+                    >
+                      <FormControlLabel
+                        value="yes"
+                        control={<Radio onChange={handleChangepg} />}
+                        label="Yes"
+                        align
+                      />
+                      <FormControlLabel
+                        value="no"
+                        control={<Radio onChange={handleChangepg} />}
+                        label="No"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">
                       Do you have Other Courses Documents?
                     </FormLabel>
                     <RadioGroup
@@ -705,7 +747,11 @@ function Documents() {
                       <TableCell>{i + 1}</TableCell>
                       <TableCell>
                         {docs[row]["name"]}
-                        {i != 5 && i != 6 && (
+                        {i != 3 && i != 5 && i != 6 && (
+                          <Typography color="red">Mandatory</Typography>
+                        )}
+
+                        {i == 3 && pg && (
                           <Typography color="red">Mandatory</Typography>
                         )}
 
