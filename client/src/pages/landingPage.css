@@ -1,4 +1,4 @@
-.landing-page-header-container{
+.landing-page-header-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -6,7 +6,7 @@
     width: 100%;
 }
 
-.landing-page-header-container2{
+.landing-page-header-container2 {
     height: auto;
     display: flex;
     align-items: center;
@@ -14,19 +14,20 @@
     padding: 7px 0 10px 0;
 }
 
-.landing-page-header-container2 img{
+.landing-page-header-container2 img {
     object-fit: cover;
     max-height: 110px;
     mix-blend-mode: multiply;
 }
 
-.landing-page-header-container2 #logo2{
+.landing-page-header-container2 #logo2 {
     margin-left: 5px;
 }
 
-@media (max-width: 600px) {
-    .landing-page-header-container2 #logo1{
-        width: 100%;
+@media (max-width: 1000px) {
+    .landing-page-header-container .title {
+        font-size: 25px;
+        padding: 25px 0;
     }
 
     .landing-page-header-container2 #logo2 {
@@ -34,35 +35,64 @@
     }
 }
 
-.sidebar-logo{
+@media (max-width: 600px) {
+    .landing-page-header-container .title {
+        font-size: 20px;
+        padding: 25px 0;
+    }
+
+
+    .landing-page-header-container2 #logo1 {
+        width: 100%;
+    }
+}
+
+.sidebar-logo {
     width: 100px;
     height: 100px;
     object-fit: cover;
 }
 
-.cards{
+.cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
-.card{
-    flex: 0 0 calc(33.33% - 20px);
-    max-width: calc(33.33% - 20px);
-    width: 100%;
+.card {
+    /* flex: 0 0 calc(33.33% - 20px); */
+    /* max-width: calc(33.33% - 20px); */
+    /* width: 100%; */
+    position: relative;
+    max-height: 225px;
+    width: 370px;
     background: #E5EDF1;
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 20px;
+    margin: 0px 5px;
     margin-bottom: 20px;
     transition: 0.3s;
     border: 2px solid transparent;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
 }
 
-.card:hover{
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 7px;
+    background-color: #00aaff;
+    border-radius: 10px 0 0 10px;
+}
+
+.card:hover {
     border-color: #00aaff;
 }
 
-.btn{
+.btn {
     border: none;
     outline: none;
     background-color: #00aaff;
@@ -70,16 +100,17 @@
     border-radius: 10px;
     max-width: 100%;
     height: 25px;
+    display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
     cursor: pointer;
     transition: .3s;
     border: 1px solid #00aaff;
+    padding: 15px;
 }
 
-.btn:hover{
+.btn:hover {
     background: transparent;
     color: #00aaff;
 }
-

@@ -23,6 +23,7 @@ import { Paper } from "@material-ui/core";
 import { renderText } from "../components/common/displayComponents";
 import './landingPage.css';
 
+import howToApply from '../docs/how-to-apply.pdf'
 import SBPdf from '../docs/SB-CollectProcedure.pdf'
 import selfDec from '../docs/Self-Declaration.docx'
 import declaration from '../docs/declaration.docx'
@@ -34,10 +35,16 @@ const drawerWidth = 280;
 function Sidebar(props) {
     const [cards] = useState([
         {
-            title: 'Undertaking',
-            text: 'For the applicant whose final semester result is awaited',
-            name: undertaking,
-            download: 'UNDERTAKING.docx'
+            title: 'Procedure',
+            text: 'Need Help? Here are the steps to apply for PGD courses',
+            name: howToApply,
+            download: 'How to apply for PGD courses.pdf'
+        },
+        {
+            title: 'SB-Collect',
+            text: 'Procedures and steps for payment',
+            name: SBPdf,
+            download: 'SB-CollectProcedure.pdf'
         },
         {
             title: 'Declaration',
@@ -46,10 +53,10 @@ function Sidebar(props) {
             download: 'Educational_Marks_Declaration.docx'
         },
         {
-            title: 'SB-Collect',
-            text: 'Procedures and steps for payment',
-            name: SBPdf,
-            download: 'SB-CollectProcedure.pdf'
+            title: 'Undertaking',
+            text: 'For the applicant whose final semester result is awaited',
+            name: undertaking,
+            download: 'UNDERTAKING.docx'
         },
         {
             title: 'Self-Declaration',
@@ -136,7 +143,7 @@ function Sidebar(props) {
                         </IconButton>
 
                         <div className='landing-page-header-container'>
-                            <Typography variant="h5" component="div" style={{ fontWeight: "600", color: "black" }}>
+                            <Typography variant="h5" component="div" className='title' style={{ fontWeight: "600", color: "black" }}>
                                 COEP PG - Diploma Admission Portal
                             </Typography>
                             <div className="landing-page-header-container2">
@@ -187,9 +194,9 @@ function Sidebar(props) {
                                 {
                                     cards.map((card, i)=>(
                                         <div key={i} className='card'>
-                                            <h3>
+                                            <h style={{fontWeight: "600"}}>
                                                 {card.title}
-                                            </h3>
+                                            </h>
                                             <p>
                                                 {card.text}
                                             </p>
