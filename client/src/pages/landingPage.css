@@ -24,26 +24,64 @@
     margin-left: 5px;
 }
 
+
+.landing-page-main {
+    margin-top: 60px;
+}
+
+.landing-page-ads {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.landing-page-ads img{
+    object-fit: contain;
+    width: 60%;
+    margin: 15px 0;
+}
+
 @media (max-width: 1000px) {
-    .landing-page-header-container .title {
-        font-size: 25px;
-        padding: 25px 0;
+    .landing-page-header-container {
+        flex-direction: column;
     }
 
+    .landing-page-header-container .title {
+        font-size: 17px;
+    }
+
+    .landing-page-header-container2 img {
+        max-height: 90px;
+    }
+
+    .landing-page-main {
+        margin-top: 85px;
+    }
+
+    .landing-page-ads img{
+        width: 90%;
+    }
+}
+
+@media (max-width: 750px) {
     .landing-page-header-container2 #logo2 {
         display: none;
     }
 }
 
+
 @media (max-width: 600px) {
     .landing-page-header-container .title {
-        font-size: 20px;
-        padding: 25px 0;
+        font-size: 15px;
     }
-
 
     .landing-page-header-container2 #logo1 {
         width: 100%;
+    }
+
+    .landing-page-ads img{
+        width: 95%;
     }
 }
 

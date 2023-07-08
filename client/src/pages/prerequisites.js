@@ -102,8 +102,10 @@ function Prerequisites() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div">
-            COEP PG - Diploma Admission Portal
+          <Typography variant="h6" component="div" style={{padding: "5px"}}>
+            COEP Technological University
+            <br />
+            PG - Diploma Admission Portal
           </Typography>
         </Toolbar>
       </AppBar>
@@ -164,7 +166,7 @@ function Prerequisites() {
           <Button
             variant="contained"
             onClick={() => {
-              download("/files/Self_Declaration.docx");
+              download("/files/Self-Declaration.pdf");
             }}
             color="success"
             style={{ margin: "0 auto", display: "flex", marginTop: "3%" }}
@@ -176,7 +178,7 @@ function Prerequisites() {
             variant="contained"
             onClick={() => {
               download(
-                "/files/Educational_Marks_Details_Declaration_by_College.docx"
+                "/files/declaration.pdf"
               );
             }}
             color="success"

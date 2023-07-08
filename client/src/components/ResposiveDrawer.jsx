@@ -43,33 +43,33 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const drawerWidth = 280;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#01257D",
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#01257D",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: "#FFFFFF",
-    },
-    '&:nth-of-type(even)': {
-        backgroundColor: "#D3D3D3",
-      },
-    // hide last border
-    // '&:last-child td, &:last-child th': {
-    //   border: 0,
-    // },
-  }));
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: "#FFFFFF",
+  },
+  '&:nth-of-type(even)': {
+    backgroundColor: "#D3D3D3",
+  },
+  // hide last border
+  // '&:last-child td, &:last-child th': {
+  //   border: 0,
+  // },
+}));
 
-  function createData(Details, Verification_Status, Completion_Status, Edit, Link) {
-    return { Details, Verification_Status, Completion_Status, Edit, Link};
-  }
-  
-  
+function createData(Details, Verification_Status, Completion_Status, Edit, Link) {
+  return { Details, Verification_Status, Completion_Status, Edit, Link };
+}
+
+
 
 function ResponsiveStudentHome() {
 
@@ -85,11 +85,11 @@ function ResponsiveStudentHome() {
   };
 
   const rows = [
-    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
-    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
-    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", personal_data["professionalExperienceEditable"] ? "Edit" : "Not Editable", "/student/professionalExperience"),
-    createData('Application Fee Details', personal_data["feesDetailsVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["feesDetailsFilled"] ? "Completed" : "Pending", personal_data["feesDetailsEditable"] ? "Edit" : "Not Editable", "/student/fees"),
-    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : (personal_data["modifications"].length>0 ? "Modification Required": "Not Verified"), personal_data["documentsFilled"] ? "Completed" : "Pending", personal_data["documentsEditable"] ? "Edit" : "Not Editable", "/student/documents"),
+    createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
+    createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
+    createData('Professional Details', personal_data["professionalExperienceVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["professionalExperienceFilled"] ? "Completed" : "Pending", personal_data["professionalExperienceEditable"] ? "Edit" : "Not Editable", "/student/professionalExperience"),
+    createData('Application Fee Details', personal_data["feesDetailsVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["feesDetailsFilled"] ? "Completed" : "Pending", personal_data["feesDetailsEditable"] ? "Edit" : "Not Editable", "/student/fees"),
+    createData('Documents Uploaded', personal_data["documentsVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["documentsFilled"] ? "Completed" : "Pending", personal_data["documentsEditable"] ? "Edit" : "Not Editable", "/student/documents"),
   ];
 
   React.useEffect(() => {
@@ -115,34 +115,34 @@ function ResponsiveStudentHome() {
     setReload(true)
     const url = BACKEND_URL + "/student/fullComplete";
     const body = {
-      id : personal_data._id
+      id: personal_data._id
     }
     axios
-    .post(url, body, {
-      headers:{
-        "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
-      }
-    })
-    .then((res) => {
-      alert(res.data.message)
-      navigate("/student/home", {
-        state: {
-          student_data : personal_data,
-          options: location.state.options
+      .post(url, body, {
+        headers: {
+          "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
         }
       })
-    })
+      .then((res) => {
+        alert(res.data.message)
+        navigate("/student/home", {
+          state: {
+            student_data: personal_data,
+            options: location.state.options
+          }
+        })
+      })
   }
 
   const drawer = (
-    <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
-      <Toolbar/>
+    <div style={{ backgroundColor: "#FFFFE0", minHeight: "100vh" }}>
+      <Toolbar />
       <List>
-      {location.state.options && Object.keys(location.state.options).map((text, index) => (
+        {location.state.options && Object.keys(location.state.options).map((text, index) => (
           <ListItem key={text}>
             <ListItemButton onClick={() => navigate(location.state.options[text], {
               state: {
-                student_data : personal_data,
+                student_data: personal_data,
                 options: location.state.options
               }
             })}>
@@ -180,16 +180,16 @@ function ResponsiveStudentHome() {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  
+
   return (
-    <Box bgcolor = "#E5EDF1" sx={{ display: 'flex', minHeight:"100vh" }}>
+    <Box bgcolor="#E5EDF1" sx={{ display: 'flex', minHeight: "100vh" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor:"#00ABE4"
+          backgroundColor: "#00ABE4"
         }}
       >
         <Toolbar>
@@ -202,8 +202,10 @@ function ResponsiveStudentHome() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div">
-            COEP PG - Diploma Admission Portal
+          <Typography variant="h6" component="div" style={{padding: "5px"}}>
+            COEP Technological University
+            <br />
+            PG - Diploma Admission Portal
           </Typography>
         </Toolbar>
       </AppBar>
@@ -229,7 +231,7 @@ function ResponsiveStudentHome() {
           {drawer}
         </Drawer>
         <Drawer
-        bg
+          bg
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
@@ -242,91 +244,93 @@ function ResponsiveStudentHome() {
       </Box>
       <Box
         component="main"
-        
-        sx={{flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
 
-          <Header />
+        <Header />
 
         <Box display="flex" justifyContent="center" alignItems="center">
-        <Typography variant="h4" sx = {{paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "600", marginBottom: "15px"}}>Student Information </Typography>
+          <Typography variant="h4" sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "600", marginBottom: "15px" }}>Student Information </Typography>
         </Box>
         <Grid container rowSpacing={0.1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
-          <Typography variant="h6">Name: {personal_data.name}</Typography>
-        </Grid>
-        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
-          <Typography variant="h6">Email-ID: {personal_data.email}</Typography>
-        </Grid>
-        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
-          <Typography variant="h6">Course: {personal_data.course}</Typography>
-        </Grid>
-        <Grid item xs={6} sx = {{padding:"0.5% 1%"}}>
-          <Typography variant="h6">Mobile-No: {personal_data.mobile}</Typography>
-        </Grid>
+          <Grid item xs={6} sx={{ padding: "0.5% 1%" }}>
+            <Typography variant="h6">Name: {personal_data.name}</Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ padding: "0.5% 1%" }}>
+            <Typography variant="h6">Email-ID: {personal_data.email}</Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ padding: "0.5% 1%" }}>
+            <Typography variant="h6">Course: {personal_data.course}</Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ padding: "0.5% 1%" }}>
+            <Typography variant="h6">Mobile-No: {personal_data.mobile}</Typography>
+          </Grid>
 
-        {/* TABLE */}
+          {/* TABLE */}
 
-        <TableContainer sx ={{marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%"}}>
-        <Table  aria-label="customized table" sx ={{paddingLeft: "2%"}}>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell wrap>DETAILS</StyledTableCell>
-            <StyledTableCell align="center" wrap>VERIFICATION STATUS</StyledTableCell>
-            <StyledTableCell align="center" wrap>COMPLETION STATUS</StyledTableCell>
-            <StyledTableCell align="center" wrap>EDITABLE</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.Details}>
-              <StyledTableCell component="th" scope="row">
-                {row.Details}
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.Verification_Status}</StyledTableCell>
-              <StyledTableCell align="center">{row.Completion_Status}</StyledTableCell>
-              <StyledTableCell align="center"><Button onClick={() => navigate(row.Link, {
-              state: {
-                student_data : personal_data,
-                options: location.state.options
-              }
-            })} sx = {{background : "#feca0a", color:"#012d5e", ":hover":{
-              background : "#00ABE4"
-            }}}>{row.Edit}</Button></StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          <TableContainer sx={{ marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%" }}>
+            <Table aria-label="customized table" sx={{ paddingLeft: "2%" }}>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell wrap>DETAILS</StyledTableCell>
+                  <StyledTableCell align="center" wrap>VERIFICATION STATUS</StyledTableCell>
+                  <StyledTableCell align="center" wrap>COMPLETION STATUS</StyledTableCell>
+                  <StyledTableCell align="center" wrap>EDITABLE</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <StyledTableRow key={row.Details}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.Details}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">{row.Verification_Status}</StyledTableCell>
+                    <StyledTableCell align="center">{row.Completion_Status}</StyledTableCell>
+                    <StyledTableCell align="center"><Button onClick={() => navigate(row.Link, {
+                      state: {
+                        student_data: personal_data,
+                        options: location.state.options
+                      }
+                    })} sx={{
+                      background: "#feca0a", color: "#012d5e", ":hover": {
+                        background: "#00ABE4"
+                      }
+                    }}>{row.Edit}</Button></StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-        <Button variant="contained" onClick = {() => handleSubmit()}color="success" style={{margin: '0 auto', display: "flex", marginTop:"3%" }}>
-        Submit Application
-        </Button>
+          <Button variant="contained" onClick={() => handleSubmit()} color="success" style={{ margin: '0 auto', display: "flex", marginTop: "3%" }}>
+            Submit Application
+          </Button>
 
-      </Grid>
-      <Box sx={{height:"70px"}} />
+        </Grid>
+        <Box sx={{ height: "70px" }} />
       </Box>
-      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+      <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, backgroundColor: "#00ABE4", height: "7%" }}>
         <Toolbar>
-        <Box sx={{ flexGrow: 0.4 }} />
-        <IconButton color="inherit">
-            <ArrowForwardIosIcon/>
+          <Box sx={{ flexGrow: 0.4 }} />
+          <IconButton color="inherit">
+            <ArrowForwardIosIcon />
           </IconButton>
           <Typography color="inherit">
             <a href="http://www.coep.org.in/" target="_blank" rel="noopener noreferrer">
-          http://www.coep.org.in/
-          </a>
+              http://www.coep.org.in/
+            </a>
           </Typography>
           <Box sx={{ flexGrow: 0.3 }} />
           <IconButton color="inherit">
             <MailIcon />
           </IconButton>
           <Typography color="inherit">
-          pgdadmission@coeptech.ac.in
+            pgdadmission@coeptech.ac.in
           </Typography>
         </Toolbar>
-        
+
       </AppBar>
     </Box>
   );

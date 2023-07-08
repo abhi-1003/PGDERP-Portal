@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,22 +11,23 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Navigate, useNavigate } from 'react-router-dom';
-import HeaderLogo from '../components/images/logo1.png'
+import { useNavigate } from 'react-router-dom';
+import HeaderLogo from '../components/images/header.jpg'
 import PGDLogo from '../components/images/pgdcoep.PNG';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LoginIcon from '@mui/icons-material/Login';
 import { Paper } from "@material-ui/core";
-import { renderText } from "../components/common/displayComponents";
 import './landingPage.css';
+import AdvertisementEng from '../components/images/ad_eng.jpeg';
+import AdvertisementMar from '../components/images/ad_mar.jpeg';
 
 import howToApply from '../docs/how-to-apply.pdf'
 import SBPdf from '../docs/SB-CollectProcedure.pdf'
-import selfDec from '../docs/Self-Declaration.docx'
-import declaration from '../docs/declaration.docx'
-import undertaking from '../docs/undertaking.docx'
+import selfDec from '../docs/Self-Declaration.pdf'
+import declaration from '../docs/declaration.pdf'
+import undertaking from '../docs/undertaking.pdf'
 import contacts from '../docs/contacts.pdf'
 
 const drawerWidth = 280;
@@ -50,19 +50,19 @@ function Sidebar(props) {
             title: 'Declaration',
             text: 'Educational marks declaration by the college',
             name: declaration,
-            download: 'Educational_Marks_Declaration.docx'
+            download: 'Educational_Marks_Declaration.pdf'
         },
         {
             title: 'Undertaking',
             text: 'For the applicant whose final semester result is awaited',
             name: undertaking,
-            download: 'UNDERTAKING.docx'
+            download: 'UNDERTAKING.pdf'
         },
         {
             title: 'Self-Declaration',
             text: 'Professional and educational gap, along with declaration of marks.',
             name: selfDec,
-            download: 'Self-Declaration.docx'
+            download: 'Self-Declaration.pdf'
         },
         {
             title: 'Contacts',
@@ -71,10 +71,10 @@ function Sidebar(props) {
             download: 'COEP_contacts_us.pdf'
         },
     ])
-    const downloadFile=(index, downloadName)=>{
+    const downloadFile = (index, downloadName) => {
         const aTag = document.createElement('a');
         aTag.href = cards[index].name
-        aTag.setAttribute('download',downloadName);
+        aTag.setAttribute('download', downloadName);
         document.body.appendChild(aTag);
         aTag.click();
         document.body.removeChild(aTag);
@@ -143,8 +143,10 @@ function Sidebar(props) {
                         </IconButton>
 
                         <div className='landing-page-header-container'>
-                            <Typography variant="h5" component="div" className='title' style={{ fontWeight: "600", color: "black" }}>
-                                COEP PG - Diploma Admission Portal
+                            <Typography variant="h6" component="div" className='title' style={{ fontWeight: "600", color: "black" }}>
+                                COEP Technological University
+                                <br />
+                                PG - Diploma Admission Portal
                             </Typography>
                             <div className="landing-page-header-container2">
                                 <img src={HeaderLogo} alt="" id="logo1" />
@@ -188,25 +190,29 @@ function Sidebar(props) {
                 <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
                     <Toolbar />
                     {/* <Outlet /> */}
-                    <Paper component={Box} p={2} style={{marginTop: "60px"}}>
+                    <Paper component={Box} p={2} className='landing-page-main'>
                         <Box mt={1} mb={2}>
                             <div className='cards'>
                                 {
-                                    cards.map((card, i)=>(
+                                    cards.map((card, i) => (
                                         <div key={i} className='card'>
-                                            <h style={{fontWeight: "600"}}>
+                                            <h style={{ fontWeight: "600" }}>
                                                 {card.title}
                                             </h>
                                             <p>
                                                 {card.text}
                                             </p>
-                                            <button className='btn' onClick={()=>{downloadFile(i, card.download)}}>Download</button>
+                                            <button className='btn' onClick={() => { downloadFile(i, card.download) }}>Download</button>
                                         </div>
                                     ))
                                 }
                             </div>
-                            {/* <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus recusandae commodi, deserunt id molestias dolorem ratione eligendi aperiam reiciendis saepe nesciunt? Tenetur, dolorem. Harum numquam necessitatibus omnis accusantium dolores veniam!</h4> */}
                         </Box>
+                    </Paper>
+
+                    <Paper className='landing-page-ads'>
+                        <img src={AdvertisementEng} alt="" />
+                        <img src={AdvertisementMar} alt="" />
                     </Paper>
                 </Box>
             </Box>

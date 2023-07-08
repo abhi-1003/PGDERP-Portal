@@ -105,6 +105,7 @@ export const OtpScript = () => {
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
         minHeight: "100vh",
+        backgroundColor: "#767676"
       }}>
       <Container
         component="main"

@@ -101,7 +101,8 @@ export default function UserLogin() {
             backgroundRepeat: "no-repeat",
             backgroundAttachment: "fixed",
             backgroundSize: "cover",
-            minHeight: "100vh"
+            minHeight: "100vh",
+            backgroundColor: "#767676"
           }}
         >
 
@@ -212,8 +213,8 @@ export default function UserLogin() {
                     </Grid>
                     <Grid item xs sx={{ p: 1}}>
                         <Link
-                          href="/files/How to Apply for PGD Courses 2023.pdf"
-                          download="How to Apply for PGD Courses 2023"
+                          href={require('../docs/how-to-apply.pdf')}
+                          download="How to Apply for PGD Courses"
                           target="_blank"
                           rel="nonreferrer"
                           variant="body2"

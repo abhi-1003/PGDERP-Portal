@@ -325,8 +325,10 @@ function FeesDetails() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div">
-            COEP PG - Diploma Admission Portal
+          <Typography variant="h6" component="div" style={{padding: "5px"}}>
+            COEP Technological University
+            <br />
+            PG - Diploma Admission Portal
           </Typography>
         </Toolbar>
       </AppBar>

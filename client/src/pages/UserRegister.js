@@ -137,7 +137,8 @@ export default function UserRegister() {
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
-          minHeight: "100vh"
+          minHeight: "100vh",
+          backgroundColor: "#767676"
         }}
       >
             <Header />
@@ -278,7 +279,7 @@ export default function UserRegister() {
                   </Grid>
                   <Grid item xs>
                     <Link
-                      href="/files/How to Apply for PGD Courses 2023.pdf"
+                      href={require('../docs/how-to-apply.pdf')}
                       download="How to Apply for PGD Courses 2023"
                       target="_blank"
                       rel="nonreferrer"

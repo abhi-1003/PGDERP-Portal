@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
   signImg: {
     width: "20%",
     height: "100px",
+    marginTop: 15,
     marginBottom: 5,
     marginLeft: "70%",
     backgroundColor: "white",
@@ -212,7 +213,8 @@ const styles = StyleSheet.create({
   },
   sign: {
     fontSize: 11,
-    textAlign: "right"
+    textAlign: "right",
+    marginRight: "30px"
   }
 });
 
@@ -1036,8 +1038,10 @@ function Download() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div">
-            COEP PG - Diploma Admission Portal
+          <Typography variant="h6" component="div" style={{padding: "5px"}}>
+            COEP Technological University
+            <br />
+            PG - Diploma Admission Portal
           </Typography>
         </Toolbar>
       </AppBar>

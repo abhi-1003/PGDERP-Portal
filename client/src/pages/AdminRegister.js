@@ -92,7 +92,8 @@ export default function AdminRegister() {
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
-          minHeight: "100vh"
+          minHeight: "100vh",
+          backgroundColor: "#767676"
         }}>
         <Container
           component="main"
