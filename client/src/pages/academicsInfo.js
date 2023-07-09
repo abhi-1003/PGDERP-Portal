@@ -1728,7 +1728,7 @@ function AcademicsInfo() {
                 <TableCell>
                 <FormControl>
                     <FormLabel sx={{p:"5px"}} id="demo-row-radio-buttons-group-label">
-                      Have you completed Your Graduation?
+                      Have you completed Your Graduation? (If appearing enter current marks in Aggregate %)
                     </FormLabel>
                     <RadioGroup
                       row
@@ -2521,8 +2521,8 @@ function AcademicsInfo() {
             <ArrowForwardIosIcon/>
           </IconButton>
           <Typography color="inherit">
-            <a href="http://www.coep.org.in/" target="_blank" rel="noopener noreferrer">
-          http://www.coep.org.in/
+            <a href="https://www.coep.org.in/content/postgraduatediplomaprogram" target="_blank" rel="noopener noreferrer">
+          https://www.coep.org.in/content/postgraduatediplomaprogram
           </a>
           </Typography>
           <Box sx={{ flexGrow: 0.3 }} />

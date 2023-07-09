@@ -226,11 +226,11 @@ export default function UserRegister() {
                         label="Course*"
                         onChange={handleCourseChange}
                       >
+                         <MenuItem value={"PGDERP"}>Enterprise Resourse Planning(PGDERP)</MenuItem>
+                         <MenuItem value={"PGDIPDD"}>Integrated Product Design and Development(PGDIPDD)</MenuItem>
+                         <MenuItem value={"PGDDSAI"}>Data Science and Artificial Intelligence(PGDDSAI)</MenuItem>
+                         <MenuItem value={"PGDESIoT"}>Embedded Systems for Internet of Things(PGDESIoT)</MenuItem>
                         <MenuItem value = {"PGDEM"}>Electric Mobility(PGDEM)</MenuItem>
-                        <MenuItem value={"PGDDSAI"}>Data Science and Artificial Intelligence(PGDDSAI)</MenuItem>
-                        <MenuItem value={"PGDESIoT"}>Embedded Systems for Internet of Things(PGDESIoT)</MenuItem>
-                        <MenuItem value={"PGDERP"}>Enterprise Resourse Planning(PGDERP)</MenuItem>
-                        <MenuItem value={"PGDIPDD"}>Integrated Product Design and Development(PGDIPDD)</MenuItem>
                         <MenuItem value={"PGDIA"}>Industrial Automation(PGDIA)</MenuItem>
                       </Select>
                       {!course && <FormHelperText sx= {{color: "red"}}>{errors.course}</FormHelperText>}
@@ -277,6 +277,9 @@ export default function UserRegister() {
                       {"Already Registered? Log In"}
                     </Link>
                   </Grid>
+                  <Grid item xs sx={{ p: 1}}>
+                        <Typography>For any Software Related Queries: pgdadmission@coeptech.ac.in</Typography>
+                      </Grid>
                   <Grid item xs>
                     <Link
                       href={require('../docs/how-to-apply.pdf')}
@@ -291,7 +294,7 @@ export default function UserRegister() {
                         alignItems: "center"
                       }}
                     >
-                      {"Need Help? Click Here"}
+                      {"Need Help? Click Here to Download Instructions"}
                     </Link>
                   </Grid>
                 </Grid>

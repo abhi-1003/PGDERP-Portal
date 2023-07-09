@@ -212,6 +212,9 @@ export default function UserLogin() {
                       
                     </Grid>
                     <Grid item xs sx={{ p: 1}}>
+                        <Typography>For any Software Related Queries: pgdadmission@coeptech.ac.in</Typography>
+                      </Grid>
+                    <Grid item xs sx={{ p: 1}}>
                         <Link
                           href={require('../docs/how-to-apply.pdf')}
                           download="How to Apply for PGD Courses"
@@ -225,10 +228,13 @@ export default function UserLogin() {
                             alignItems: "center"
                           }}
                         >
-                          {"Need Help? Click Here"}
+                          {"Need Help? Click Here to Download Instructions"}
                         </Link>
                       </Grid>
+
+                      
                   </Grid>
+                  
                 </Grid>
               </Form>
             </Box>

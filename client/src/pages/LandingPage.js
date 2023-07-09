@@ -22,7 +22,7 @@ import { Paper } from "@material-ui/core";
 import './landingPage.css';
 import AdvertisementEng from '../components/images/ad_eng.jpeg';
 import AdvertisementMar from '../components/images/ad_mar.jpeg';
-
+import Grid from "@mui/material/Grid";
 import howToApply from '../docs/how-to-apply.pdf'
 import SBPdf from '../docs/SB-CollectProcedure.pdf'
 import selfDec from '../docs/Self-Declaration.pdf'
@@ -190,6 +190,12 @@ function Sidebar(props) {
                 <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
                     <Toolbar />
                     {/* <Outlet /> */}
+                    <Paper component={Box} p ={1} className='landing-page-main' sx = {{color: "blue", backgroundColor:"yellow"}}>
+                    
+                    <Grid item xs sx={{ p: 1}}>
+                        <Typography>For any Software Related Queries: pgdadmission@coeptech.ac.in</Typography>
+                      </Grid>
+                    </Paper>
                     <Paper component={Box} p={2} className='landing-page-main'>
                         <Box mt={1} mb={2}>
                             <div className='cards'>

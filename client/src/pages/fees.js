@@ -615,8 +615,8 @@ function FeesDetails() {
             <ArrowForwardIosIcon/>
           </IconButton>
           <Typography color="inherit">
-            <a href="http://www.coep.org.in/" target="_blank" rel="noopener noreferrer">
-          http://www.coep.org.in/
+            <a href="https://www.coep.org.in/content/postgraduatediplomaprogram" target="_blank" rel="noopener noreferrer">
+          https://www.coep.org.in/content/postgraduatediplomaprogram
           </a>
           </Typography>
           <Box sx={{ flexGrow: 0.3 }} />
