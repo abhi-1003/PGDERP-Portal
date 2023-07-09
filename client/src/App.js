@@ -51,6 +51,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" exact element={<LandingPage />}></Route>
+
+        <Route
+          path="*"
+          element={<Navigate to="/" replace={true} />}
+        />
         <Route path="/student/login" element={<UserLogin />} exact></Route>
         <Route path="/student/register" element={<UserRegister />}></Route>
         
@@ -125,8 +130,8 @@ function App() {
           }
         />
 
-        <Route path="/admin/login" element={<AdminLogin />} exact></Route>
-        <Route path="/admin/register" element={<AdminRegister />}></Route>
+        <Route path="/admin/loginefirihig67894536dyey" element={<AdminLogin />} exact></Route>
+        {/* <Route path="/admin/register" element={<AdminRegister />}></Route> */}
         <Route
           path="/admin/home"
           element={
@@ -153,7 +158,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/coordinator/login"
+          path="/coordinator/login767984rgykeyenc678"
           element={<CoordinatorLogin />}
           exact
         ></Route>

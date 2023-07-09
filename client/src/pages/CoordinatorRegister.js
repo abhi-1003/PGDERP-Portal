@@ -72,7 +72,7 @@ export default function UserRegister() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const data = {
+      const body = {
         name: values.fullname,
         email: values.email,
         mobile: values.mobile,
@@ -83,7 +83,9 @@ export default function UserRegister() {
       const token = localStorage.getItem("pgderp-website-jwt");
       const url = BACKEND_URL + "/coordinator/coordinatorRegister";
       axios
-        .post(url, { data, headers: { "pgderp-website-jwt": token } })
+        .post(url,body, {
+          headers: { "pgderp-website-jwt": token } }
+        )
         .then((res) => {
           alert(res.data.message);
           navigate("/admin/home", {

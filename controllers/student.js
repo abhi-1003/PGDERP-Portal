@@ -352,10 +352,10 @@ exports.getOtherDocs = async (req, res) => {
 };
 
 exports.getAllStudentDetails = async (req, res) => {
-  console.log("Outise losf");
+  // console.log("Outise losf");
   if (req.userRole == "admin") {
     let projection = "";
-    console.log("sdacsa000");
+    // console.log("sdacsa000");
     Student.find()
       .lean()
       .exec()

@@ -117,9 +117,13 @@ exports.registerCoordinator = (req, res) => {
   // if (1) {
   //   return res.status(403).json({ error: "Only Admin can add cooordinator" });
   // }
-  console.log(117, req.body.data)
-  const { name, email, mobile, password, courses } = req.body.data;
-  console.log(req.body)
+  // console.log(117, req.body)
+
+  if(req.userRole == "admin"){
+
+  
+  const { name, email, mobile, password, courses } = req.body;
+  // console.log(req.body)
   if (!(name, email, mobile && password, courses)) {
     return res.status(400).json({ error: "All input is required" });
   }
@@ -144,6 +148,8 @@ exports.registerCoordinator = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: err.message });
     });
+
+  }
 };
 
 exports.loginCoordinator = (req, res) => {
