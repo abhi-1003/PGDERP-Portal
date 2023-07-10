@@ -156,7 +156,9 @@ function AcademicsInfo() {
       SSCtoDiploma: 0,
       SSCtoHSC: 0,
       otherCourses: [],
-      TotalGapsSchool: 0
+      TotalGapsSchool: 0,
+      OtherSpecializationGrad: "",
+      OtherSpecializationPostGrad: ""
     },
     errors: {}
   });
@@ -368,11 +370,21 @@ function AcademicsInfo() {
       }
       if (
         "SpecializationGrad" in personalData.academicsInfo &&
-        personalData.academicsInfo.SpecializationGrad
+        personalData.academicsInfo.SpecializationGrad && personalData.academicsInfo.SpecializationGrad.includes("OTHER - ") === false
       ) {
         copyData = {
           ...copyData,
           SpecializationGrad: personalData.academicsInfo.SpecializationGrad
+        };
+      }
+      if (
+        "SpecializationGrad" in personalData.academicsInfo &&
+        personalData.academicsInfo.SpecializationGrad && personalData.academicsInfo.SpecializationGrad.includes("OTHER - ") === true
+      ) {
+        copyData = {
+          ...copyData,
+          SpecializationGrad: "Other",
+          OtherSpecializationGrad: personalData.academicsInfo.SpecializationGrad.replace("OTHER - ", "")
         };
       }
       if (
@@ -440,12 +452,25 @@ function AcademicsInfo() {
       }
       if (
         "SpecializationPostGrad" in personalData.academicsInfo &&
-        personalData.academicsInfo.SpecializationPostGrad
+        personalData.academicsInfo.SpecializationPostGrad && 
+        personalData.academicsInfo.SpecializationPostGrad.includes("OTHER - ") === false
       ) {
         copyData = {
           ...copyData,
           SpecializationPostGrad:
             personalData.academicsInfo.SpecializationPostGrad
+        };
+      }
+      if (
+        "SpecializationPostGrad" in personalData.academicsInfo &&
+        personalData.academicsInfo.SpecializationPostGrad && 
+        personalData.academicsInfo.SpecializationPostGrad.includes("OTHER - ") === true
+      ) {
+        copyData = {
+          ...copyData,
+          SpecializationPostGrad: "Other",
+          OtherSpecializationPostGrad : 
+            personalData.academicsInfo.SpecializationPostGrad.replace("OTHER - ", "")
         };
       }
       if (
@@ -535,6 +560,8 @@ function AcademicsInfo() {
 
 //   console.log(personalData);
 
+//console.log(stateVar)
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -593,10 +620,11 @@ function AcademicsInfo() {
     window !== undefined ? () => window().document.body : undefined;
 
   const handleOnChange = ({ target }) => {
-    let errors = { ...stateVar.errors };
-    let data = { ...stateVar.data };
-    data[target.name] = target.value;
-    setStateVar({ data: data, errors: errors });
+      let errors = { ...stateVar.errors };
+      let data = { ...stateVar.data };
+      data[target.name] = target.value;
+      setStateVar({ data: data, errors: errors });
+    
   };
 
   const today = dayjs();
@@ -1024,6 +1052,18 @@ function AcademicsInfo() {
 
       if (validate) {
         const academicsInfo = data;
+        //console.log(academicsInfo);
+        if(academicsInfo.SpecializationGrad === "Other"){
+          academicsInfo["SpecializationGrad"] = "OTHER - " + academicsInfo.OtherSpecializationGrad;
+        }
+
+        if(academicsInfo.SpecializationPostGrad === "Other"){
+          academicsInfo["SpecializationPostGrad"] = "OTHER - " + academicsInfo.OtherSpecializationPostGrad;
+        }
+        //console.log(academicsInfo);
+        delete academicsInfo["OtherSpecializationGrad"]
+        delete academicsInfo["OtherSpecializationPostGrad"]
+        //console.log(academicsInfo);
         const url = BACKEND_URL + "/student/editStudentInfo";
         const body = {
           personalInfo: personalData.personalInfo,
@@ -1876,6 +1916,10 @@ function AcademicsInfo() {
                         {
                           value: "Bachelor of Computer Applications - B.C.A.",
                           label: "Bachelor of Computer Applications - B.C.A."
+                        },
+                        {
+                          value: "Other",
+                          label: "Other"
                         }
                       ],personalData
                     })}
@@ -2083,7 +2127,8 @@ function AcademicsInfo() {
                       arr: [
                         { value: "M.E/M.Tech", label: "M.E/M.Tech" },
                         { value: "MBA", label: "MBA" },
-                        { value: "M.Com.", label: "M.Com." }
+                        { value: "M.Com.", label: "M.Com." },
+                        { value: "Other", label : "Other"}
                       ],personalData
                     })}
                   </StyledTableCell>
@@ -2268,6 +2313,57 @@ function AcademicsInfo() {
 
                 {/* POST GRAD */}
               </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TableContainer component={Paper}>
+          <Table aria-label="Other Details">
+                    <TableBody>
+                    {/* 
+                OTHER SPECIALIZATION */}
+                {
+                    stateVar.data.SpecializationGrad === "Other" && (
+                      <StyledTableRow>
+                      <StyledTableCell sx={{ padding: "8px" }}>
+                        <Box mb={0.5} mt={0.5} mr={0}>
+                          {renderText1({ label: "Graduation Other Specialization" })}
+                        </Box>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {renderMultiInputText({
+                          label: "",
+                          name: "OtherSpecializationGrad",
+                          stateVar,
+                          handleOnChange: handleOnChange,
+                          personalData: personalData,
+                        })}
+                      </StyledTableCell>
+                      </StyledTableRow>
+                    )
+                  }
+
+
+{
+                    stateVar.data.SpecializationPostGrad === "Other" && (
+                      <StyledTableRow>
+                      <StyledTableCell sx={{ padding: "8px" }}>
+                        <Box mb={0.5} mt={0.5} mr={0}>
+                          {renderText1({ label: "Post Graduation Other Specialization" })}
+                        </Box>
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {renderMultiInputText({
+                          label: "",
+                          name: "OtherSpecializationPostGrad",
+                          stateVar,
+                          handleOnChange: handleOnChange,
+                          personalData: personalData,
+                        })}
+                      </StyledTableCell>
+                      </StyledTableRow>
+                    )
+                  }
+                    </TableBody>
             </Table>
           </TableContainer>
           <Button
