@@ -2128,6 +2128,7 @@ function AcademicsInfo() {
                         { value: "M.E/M.Tech", label: "M.E/M.Tech" },
                         { value: "MBA", label: "MBA" },
                         { value: "M.Com.", label: "M.Com." },
+                        { value: "M.Sc.", label: "M.Sc."}, 
                         { value: "Other", label : "Other"}
                       ],personalData
                     })}
