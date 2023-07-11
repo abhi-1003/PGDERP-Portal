@@ -18,10 +18,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import HomeIcon from '@mui/icons-material/Home';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ArticleIcon from '@mui/icons-material/Article';
-
+import CallIcon from '@mui/icons-material/Call';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
   Grid,
   Paper,
@@ -68,7 +66,14 @@ import {
   Image,
   pdf
 } from "@react-pdf/renderer";
+
+import HomeIcon from "@mui/icons-material/Home";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import EditIcon from "@mui/icons-material/Edit";
+import DownloadIcon from "@mui/icons-material/Download";
+import LogoutIcon from "@mui/icons-material/Logout";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import ArticleIcon from '@mui/icons-material/Article';
 
 const drawerWidth = 280;
 
@@ -172,6 +177,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  photo: {
+    width: "30%",
+    height: "150px",
+    padding: 0,
+    marginBottom: 5,
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  signImg: {
+    width: "20%",
+    height: "100px",
+    marginTop: 15,
+    marginBottom: 5,
+    marginLeft: "70%",
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "right",
+    justifyContent: "right"
+  },
   declareHead: {
     fontSize: 11,
     marginTop: 5
@@ -189,7 +215,8 @@ const styles = StyleSheet.create({
   },
   sign: {
     fontSize: 11,
-    textAlign: "right"
+    textAlign: "right",
+    marginRight: "30px"
   }
 });
 
@@ -198,56 +225,47 @@ function Download() {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [personalData, setPersonalData] = React.useState([]);
-  
+  const [sign, setSign] = React.useState(null);
+  const [photo, setPhoto] = React.useState(null);
+
   React.useEffect(() => {
-        let url = BACKEND_URL + "/student/getAppData";
-        console.log(queryParameters.get("id"))
+    let url = BACKEND_URL + "/student/getAppData";
+    axios
+      .get(url, {params: {'userRole': 'coordinator', 'id': queryParameters.get("id")}})
+      .then((res) => {
+        setPersonalData(res.data.user);
+        let contentType = "image/png";
         axios
-          .get(url, {params: {'userRole': 'coordinator', 'id': queryParameters.get("id")}})
-          .then(res => {
-            console.log(res.data)
-            setPersonalData(res.data.user);
-          });
-  });
-  const options = [
-    {
-      "value": "Home",
-      "icons": <HomeIcon />
-    },
-    {
-      "value": "Logout",
-      "icons": <LogoutIcon />
-    },
-    {
-      "value": "Download Individual Applications",
-      "icons": <DocumentScannerIcon />
-    },
-    {
-      "value": "Download List",
-      "icons": <ArticleIcon />
-    }
-  ];
-  const changeStatus = (e) => {
-    handleDrawerToggle();
-    if (e.target.textContent === "Logout") {
-      localStorage.clear();
-      navigate("/");
-    } else if (e.target.textContent === "Home"){
-      navigate("/coordinator");
-    }
-    else if(e.target.textContent === "Download List"){
-      navigate("/coordinator/list")
-    }
-    else if(e.target.textContent === "Download Individual Applications"){
-      navigate("/coordinator/download")
-    }
-  };
+          .get(BACKEND_URL + "/files/get/" + res.data.user.documents.sign, {
+            responseType: "blob",
+          })
+          .then(function(response){
+            const file = new Blob([response.data], { type: contentType });
+            setSign(URL.createObjectURL(file));
+          })
+          axios
+          .get(BACKEND_URL + "/files/get/" + res.data.user.documents.photo, {
+            responseType: "blob",
+          })
+          .then(function(response){
+            const file = new Blob([response.data], { type: contentType });
+            setPhoto(URL.createObjectURL(file));
+          })
+      });
+  }, []);
   const MyDoc = () => (
     <Document>
       <Page style={styles.body}>
         <View style={styles.view}>
           <Image style={styles.image} src={pic} alt="image" />
         </View>
+        {
+          photo && (
+            <View style={styles.view}>
+          <Image style={styles.photo} src={photo} alt="image" />
+        </View>
+          )
+        }
         <View style={styles.table}>
           <View style={styles.tableRow}>
             <View style={styles.tableColHeader}>
@@ -304,6 +322,17 @@ function Download() {
             <View style={styles.tableCol3}>
               <Text style={styles.tableCell}>
                 {personalData.personalInfo.Address}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Pincode</Text>
+            </View>
+            <View style={styles.tableCol3}>
+              <Text style={styles.tableCell}>
+                {personalData.personalInfo.Pincode}
               </Text>
             </View>
           </View>
@@ -863,9 +892,57 @@ function Download() {
                     <Text style={styles.tableCell}>{""}</Text>
                   </View>
                 </View>
+
+                
               </>
             )
           )}
+
+<View style={styles.tableRow}>
+            <View style={styles.tableColHeader}>
+              <Text style={styles.tableCellHeader}>
+                Fees Payment Details
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Bank Name</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.bank}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Reference No</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.refNo}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Amount</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.amt}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Payment Date</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.feesDetails.date[0] + "-" + personalData.feesDetails.date[1] + "-" + personalData.feesDetails.date[2]}
+              </Text>
+            </View>
+          </View>
         </View>
         <Text style={styles.declareHead}>Declaration:</Text>
         <Text style={styles.declare}>
@@ -879,8 +956,11 @@ function Download() {
           be forfeited. Further, I will be subject to legal and/or penal action
           as per the provisions of the law.
         </Text>
-        <Text style={styles.place}>Place :</Text>
-        <Text style={styles.date}>Date :</Text>
+        {/* <Text style={styles.place}>Place :</Text>
+        <Text style={styles.date}>Date :</Text> */}
+        <View style={styles.view}>
+          <Image style={styles.signImg} src={sign} alt="image" />
+        </View>
         <Text style={styles.sign}>Signature of Candidate</Text>
       </Page>
     </Document>
@@ -888,6 +968,39 @@ function Download() {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+  const options = [
+    {
+      "value": "Home",
+      "icons": <HomeIcon />
+    },
+    {
+      "value": "Logout",
+      "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download Individual Applications",
+      "icons": <DocumentScannerIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
+    }
+  ];
+  const changeStatus = (e) => {
+    handleDrawerToggle();
+    if (e.target.textContent === "Logout") {
+      localStorage.clear();
+      navigate("/");
+    } else if (e.target.textContent === "Home"){
+      navigate("/coordinator");
+    }
+    else if(e.target.textContent === "Download List"){
+      navigate("/coordinator/list")
+    }
+    else if(e.target.textContent === "Download Individual Applications"){
+      navigate("/coordinator/download")
+    }
   };
   const drawer = (
     <div style={{backgroundColor:"#FFFFE0", minHeight:"100vh"}}>
@@ -906,7 +1019,6 @@ function Download() {
       </List>
     </div>
   );
-  // console.log(personalData)
 
   return (
     <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>
@@ -929,8 +1041,10 @@ function Download() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div">
-            COEP PG - Diploma Admission Portal
+          <Typography variant="h6" component="div" style={{padding: "5px"}}>
+            COEP Technological University
+            <br />
+            PG - Diploma Admission Portal
           </Typography>
         </Toolbar>
       </AppBar>
@@ -989,7 +1103,13 @@ function Download() {
           {personalData["personalInfoFilled"] &&
           personalData["academicsInfoFilled"] &&
           personalData["professionalExperienceFilled"] &&
-          personalData["documentsFilled"] ? (
+          personalData["documentsFilled"] && personalData["feesDetailsFilled"] && !photo && !sign  ? (
+            <div>Loading ...</div>
+          ) : (
+          personalData["personalInfoFilled"] &&
+          personalData["academicsInfoFilled"] &&
+          personalData["professionalExperienceFilled"] &&
+          personalData["documentsFilled"] && personalData["feesDetailsFilled"] && photo && sign ? (
             <PDFDownloadLink document={<MyDoc />} fileName="Application.pdf">
               <Button
                 variant="contained"
@@ -1007,9 +1127,32 @@ function Download() {
             </PDFDownloadLink>
           ) : (
             <div>Save all sections first</div>
-          )}
+          )
+
+        )}
         </Paper>
       </Box>
+      <AppBar position="fixed"  sx={{ top: 'auto', bottom: 0, backgroundColor:"#00ABE4", height:"7%" }}>
+        <Toolbar>
+        <Box sx={{ flexGrow: 0.4 }} />
+        <IconButton color="inherit">
+            <ArrowForwardIosIcon/>
+          </IconButton>
+          <Typography color="inherit">
+            <a href="https://www.coep.org.in/content/postgraduatediplomaprogram" target="_blank" rel="noopener noreferrer">
+          https://www.coep.org.in/content/postgraduatediplomaprogram
+          </a>
+          </Typography>
+          <Box sx={{ flexGrow: 0.3 }} />
+          <IconButton color="inherit">
+            <MailIcon />
+          </IconButton>
+          <Typography color="inherit">
+          pgdadmission@coeptech.ac.in
+          </Typography>
+        </Toolbar>
+        
+      </AppBar>
     </Box>
   );
 }
