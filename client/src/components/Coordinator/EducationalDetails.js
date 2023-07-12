@@ -418,6 +418,12 @@ function EducationalDetails({setStep}) {
               </StyledTableRow>}
               </TableBody>
             </Table>
+            {(data['HSCFilled'] === true) && 
+            <>
+            <Typography margin={2}>Gap from SSC To HSC: {data['SSCtoHSC']} Yrs.</Typography>
+            {data['DiplomaFilled'] === true && <Typography margin={2}>Gap from HSC To Diploma: {data['HSCtoDiploma']} Yrs.</Typography>} 
+            </>}
+            {(data['HSCFilled'] === false && data['DiplomaFilled'] === true) && <Typography margin={2}>Gap from SSC To Diploma: {data['SSCtoDiploma']} Yrs.</Typography>}
         </TableContainer>
 
         <TableContainer component={Paper} className={classes.tableContainer}>
@@ -492,6 +498,7 @@ function EducationalDetails({setStep}) {
                 </TableRow>}
               </TableBody>
             </Table>
+            {(data['PostGradFrom'].length > 0) && <Typography margin={2}>Gap from Graduation to Post Graduation: {data['GradtoPostGrad']} Yrs.</Typography>}
         </TableContainer>
 
         <TableContainer component={Paper} className={classes.tableContainer}>
