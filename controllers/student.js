@@ -585,28 +585,13 @@ exports.getDocsById = async (req, res) => {
 
 exports.getDataByCourse = async (req, res) => {
   const course = req.query.course;
-  console.log(531, course);
-  try {
-    const users = await Student.find({ course: course }).exec();
-    if (users) {
-      let result = [];
-      users.forEach((user) => {
-        result.push({
-          "Registration ID": user.registrationID,
-          Course: user.course,
-          Name: user.name,
-          "Mobile No.": user.mobile,
-          "Email Address": user.email,
-        });
-      });
-      return res.json(result);
-    } else {
-      return res.json([]);
-    }
-  } catch (e) {
-    console.log(e);
-    return res.json([]);
-  }
+  Student.find({ course: course }).lean().exec()
+    .then((users) => {
+      return res.json(users)
+    })
+    .catch((err) => {
+      res.status(400).json({ error: "invalid request" });
+    })
 };
 
 exports.modifications = async (req, res) => {
