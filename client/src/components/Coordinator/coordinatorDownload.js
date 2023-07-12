@@ -558,12 +558,14 @@ const GridAdmin = () => {
               "PostGradTo" in students[student]["academicsInfo"] &&
               students[student]["academicsInfo"]["PostGradTo"].length > 2
             ) {
-              row["PG End"] =
+              if(students[student]["academicsInfo"]["PostGradTo"][0] && students[student]["academicsInfo"]["PostGradTo"][1] && students[student]["academicsInfo"]["PostGradTo"][2]){
+                row["PG End"] =
                 students[student]["academicsInfo"]["PostGradTo"][0].toString() +
                 "-" +
                 students[student]["academicsInfo"]["PostGradTo"][1].toString() +
                 "-" +
                 students[student]["academicsInfo"]["PostGradTo"][2].toString();
+              }
             }
             if (
               "FinalYearMarksPostGrad" in students[student]["academicsInfo"]
