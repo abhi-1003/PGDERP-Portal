@@ -148,7 +148,7 @@ function Coordinator() {
     const url = BACKEND_URL + '/student/getData';
     axios.get(url, {params: {'course': i}})
     .then((response)=>{
-        console.log(response.data)
+        console.log(151, response.data)
         exportToCSV(response.data, `${i}`)
     })
     .catch((e)=>{
@@ -233,7 +233,7 @@ function Coordinator() {
                         </Typography>
                         </CardContent>
                         <CardActions>
-                        <Button onClick={download}><DownloadIcon /></Button>
+                        <Button onClick={()=>download(i)}><DownloadIcon /></Button>
                         </CardActions>
                     </Card>
                     </Grid>
