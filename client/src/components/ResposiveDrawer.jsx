@@ -84,6 +84,9 @@ function ResponsiveStudentHome() {
     setMobileOpen(!mobileOpen);
   };
 
+  // console.log(personal_data.applicationFilled
+  //   )
+
   const rows = [
     createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
     createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
@@ -282,14 +285,11 @@ function ResponsiveStudentHome() {
                       Application Submission Status
                     </StyledTableCell>
                     {
-                      personal_data.applicationSubmitted && (
+                      personal_data.personalInfoFilled && personal_data.academicsInfoFilled && personal_data.professionalExperienceFilled && personal_data.documentsFilled && personal_data.feesDetailsFilled ? (
                         <StyledTableCell align="center" wrap>
                           Submitted
                         </StyledTableCell>
-                      )
-                    }
-                    {
-                      !personal_data.applicationSubmitted && (
+                      ) :  (
                         <StyledTableCell align="center" wrap>
                           Pending
                         </StyledTableCell>
