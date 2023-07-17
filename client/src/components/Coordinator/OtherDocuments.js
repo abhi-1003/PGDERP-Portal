@@ -334,7 +334,7 @@ function OtherDocuments({setStep}) {
               <TableBody>
                 <TableRow>
                 <StyledTableCell>Self Declaration</StyledTableCell>
-                <StyledTableCell><DocViewer filename={data['selfDeclaration']}/></StyledTableCell>
+                <StyledTableCell><DocViewer filename={data['selfDeclaration']} contentType="application/pdf"/></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell className={classes.tabStyledTableCellleHeadCell} width="10%">
                     {nowVerified.includes('selfDeclaration')?<FormControl>
@@ -353,7 +353,7 @@ function OtherDocuments({setStep}) {
                 </TableRow>
                 <TableRow>
                 <StyledTableCell>Fees Payment</StyledTableCell>
-                <StyledTableCell><DocViewer filename={data['feesPayment']}/></StyledTableCell>
+                <StyledTableCell><DocViewer filename={data['feesPayment']} contentType="application/pdf"/></StyledTableCell>
                 <StyledTableCell><Card>
                 <CardContent>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

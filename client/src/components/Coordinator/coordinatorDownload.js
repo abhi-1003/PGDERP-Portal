@@ -209,6 +209,7 @@ const GridAdmin = () => {
   columnDefs.push({ field: "PG Aggregation Marks" });
   columnDefs.push({ field: "PG Dead Backlog" });
   columnDefs.push({ field: "PG Alive Backlog" });
+  columnDefs.push({ field: "Total Educational Gap" });
   columnDefs.push({ field: "personalInfoFilled" });
   columnDefs.push({ field: "academicsInfoFilled" });
   columnDefs.push({ field: "professionalExperienceFilled" });
@@ -585,6 +586,10 @@ const GridAdmin = () => {
               row["PG Alive Backlog"] =
                 students[student]["academicsInfo"]["AliveBacklogPostGrad"];
             }
+          }
+
+          if (students[student]["academicsInfo"]["TotalGapsSchool"] !== undefined) {
+            row["Total Educational Gap"] = students[student]["academicsInfo"]["TotalGapsSchool"]
           }
 
           if (students[student]["personalInfoFilled"]) {
