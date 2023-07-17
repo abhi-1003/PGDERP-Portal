@@ -221,6 +221,7 @@ const GridAdmin = () => {
   const onGridReady = (params) => {
     const url = BACKEND_URL + "/admin/allStudentDetails";
     let all_rows = [];
+    console.log("ready")
     axios
       .get(url, {
         headers: {
@@ -228,6 +229,7 @@ const GridAdmin = () => {
         },
       })
       .then((res) => {
+        console.log(res)
         let students = res.data;
         Object.keys(students).map((student, index) => {
           // console.log(students[student]);
@@ -524,12 +526,16 @@ const GridAdmin = () => {
               "PostGradTo" in students[student]["academicsInfo"] &&
               students[student]["academicsInfo"]["PostGradTo"].length > 2
             ) {
-              row["PG End"] =
+
+              if(students[student]["academicsInfo"]["PostGradTo"][0] && students[student]["academicsInfo"]["PostGradTo"][1] && students[student]["academicsInfo"]["PostGradTo"][2]){
+                row["PG End"] =
                 students[student]["academicsInfo"]["PostGradTo"][0].toString() +
                 "-" +
                 students[student]["academicsInfo"]["PostGradTo"][1].toString() +
                 "-" +
                 students[student]["academicsInfo"]["PostGradTo"][2].toString();
+              }
+              
             }
             if (
               "FinalYearMarksPostGrad" in students[student]["academicsInfo"]

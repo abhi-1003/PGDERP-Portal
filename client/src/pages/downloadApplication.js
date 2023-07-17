@@ -445,7 +445,7 @@ function Download() {
 
           <View style={styles.tableRow}>
             <View style={styles.tableCol1}>
-              <Text style={styles.tableCell}>Domacile</Text>
+              <Text style={styles.tableCell}>Domicile</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>
@@ -615,6 +615,48 @@ function Download() {
 
           <View style={styles.tableRow}>
             <View style={styles.tableColHeader}>
+              <Text style={styles.tableCellHeader}>SSC, HSC, Diploma Gaps</Text>
+            </View>
+          </View>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>SSC-HSC Gap</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.SSCtoHSC}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>HSC-Diploma Gap</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.HSCtoDiploma}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>SSC-Diploma Gap</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.SSCtoDiploma}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Total Gaps</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.TotalGapsSchool}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableColHeader}>
               <Text style={styles.tableCellHeader}>Graduation Details</Text>
             </View>
           </View>
@@ -747,6 +789,66 @@ function Download() {
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>
                 {personalData.academicsInfo.AggregateMarksPostGrad}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.tableRow}>
+            <View style={styles.tableColHeader}>
+              <Text style={styles.tableCellHeader}>Graduation & Post Graduation Backlogs & Gaps</Text>
+            </View>
+          </View>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Grad. Alive Backlogs</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.AliveBacklogsGrad}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Grad. Dead Backlogs</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.DeadBacklogsGrad}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Post Grad. Alive Backlogs</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.AliveBacklogsPostGrad}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Post Grad. Dead Backlogs</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.DeadBacklogsPostGrad}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Graduation Period</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.GradPeriod}
+              </Text>
+            </View>
+            <View style={styles.tableCol1}>
+              <Text style={styles.tableCell}>Grad-Post Grad Gap</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {personalData.academicsInfo.GradtoPostGrad}
               </Text>
             </View>
           </View>

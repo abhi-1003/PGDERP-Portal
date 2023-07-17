@@ -84,6 +84,9 @@ function ResponsiveStudentHome() {
     setMobileOpen(!mobileOpen);
   };
 
+  // console.log(personal_data.applicationFilled
+  //   )
+
   const rows = [
     createData('Personal Information', personal_data["personalInfoVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["personalInfoFilled"] ? "Completed" : "Pending", personal_data["personalInfoEditable"] ? "Edit" : "Not Editable", "/student/personalInfo"),
     createData('Academics Information', personal_data["academicsInfoVerified"] ? "Verified" : (personal_data["modifications"].length > 0 ? "Modification Required" : "Not Verified"), personal_data["academicsInfoFilled"] ? "Completed" : "Pending", personal_data["academicsInfoEditable"] ? "Edit" : "Not Editable", "/student/academicsInfo"),
@@ -251,8 +254,196 @@ function ResponsiveStudentHome() {
 
         <Header />
 
+
+
         <Box display="flex" justifyContent="center" alignItems="center">
-          <Typography variant="h4" sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "600", marginBottom: "15px" }}>Student Information </Typography>
+          <Typography variant="h4" sx={{ paddingTop: "1%", paddingBottom: "0", margin: "auto", fontWeight: "400", marginBottom: "15px" }}>Important Announcements</Typography>
+        </Box>
+
+
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "40", marginBottom: "15px" }}>Please keep checking the portal regularly. Your application will not be considered if it does not get verified before 31 JULY 2023.</Typography>
+        </Box>
+        
+
+        <Grid container rowSpacing={0.1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <TableContainer sx={{ marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%" }}>
+            <Table aria-label="customized table" sx={{ paddingLeft: "2%" }}>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="center" wrap>SR.No.</StyledTableCell>
+                  <StyledTableCell align="center" wrap>FIELD</StyledTableCell>
+                  <StyledTableCell align="center" wrap>DETAILS</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <StyledTableRow>
+                    <StyledTableCell align="center">
+                      1
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Application Submission Status
+                    </StyledTableCell>
+                    {
+                      personal_data.personalInfoFilled && personal_data.academicsInfoFilled && personal_data.professionalExperienceFilled && personal_data.documentsFilled && personal_data.feesDetailsFilled ? (
+                        <StyledTableCell align="center" wrap>
+                          Submitted
+                        </StyledTableCell>
+                      ) :  (
+                        <StyledTableCell align="center" wrap>
+                          Pending
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                </StyledTableRow>
+
+                <StyledTableRow>
+                <StyledTableCell align="center">
+                      2
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Application Verification Status
+                    </StyledTableCell>
+                    {
+                      personal_data.applicationVerified && (
+                        <StyledTableCell align="center" wrap>
+                          Submitted
+                        </StyledTableCell>
+                      )
+                    }
+                    {
+                      !personal_data.applicationVerified && (
+                        <StyledTableCell align="center" wrap>
+                          Pending
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                </StyledTableRow>
+
+                <StyledTableRow>
+                <StyledTableCell align="center">
+                     3
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Personal Info Remarks
+                    </StyledTableCell>
+                    {
+                      "personalInfoRemarks" in personal_data && personal_data.personalInfoRemarks.length > 0 ? (
+                        <StyledTableCell align="center" wrap>
+                          {personal_data.personalInfoRemarks}
+                        </StyledTableCell>
+                      )
+                    : (
+                        <StyledTableCell align="center" wrap>
+                          -
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                </StyledTableRow>
+
+
+                <StyledTableRow>
+                <StyledTableCell align="center">
+                     4
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Academics Info Remarks
+                    </StyledTableCell>
+                    {
+                      "academicsInfoRemarks" in personal_data && personal_data.academicsInfoRemarks.length > 0 ? (
+                        <StyledTableCell align="center" wrap>
+                          {personal_data.academicsInfoRemarks}
+                        </StyledTableCell>
+                      )
+                    : (
+                        <StyledTableCell align="center" wrap>
+                          -
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                    
+                </StyledTableRow>
+
+
+                <StyledTableRow>
+                <StyledTableCell align="center">
+                     5
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Professional Experience Remarks
+                    </StyledTableCell>
+                    {
+                      "professionalExperienceRemarks" in personal_data && personal_data.professionalExperienceRemarks.length > 0 ? (
+                        <StyledTableCell align="center" wrap>
+                          {personal_data.professionalExperienceRemarks}
+                        </StyledTableCell>
+                      )
+                    : (
+                        <StyledTableCell align="center" wrap>
+                          -
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                </StyledTableRow>
+
+                <StyledTableRow>
+                <StyledTableCell align="center">
+                     6
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Fees Details Remarks
+                    </StyledTableCell>
+                    {
+                      "feesDetailsRemarks" in personal_data && personal_data.feesDetailsRemarks.length > 0 ? (
+                        <StyledTableCell align="center" wrap>
+                          {personal_data.feesDetailsRemarks}
+                        </StyledTableCell>
+                      )
+                    : (
+                        <StyledTableCell align="center" wrap>
+                          -
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                    
+                </StyledTableRow>
+
+
+                <StyledTableRow>
+                <StyledTableCell align="center">
+                     7
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Documents Remarks
+                    </StyledTableCell>
+                    {
+                      "documentsRemarks" in personal_data && personal_data.documentsRemarks.length > 0 ? (
+                        <StyledTableCell align="center" wrap>
+                          {personal_data.documentsRemarks}
+                        </StyledTableCell>
+                      )
+                    : (
+                        <StyledTableCell align="center" wrap>
+                          -
+                        </StyledTableCell>
+                      )
+                    }
+                    
+                    
+                </StyledTableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </Grid>
+
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography variant="h4" sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "400", marginBottom: "15px" }}>Student Information </Typography>
         </Box>
         <Grid container rowSpacing={0.1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={6} sx={{ padding: "0.5% 1%" }}>
