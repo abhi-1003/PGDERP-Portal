@@ -287,7 +287,7 @@ function ResponsiveStudentHome() {
                     {
                       personal_data.personalInfoFilled && personal_data.academicsInfoFilled && personal_data.professionalExperienceFilled && personal_data.documentsFilled && personal_data.feesDetailsFilled ? (
                         <StyledTableCell align="center" wrap>
-                          Submitted
+                          Application Submitted
                         </StyledTableCell>
                       ) :  (
                         <StyledTableCell align="center" wrap>
