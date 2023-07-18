@@ -41,6 +41,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import SearchBar from "material-ui-search-bar";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 280;
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -65,23 +66,57 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   //   border: 0,
   // },
 }));
+const useStyles = makeStyles((theme) => ({
+  homeContent: {
+      padding: theme.spacing(4),
+
+  },
+  title: {
+      fontFamily: 'Franklin Gothic Medium',
+      fontSize: '2rem',
+      color: '#057BDB',
+  },
+  tableContainer: {
+      margin: 'auto',
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+      borderRadius: "5px",
+      marginLeft: "2%"
+  },
+  table: {
+      borderRadius: "5px",
+      paddingLeft: "2%"
+  },
+  tableHeadCell: {
+      fontWeight: 'bold',
+      fontSize: '1rem',
+      background: "#05AAE2",
+      paddingLeft: theme.spacing(3),
+      color: 'white',
+  },
+}));
 function CoordinatorIndividual() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const classes = useStyles();
   const options = [
-  {
-    "value": "Home",
-    "icons": <HomeIcon />
-  },
-  {
-    "value": "Logout",
-    "icons": <LogoutIcon />
-  },
-  {
-    "value": "Download List",
-    "icons": <ArticleIcon />
-  }
-];
+    {
+      "value": "Home",
+      "icons": <HomeIcon />
+    },
+    {
+      "value": "Logout",
+      "icons": <LogoutIcon />
+    },
+    {
+      "value": "Download Individual Applications",
+      "icons": <DocumentScannerIcon />
+    },
+    {
+      "value": "Download List",
+      "icons": <ArticleIcon />
+    }
+  ];
   const [rows, setRows] = useState(null);
   const [origRows, setOrigRows] = useState(null);
   const [searched, setSearched] = useState("");
@@ -109,6 +144,9 @@ function CoordinatorIndividual() {
     }
     else if(e.target.textContent === "Download List"){
       navigate("/coordinator/list")
+    }
+    else if(e.target.textContent === "Download Individual Applications"){
+      navigate("/coordinator/download")
     }
   };
   const drawer = (
@@ -252,7 +290,7 @@ function CoordinatorIndividual() {
                   </StyledTableCell>
                   <StyledTableCell align="center">{row.name}</StyledTableCell>
                   <StyledTableCell align="center">{row.applicationVerified ? "Verified": "Pending"}</StyledTableCell>
-                  <StyledTableCell align="center"><DownloadIcon onClick={()=>navigate(`/coordinator/get?id=${row.registrationID}`)}/></StyledTableCell>
+                  <StyledTableCell align="center"><DownloadIcon style={{cursor: 'pointer'}} onClick={()=>navigate(`/coordinator/get?id=${row.registrationID}`)}/></StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
