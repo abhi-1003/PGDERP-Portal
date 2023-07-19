@@ -285,7 +285,7 @@ function ResponsiveStudentHome() {
                       Application Submission Status
                     </StyledTableCell>
                     {
-                      personal_data.personalInfoFilled && personal_data.academicsInfoFilled && personal_data.professionalExperienceFilled && personal_data.documentsFilled && personal_data.feesDetailsFilled ? (
+                      personal_data.personalInfoFilled && personal_data.academicsInfoFilled && personal_data.professionalExperienceFilled && personal_data.documentsFilled && personal_data.feesDetailsFilled && personal_data.applicationFilled ? (
                         <StyledTableCell align="center" wrap>
                           Application Submitted
                         </StyledTableCell>
@@ -308,7 +308,7 @@ function ResponsiveStudentHome() {
                     {
                       personal_data.applicationVerified && (
                         <StyledTableCell align="center" wrap>
-                          Submitted
+                          Application Verified
                         </StyledTableCell>
                       )
                     }
@@ -330,15 +330,22 @@ function ResponsiveStudentHome() {
                       Personal Info Remarks
                     </StyledTableCell>
                     {
-                      "personalInfoRemarks" in personal_data && personal_data.personalInfoRemarks.length > 0 ? (
+                      personal_data.personalInfoVerified? (
                         <StyledTableCell align="center" wrap>
-                          {personal_data.personalInfoRemarks}
+                          Personal Info Verified
                         </StyledTableCell>
                       )
                     : (
-                        <StyledTableCell align="center" wrap>
-                          -
-                        </StyledTableCell>
+                        "personalInfoRemarks" in personal_data && personal_data.personalInfoRemarks.length > 0 ? (
+                          <StyledTableCell align="center" wrap>
+                            {personal_data.personalInfoRemarks}
+                          </StyledTableCell>
+                        )
+                      : (
+                          <StyledTableCell align="center" wrap>
+                            -
+                          </StyledTableCell>
+                        )
                       )
                     }
                     
@@ -353,15 +360,22 @@ function ResponsiveStudentHome() {
                       Academics Info Remarks
                     </StyledTableCell>
                     {
-                      "academicsInfoRemarks" in personal_data && personal_data.academicsInfoRemarks.length > 0 ? (
+                      personal_data.academicsInfoVerified ? (
                         <StyledTableCell align="center" wrap>
-                          {personal_data.academicsInfoRemarks}
+                          Academics Info Verified
                         </StyledTableCell>
                       )
                     : (
-                        <StyledTableCell align="center" wrap>
-                          -
-                        </StyledTableCell>
+                        "academicsInfoRemarks" in personal_data && personal_data.academicsInfoRemarks.length > 0 ? (
+                          <StyledTableCell align="center" wrap>
+                            {personal_data.academicsInfoRemarks}
+                          </StyledTableCell>
+                        )
+                      : (
+                          <StyledTableCell align="center" wrap>
+                            -
+                          </StyledTableCell>
+                        )
                       )
                     }
                     
@@ -377,6 +391,12 @@ function ResponsiveStudentHome() {
                       Professional Experience Remarks
                     </StyledTableCell>
                     {
+                      personal_data.professionalExperienceVerified ? (
+                        <StyledTableCell align="center" wrap>
+                          Professional Experience Verified
+                        </StyledTableCell>
+                      )
+                    : (
                       "professionalExperienceRemarks" in personal_data && personal_data.professionalExperienceRemarks.length > 0 ? (
                         <StyledTableCell align="center" wrap>
                           {personal_data.professionalExperienceRemarks}
@@ -386,6 +406,7 @@ function ResponsiveStudentHome() {
                         <StyledTableCell align="center" wrap>
                           -
                         </StyledTableCell>
+                      )
                       )
                     }
                     
@@ -399,19 +420,26 @@ function ResponsiveStudentHome() {
                       Fees Details Remarks
                     </StyledTableCell>
                     {
-                      "feesDetailsRemarks" in personal_data && personal_data.feesDetailsRemarks.length > 0 ? (
+                      personal_data.feesDetailsVerified ? (
                         <StyledTableCell align="center" wrap>
-                          {personal_data.feesDetailsRemarks}
+                          Fees Details Verified
                         </StyledTableCell>
                       )
-                    : (
-                        <StyledTableCell align="center" wrap>
-                          -
-                        </StyledTableCell>
+                      :
+                      (
+                        "feesDetailsRemarks" in personal_data && personal_data.feesDetailsRemarks.length > 0 ? (
+                          <StyledTableCell align="center" wrap>
+                            {personal_data.feesDetailsRemarks}
+                          </StyledTableCell>
+                        )
+                      : (
+                          <StyledTableCell align="center" wrap>
+                            -
+                          </StyledTableCell>
+                        )
                       )
                     }
-                    
-                    
+
                 </StyledTableRow>
 
 
@@ -423,15 +451,21 @@ function ResponsiveStudentHome() {
                       Documents Remarks
                     </StyledTableCell>
                     {
-                      "documentsRemarks" in personal_data && personal_data.documentsRemarks.length > 0 ? (
-                        <StyledTableCell align="center" wrap>
-                          {personal_data.documentsRemarks}
+                      personal_data.documentsVerified ? (
+                        <StyledTableCell align = "center" wrap>
+                          Documents Verified
                         </StyledTableCell>
-                      )
-                    : (
-                        <StyledTableCell align="center" wrap>
-                          -
-                        </StyledTableCell>
+                      ) : (
+                        "documentsRemarks" in personal_data && personal_data.documentsRemarks.length > 0 ? (
+                          <StyledTableCell align="center" wrap>
+                            {personal_data.documentsRemarks}
+                          </StyledTableCell>
+                        )
+                      : (
+                          <StyledTableCell align="center" wrap>
+                            -
+                          </StyledTableCell>
+                        )
                       )
                     }
                     
