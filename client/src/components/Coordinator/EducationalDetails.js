@@ -168,7 +168,7 @@ function EducationalDetails({setStep}) {
         t += 4
       }
       if(response.data.academicInfo.PostGradFrom.length > 0 && !['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad'].every((i)=>response.data.verified.includes(i))){
-        t += 6
+        t += 7
       }
       if(response.data.academicInfo.otherCourses.length && !['otherCourses', 'otCourses'].every((i)=>response.data.verified.includes(i))){
         t += 2
