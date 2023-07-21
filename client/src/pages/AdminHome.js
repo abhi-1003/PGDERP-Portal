@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useRef } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -63,6 +63,7 @@ import {
 } from "../components/common/displayComponents";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { toPng } from 'html-to-image';
 
 const theme = createTheme();
 const drawerWidth = 280;
@@ -202,6 +203,21 @@ export default function AdminHome() {
     navigate("/admin/grid")
   }
 
+  const elementRef = useRef(null);
+
+  const htmlToImageConvert = () => {
+    toPng(elementRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "my-image-name.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>
     <CssBaseline />
@@ -275,12 +291,27 @@ export default function AdminHome() {
         }}
       > <Toolbar />
         <Paper component={Box} p={2}>
-        <Grid container spacing={2} style={{ justifyContent: "center" }}>
+        <Grid container spacing={2} style={{ justifyContent: "center" , marginBottom:"2%"}}>
             <Box mt={1} mb={2}>
               {renderText({ label: "ADMIN HOME" })}
             </Box>
           </Grid>
         </Paper>
+
+        <TableContainer sx={{ marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%" }}>
+          <Table ref={elementRef} aria-label="customized table" sx={{ paddingLeft: "2%" }}>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="center" wrap>SR.No.</StyledTableCell>
+                  <StyledTableCell align="center" wrap>FIELD</StyledTableCell>
+                  <StyledTableCell align="center" wrap>DETAILS</StyledTableCell>
+                </TableRow>
+              </TableHead>
+          </Table>
+        </TableContainer>
+
+      <button onClick={htmlToImageConvert}>Download Image</button>
+
       </Box>
     </Box>
       
