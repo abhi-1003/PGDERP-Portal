@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -64,6 +64,7 @@ import {
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { toPng } from 'html-to-image';
+import Header from "../components/Header";
 
 const theme = createTheme();
 const drawerWidth = 280;
@@ -121,11 +122,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
+  '&:nth-of-type(odd)': {
     backgroundColor: "#FFFFFF",
   },
-  "&:nth-of-type(even)": {
-    backgroundColor: "#FFFFFF",
+  '&:nth-of-type(even)': {
+    backgroundColor: "#D3D3D3",
   },
   // hide last border
   // '&:last-child td, &:last-child th': {
@@ -138,6 +139,20 @@ export default function AdminHome() {
   const navigate = useNavigate();
   const { window } = location.state;
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const [pgderp, setPgderp] = useState({})
+
+  const [pgdipdd, setPgdipdd] = useState({})
+
+  const [pgddsai, setPgddsai] = useState({})
+
+  const [pgdesiot, setPgdesiot] = useState({})
+
+  const [pgdem, setPgdem] = useState({})
+
+  const [pgdia, setPgdia] = useState({})
+
+  const [total, setTotal] = useState({})
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -209,7 +224,7 @@ export default function AdminHome() {
     toPng(elementRef.current, { cacheBust: false })
       .then((dataUrl) => {
         const link = document.createElement("a");
-        link.download = "my-image-name.png";
+        link.download = "stats.png";
         link.href = dataUrl;
         link.click();
       })
@@ -217,6 +232,161 @@ export default function AdminHome() {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+
+    const url = BACKEND_URL + "/admin/allStudentDetails";
+    axios 
+      .get(url, {
+        headers: {
+          "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt"),
+        }
+      })
+      .then((res) => {
+        let students = res.data;
+        let pgderpCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let pgdiaCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let pgdesiotCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let pgdemCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let pgddsaiCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let pgdipddCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let totalCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+
+        Object.keys(students).map((student, index) => {
+          if(students[student]["course"] == "PGDERP"){
+            pgderpCopy["registered"] += 1;
+            totalCopy["registered"] += 1;
+
+            if(students[student]["applicationFilled"]){
+              pgderpCopy["filled"] += 1;
+              totalCopy["filled"] += 1;
+            }
+
+            if(students[student]["feesDetailsFilled"]){
+              pgderpCopy["feesPayed"] += 1;
+              totalCopy["feesPayed"] += 1;
+            }
+
+            if(students[student]["applicationVerified"]){
+              pgderpCopy["verified"] += 1;
+              totalCopy["verified"] += 1;
+            }
+          }
+
+          else if(students[student]["course"] == "PGDIA"){
+            pgdiaCopy["registered"] += 1;
+            totalCopy["registered"] += 1;
+
+            if(students[student]["applicationFilled"]){
+              pgdiaCopy["filled"] += 1;
+              totalCopy["filled"] += 1;
+            }
+
+            if(students[student]["feesDetailsFilled"]){
+              pgdiaCopy["feesPayed"] += 1;
+              totalCopy["feesPayed"] += 1;
+            }
+
+            if(students[student]["applicationVerified"]){
+              pgdiaCopy["verified"] += 1;
+              totalCopy["verified"] += 1;
+            }
+          }
+
+          else if(students[student]["course"] == "PGDESIoT"){
+            pgdesiotCopy["registered"] += 1;
+            totalCopy["registered"] += 1;
+
+            if(students[student]["applicationFilled"]){
+              pgdesiotCopy["filled"] += 1;
+              totalCopy["filled"] += 1;
+            }
+
+            if(students[student]["feesDetailsFilled"]){
+              pgdesiotCopy["feesPayed"] += 1;
+              totalCopy["feesPayed"] += 1;
+            }
+
+            if(students[student]["applicationVerified"]){
+              pgdesiotCopy["verified"] += 1;
+              totalCopy["verified"] += 1;
+            }
+          }
+
+          else if(students[student]["course"] == "PGDEM"){
+            pgdemCopy["registered"] += 1;
+            totalCopy["registered"] += 1;
+
+            if(students[student]["applicationFilled"]){
+              pgdemCopy["filled"] += 1;
+              totalCopy["filled"] += 1;
+            }
+
+            if(students[student]["feesDetailsFilled"]){
+              pgdemCopy["feesPayed"] += 1;
+              totalCopy["feesPayed"] += 1;
+            }
+
+            if(students[student]["applicationVerified"]){
+              pgdemCopy["verified"] += 1;
+              totalCopy["verified"] += 1;
+            }
+          }
+
+          else if(students[student]["course"] == "PGDDSAI"){
+            pgddsaiCopy["registered"] += 1;
+            totalCopy["registered"] += 1;
+
+            if(students[student]["applicationFilled"]){
+              pgddsaiCopy["filled"] += 1;
+              totalCopy["filled"] += 1;
+            }
+
+            if(students[student]["feesDetailsFilled"]){
+              pgddsaiCopy["feesPayed"] += 1;
+              totalCopy["feesPayed"] += 1;
+            }
+
+            if(students[student]["applicationVerified"]){
+              pgddsaiCopy["verified"] += 1;
+              totalCopy["verified"] += 1;
+            }
+          }
+
+          else if(students[student]["course"] == "PGDIPDD"){
+            pgdipddCopy["registered"] += 1;
+            totalCopy["registered"] += 1;
+
+            if(students[student]["applicationFilled"]){
+              pgdipddCopy["filled"] += 1;
+              totalCopy["filled"] += 1;
+            }
+
+            if(students[student]["feesDetailsFilled"]){
+              pgdipddCopy["feesPayed"] += 1;
+              totalCopy["feesPayed"] += 1;
+            }
+
+            if(students[student]["applicationVerified"]){
+              pgdipddCopy["verified"] += 1;
+              totalCopy["verified"] += 1;
+            }
+          }
+
+        })
+
+        setPgderp(pgderpCopy);
+        setPgdipdd(pgdipddCopy);
+        setPgdia(pgdiaCopy);
+        setPgdesiot(pgdesiotCopy);
+        setPgdem(pgdemCopy);
+        setPgddsai(pgddsaiCopy);
+        setTotal(totalCopy)
+        //console.log(pgderpCopy, pgdipddCopy, pgdesiotCopy, pgdemCopy, pgddsaiCopy, pgdiaCopy)
+      })
+  }, [])
+
+  //console.log(total, pgderp, pgdipdd)
 
   return (
     <Box bgcolor="#E5EDF1" sx={{ display: "flex", minHeight: "100vh" }}>
@@ -290,27 +460,107 @@ export default function AdminHome() {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       > <Toolbar />
-        <Paper component={Box} p={2}>
-        <Grid container spacing={2} style={{ justifyContent: "center" , marginBottom:"2%"}}>
-            <Box mt={1} mb={2}>
-              {renderText({ label: "ADMIN HOME" })}
-            </Box>
-          </Grid>
-        </Paper>
 
-        <TableContainer sx={{ marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%" }}>
-          <Table ref={elementRef} aria-label="customized table" sx={{ paddingLeft: "2%" }}>
+      <Header />
+
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography variant="h4" sx={{ paddingTop: "0.2%", paddingBottom: "0", margin: "auto", fontWeight: "200", marginBottom: "7px" }}>Admin Home</Typography>
+        </Box>
+
+        <Grid container rowSpacing={0.1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx = {{paddingLeft: "20px"}}>
+
+          {
+            total.registered === (pgderp.registered + pgdem.registered + pgdia.registered + pgddsai.registered + pgdipdd.registered + pgdesiot.registered) ? (
+
+              <TableContainer sx={{ marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%" }}>
+            <Table ref={elementRef} aria-label="customized table"sx={{ paddingLeft: "2%" }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center" wrap>SR.No.</StyledTableCell>
-                  <StyledTableCell align="center" wrap>FIELD</StyledTableCell>
-                  <StyledTableCell align="center" wrap>DETAILS</StyledTableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Couse Name</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Students Registered</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Applications Submitted</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Fees Payed</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Students Verified</TableCell>
                 </TableRow>
               </TableHead>
-          </Table>
-        </TableContainer>
+              <TableBody>
 
-      <button onClick={htmlToImageConvert}>Download Image</button>
+                <StyledTableRow>
+                  <StyledTableCell align="center">PGDERP</StyledTableCell>
+                  <StyledTableCell align="center">{pgderp.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{pgderp.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{pgderp.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgderp.verified}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell align="center">PGDIPDD</StyledTableCell>
+                  <StyledTableCell align="center">{pgdipdd.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdipdd.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdipdd.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdipdd.verified}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell align="center">PGDDSAI</StyledTableCell>
+                  <StyledTableCell align="center">{pgddsai.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{pgddsai.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{pgddsai.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgddsai.verified}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell align="center">PGDESIot</StyledTableCell>
+                  <StyledTableCell align="center">{pgdesiot.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdesiot.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdesiot.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdesiot.verified}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell align="center">PGDEM</StyledTableCell>
+                  <StyledTableCell align="center">{pgdem.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdem.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdem.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdem.verified}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell align="center">PGDIA</StyledTableCell>
+                  <StyledTableCell align="center">{pgdia.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdia.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdia.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdia.verified}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell align="center">TOTAL</StyledTableCell>
+                  <StyledTableCell align="center">{total.registered}</StyledTableCell>
+                  <StyledTableCell align="center">{total.filled}</StyledTableCell>
+                  <StyledTableCell align="center">{total.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{total.verified}</StyledTableCell>
+                </StyledTableRow>
+
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+            ) : (
+              <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography variant="h4" sx={{ paddingTop: "0.2%", paddingBottom: "0", margin: "auto", fontWeight: "200", marginBottom: "15px" }}>Loading ...</Typography>
+        </Box>
+            )
+          }
+          </Grid>
+      
+          <Button
+            variant="contained"
+            onClick={() => htmlToImageConvert()}
+            color="success"
+            style={{ margin: "0 auto", display: "flex", marginTop: "1%" }}>
+            DOWNLOAD IMAGE
+          </Button>
+
 
       </Box>
     </Box>
