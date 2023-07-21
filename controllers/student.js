@@ -262,6 +262,7 @@ exports.getAcademicDetails = async (req, res) => {
         sscEq: user.documents.sscEq,
         hscEq: user.documents.hscEq,
         grad: user.documents.grad,
+        postGrad: user.documents.postGrad,
         otCourses: user.documents.otCourses,
       });
       return res.json({

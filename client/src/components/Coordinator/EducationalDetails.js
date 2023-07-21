@@ -167,7 +167,7 @@ function EducationalDetails({setStep}) {
       if(response.data.academicInfo.DiplomaFilled && !['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks'].every((i)=>response.data.verified.includes(i))){
         t += 4
       }
-      if(response.data.academicInfo.PostGradFrom.length > 0 && !['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad'].every((i)=>response.data.verified.includes(i))){
+      if(response.data.academicInfo.PostGradFrom.length > 0 && !['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad'].every((i)=>response.data.verified.includes(i))){
         t += 7
       }
       if(response.data.academicInfo.otherCourses.length && !['otherCourses', 'otCourses'].every((i)=>response.data.verified.includes(i))){
@@ -479,18 +479,18 @@ function EducationalDetails({setStep}) {
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['PostGradTo'][0]}/{data['PostGradTo'][1]}/{data['PostGradTo'][2]}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['FinalYearMarksPostGrad']}</StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">{data['AggregateMarksPostGrad']}</StyledTableCell>
-                    <StyledTableCell><DocViewer filename={data['grad']} contentType="application/pdf"/></StyledTableCell>
+                    <StyledTableCell><DocViewer filename={data['postGrad']} contentType="application/pdf"/></StyledTableCell>
                     <StyledTableCell className={classes.StyledTableCell} width="10%">
-                      {['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad'].every((i)=>nowVerified.includes(i))?<FormControl>
+                      {['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad'].every((i)=>nowVerified.includes(i))?<FormControl>
                         <RadioGroup>
-                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="modification"/>} label="Modification Required" />
-                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="accepted"/>} label="Accepted" />
+                        <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad']} value="modification"/>} label="Modification Required" />
+                        <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad']} value="accepted"/>} label="Accepted" />
                         </RadioGroup>
                       </FormControl>:
                       <FormControl>
                       <RadioGroup>
-                      <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="modification"/>} label="Modification Required" />
-                      <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'grad']} value="accepted"/>} label="Accepted" />
+                      <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad']} value="modification"/>} label="Modification Required" />
+                      <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad']} value="accepted"/>} label="Accepted" />
                       </RadioGroup>
                     </FormControl>}
                       
