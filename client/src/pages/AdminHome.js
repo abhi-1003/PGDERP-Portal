@@ -244,13 +244,13 @@ export default function AdminHome() {
       })
       .then((res) => {
         let students = res.data;
-        let pgderpCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
-        let pgdiaCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
-        let pgdesiotCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
-        let pgdemCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
-        let pgddsaiCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
-        let pgdipddCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
-        let totalCopy = {"registered": 0, "filled" : 0, "feesPayed" : 0, "verified" : 0};
+        let pgderpCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
+        let pgdiaCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
+        let pgdesiotCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
+        let pgdemCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
+        let pgddsaiCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
+        let pgdipddCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
+        let totalCopy = {"registered": 0, "filled" : 0, "feesPaid" : 0, "verified" : 0};
 
         Object.keys(students).map((student, index) => {
           if(students[student]["course"] == "PGDERP"){
@@ -263,8 +263,8 @@ export default function AdminHome() {
             }
 
             if(students[student]["feesDetailsFilled"]){
-              pgderpCopy["feesPayed"] += 1;
-              totalCopy["feesPayed"] += 1;
+              pgderpCopy["feesPaid"] += 1;
+              totalCopy["feesPaid"] += 1;
             }
 
             if(students[student]["applicationVerified"]){
@@ -283,8 +283,8 @@ export default function AdminHome() {
             }
 
             if(students[student]["feesDetailsFilled"]){
-              pgdiaCopy["feesPayed"] += 1;
-              totalCopy["feesPayed"] += 1;
+              pgdiaCopy["feesPaid"] += 1;
+              totalCopy["feesPaid"] += 1;
             }
 
             if(students[student]["applicationVerified"]){
@@ -303,8 +303,8 @@ export default function AdminHome() {
             }
 
             if(students[student]["feesDetailsFilled"]){
-              pgdesiotCopy["feesPayed"] += 1;
-              totalCopy["feesPayed"] += 1;
+              pgdesiotCopy["feesPaid"] += 1;
+              totalCopy["feesPaid"] += 1;
             }
 
             if(students[student]["applicationVerified"]){
@@ -323,8 +323,8 @@ export default function AdminHome() {
             }
 
             if(students[student]["feesDetailsFilled"]){
-              pgdemCopy["feesPayed"] += 1;
-              totalCopy["feesPayed"] += 1;
+              pgdemCopy["feesPaid"] += 1;
+              totalCopy["feesPaid"] += 1;
             }
 
             if(students[student]["applicationVerified"]){
@@ -343,8 +343,8 @@ export default function AdminHome() {
             }
 
             if(students[student]["feesDetailsFilled"]){
-              pgddsaiCopy["feesPayed"] += 1;
-              totalCopy["feesPayed"] += 1;
+              pgddsaiCopy["feesPaid"] += 1;
+              totalCopy["feesPaid"] += 1;
             }
 
             if(students[student]["applicationVerified"]){
@@ -363,8 +363,8 @@ export default function AdminHome() {
             }
 
             if(students[student]["feesDetailsFilled"]){
-              pgdipddCopy["feesPayed"] += 1;
-              totalCopy["feesPayed"] += 1;
+              pgdipddCopy["feesPaid"] += 1;
+              totalCopy["feesPaid"] += 1;
             }
 
             if(students[student]["applicationVerified"]){
@@ -476,10 +476,10 @@ export default function AdminHome() {
             <Table ref={elementRef} aria-label="customized table"sx={{ paddingLeft: "2%" }}>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Couse Name</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Course Name</TableCell>
                   <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Students Registered</TableCell>
                   <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Applications Submitted</TableCell>
-                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Fees Payed</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Fees Paid</TableCell>
                   <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Students Verified</TableCell>
                 </TableRow>
               </TableHead>
@@ -489,7 +489,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">PGDERP</StyledTableCell>
                   <StyledTableCell align="center">{pgderp.registered}</StyledTableCell>
                   <StyledTableCell align="center">{pgderp.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{pgderp.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgderp.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{pgderp.verified}</StyledTableCell>
                 </StyledTableRow>
 
@@ -497,7 +497,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">PGDIPDD</StyledTableCell>
                   <StyledTableCell align="center">{pgdipdd.registered}</StyledTableCell>
                   <StyledTableCell align="center">{pgdipdd.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{pgdipdd.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdipdd.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{pgdipdd.verified}</StyledTableCell>
                 </StyledTableRow>
 
@@ -505,7 +505,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">PGDDSAI</StyledTableCell>
                   <StyledTableCell align="center">{pgddsai.registered}</StyledTableCell>
                   <StyledTableCell align="center">{pgddsai.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{pgddsai.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgddsai.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{pgddsai.verified}</StyledTableCell>
                 </StyledTableRow>
 
@@ -513,7 +513,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">PGDESIot</StyledTableCell>
                   <StyledTableCell align="center">{pgdesiot.registered}</StyledTableCell>
                   <StyledTableCell align="center">{pgdesiot.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{pgdesiot.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdesiot.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{pgdesiot.verified}</StyledTableCell>
                 </StyledTableRow>
 
@@ -521,7 +521,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">PGDEM</StyledTableCell>
                   <StyledTableCell align="center">{pgdem.registered}</StyledTableCell>
                   <StyledTableCell align="center">{pgdem.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{pgdem.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdem.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{pgdem.verified}</StyledTableCell>
                 </StyledTableRow>
 
@@ -529,7 +529,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">PGDIA</StyledTableCell>
                   <StyledTableCell align="center">{pgdia.registered}</StyledTableCell>
                   <StyledTableCell align="center">{pgdia.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{pgdia.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{pgdia.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{pgdia.verified}</StyledTableCell>
                 </StyledTableRow>
 
@@ -537,7 +537,7 @@ export default function AdminHome() {
                   <StyledTableCell align="center">TOTAL</StyledTableCell>
                   <StyledTableCell align="center">{total.registered}</StyledTableCell>
                   <StyledTableCell align="center">{total.filled}</StyledTableCell>
-                  <StyledTableCell align="center">{total.feesPayed}</StyledTableCell>
+                  <StyledTableCell align="center">{total.feesPaid}</StyledTableCell>
                   <StyledTableCell align="center">{total.verified}</StyledTableCell>
                 </StyledTableRow>
 
