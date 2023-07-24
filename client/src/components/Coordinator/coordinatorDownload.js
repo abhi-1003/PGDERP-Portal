@@ -160,18 +160,18 @@ const GridAdmin = () => {
   columnDefs.push({ field: "First Name" });
   columnDefs.push({ field: "Middle Name" });
   columnDefs.push({ field: "Last Name" });
-  columnDefs.push({ field: "Address" });
-  columnDefs.push({ field: "Pincode" });
-  columnDefs.push({ field: "Permanent Address" });
+  // columnDefs.push({ field: "Address" });
+  // columnDefs.push({ field: "Pincode" });
+  // columnDefs.push({ field: "Permanent Address" });
   columnDefs.push({ field: "Gender" });
-  columnDefs.push({ field: "Physical Disability" });
-  columnDefs.push({ field: "Parents/Husband's Name" });
-  columnDefs.push({ field: "Parents/Husband's Email" });
-  columnDefs.push({ field: "Parents/Husband's Number" });
+  // columnDefs.push({ field: "Physical Disability" });
+  // columnDefs.push({ field: "Parents/Husband's Name" });
+  // columnDefs.push({ field: "Parents/Husband's Email" });
+  // columnDefs.push({ field: "Parents/Husband's Number" });
   columnDefs.push({ field: "Birth Date" });
-  columnDefs.push({ field: "Domicile State" });
-  columnDefs.push({ field: "Nationality" });
-  columnDefs.push({ field: "Caste" });
+  // columnDefs.push({ field: "Domicile State" });
+  // columnDefs.push({ field: "Nationality" });
+  // columnDefs.push({ field: "Caste" });
   columnDefs.push({ field: "Age" });
   columnDefs.push({ field: "Diploma" });
   columnDefs.push({ field: "Drop for Graduation" });
@@ -210,23 +210,27 @@ const GridAdmin = () => {
   columnDefs.push({ field: "PG Dead Backlog" });
   columnDefs.push({ field: "PG Alive Backlog" });
   columnDefs.push({ field: "Total Educational Gap" });
-  columnDefs.push({ field: "personalInfoFilled" });
-  columnDefs.push({ field: "academicsInfoFilled" });
-  columnDefs.push({ field: "professionalExperienceFilled" });
-  columnDefs.push({ field: "documentsFilled" });
-  columnDefs.push({ field: "feesDetailsFilled" });
-  columnDefs.push({ field: "applicationFilled" });
-  columnDefs.push({ field: "personalInfoEditable" });
-  columnDefs.push({ field: "academicsInfoEditable" });
-  columnDefs.push({ field: "professionalExperienceEditable" });
-  columnDefs.push({ field: "documentsEditable" });
-  columnDefs.push({ field: "feesDetailsEditable" });
-  columnDefs.push({ field: "personalInfoVerified" });
-  columnDefs.push({ field: "academicsInfoVerified" });
-  columnDefs.push({ field: "professionalExperienceVerified" });
-  columnDefs.push({ field: "documentsVerified" });
-  columnDefs.push({ field: "feesDetailsVerified" });
-  columnDefs.push({ field: "applicationVerified" });
+  columnDefs.push({ field: "Application Fees Reference Number" });
+  columnDefs.push({ field: "Application Fees Date" });
+  columnDefs.push({ field: "Application Fees Bank" });
+  
+  // columnDefs.push({ field: "personalInfoFilled" });
+  // columnDefs.push({ field: "academicsInfoFilled" });
+  // columnDefs.push({ field: "professionalExperienceFilled" });
+  // columnDefs.push({ field: "documentsFilled" });
+  // columnDefs.push({ field: "feesDetailsFilled" });
+  // columnDefs.push({ field: "applicationFilled" });
+  // columnDefs.push({ field: "personalInfoEditable" });
+  // columnDefs.push({ field: "academicsInfoEditable" });
+  // columnDefs.push({ field: "professionalExperienceEditable" });
+  // columnDefs.push({ field: "documentsEditable" });
+  // columnDefs.push({ field: "feesDetailsEditable" });
+  // columnDefs.push({ field: "personalInfoVerified" });
+  // columnDefs.push({ field: "academicsInfoVerified" });
+  // columnDefs.push({ field: "professionalExperienceVerified" });
+  // columnDefs.push({ field: "documentsVerified" });
+  // columnDefs.push({ field: "feesDetailsVerified" });
+  // columnDefs.push({ field: "applicationVerified" });
 
   const searchDivStyle = { backgroundColor: "#dedede", padding: 10 };
 
@@ -299,35 +303,35 @@ const GridAdmin = () => {
               row["Middle Name"] =
                 students[student]["personalInfo"]["middleName"];
             }
-            if ("Address" in students[student]["personalInfo"]) {
-              row["Address"] = students[student]["personalInfo"]["Address"];
-            }
-            if ("Pincode" in students[student]["personalInfo"]) {
-              row["Pincode"] = students[student]["personalInfo"]["Pincode"];
-            }
-            if ("permanentAddress" in students[student]["personalInfo"]) {
-              row["Permanent Address"] =
-                students[student]["personalInfo"]["permanentAddress"];
-            }
+            // if ("Address" in students[student]["personalInfo"]) {
+            //   row["Address"] = students[student]["personalInfo"]["Address"];
+            // }
+            // if ("Pincode" in students[student]["personalInfo"]) {
+            //   row["Pincode"] = students[student]["personalInfo"]["Pincode"];
+            // }
+            // if ("permanentAddress" in students[student]["personalInfo"]) {
+            //   row["Permanent Address"] =
+            //     students[student]["personalInfo"]["permanentAddress"];
+            // }
             if ("gender" in students[student]["personalInfo"]) {
               row["Gender"] = students[student]["personalInfo"]["gender"];
             }
-            if ("phyDis" in students[student]["personalInfo"]) {
-              row["Physical Disability"] =
-                students[student]["personalInfo"]["phyDis"];
-            }
-            if ("PHname" in students[student]["personalInfo"]) {
-              row["Parents/Husband's Name"] =
-                students[student]["personalInfo"]["PHname"];
-            }
-            if ("PHemail" in students[student]["personalInfo"]) {
-              row["Parents/Husband's Email"] =
-                students[student]["personalInfo"]["PHemail"];
-            }
-            if ("PHnumber" in students[student]["personalInfo"]) {
-              row["Parents/Husband's Number"] =
-                students[student]["personalInfo"]["PHnumber"];
-            }
+            // if ("phyDis" in students[student]["personalInfo"]) {
+            //   row["Physical Disability"] =
+            //     students[student]["personalInfo"]["phyDis"];
+            // }
+            // if ("PHname" in students[student]["personalInfo"]) {
+            //   row["Parents/Husband's Name"] =
+            //     students[student]["personalInfo"]["PHname"];
+            // }
+            // if ("PHemail" in students[student]["personalInfo"]) {
+            //   row["Parents/Husband's Email"] =
+            //     students[student]["personalInfo"]["PHemail"];
+            // }
+            // if ("PHnumber" in students[student]["personalInfo"]) {
+            //   row["Parents/Husband's Number"] =
+            //     students[student]["personalInfo"]["PHnumber"];
+            // }
             if (
               "dob" in students[student]["personalInfo"] &&
               students[student]["personalInfo"]["dob"].length > 2
@@ -339,17 +343,17 @@ const GridAdmin = () => {
                 "-" +
                 students[student]["personalInfo"]["dob"][2].toString();
             }
-            if ("domicileState" in students[student]["personalInfo"]) {
-              row["Domicile State"] =
-                students[student]["personalInfo"]["domicileState"];
-            }
-            if ("nationality" in students[student]["personalInfo"]) {
-              row["Nationality"] =
-                students[student]["personalInfo"]["nationality"];
-            }
-            if ("caste" in students[student]["personalInfo"]) {
-              row["Caste"] = students[student]["personalInfo"]["caste"];
-            }
+            // if ("domicileState" in students[student]["personalInfo"]) {
+            //   row["Domicile State"] =
+            //     students[student]["personalInfo"]["domicileState"];
+            // }
+            // if ("nationality" in students[student]["personalInfo"]) {
+            //   row["Nationality"] =
+            //     students[student]["personalInfo"]["nationality"];
+            // }
+            // if ("caste" in students[student]["personalInfo"]) {
+            //   row["Caste"] = students[student]["personalInfo"]["caste"];
+            // }
             if ("age" in students[student]["personalInfo"]) {
               row["Age"] = students[student]["personalInfo"]["age"];
             }
@@ -594,101 +598,107 @@ const GridAdmin = () => {
             row["Total Educational Gap"] = students[student]["academicsInfo"]["TotalGapsSchool"]
           }
 
-          if (students[student]["personalInfoFilled"]) {
-            row["personalInfoFilled"] = students[student]["personalInfoFilled"];
-          } else {
-            row["personalInfoFilled"] = false;
-          }
-          if (students[student]["academicsInfoFilled"]) {
-            row["academicsInfoFilled"] =
-              students[student]["academicsInfoFilled"];
-          } else {
-            row["academicsInfoFilled"] = false;
-          }
-          if (students[student]["professionalExperienceFilled"]) {
-            row["professionalExperienceFilled"] =
-              students[student]["professionalExperienceFilled"];
-          } else {
-            row["professionalExperienceFilled"] = false;
-          }
-          if (students[student]["documentsFilled"]) {
-            row["documentsFilled"] = students[student]["documentsFilled"];
-          } else {
-            row["documentsFilled"] = false;
-          }
-          if (students[student]["feesDetailsFilled"]) {
-            row["feesDetailsFilled"] = students[student]["feesDetailsFilled"];
-          } else {
-            row["feesDetailsFilled"] = false;
-          }
-          if (students[student]["applicationFilled"]) {
-            row["applicationFilled"] = students[student]["applicationFilled"];
-          } else {
-            row["applicationFilled"] = false;
-          }
-          if (students[student]["personalInfoEditable"]) {
-            row["personalInfoEditable"] =
-              students[student]["personalInfoEditable"];
-          } else {
-            row["personalInfoEditable"] = false;
-          }
-          if (students[student]["academicsInfoEditable"]) {
-            row["academicsInfoEditable"] =
-              students[student]["academicsInfoEditable"];
-          } else {
-            row["academicsInfoEditable"] = false;
-          }
-          if (students[student]["professionalExperienceEditable"]) {
-            row["professionalExperienceEditable"] =
-              students[student]["professionalExperienceEditable"];
-          } else {
-            row["professionalExperienceEditable"] = false;
-          }
-          if (students[student]["documentsEditable"]) {
-            row["documentsEditable"] = students[student]["documentsEditable"];
-          } else {
-            row["documentsEditable"] = false;
-          }
-          if (students[student]["feesDetailsEditable"]) {
-            row["feesDetailsEditable"] =
-              students[student]["feesDetailsEditable"];
-          } else {
-            row["feesDetailsEditable"] = false;
-          }
-          if (students[student]["personalInfoVerified"]) {
-            row["personalInfoVerified"] =
-              students[student]["personalInfoVerified"];
-          } else {
-            row["personalInfoVerified"] = false;
-          }
-          if (students[student]["academicsInfoVerified"]) {
-            row["academicsInfoVerified"] =
-              students[student]["academicsInfoVerified"];
-          } else {
-            row["academicsInfoVerified"] = false;
-          }
-          if (students[student]["professionalExperienceVerified"]) {
-            row["professionalExperienceVerified"] =
-              students[student]["professionalExperienceVerified"];
-          } else {
-            row["professionalExperienceVerified"] = false;
-          }
-          if (students[student]["documentsVerified"]) {
-            row["documentsVerified"] = students[student]["documentsVerified"];
-          } else {
-            row["documentsVerified"] = false;
-          }
-          if (students[student]["feesDetailsVerified"]) {
-            row["feesDetailsVerified"] =
-              students[student]["feesDetailsVerified"];
-          } else {
-            row["feesDetailsVerified"] = false;
-          }
-          if (students[student]["applicationVerified"]) {
-            row["applicationVerified"] =
-              students[student]["applicationVerified"];
-          } else {
-            row["applicationVerified"] = false;
+          // if (students[student]["personalInfoFilled"]) {
+          //   row["personalInfoFilled"] = students[student]["personalInfoFilled"];
+          // } else {
+          //   row["personalInfoFilled"] = false;
+          // }
+          // if (students[student]["academicsInfoFilled"]) {
+          //   row["academicsInfoFilled"] =
+          //     students[student]["academicsInfoFilled"];
+          // } else {
+          //   row["academicsInfoFilled"] = false;
+          // }
+          // if (students[student]["professionalExperienceFilled"]) {
+          //   row["professionalExperienceFilled"] =
+          //     students[student]["professionalExperienceFilled"];
+          // } else {
+          //   row["professionalExperienceFilled"] = false;
+          // }
+          // if (students[student]["documentsFilled"]) {
+          //   row["documentsFilled"] = students[student]["documentsFilled"];
+          // } else {
+          //   row["documentsFilled"] = false;
+          // }
+          // if (students[student]["feesDetailsFilled"]) {
+          //   row["feesDetailsFilled"] = students[student]["feesDetailsFilled"];
+          // } else {
+          //   row["feesDetailsFilled"] = false;
+          // }
+          // if (students[student]["applicationFilled"]) {
+          //   row["applicationFilled"] = students[student]["applicationFilled"];
+          // } else {
+          //   row["applicationFilled"] = false;
+          // }
+          // if (students[student]["personalInfoEditable"]) {
+          //   row["personalInfoEditable"] =
+          //     students[student]["personalInfoEditable"];
+          // } else {
+          //   row["personalInfoEditable"] = false;
+          // }
+          // if (students[student]["academicsInfoEditable"]) {
+          //   row["academicsInfoEditable"] =
+          //     students[student]["academicsInfoEditable"];
+          // } else {
+          //   row["academicsInfoEditable"] = false;
+          // }
+          // if (students[student]["professionalExperienceEditable"]) {
+          //   row["professionalExperienceEditable"] =
+          //     students[student]["professionalExperienceEditable"];
+          // } else {
+          //   row["professionalExperienceEditable"] = false;
+          // }
+          // if (students[student]["documentsEditable"]) {
+          //   row["documentsEditable"] = students[student]["documentsEditable"];
+          // } else {
+          //   row["documentsEditable"] = false;
+          // }
+          // if (students[student]["feesDetailsEditable"]) {
+          //   row["feesDetailsEditable"] =
+          //     students[student]["feesDetailsEditable"];
+          // } else {
+          //   row["feesDetailsEditable"] = false;
+          // }
+          // if (students[student]["personalInfoVerified"]) {
+          //   row["personalInfoVerified"] =
+          //     students[student]["personalInfoVerified"];
+          // } else {
+          //   row["personalInfoVerified"] = false;
+          // }
+          // if (students[student]["academicsInfoVerified"]) {
+          //   row["academicsInfoVerified"] =
+          //     students[student]["academicsInfoVerified"];
+          // } else {
+          //   row["academicsInfoVerified"] = false;
+          // }
+          // if (students[student]["professionalExperienceVerified"]) {
+          //   row["professionalExperienceVerified"] =
+          //     students[student]["professionalExperienceVerified"];
+          // } else {
+          //   row["professionalExperienceVerified"] = false;
+          // }
+          // if (students[student]["documentsVerified"]) {
+          //   row["documentsVerified"] = students[student]["documentsVerified"];
+          // } else {
+          //   row["documentsVerified"] = false;
+          // }
+          // if (students[student]["feesDetailsVerified"]) {
+          //   row["feesDetailsVerified"] =
+          //     students[student]["feesDetailsVerified"];
+          // } else {
+          //   row["feesDetailsVerified"] = false;
+          // }
+          // if (students[student]["applicationVerified"]) {
+          //   row["applicationVerified"] =
+          //     students[student]["applicationVerified"];
+          // } else {
+          //   row["applicationVerified"] = false;
+          // }
+
+          if(students[student]["feesDetailsFilled"] == true){
+            row["Application Fees Reference Number"] = students[student]["feesDetails"]["refNo"];
+            row["Application Fees Date"] = students[student]["feesDetails"]["date"][0]+"/"+students[student]["feesDetails"]["date"][1]+"/"+students[student]["feesDetails"]["date"][2];
+            row["Application Fees Bank"] = students[student]["feesDetails"]["bank"]
           }
 
           all_rows.push(row);
