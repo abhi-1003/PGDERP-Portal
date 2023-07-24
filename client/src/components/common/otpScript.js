@@ -72,10 +72,10 @@ export const OtpScript = () => {
       setLoading(true);
       emailjs
         .sendForm(
-          "service_8nlio9w", // service id
-          "template_0gn52ht", // template id
+          "service_6wjn715", // service id
+          "template_x77v08c", // template id
           form.current,
-          "T6JxzjQulp3brwlwA" // public api key
+          "IWz8BxDawjTZYvnbQ" // public api key
         )
         .then(
           (result) => {
