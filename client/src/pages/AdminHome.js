@@ -224,7 +224,15 @@ export default function AdminHome() {
     toPng(elementRef.current, { cacheBust: false })
       .then((dataUrl) => {
         const link = document.createElement("a");
-        link.download = "stats.png";
+        const date = new Date();
+        let currentDay= String(date.getDate()).padStart(2, '0');
+        let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+        let currentYear = date.getFullYear();
+
+        // we will display the date as DD-MM-YYYY 
+
+        let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+        link.download = "stats" + currentDate + ".png";
         link.href = dataUrl;
         link.click();
       })
