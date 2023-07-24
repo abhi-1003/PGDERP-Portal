@@ -543,7 +543,7 @@ const GridAdmin = () => {
                 students[student]["academicsInfo"]["SpecializationPostGrad"];
             }
             if (
-              "PostGradFrom" in students[student]["academicsInfo"] &&
+              "PostGradFrom" in students[student]["academicsInfo"] && students[student]["academicInfo"]["PostGradFrom"][0] !== null &&
               students[student]["academicsInfo"]["PostGradFrom"].length > 2
             ) {
               row["PG Start"] =
