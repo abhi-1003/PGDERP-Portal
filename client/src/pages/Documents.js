@@ -741,6 +741,7 @@ function Documents() {
             </TableHead>
             <TableBody>
               {Object.keys(docs).map((row, i) => {
+                //console.log(location.state.student_data.modifications)
                 return (
                   <>
                     <TableRow>
@@ -763,23 +764,95 @@ function Documents() {
                           <Typography color="red">Mandatory</Typography>
                         )}
                       </TableCell>
-                      {location.state.student_data.applicationFilled && (
-                        <TableCell>
-                          <Typography>Documents Submitted</Typography>
-                        </TableCell>
-                      )}
-                      {location.state.student_data.applicationFilled ==
-                        false && (
-                        <TableCell>
-                          <input
-                            type="file"
-                            onChange={(event) => fileUpload(event, i)}
-                            style={{ color: "transparent" }}
-                          />
-                        </TableCell>
-                      )}
+                      
+                      <TableCell>
+                      {
+                        i == 0 && ((location.state.student_data.modifications.includes("sscEq") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
 
-                      {/* {docs[row].file && ( */}
+{
+                        i == 1 && ((location.state.student_data.modifications.includes("hscEq") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
+
+              {i == 2 && ((location.state.student_data.modifications.includes("grad") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
+{i == 3 && ((location.state.student_data.modifications.includes("postGrad") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
+{i == 5 && ((location.state.student_data.modifications.includes("profExp") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
+{i == 6 && ((location.state.student_data.modifications.includes("otCourses") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
+              {
+
+                [0, 1,  2, 3, 5, 6].includes(i) == false && (
+                  location.state.student_data.applicationFilled == false ? (
+                    <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                  ) : (
+                    <Typography>Document Submitted</Typography>
+                  )
+                )
+
+              }
+                      </TableCell>
+
+
                         <TableCell>
                           <div
                             style={{
