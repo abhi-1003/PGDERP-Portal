@@ -993,6 +993,16 @@ function Documents() {
                       {i == 9 && !loading10 && (
                         <TableCell>{docs[row]["status"]}</TableCell>
                       )}
+
+{i == 10 && loading11 && (
+                        <TableCell>
+                          <CircularProgress />
+                          {docs[row]["status"]}
+                        </TableCell>
+                      )}
+                      {i == 10 && !loading11 && (
+                        <TableCell>{docs[row]["status"]}</TableCell>
+                      )}
                     </TableRow>
                   </>
                 );

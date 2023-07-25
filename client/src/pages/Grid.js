@@ -507,9 +507,11 @@ const GridAdmin = () => {
             }
             if (
               "PostGradFrom" in students[student]["academicsInfo"] &&
-              students[student]["academicsInfo"]["PostGradFrom"].length > 2 && students[student]["academicInfo"]["PostGradFrom"][0] !== null
+              students[student]["academicsInfo"]["PostGradFrom"].length > 2
             ) {
-              row["PG Start"] =
+
+              if(students[student]["academicsInfo"]["PostGradFrom"][0] != null) {
+                row["PG Start"] =
                 students[student]["academicsInfo"][
                   "PostGradFrom"
                 ][0].toString() +
@@ -521,6 +523,8 @@ const GridAdmin = () => {
                 students[student]["academicsInfo"][
                   "PostGradFrom"
                 ][2].toString();
+              }
+              
             }
             if (
               "PostGradTo" in students[student]["academicsInfo"] &&
