@@ -779,7 +779,7 @@ function Documents() {
               )}
 
 {
-                        i == 1 && ((location.state.student_data.modifications.includes("hscEq") || location.state.student_data.applicationFilled == false) ? (
+                        i == 1 && ((location.state.student_data.modifications.includes("hscEq") || location.state.student_data.modifications.includes("diplomaEq") || location.state.student_data.applicationFilled == false) ? (
                             <input
                               type="file"
                               onChange={(event) => fileUpload(event, i)}
@@ -813,6 +813,17 @@ function Documents() {
                         )
               )}
 
+{i == 4 && ((location.state.student_data.modifications.includes("aadharPassport") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
 {i == 5 && ((location.state.student_data.modifications.includes("profExp") || location.state.student_data.applicationFilled == false) ? (
                             <input
                               type="file"
@@ -835,9 +846,31 @@ function Documents() {
                         )
               )}
 
+{i == 7 && ((location.state.student_data.modifications.includes("selfDeclaration") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
+{i == 8 && ((location.state.student_data.modifications.includes("feesPayment") || location.state.student_data.applicationFilled == false) ? (
+                            <input
+                              type="file"
+                              onChange={(event) => fileUpload(event, i)}
+                              style={{ color: "transparent" }}
+                            />
+                        ) : (
+                            <Typography>Document Submitted</Typography>
+                        )
+              )}
+
               {
 
-                [0, 1,  2, 3, 5, 6].includes(i) == false && (
+                [0, 1,  2, 3, 4, 5, 6, 7, 8].includes(i) == false && (
                   location.state.student_data.applicationFilled == false ? (
                     <input
                               type="file"
