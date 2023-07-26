@@ -164,8 +164,8 @@ function EducationalDetails({setStep}) {
       if(response.data.academicInfo.HSCFilled && !['InstituteHSC', 'HSCFrom', 'HSCTo', 'HSCmarks', 'hscEq'].every((i)=>response.data.verified.includes(i))){
         t += 5
       }
-      if(response.data.academicInfo.DiplomaFilled && !['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks'].every((i)=>response.data.verified.includes(i))){
-        t += 4
+      if(response.data.academicInfo.DiplomaFilled && !['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks', 'diplomaEq'].every((i)=>response.data.verified.includes(i))){
+        t += 5
       }
       if(response.data.academicInfo.PostGradFrom.length > 0 && !['InstitutePostGrad', 'SpecializationPostGrad', 'PostGradFrom', 'PostGradTo', 'FinalYearMarksPostGrad', 'AggregateMarksPostGrad', 'postGrad'].every((i)=>response.data.verified.includes(i))){
         t += 7
@@ -399,12 +399,12 @@ function EducationalDetails({setStep}) {
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['DiplomaFrom'][0]}/{data['DiplomaFrom'][1]}/{data['DiplomaFrom'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['DiplomaTo'][0]}/{data['DiplomaTo'][1]}/{data['DiplomaTo'][2]}</StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="10%">{data['Diplomamarks']}</StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
+                  <StyledTableCell><DocViewer filename={data['hscEq']} contentType="application/pdf" /></StyledTableCell>
                   <StyledTableCell className={classes.StyledTableCell} width="35%">
-                    {['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks'].every((i)=>nowVerified.includes(i))?<FormControl>
+                    {['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks', 'diplomaEq'].every((i)=>nowVerified.includes(i))?<FormControl>
                     <RadioGroup>
-                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="modification"/>} label="Modification Required" />
-                    <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="accepted"/>} label="Accepted" />
+                    <FormControlLabel value="Modification Required" control={<Radio disabled onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks', 'diplomaEq']} value="modification"/>} label="Modification Required" />
+                    <FormControlLabel value="Accepted" control={<Radio disabled defaultChecked onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks', 'diplomaEq']} value="accepted"/>} label="Accepted" />
                     </RadioGroup>
                   </FormControl>:
                   <FormControl>
