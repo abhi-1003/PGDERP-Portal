@@ -262,7 +262,7 @@ function ResponsiveStudentHome() {
 
 
         <Box display="flex" justifyContent="center" alignItems="center">
-          <Typography sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "40", marginBottom: "15px" }}>Please keep checking the portal regularly. Your application will not be considered if it does not get verified before 31 JULY 2023.</Typography>
+          <Typography sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "40", marginBottom: "15px" }}>Please keep checking the portal regularly. Last date of acceptance of application is till 31st July, 2023,6.00 PM</Typography>
         </Box>
         
 
