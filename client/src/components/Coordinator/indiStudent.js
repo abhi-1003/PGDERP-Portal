@@ -1212,7 +1212,7 @@ function Download() {
           personalData["academicsInfoFilled"] &&
           personalData["professionalExperienceFilled"] &&
           personalData["documentsFilled"] && personalData["feesDetailsFilled"] && photo && sign ? (
-            <PDFDownloadLink document={<MyDoc />} fileName="Application.pdf">
+            <PDFDownloadLink document={<MyDoc />} fileName={personalData.registrationID + ".pdf"}>
               <Button
                 variant="contained"
                 //   onClick={() => {
