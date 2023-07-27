@@ -71,6 +71,7 @@ import {
 } from "../components/common/displayComponents";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import zip from "../components/zip";
 
 const drawerWidth = 280;
 
@@ -123,8 +124,14 @@ const GridAdmin = () => {
   let columnDefs = [];
 
   // Pushing all column fields
+  columnDefs.push({ field: "ID", cellRenderer: zip,
+  cellRendererParams: {
+    clicked: function (field) {
+      alert(`${field} was clicked`);
+    },
+  },});
   columnDefs.push({ field: "Name" });
-  columnDefs.push({ field: "ID" });
+  columnDefs.push({ field: "RegistrationID" });
   columnDefs.push({ field: "Course" });
   columnDefs.push({ field: "Email-ID" });
   columnDefs.push({ field: "Mobile" });
@@ -221,7 +228,7 @@ const GridAdmin = () => {
   const onGridReady = (params) => {
     const url = BACKEND_URL + "/admin/allStudentDetails";
     let all_rows = [];
-    console.log("ready")
+    //console.log("ready")
     axios
       .get(url, {
         headers: {
@@ -229,7 +236,7 @@ const GridAdmin = () => {
         },
       })
       .then((res) => {
-        console.log(res)
+        //console.log(res)
         let students = res.data;
         Object.keys(students).map((student, index) => {
           // console.log(students[student]);
@@ -248,6 +255,7 @@ const GridAdmin = () => {
           }
           if (students[student]["registrationID"]) {
             row["ID"] = students[student]["registrationID"];
+            row["RegistrationID"] = students[student]["registrationID"];
           }
 
           //Personal details
