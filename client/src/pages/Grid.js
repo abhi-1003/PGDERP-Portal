@@ -72,6 +72,7 @@ import {
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import zip from "../components/zip";
+import adminApplication from "../components/adminApplication";
 
 const drawerWidth = 280;
 
@@ -125,6 +126,12 @@ const GridAdmin = () => {
 
   // Pushing all column fields
   columnDefs.push({ field: "ID", cellRenderer: zip,
+  cellRendererParams: {
+    clicked: function (field) {
+      alert(`${field} was clicked`);
+    },
+  },});
+  columnDefs.push({ field: "application_id", cellRenderer: adminApplication,
   cellRendererParams: {
     clicked: function (field) {
       alert(`${field} was clicked`);
@@ -256,6 +263,7 @@ const GridAdmin = () => {
           if (students[student]["registrationID"]) {
             row["ID"] = students[student]["registrationID"];
             row["RegistrationID"] = students[student]["registrationID"];
+            row["application_id"] = students[student]["registrationID"];
           }
 
           //Personal details
