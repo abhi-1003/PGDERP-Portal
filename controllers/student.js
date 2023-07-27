@@ -523,6 +523,18 @@ exports.getStudent = async (req, res) => {
   }
 };
 
+exports.getStudentDocsZip = async(req, res) => {
+  if(req.userRole == "admin"){
+    const id = req.body.id;
+    try{
+      const user = await Student.findOne({registrationID : id}).exec();
+      return res.send({ data : user.documents });
+    }catch (error) {
+      res.status(400).json({ error: "request body contains invalid data" });
+    }
+  }
+}
+
 exports.getDocs = async (req, res) => {
   const email = req.query.email;
   try {
