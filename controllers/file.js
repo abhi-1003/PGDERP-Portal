@@ -91,6 +91,15 @@ exports.getFileGrid = (req, res) => {
   });
 };
 
+exports.getFileId = (req, res) => {
+  const filename = req.params && req.params.filename;
+  gfs.files.findOne({"filename": filename}, (err, file) => {
+    if(file){
+      res.send({id: file._id})
+    }
+  })
+}
+
 exports.removeFileGrid = (req, res) => {
   // if (req.userRole != "student") {
   //   res.status(403).json({ error: "only students can delete documents" });
@@ -101,6 +110,7 @@ exports.removeFileGrid = (req, res) => {
   }
   // var files_id = new mongodb.ObjectId(id);
   // console.log(files_id)
+  
   gfs.files.remove({filename}, (err, data) => {
     if (err) return res.status(404).json({ err: err.message });
     return res.json({success: true})

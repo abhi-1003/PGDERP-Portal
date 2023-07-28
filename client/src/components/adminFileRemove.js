@@ -10,7 +10,7 @@ class adminFileRemover extends Component{
         this.btnClickedHandler = this.btnClickedHandler.bind(this);
       }
 
-    btnClickedHandler(){
+    async btnClickedHandler(){
         this.props.clicked(this.props.value)
 
         const body = {
@@ -19,13 +19,45 @@ class adminFileRemover extends Component{
 
         const url = BACKEND_URL + "/admin/zipDocs";
 
-        axios.post(url, body, {
+        await axios.post(url, body, {
             headers:{
                 "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt")
             }
         })
         .then((res) => {
             const docs = res.data.data;
+            let s = "";
+            Object.keys(docs).map((doc) => {
+                console.log(docs[doc])
+                axios.get(BACKEND_URL + "/files/fileId/"+ docs[doc], {
+                    headers:{
+                        "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt")
+                    }
+                })
+                .then((fileId) => {
+                    s += fileId.data.id
+                    s += ","
+                    console.log(s)
+                })
+            })
+        })
+
+        await axios.post(url, body, {
+            headers:{
+                "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt")
+            }
+        })
+        .then((res) => {
+            const docs = res.data.data;
+            let s = "";
+            axios.post(url, body, {
+            headers:{
+                "pgderp-website-jwt": localStorage.getItem("pgderp-website-jwt")
+                }
+            })
+        .then((res) => {
+            const docs = res.data.data;
+            let s = "";
             Object.keys(docs).map((doc) => {
                 const delete_url = BACKEND_URL + "/files/removeFiles/" + docs[doc]
                 axios.post(delete_url, {
@@ -38,6 +70,8 @@ class adminFileRemover extends Component{
                 )
             })
         })
+        })
+
     }
 
     render(){

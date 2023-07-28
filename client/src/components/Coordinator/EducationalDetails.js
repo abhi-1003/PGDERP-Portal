@@ -409,8 +409,8 @@ function EducationalDetails({setStep}) {
                   </FormControl>:
                   <FormControl>
                   <RadioGroup>
-                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="modification"/>} label="Modification Required" />
-                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks']} value="accepted"/>} label="Accepted" />
+                  <FormControlLabel value="Modification Required" control={<Radio onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks', 'diplomaEq']} value="modification"/>} label="Modification Required" />
+                  <FormControlLabel value="Accepted" control={<Radio onChange={changeVerificationStatus} id={['InstituteDiploma', 'DiplomaFrom', 'DiplomaTo', 'Diplomamarks', 'diplomaEq']} value="accepted"/>} label="Accepted" />
                   </RadioGroup>
                 </FormControl>}
                   
