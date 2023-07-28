@@ -133,18 +133,18 @@ const GridAdmin = () => {
       alert(`${field} was clicked`);
     },
   },});
-  columnDefs.push({ field: "removeDocs", cellRenderer: adminFileRemover,
-  cellRendererParams: {
-    clicked: function (field) {
-      alert(`${field} was clicked`);
-    },
-  },});
-  columnDefs.push({ field: "emptyDocsStudent", cellRenderer: docsStatusRemove,
-  cellRendererParams: {
-    clicked: function (field) {
-      alert(`${field} was clicked`);
-    },
-  },});
+  // columnDefs.push({ field: "removeDocs", cellRenderer: adminFileRemover,
+  // cellRendererParams: {
+  //   clicked: function (field) {
+  //     alert(`${field} was clicked`);
+  //   },
+  // },});
+  // columnDefs.push({ field: "emptyDocsStudent", cellRenderer: docsStatusRemove,
+  // cellRendererParams: {
+  //   clicked: function (field) {
+  //     alert(`${field} was clicked`);
+  //   },
+  // },});
   columnDefs.push({ field: "Name" });
   columnDefs.push({ field: "RegistrationID" });
   columnDefs.push({ field: "Course" });
@@ -271,8 +271,8 @@ const GridAdmin = () => {
           if (students[student]["registrationID"]) {
             row["ID"] = students[student]["registrationID"];
             row["RegistrationID"] = students[student]["registrationID"];
-            row["removeDocs"] = students[student]["registrationID"];
-            row["emptyDocsStudent"] = students[student]["registrationID"];
+            // row["removeDocs"] = students[student]["registrationID"];
+            // row["emptyDocsStudent"] = students[student]["registrationID"];
           }
 
           //Personal details
