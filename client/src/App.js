@@ -32,6 +32,7 @@ import FeesDetails from "./pages/fees";
 import GridAdmin from "./pages/Grid";
 import FeesDetailsAdmin from "./pages/FeesDetailsAdmin";
 import LandingPage from "./pages/LandingPage";
+import WebsiteMaintenance from "./pages/websiteMaintenance";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -50,9 +51,17 @@ function App() {
   return (
     <Router>
       <Routes>
+
+        {/* maintenance */}
+        <Route path = "/" exact element={<WebsiteMaintenance />} />
+        <Route
+          path="*"
+          element={<Navigate to="/" replace={true} />}
+        />
+
         <Route path="/" exact element={<LandingPage />}></Route>
 
-        <Route
+        {/* <Route
           path="*"
           element={<Navigate to="/" replace={true} />}
         />
@@ -130,9 +139,8 @@ function App() {
           }
         />
 
-        <Route path="/admin/loginefirihig67894536dyey" element={<AdminLogin />} exact></Route>
-        {/* <Route path="/admin/register" element={<AdminRegister />}></Route> */}
-        <Route
+        <Route path="/admin/loginefirihig67894536dyey" element={<AdminLogin />} exact></Route> */}
+        {/* <Route
           path="/admin/home"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
@@ -195,15 +203,6 @@ function App() {
           }
         />
         <Route path="/otpscript" element={<OtpScript />}></Route>
-        {/* <Route
-          path="/doc-view"
-          element = {
-            <DocViewer
-              filename="a2020d3641851fc69d1be879a9a35bff1685731386851.pdf"
-              contentType="application/pdf"
-            />
-          }
-        ></Route> */}
         <Route
           path="/admin/grid"
           element={
@@ -219,7 +218,7 @@ function App() {
               <FeesDetailsAdmin />
             </ProtectedRoute>
           }
-        />
+        /> */}
       </Routes>
     </Router>
   );
