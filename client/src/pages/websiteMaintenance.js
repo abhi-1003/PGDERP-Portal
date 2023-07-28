@@ -25,7 +25,7 @@ const WebsiteMaintenance = () => {
         PG - Diploma Admission Portal
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Website down for maintenance from 28 July 5:30 PM - 7 PM. Please keep checking the portal regularly. Last date of acceptance of application is till 31st July, 2023,6.00 PM
+          Website down for maintenance from 28 July 5 PM - 7 PM. Please keep checking the portal regularly. Last date of acceptance of application is till 31st July, 2023,6.00 PM
         </Typography>
       </CardContent>
     </Card>
