@@ -53,15 +53,16 @@ function App() {
       <Routes>
 
         {/* maintenance */}
-        <Route path = "/" exact element={<WebsiteMaintenance />} />
+        {/* <Route path = "/" exact element={<WebsiteMaintenance />} />
         <Route
           path="*"
           element={<Navigate to="/" replace={true} />}
         />
+        */}
 
-        <Route path="/" exact element={<LandingPage />}></Route>
+        <Route path="/" exact element={<LandingPage />}></Route> 
 
-        {/* <Route
+        <Route
           path="*"
           element={<Navigate to="/" replace={true} />}
         />
@@ -139,8 +140,8 @@ function App() {
           }
         />
 
-        <Route path="/admin/loginefirihig67894536dyey" element={<AdminLogin />} exact></Route> */}
-        {/* <Route
+        <Route path="/admin/loginefirihig67894536dyey" element={<AdminLogin />} exact></Route>
+        <Route
           path="/admin/home"
           element={
             <ProtectedRoute allowedRoles={[roles.admin]}>
@@ -218,7 +219,7 @@ function App() {
               <FeesDetailsAdmin />
             </ProtectedRoute>
           }
-        /> */}
+        />
       </Routes>
     </Router>
   );
