@@ -12,6 +12,7 @@ const {
 router.post("/upload", uploadFile);
 router.post("/setUser", setUser);
 router.get("/get/:filename", getFileGrid);
+router.post("/removeFiles/:filename", removeFileGrid);
 
 // router.delete("/delete/:filename", removeFileGrid);
 

@@ -73,6 +73,8 @@ import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import zip from "../components/zip";
 import adminApplication from "../components/adminApplication";
+import adminFileRemover from "../components/adminFileRemove";
+import docsStatusRemove from "../components/docsStatusRemove";
 
 const drawerWidth = 280;
 
@@ -131,7 +133,13 @@ const GridAdmin = () => {
       alert(`${field} was clicked`);
     },
   },});
-  columnDefs.push({ field: "application_id", cellRenderer: adminApplication,
+  columnDefs.push({ field: "removeDocs", cellRenderer: adminFileRemover,
+  cellRendererParams: {
+    clicked: function (field) {
+      alert(`${field} was clicked`);
+    },
+  },});
+  columnDefs.push({ field: "emptyDocsStudent", cellRenderer: docsStatusRemove,
   cellRendererParams: {
     clicked: function (field) {
       alert(`${field} was clicked`);
@@ -263,7 +271,8 @@ const GridAdmin = () => {
           if (students[student]["registrationID"]) {
             row["ID"] = students[student]["registrationID"];
             row["RegistrationID"] = students[student]["registrationID"];
-            row["application_id"] = students[student]["registrationID"];
+            row["removeDocs"] = students[student]["registrationID"];
+            row["emptyDocsStudent"] = students[student]["registrationID"];
           }
 
           //Personal details

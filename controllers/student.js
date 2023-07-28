@@ -393,6 +393,24 @@ exports.getNoStudentsandEmailCheck = async (req, res) => {
   });
 };
 
+exports.adminDocsEdit = async(req, res) => {
+  if(req.userRole == "admin"){
+    const id = req.body["id"]
+    try{
+      const user = await Student.findById(id).exec();
+      user["documents"] = {}
+      await user.save().catch((err) => {
+        console.log(err);
+        return res.json({ error: "couldn't update record" });
+      });
+      return res.send({message: "updated docs"})
+    }
+    catch (error) {
+      res.status(400).json({ error: "request body contains invalid data" });
+    }
+  }
+}
+
 exports.editStudentInfo = async (req, res) => {
   if (req.userRole == "student") {
     const fields = [
@@ -502,6 +520,19 @@ exports.getStudentMe = async (req, res) => {
     const id = req.body["id"];
     try {
       const user = await Student.findById(id).exec();
+      return res.send({ user });
+    } catch (error) {
+      res.status(400).json({ error: "request body contains invalid data" });
+    }
+  }
+};
+
+// Route for getting personal data of student
+exports.getStudentAdmin = async (req, res) => {
+  if (req.userRole == "admin") {
+    const id = req.body["id"];
+    try {
+      const user = await Student.findOne({ registrationID: id }).exec();
       return res.send({ user });
     } catch (error) {
       res.status(400).json({ error: "request body contains invalid data" });

@@ -2,6 +2,8 @@ const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const path = require("path");
 const crypto = require("crypto");
+const mongoose = require("mongoose");
+const mongodb = require('mongodb');
 const { mongoURI } = require("../config/configKeys");
 const Student = require("../models/student");
 
@@ -90,17 +92,18 @@ exports.getFileGrid = (req, res) => {
 };
 
 exports.removeFileGrid = (req, res) => {
-  if (req.userRole != "student") {
-    res.status(403).json({ error: "only students can delete documents" });
-  }
+  // if (req.userRole != "student") {
+  //   res.status(403).json({ error: "only students can delete documents" });
+  // }
   const filename = req.params && req.params.filename;
   if (!filename) {
-    return res.status(400).send({ err: " missing file name" });
+    return res.status(400).send({ err: "file name is required" });
   }
-  gfs.files.remove({ filename }, (err, file) => {
-    if (!file || file.length === 0 || err !== null) {
-      return res.status(404).send({ err: "Error removing file" });
-    }
-    return res.json({ success: true });
+  // var files_id = new mongodb.ObjectId(id);
+  // console.log(files_id)
+  gfs.files.remove({filename}, (err, data) => {
+    if (err) return res.status(404).json({ err: err.message });
+    return res.json({success: true})
   });
+
 };
