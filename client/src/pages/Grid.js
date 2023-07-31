@@ -495,7 +495,7 @@ const GridAdmin = () => {
             }
             if (
               "GradTo" in students[student]["academicsInfo"] &&
-              students[student]["academicsInfo"]["GradTo"].length > 2
+              students[student]["academicsInfo"]["GradTo"].length > 2 && students[student]["academicsInfo"]["GradTo"][0]!=null
             ) {
               row["Graduation End"] =
                 students[student]["academicsInfo"]["GradTo"][0].toString() +

@@ -507,7 +507,7 @@ const GridAdmin = () => {
             }
             if (
               "GradTo" in students[student]["academicsInfo"] &&
-              students[student]["academicsInfo"]["GradTo"].length > 2
+              students[student]["academicsInfo"]["GradTo"].length > 2 && students[student]["academicsInfo"]["GradTo"][0]!=null
             ) {
               row["Graduation End"] =
                 students[student]["academicsInfo"]["GradTo"][0].toString() +
@@ -543,9 +543,12 @@ const GridAdmin = () => {
                 students[student]["academicsInfo"]["SpecializationPostGrad"];
             }
             if (
-              "PostGradFrom" in students[student]["academicsInfo"] && students[student]["academicInfo"]["PostGradFrom"][0] !== null &&
+              "PostGradFrom" in students[student]["academicsInfo"] && 
               students[student]["academicsInfo"]["PostGradFrom"].length > 2
             ) {
+              if(students[student]["academicsInfo"]["PostGradFrom"][0] != null){
+
+              
               row["PG Start"] =
                 students[student]["academicsInfo"][
                   "PostGradFrom"
@@ -558,6 +561,8 @@ const GridAdmin = () => {
                 students[student]["academicsInfo"][
                   "PostGradFrom"
                 ][2].toString();
+
+              }
             }
             if (
               "PostGradTo" in students[student]["academicsInfo"] &&
