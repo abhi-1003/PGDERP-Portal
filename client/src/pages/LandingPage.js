@@ -195,6 +195,9 @@ function Sidebar(props) {
                     <Grid item xs sx={{ p: 1}}>
                         <Typography>For any Software Related Queries: pgdadmission@coeptech.ac.in</Typography>
                       </Grid>
+                    <Grid item xs sx = {{p:1}}>
+                    <Typography>Please keep checking the portal regularly. Last date of submission of application is till 10th August, 2023,6.00 PM.</Typography>
+                    </Grid>
                     </Paper>
                     <Paper component={Box} p={2} className='landing-page-main'>
                         <Box mt={1} mb={2}>

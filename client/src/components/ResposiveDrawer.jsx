@@ -262,7 +262,7 @@ function ResponsiveStudentHome() {
 
 
         <Box display="flex" justifyContent="center" alignItems="center">
-          <Typography sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "40", marginBottom: "15px" }}>Please keep checking the portal regularly. Last date of acceptance of application is till 31st July, 2023,6.00 PM</Typography>
+          <Typography sx={{ paddingTop: "1%", paddingBottom: "1%", margin: "auto", fontWeight: "40", marginBottom: "15px" }}>Please keep checking the portal regularly. Last date of submission of application is till 10th August, 2023,6.00 PM</Typography>
         </Box>
         
 
