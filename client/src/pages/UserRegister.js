@@ -174,9 +174,9 @@ export default function UserRegister() {
               COEP PG Diploma Admissions
             </Typography>
             <Typography component="h6" variant="h6">
-              Application Form
+              Registration for PG Diploma is closed. Only Students who have submitted their application can login to the portal.
             </Typography>
-            <Form onSubmit={handleSubmit}>
+            {/* <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
                 <Grid align="center" item xs={12}>
                   <Input
@@ -299,7 +299,7 @@ export default function UserRegister() {
                   </Grid>
                 </Grid>
               </Grid>
-            </Form>
+            </Form> */}
           </Box>
         </Container>
       </div>

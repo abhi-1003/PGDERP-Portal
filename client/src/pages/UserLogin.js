@@ -135,9 +135,16 @@ export default function UserLogin() {
               <Typography
                 component="h1"
                 variant="h5"
-                style={{ marginBottom: "20px", fontWeight: "600" }}
+                style={{ marginBottom: "10px", fontWeight: "600" }}
               >
                 COEP PG Diploma Login
+              </Typography>
+              <Typography
+                component="h1"
+                variant="h6"
+                style={{ marginBottom: "10px", fontWeight: "300" }}
+              >
+                Students who have submitted their application can only login to the portal.
               </Typography>
               <Form onSubmit={handleSubmit}>
                 <Grid align="center" xs={12} item>

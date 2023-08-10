@@ -196,7 +196,7 @@ function Sidebar(props) {
                         <Typography>For any Software Related Queries: pgdadmission@coeptech.ac.in</Typography>
                       </Grid>
                     <Grid item xs sx = {{p:1}}>
-                    <Typography>Please keep checking the portal regularly. Last date of submission of application is till 10th August, 2023,6.00 PM.</Typography>
+                    <Typography>Please keep checking the portal regularly. New Registrations have closed now. Only students who have submitted their applications can login to the portal.</Typography>
                     </Grid>
                     </Paper>
                     <Paper component={Box} p={2} className='landing-page-main'>

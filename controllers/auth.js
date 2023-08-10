@@ -97,7 +97,7 @@ exports.loginStudent = (req, res) => {
       }
 
       const isMatch = await compare(password, user.password);
-      if (isMatch) {
+      if (isMatch && (user.applicationFilled == true || user.modifications.length > 0)) {
         user.role = Student.modelName;
         const token = generateToken(user);
         res.send({ message: "Login Successful", token: token, data: user });
