@@ -194,7 +194,7 @@ function Sidebar(props) {
                     <Paper component={Box} p ={1} className='landing-page-main' sx = {{color: "blue", backgroundColor:"yellow"}}>
                     
                     <Grid item xs sx={{ p: 1}}>
-                        <Typography>Candidates shortlisted for Interview Round will be declared soon. For any queries please contact respective Course Coordinator.</Typography>
+                        <Typography>Candidates shortlisted will be declared soon. For any queries please contact respective Course Coordinator.</Typography>
                       </Grid>
                     </Paper>
 
