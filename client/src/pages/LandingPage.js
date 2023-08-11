@@ -29,6 +29,7 @@ import selfDec from '../docs/Self-Declaration.pdf'
 import declaration from '../docs/declaration.pdf'
 import undertaking from '../docs/undertaking.pdf'
 import contacts from '../docs/contacts.pdf'
+import { Table, TableContainer, TableHead, TableRow, TableCell, Button } from '@mui/material';
 
 const drawerWidth = 280;
 
@@ -193,12 +194,59 @@ function Sidebar(props) {
                     <Paper component={Box} p ={1} className='landing-page-main' sx = {{color: "blue", backgroundColor:"yellow"}}>
                     
                     <Grid item xs sx={{ p: 1}}>
-                        <Typography>For any Software Related Queries: pgdadmission@coeptech.ac.in</Typography>
+                        <Typography>Candidates shortlisted for Interview Round will be declared soon. For any queries please contact respective Course Coordinator.</Typography>
                       </Grid>
-                    <Grid item xs sx = {{p:1}}>
-                    <Typography>Please keep checking the portal regularly. New Registrations have closed now. Only students who have submitted their applications can login to the portal.</Typography>
-                    </Grid>
                     </Paper>
+
+                    <Grid container rowSpacing={0.1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx = {{paddingLeft: "20px"}}>
+                        <TableContainer sx={{ marginTop: "1%", paddingLeft: "2%", paddingTop: "0.1%" }}>
+                            <Table sx={{ paddingLeft: "2%" }}>
+                                <TableHead>
+                                    <TableRow>
+                                    <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Course Name</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Download PDF</TableCell>
+                                    </TableRow>
+                                </TableHead>
+
+                                <TableRow>
+                                <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDERP</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>Result Pending</TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                <TableCell align="center" wrap sx = {{background: "#8CABFF"}}>PGDIPDD</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#8CABFF"}}>Result Pending</TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDDSAI</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>Result Pending</TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                <TableCell align="center" wrap sx = {{background: "#8CABFF"}}>PGDESIoT</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#8CABFF"}}>Result Pending</TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDEM</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>
+                  <a href={require("../assets/Result/PGDEM.pdf")} download="PGDEM.pdf">
+                    <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
+                        backgroundColor: "#40128B"
+                    }}}>Download</Button></a>
+                  </TableCell>
+                                </TableRow>
+
+                                <TableRow>
+                                <TableCell align="center" wrap sx = {{background: "#8CABFF"}}>PGDIA</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#8CABFF"}}>Result Pending</TableCell>
+                                </TableRow>
+
+
+                            </Table>
+                        </TableContainer>
+                    </Grid>
                     <Paper component={Box} p={2} className='landing-page-main'>
                         <Box mt={1} mb={2}>
                             <div className='cards'>
