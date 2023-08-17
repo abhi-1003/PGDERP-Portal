@@ -204,13 +204,15 @@ function Sidebar(props) {
                                 <TableHead>
                                     <TableRow>
                                     <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Course Name</TableCell>
-                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Download PDF</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#1B9C85"}}>Important Downloads</TableCell>
                                     </TableRow>
                                 </TableHead>
 
                                 <TableRow>
                                 <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDERP</TableCell>
-                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>Result Pending</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>
+                    Result Pending
+                  </TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -220,7 +222,19 @@ function Sidebar(props) {
 
                                 <TableRow>
                                 <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDDSAI</TableCell>
-                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>Result Pending</TableCell>
+                  <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>
+                  <Typography sx = {{p:1}}>Interview Schedule for PGDDSAI
+                    <a href={require("../assets/Result/Interview Schedule -PGDDSAI for AY 2023-24.pdf")} download="Interview Schedule -PGDDSAI for AY 2023-24.pdf" >
+                    <Button sx ={{backgroundColor: "#0D1282", color:"white", ml:2, '&:hover': {
+                        backgroundColor: "#40128B"
+                    }}}>Download</Button></a>
+                    </Typography>
+                  <Typography sx = {{p:1}}> Provisional List for PGDDSAI<a href={require("../assets/Result/PGDDSAI Provisional List for AY 2023-24.pdf")} download="PGDDSAI Provisional List for AY 2023-24.pdf" >
+                    <Button sx ={{backgroundColor: "#0D1282", color:"white", ml:2, '&:hover': {
+                        backgroundColor: "#40128B"
+                    }}}>Download</Button></a></Typography>
+                    
+                  </TableCell>
                                 </TableRow>
 
                                 <TableRow>
@@ -234,7 +248,7 @@ function Sidebar(props) {
                   <a href={require("../assets/Result/PGDEM.pdf")} download="PGDEM.pdf">
                     <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
                         backgroundColor: "#40128B"
-                    }}}>Download</Button></a>
+                    }}}>Download Result</Button></a>
                   </TableCell>
                                 </TableRow>
 
