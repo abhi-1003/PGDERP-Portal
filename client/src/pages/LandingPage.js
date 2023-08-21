@@ -211,7 +211,10 @@ function Sidebar(props) {
                                 <TableRow>
                                 <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDERP</TableCell>
                   <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>
-                    Result Pending
+                  <a href={require("../assets/Result/Provisional Merit List PGDERP 2023-24.pdf")} download="Provisional Merit List PGDERP 2023-24.pdf">
+                    <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
+                        backgroundColor: "#40128B"
+                    }}}>Download Provisional Merit List</Button></a>
                   </TableCell>
                                 </TableRow>
 
