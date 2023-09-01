@@ -215,6 +215,10 @@ function Sidebar(props) {
                     <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
                         backgroundColor: "#40128B"
                     }}}>Download Provisional Merit List</Button></a>
+                    <a href={require("../assets/Result/PGDERP 2023-24 Provisional Merit List - 2.pdf")} download="PGDERP 2023-24 Provisional Merit List - 2.pdf">
+                    <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
+                        backgroundColor: "#40128B"
+                    }}}>Download Provisional Merit List 2</Button></a>
                   </TableCell>
                                 </TableRow>
 
