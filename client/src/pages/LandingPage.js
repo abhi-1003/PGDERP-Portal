@@ -252,10 +252,11 @@ function Sidebar(props) {
                                 <TableRow>
                                 <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDEM</TableCell>
                   <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>
-                  <a href={require("../assets/Result/PGDEM.pdf")} download="PGDEM.pdf">
+                  {/* {require("../assets/Result/PGDEM.pdf")} download="PGDEM.pdf" */}
+                  <a href="./student/register">
                     <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
                         backgroundColor: "#40128B"
-                    }}}>Download Result</Button></a>
+                    }}}>Register</Button></a>
                   </TableCell>
                                 </TableRow>
 

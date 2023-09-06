@@ -173,10 +173,10 @@ export default function UserRegister() {
             <Typography component="h1" variant="h5">
               COEP PG Diploma Admissions
             </Typography>
-            <Typography component="h6" variant="h6">
+            {/* <Typography component="h6" variant="h6">
               Registration for PG Diploma is closed. Only Students who have submitted their application can login to the portal.
-            </Typography>
-            {/* <Form onSubmit={handleSubmit}>
+            </Typography> */}
+            <Form onSubmit={handleSubmit}>
               <Grid align="center" item xs={12}>
                 <Grid align="center" item xs={12}>
                   <Input
@@ -226,12 +226,12 @@ export default function UserRegister() {
                         label="Course*"
                         onChange={handleCourseChange}
                       >
-                         <MenuItem value={"PGDERP"}>Enterprise Resourse Planning(PGDERP)</MenuItem>
+                         {/* <MenuItem value={"PGDERP"}>Enterprise Resourse Planning(PGDERP)</MenuItem>
                          <MenuItem value={"PGDIPDD"}>Integrated Product Design and Development(PGDIPDD)</MenuItem>
                          <MenuItem value={"PGDDSAI"}>Data Science and Artificial Intelligence(PGDDSAI)</MenuItem>
-                         <MenuItem value={"PGDESIoT"}>Embedded Systems for Internet of Things(PGDESIoT)</MenuItem>
+                         <MenuItem value={"PGDESIoT"}>Embedded Systems for Internet of Things(PGDESIoT)</MenuItem> */}
                         <MenuItem value = {"PGDEM"}>Electric Mobility(PGDEM)</MenuItem>
-                        <MenuItem value={"PGDIA"}>Industrial Automation(PGDIA)</MenuItem>
+                        {/* <MenuItem value={"PGDIA"}>Industrial Automation(PGDIA)</MenuItem> */}
                       </Select>
                       {!course && <FormHelperText sx= {{color: "red"}}>{errors.course}</FormHelperText>}
                       
@@ -299,7 +299,7 @@ export default function UserRegister() {
                   </Grid>
                 </Grid>
               </Grid>
-            </Form> */}
+            </Form>
           </Box>
         </Container>
       </div>
