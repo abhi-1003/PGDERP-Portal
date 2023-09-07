@@ -59,7 +59,7 @@ export default function UserLogin() {
         .then(res => {
           alert(res.data.message);
           let token_dict = res.data.token;
-          // console.log(token_dict.token)
+          console.log(token_dict.token)
           localStorage.setItem("pgderp-website-jwt", token_dict.token);
           localStorage.setItem("pgderp-website-role", "student");
           let student_data = res.data.data;
@@ -78,7 +78,7 @@ export default function UserLogin() {
         })
         .catch(err => {
           alert("Invalid credentials. Login again");
-          console.log(err.response || err);
+          console.log(err.response.data || err);
         });
     }
   };
@@ -139,13 +139,13 @@ export default function UserLogin() {
               >
                 COEP PG Diploma Login
               </Typography>
-              <Typography
+              {/* <Typography
                 component="h1"
                 variant="h6"
                 style={{ marginBottom: "10px", fontWeight: "300" }}
               >
                 Students who have submitted their application can only login to the portal.
-              </Typography>
+              </Typography> */}
               <Form onSubmit={handleSubmit}>
                 <Grid align="center" xs={12} item>
                   <Grid align="center" item xs={12}>
