@@ -249,7 +249,9 @@ function Download() {
                 responseType: "blob",
               })
               .then(function(response){
+                console.log(response)
                 const file = new Blob([response.data], { type: contentType });
+                console.log(file)
                 setSign(URL.createObjectURL(file));
               })
               axios

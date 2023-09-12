@@ -211,14 +211,24 @@ function Sidebar(props) {
                                 <TableRow>
                                 <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>PGDERP</TableCell>
                   <TableCell align="center" wrap sx = {{background: "#EEE0C9"}}>
+                    <Typography sx = {{mb:2}}>
                   <a href={require("../assets/Result/Provisional Merit List PGDERP 2023-24.pdf")} download="Provisional Merit List PGDERP 2023-24.pdf">
                     <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
                         backgroundColor: "#40128B"
                     }}}>Download Provisional Merit List</Button></a>
+                    </Typography>
+                    <Typography sx = {{mb:2}}>
                     <a href={require("../assets/Result/PGDERP 2023-24 Provisional Merit List - 2.pdf")} download="PGDERP 2023-24 Provisional Merit List - 2.pdf">
                     <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
                         backgroundColor: "#40128B"
                     }}}>Download Provisional Merit List 2</Button></a>
+                    </Typography>
+                    <Typography>
+                    <a href={require("../assets/Result/PGDERP 2023-24- Provisional Merit List - 3.pdf")} download="PGDERP 2023-24 Provisional Merit List - 3.pdf">
+                    <Button sx ={{backgroundColor: "#0D1282", color:"white", '&:hover': {
+                        backgroundColor: "#40128B"
+                    }}}>Download Provisional Merit List 3</Button></a>
+                    </Typography>
                   </TableCell>
                                 </TableRow>
 
