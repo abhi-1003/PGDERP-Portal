@@ -195,6 +195,7 @@ function Sidebar(props) {
                     
                     <Grid item xs sx={{ p: 1}}>
                         <Typography>Candidates shortlisted will be declared soon. For any queries please contact respective Course Coordinator.</Typography>
+                        <Typography>For PGDEM Course - All students should report to CAD/CAM lab of Bajaj School of Mechanical Engineering (BSME) on 16th September, 2023, at 11:00 am. The students should bring all original documents for verification along with one Xerox set of all the documents. The payment should be done through SBI collect of COEP Tech. University, Pune on the same day. Total fee amount is Rs. 1,50,000/-.</Typography>
                       </Grid>
                     </Paper>
 
