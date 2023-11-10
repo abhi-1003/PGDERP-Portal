@@ -14,3 +14,4 @@ Project Members:
 3. Vedanshi Shah
 4. Abhinav Kurule
 5. Abhishek Shinde
+6. Satvik Gaikwad
