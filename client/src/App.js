@@ -33,6 +33,7 @@ import GridAdmin from "./pages/Grid";
 import FeesDetailsAdmin from "./pages/FeesDetailsAdmin";
 import LandingPage from "./pages/LandingPage";
 import WebsiteMaintenance from "./pages/websiteMaintenance";
+import Page404 from "./pages/404";
 function setToken() {
   const token = localStorage.getItem("pgderp-website-jwt");
   if (token) {
@@ -60,7 +61,9 @@ function App() {
         />
         */}
 
-        <Route path="/" exact element={<LandingPage />}></Route> 
+        {/* <Route path="/" exact element={<LandingPage />}></Route> */}
+
+        <Route path="/"  exact element={<Page404 />}></Route>
 
         <Route
           path="*"
