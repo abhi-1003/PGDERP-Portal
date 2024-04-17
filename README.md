@@ -7,11 +7,3 @@ This portal facilitated COEP PG Diploma Course Admissions and was used by COEP A
 Tech Stacks used - React, MongoDB, Express, Node
 
 Email Service used - Email JS
-
-Project Members:
-1. Prerna Tulsiani
-2. Pratik Patil
-3. Vedanshi Shah
-4. Abhinav Kurule
-5. Abhishek Shinde
-6. Satvik Gaikwad
